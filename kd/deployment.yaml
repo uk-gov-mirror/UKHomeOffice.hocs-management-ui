@@ -2,14 +2,14 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: hocs-frontend
+  name: hocs-management-ui
   labels:
     version: {{.VERSION}}
 spec:
   replicas: {{.REPLICAS}}
   selector:
     matchLabels:
-      name: hocs-frontend
+      name: hocs-management-ui
   strategy:
     rollingUpdate:
       maxUnavailable: 0
@@ -18,8 +18,8 @@ spec:
   template:
     metadata:
       labels:
-        name: hocs-frontend
-        role: hocs-frontend
+        name: hocs-management-ui
+        role: hocs-management-ui
         version: {{.VERSION}}
     spec:
       containers:
@@ -33,7 +33,7 @@ spec:
              - SETGID
         args:
           - --certs=/certs
-          - --domain=hocs-frontend.${KUBE_NAMESPACE}.svc.cluster.local
+          - --domain=hocs-management-ui.${KUBE_NAMESPACE}.svc.cluster.local
           - --expiry=8760h
           - --command=/usr/local/scripts/trigger_nginx_reload.sh
         env:
@@ -179,8 +179,8 @@ spec:
           - mountPath: /etc/secrets
             name: frontend-keycloak-secret
             readOnly: true
-      - name: hocs-frontend
-        image: quay.io/ukhomeofficedigital/hocs-frontend:{{.VERSION}}
+      - name: hocs-management-ui
+        image: quay.io/ukhomeofficedigital/hocs-management-ui:{{.VERSION}}
         imagePullPolicy: Always
         securityContext:
           runAsNonRoot: true
@@ -196,12 +196,12 @@ spec:
           - name: GA_TRACKER
             valueFrom:
               secretKeyRef:
-                name: hocs-frontend
+                name: hocs-management-ui
                 key: ga_tracker
           - name: USE_CLIENTSIDE
             valueFrom:
               configMapKeyRef:
-                name: hocs-frontend
+                name: hocs-management-ui
                 key: clientside
           - name: MAX_UPLOAD_SIZE
             valueFrom:
