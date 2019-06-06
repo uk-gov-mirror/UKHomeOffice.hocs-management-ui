@@ -56,7 +56,5 @@ cd kd
 
 kd --insecure-skip-tls-verify \
     -f ingress.yaml \
-    -f converter-configmap.yaml \
-    -f configmap.yaml \
     -f deployment.yaml \
     -f service.yaml
