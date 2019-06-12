@@ -227,7 +227,7 @@ spec:
             containerPort: 8080
         livenessProbe:
           httpGet:
-            path: /health
+            path: /
             port: http
             httpHeaders:
               - name: X-probe
@@ -237,7 +237,7 @@ spec:
           timeoutSeconds: 10
         readinessProbe:
           httpGet:
-            path: /health
+            path: /
             port: http
             httpHeaders:
               - name: X-probe
