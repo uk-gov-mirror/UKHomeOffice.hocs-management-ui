@@ -4,15 +4,40 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --coverage",
+    "jest": "node_modules/jest/bin/jest.js  ."
   },
   "repository": {
     "type": "git",
     "url": "ssh://git@gitlab.digital.homeoffice.gov.uk:2222/hocs/hocs-management-ui.git"
   },
+  "jest": {
+    "setupFiles": [
+      "./test/jestsetup.js"
+    ],
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ],
+    "moduleNameMapper": {
+      "\\.(css|less|scss|sass)$": "identity-obj-proxy"
+    },
+    "testPathIgnorePatterns": [
+      "\\.spec.utils.(js|jsx)$"
+    ],
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx}",
+      "server/**/*.js"
+    ]
+  },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "typescript": "^3.5.3"
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.14.0",
+    "jest": "^24.8.0",
+    "typescript": "^3.5.3",
+    "enzyme-to-json": "^3.3.5",
+    "identity-obj-proxy": "^3.0.0"
   }
 }
