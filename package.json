@@ -44,6 +44,10 @@
     "identity-obj-proxy": "^3.0.0",
     "jest": "^24.8.0",
     "tslint-config-airbnb": "^5.11.1",
-    "typescript": "^3.5.3"
+    "typescript": "^3.5.3",
+    "webpack": "^4.38.0",
+    "webpack-assets-manifest": "^3.1.1",
+    "webpack-cli": "^3.3.6",
+    "webpack-node-externals": "^1.7.2"
   }
 }
