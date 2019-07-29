@@ -1,0 +1,15 @@
+{
+  "name": "hocs-management-ui",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@gitlab.digital.homeoffice.gov.uk:2222/hocs/hocs-management-ui.git"
+  },
+  "author": "",
+  "license": "ISC"
+}
