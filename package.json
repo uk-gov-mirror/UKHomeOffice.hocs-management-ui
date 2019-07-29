@@ -6,7 +6,9 @@
   "scripts": {
     "test": "jest --coverage",
     "jest": "node_modules/jest/bin/jest.js  .",
-    "lint-staged": "node_modules/lint-staged/src/index.js"
+    "lint-staged": "node_modules/lint-staged/src/index.js",
+    "lint:ts": "tslint -c tslint.json 'src/**/*.ts'",
+    "lint:tsx": "tslint -c tslint.json 'src/**/*.tsx'"
   },
   "repository": {
     "type": "git",
@@ -47,6 +49,7 @@
     "jest": "^24.8.0",
     "lint-staged": "^9.2.1",
     "pre-commit": "^1.2.2",
+    "tslint": "^5.18.0",
     "tslint-config-airbnb": "^5.11.1",
     "typescript": "^3.5.3",
     "webpack": "^4.38.0",
@@ -60,10 +63,21 @@
   ],
   "lint-staged": {
     "*.js": [
-      "eslint --fix",
+      "eslint --fix --ignore-path .gitignore",
       "git add"
     ],
-    "*.jsx": "node_modules/eslint/bin/eslint.js --ignore-path .gitignore"
+    "*.ts": [
+      "tslint -c tslint.json 'src/**/*.ts' --fix",
+      "git add"
+    ],
+    "*.jsx": [
+      "eslint --fix --ignore-path .gitignore",
+      "git add"
+    ],
+    "*.tsx": [
+      "tslint -c tslint.json 'src/**/*.ts' --fix",
+      "git add"
+    ]
   },
   "husky": {
     "hooks": {
