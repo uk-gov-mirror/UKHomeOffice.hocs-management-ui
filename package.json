@@ -6,7 +6,6 @@
   "scripts": {
     "test": "jest --coverage",
     "jest": "node_modules/jest/bin/jest.js  .",
-    "lint-staged": "node_modules/lint-staged/src/index.js",
     "lint:ts": "tslint -c tslint.json 'src/**/*.ts'",
     "lint:tsx": "tslint -c tslint.json 'src/**/*.tsx'"
   },
