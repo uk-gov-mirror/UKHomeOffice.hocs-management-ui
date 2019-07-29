@@ -11,5 +11,8 @@
     "url": "ssh://git@gitlab.digital.homeoffice.gov.uk:2222/hocs/hocs-management-ui.git"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^3.5.3"
+  }
 }
