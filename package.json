@@ -8,6 +8,8 @@
     "build-prod": "webpack --mode=production --env.NODE_ENV=production",
     "test": "jest --coverage",
     "jest": "node_modules/jest/bin/jest.js  .",
+    "lint:js": "eslint ./ --ignore-path .gitignore",
+    "lint:jsx": "eslint --ignore-path .gitignore",
     "lint:ts": "tslint -c tslint.json 'src/**/*.ts'",
     "lint:tsx": "tslint -c tslint.json 'src/**/*.tsx'"
   },
