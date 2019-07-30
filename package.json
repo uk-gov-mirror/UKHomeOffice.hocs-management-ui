@@ -11,7 +11,8 @@
     "lint:js": "eslint ./ --ignore-path .gitignore",
     "lint:jsx": "eslint ./ --ignore-path .gitignore",
     "lint:ts": "tslint -c tslint.json 'src/**/*.ts'",
-    "lint:tsx": "tslint -c tslint.json 'src/**/*.tsx'"
+    "lint:tsx": "tslint -c tslint.json 'src/**/*.tsx'",
+    "lint-staged": "node_modules/lint-staged/index.js"
   },
   "repository": {
     "type": "git",
@@ -78,6 +79,10 @@
     "webpack-cli": "^3.1.2",
     "webpack-node-externals": "^1.7.2"
   },
+  "pre-commit": [
+    "lint-staged",
+    "jest"
+  ],
   "lint-staged": {
     "*.js": [
       "eslint ./ --fix --ignore-path .gitignore",
