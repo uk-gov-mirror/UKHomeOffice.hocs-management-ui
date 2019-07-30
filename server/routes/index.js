@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const assets = require('../../build/assets.json');
-const html = require('../layout/html').default;
+const html = require('../layout/html');
 const { authMiddleware } = require('../middleware/auth');
 const apiRouter = require('./api/index');
 const healthRouter = require('./health');

@@ -22,5 +22,8 @@
     "exclude": [
         ".git",
         "node_modules"
+    ],
+    "include": [
+        "src"
     ]
 }
