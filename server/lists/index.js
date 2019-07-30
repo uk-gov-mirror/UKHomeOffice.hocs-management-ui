@@ -1,17 +1,10 @@
 const { caseworkService, infoService, documentService, workflowService } = require('../clients/index');
 const listService = require('../services/list');
 const statics = require('./adapters/statics');
-const caseTypeAdapter = require('./adapters/case-types');
-const workstack = require('./adapters/workstacks');
 const topicAdapter = require('./adapters/topics');
 const usersAdapter = require('./adapters/users');
 const teamsAdapter = require('./adapters/teams');
-const templatesAdapter = require('./adapters/templates');
 const membersAdapter = require('./adapters/members');
-const documentsAdapter = require('./adapters/documents');
-const caseNoteAdapter = require('./adapters/case-notes');
-const caseSummaryAdapter = require('./adapters/case-summary');
-const caseViewAdapter = require('./adapters/case-view');
 const {
     caseCorrespondentAdapter,
     correspondentTypeAdapter
@@ -42,41 +35,6 @@ module.exports = {
             endpoint: '/stageType',
             type: listService.types.STATIC,
             adapter: statics.stageTypesAdapter
-        },
-        CASE_TYPES: {
-            client: 'INFO',
-            endpoint: '/caseType?bulkOnly=false',
-            adapter: caseTypeAdapter
-        },
-        CASE_TYPES_BULK: {
-            client: 'INFO',
-            endpoint: '/caseType?bulkOnly=true',
-            adapter: caseTypeAdapter
-        },
-        DASHBOARD: {
-            client: 'CASEWORK',
-            endpoint: '/stage',
-            adapter: workstack.dashboardAdapter
-        },
-        USER_WORKSTACK: {
-            client: 'CASEWORK',
-            endpoint: '/stage',
-            adapter: workstack.userAdapter
-        },
-        TEAM_WORKSTACK: {
-            client: 'CASEWORK',
-            endpoint: '/stage',
-            adapter: workstack.teamAdapter
-        },
-        WORKFLOW_WORKSTACK: {
-            client: 'CASEWORK',
-            endpoint: '/stage',
-            adapter: workstack.workflowAdapter
-        },
-        STAGE_WORKSTACK: {
-            client: 'CASEWORK',
-            endpoint: '/stage',
-            adapter: workstack.stageAdapter
         },
         DRAFT_TEAMS: {
             client: 'INFO',
@@ -123,52 +81,10 @@ module.exports = {
             endpoint: '/case/${caseId}/topic',
             adapter: (data) => data.topics
         },
-        CASE_TEMPLATES: {
-            client: 'CASEWORK',
-            endpoint: '/case/${caseId}/template',
-            adapter: templatesAdapter,
-            defaultValue: []
-        },
-        CASE_STANDARD_LINES: {
-            client: 'CASEWORK',
-            endpoint: '/case/${caseId}/standardLine',
-            adapter: templatesAdapter,
-            defaultValue: []
-        },
         MEMBER_LIST: {
             client: 'INFO',
             endpoint: '/member',
             adapter: membersAdapter
-        },
-        CASE_DOCUMENT_LIST: {
-            client: 'DOCUMENT',
-            endpoint: '/document/reference/${caseId}',
-            adapter: documentsAdapter
-        },
-        CASE_DOCUMENT_LIST_FINAL: {
-            client: 'DOCUMENT',
-            endpoint: '/document/reference/${caseId}/?type=FINAL',
-            adapter: documentsAdapter
-        },
-        CASE_DOCUMENT_LIST_DRAFT: {
-            client: 'DOCUMENT',
-            endpoint: '/document/reference/${caseId}/?type=DRAFT',
-            adapter: documentsAdapter
-        },
-        CASE_NOTES: {
-            client: 'CASEWORK',
-            endpoint: '/case/${caseId}/timeline',
-            adapter: caseNoteAdapter
-        },
-        CASE_SUMMARY: {
-            client: 'CASEWORK',
-            endpoint: '/case/${caseId}/summary',
-            adapter: caseSummaryAdapter
-        },
-        CASE_VIEW: {
-            client: 'WORKFLOW',
-            endpoint: '/case/${caseId}',
-            adapter: caseViewAdapter
         }
     },
     clients: {

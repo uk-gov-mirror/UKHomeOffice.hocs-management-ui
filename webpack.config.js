@@ -1,12 +1,4 @@
-const path = require('path');
-const webpack = require('webpack');
 const MinificationPlugin = require('terser-webpack-plugin');
-const AssetsPlugin = require('webpack-assets-manifest');
-const ExtractTextPlugin = require('mini-css-extract-plugin');
-const AutoPrefixer = require('autoprefixer');
-
-
-
 
 const serverConfig = {
     entry: {

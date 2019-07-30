@@ -1,15 +1,9 @@
 const router = require('express').Router();
 const assets = require('../../build/assets.json');
-const html = require('../layout/html');
+const html = require('../layout/html').default;
 const { authMiddleware } = require('../middleware/auth');
 const apiRouter = require('./api/index');
-const pageRouter = require('./page');
-const actionRouter = require('./action');
-const caseRouter = require('./case');
-const documentRouter = require('./document');
-const templatesRouter = require('./templates');
 const healthRouter = require('./health');
-const search = require('./search');
 const dashboard = require('./dashboard');
 const { renderMiddleware, renderResponseMiddleware } = require('../middleware/render');
 const { errorMiddleware, initRequest } = require('../middleware/request');
@@ -23,14 +17,8 @@ html.use(assets);
 
 router.use('/health', healthRouter);
 router.use('*', authMiddleware, initRequest, createAnalyticsObject);
-router.use('/', pageRouter);
 router.use('/api', apiRouter);
-router.use('/action', actionRouter);
-router.use('/case', caseRouter);
-router.use('/case', documentRouter);
-router.use('/case', templatesRouter);
 router.use('/', dashboard);
-router.use('/', search);
 
 router.get('/members/refresh',
     protect('REFRESH_MEMBERS'),

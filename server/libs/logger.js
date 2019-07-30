@@ -1,7 +1,8 @@
 const winston = require('winston');
+const { isProduction } = require('../config');
+
 const loggingTransports = [];
 const exceptionTransports = [];
-const { isProduction } = require('../config');
 
 const colors = {
     info: 'green',
