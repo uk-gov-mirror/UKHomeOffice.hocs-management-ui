@@ -65,4 +65,7 @@ build/
 .idea
 *.iml
 
+# OS
+.DS_Store
+
 docker/keycloak/hsperfdata_jboss
