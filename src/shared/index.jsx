@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { ApplicationProvider } from './contexts/application.jsx';
+import Router from './router/index.jsx';
 
 class App extends Component {
     render() {
-        return 'hello world';
+        return (
+            <ApplicationProvider config={this.props.config}>
+                <Router />
+            </ApplicationProvider>
+        );
     }
 }
 
