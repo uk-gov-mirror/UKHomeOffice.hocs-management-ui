@@ -1,11 +1,11 @@
 import Error from '../../layouts/error.jsx';
-import MainPage from '../../pages/dashboard.jsx';
+import Dashboard from '../../pages/dashboard.jsx';
 
 const routes = [
     {
         path: '/',
         exact: true,
-        component: MainPage,
+        component: Dashboard,
         title: 'Dashboard'
     },
     {

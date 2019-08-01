@@ -9,5 +9,5 @@ hydrate(
     <BrowserRouter>
         <App config={(window as any).__INITIAL_DATA__} />
     </BrowserRouter>,
-    document.getElementById('app')  
+    document.getElementById('app')
 );
