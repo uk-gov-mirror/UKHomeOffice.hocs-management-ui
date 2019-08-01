@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import PhaseBanner from '../../common/components/phase-banner.jsx';
+import PhaseBanner, { PhaseBannerComponentProps } from '../../common/components/phase-banner';
 
-class Body extends Component {
+export interface BodyProps {
+    phaseBanner: PhaseBannerComponentProps;
+}
+
+class Body extends Component<BodyProps> {
     render() {
         const {
             children,
@@ -18,16 +21,5 @@ class Body extends Component {
         );
     }
 }
-
-Body.propTypes = {
-    children: PropTypes.node,
-    phaseBanner: PropTypes.object
-};
-
-Body.defaultProps = {
-    phaseBanner: {
-        isVisible: false
-    }
-};
 
 export default Body;

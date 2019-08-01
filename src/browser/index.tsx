@@ -1,7 +1,7 @@
 import React from 'react';
 import { hydrate } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
-import App from '../shared/index.jsx';
+import App from '../shared/index';
 import '../styles/app.scss';
 
 document.body.className = 'govuk-template__body js-enabled';

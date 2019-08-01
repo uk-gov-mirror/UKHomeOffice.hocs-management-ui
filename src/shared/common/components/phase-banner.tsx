@@ -1,12 +1,17 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
-const PhaseBannerComponent = ({ feedback, phase }) => (
+export interface PhaseBannerComponentProps {
+    feedback: string;
+    isVisible: boolean;
+    phase: string;
+}
+
+const PhaseBannerComponent: React.FC<PhaseBannerComponentProps> = ({ feedback = '/', phase= 'PROTOTYPE' }) => (
   <div className="govuk-phase-banner">
     <p className="govuk-phase-banner__content">
       <strong className="govuk-tag govuk-phase-banner__content__tag">{phase}</strong>
       <span>
-        This is a new service – your
+        This is a new service – your&nbsp;
         <a
           href={feedback}
         >
@@ -17,17 +22,6 @@ const PhaseBannerComponent = ({ feedback, phase }) => (
       </span>
     </p>
   </div>
-)
+);
 
-
-PhaseBannerComponent.propTypes = {
-    feedback: PropTypes.string,
-    phase: PropTypes.string
-};
-
-PhaseBannerComponent.defaultProps = {
-    feedback: '/',
-    phase: 'PROTOTYPE'
-};
-
-export default PhaseBannerComponent
+export default PhaseBannerComponent;

@@ -1,7 +1,21 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-class Error extends Component {
+export interface ErrorContent {
+    body?: string[];
+    location: {
+        pathname: string;
+    };
+    message: string;
+    stack: string;
+    status: number;
+    title: string;
+}
+
+interface ErrorProps {
+    error?: ErrorContent;
+}
+class Error extends Component<ErrorProps> {
 
     componentDidMount() {
         const { error } = this.props;
@@ -16,7 +30,7 @@ class Error extends Component {
         }
     }
 
-    getDefaultContent(status) {
+    getDefaultContent(status: number) {
         switch (status) {
         case 401:
             return {
@@ -48,13 +62,10 @@ class Error extends Component {
     }
 
     UNSAFE_componentWillMount() {
-        const { error, staticContext } = this.props;
-        if (staticContext) {
-            staticContext.status = error.status;
-        }
+        // todo: was the static context bit needed here?
     }
 
-    buildParagraphs(body) {
+    buildParagraphs(body?: string[]) {
         if (!body) return null;
         return body.map((paragraph, index) => {
             // eslint-disable-next-line react/no-array-index-key
@@ -70,48 +81,36 @@ class Error extends Component {
             stack,
             status,
             body,
-            message,
-        } = error;
+            message
+        } = error!;
 
         const { defaultTitle, defaultBody } = this.getDefaultContent(status);
 
         return (
-          <div className='govuk-grid-row'>
-            <div className='govuk-grid-column-full'>
-              <h1 className='govuk-heading-xl'>
+          <div className="govuk-grid-row">
+            <div className="govuk-grid-column-full">
+              <h1 className="govuk-heading-xl">
                 {title ? title : defaultTitle}
-                {message && <span className='govuk-caption-xl'>{message}</span>}
+                {message && <span className="govuk-caption-xl">{message}</span>}
               </h1>
               {body ? this.buildParagraphs(body) : this.buildParagraphs(defaultBody)}
-              {status === 404 && location && location.pathname && <p><code className='code'>{location.pathname}</code></p>}
+              {status === 404 && location && location.pathname && <p><code className="code">{location.pathname}</code></p>}
               {stack && (
-                <details className='govuk-details' open>
-                  <summary className='govuk-details__summary'>
-                    <span className='govuk-details__summary-text'>
+                <details className="govuk-details" open>
+                  <summary className="govuk-details__summary">
+                    <span className="govuk-details__summary-text">
                         Stack trace
                     </span>
                   </summary>
-                  <div className='govuk-details__text'>
-                    <pre className='code overflow-scroll'>{stack}</pre>
+                  <div className="govuk-details__text">
+                    <pre className="code overflow-scroll">{stack}</pre>
                   </div>
                 </details>
                )}
             </div>
           </div>
         );
-    }     
+    }
 }
-
-Error.propTypes = {
-    // eslint-disable-next-line react/require-default-props
-    error: PropTypes.object.isRequired,
-    // eslint-disable-next-line react/require-default-props
-    staticContext: PropTypes.object,
-};
-
-Error.defaultProps = {
-    // eslint-disable-next-line react/default-props-match-prop-types
-    error: {}
-};
 
 export default Error;

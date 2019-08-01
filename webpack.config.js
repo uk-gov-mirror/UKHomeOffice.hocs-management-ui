@@ -141,7 +141,7 @@ const browserConfig = env => {
 
 const serverConfig = {
     entry: {
-        app: './src/shared/index.jsx'
+        app: './src/shared/index.tsx'
     },
     output: {
         path: __dirname,
@@ -150,8 +150,17 @@ const serverConfig = {
     },
     module: {
         rules: [
+            { test: /\.tsx?$/, use: 'ts-loader', exclude: /node_modules/ },
             { test: /\.(js|jsx)$/, loader: 'babel-loader', exclude: /node_modules/ },
             { test: /\.scss$/, loader: 'css-loader/locals' }
+        ]
+    },
+    resolve: {
+        extensions: [
+            '.js',
+            '.jsx',
+            '.ts',
+            '.tsx'
         ]
     },
     externals: {

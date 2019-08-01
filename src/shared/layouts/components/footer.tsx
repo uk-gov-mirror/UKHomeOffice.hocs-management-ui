@@ -1,11 +1,19 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 
-class Footer extends Component {
+export interface Link {
+    // todo: this might exist elsewhere
+    label: string;
+    target: string;
+}
+
+export interface FooterProps {
+    isVisible: boolean;
+    links: Link[];
+}
+
+class Footer extends Component<FooterProps> {
     render() {
-        const {
-            links
-        } = this.props;
+        const { links = [] } = this.props;
 
         return (
           <footer className="govuk-footer " role="contentinfo">
@@ -13,26 +21,25 @@ class Footer extends Component {
               <div className="govuk-footer__meta">
                 <div className="govuk-footer__meta-item govuk-footer__meta-item--grow">
                   {
-                                links.length > 0 && (
-                                <ul className="govuk-footer__inline-list">
-
-                                  {
-                                            links.map(link => (
-                                              <li className="govuk-footer__inline-list-item" key={link.target}>
-                                                <a className="govuk-footer__link" href={link.target}>{link.label}</a>
-                                              </li>
-                                            ))
-                                        }
-                                </ul>
-                                )
-                            }
+                      links.length > 0 && (
+                        <ul className="govuk-footer__inline-list">
+                          {
+                              links.map(link => (
+                                <li className="govuk-footer__inline-list-item" key={link.target}>
+                                  <a className="govuk-footer__link" href={link.target}>{link.label}</a>
+                                </li>
+                              ))
+                          }
+                        </ul>
+                      )
+                  }
                   <ul className="govuk-footer__inline-list">
                     <li className="govuk-footer__inline-list-item">
-                                  Built by the 
+                      Built by the
                       {' '}
                       <a className="govuk-footer__link" href="https://www.gov.uk/government/organisations/home-office">Home Office</a>
                       {' '}
-in Sheffield
+                      in Sheffield
                     </li>
                   </ul>
 
@@ -51,16 +58,16 @@ in Sheffield
                     />
                   </svg>
                   <span className="govuk-footer__licence-description">
-                                All content is available under the 
+                    All content is available under the
                     {' '}
                     <a
                       className="govuk-footer__link"
                       href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
                       rel="license"
                     >
-Open Government Licence v3.0
+                      Open Government Licence v3.0
                     </a>
-, except where otherwise stated
+                    , except where otherwise stated
                   </span>
                 </div>
                 <div className="govuk-footer__meta-item">
@@ -78,13 +85,5 @@ Open Government Licence v3.0
         );
     }
 }
-
-Footer.propTypes = {
-    links: PropTypes.arrayOf(PropTypes.object)
-};
-
-Footer.defaultProps = {
-    links: []
-};
 
 export default Footer;
