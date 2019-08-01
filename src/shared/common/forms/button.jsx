@@ -19,14 +19,16 @@ class Button extends Component {
             label
         } = this.props;
         return (
-            <Fragment>
-                <Link
-                    className={`govuk-button${className ? ' ' + className : ''}`}
-                    disabled={disabled}
-                    to={action}
-                    onClick={e => this.handleClick(e)}
-                >{label}</Link>
-            </Fragment>
+          <Fragment>
+            <Link
+              className={`govuk-button${className ? ' ' + className : ''}`}
+              disabled={disabled}
+              to={action}
+              onClick={e => this.handleClick(e)}
+            >
+              {label}
+            </Link>
+          </Fragment>
         );
     }
 }
@@ -45,9 +47,9 @@ Button.defaultProps = {
 };
 
 const WrappedButton = props => (
-    <ApplicationConsumer>
-        {({ dispatch }) => <Button {...props} dispatch={dispatch} />}
-    </ApplicationConsumer>
+  <ApplicationConsumer>
+    {({ dispatch }) => <Button {...props} dispatch={dispatch} />}
+  </ApplicationConsumer>
 );
 
 export default WrappedButton;

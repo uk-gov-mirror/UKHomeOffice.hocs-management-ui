@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { ApplicationConsumer } from '../../contexts/application.jsx';
 import { Link } from 'react-router-dom';
+import { ApplicationConsumer } from '../../contexts/application.jsx';
 import DocumentPane from './document-pane.jsx';
 import CaseNotes from './case-notes.jsx';
 import StageSummary from './stage-summary.jsx';
@@ -30,28 +30,28 @@ class SideBar extends Component {
     renderTabButton(label, value) {
         const { page } = this.props;
         return (
-            <li>
-                <Link onClick={(e) => this.setActive(e, value)} className={this.isActive(value) ? 'tab tab__active' : 'tab'} to={`${page.url}/?activeTab=${value}`}>
-                    {label}
-                </Link>
-            </li>
+          <li>
+            <Link onClick={(e) => this.setActive(e, value)} className={this.isActive(value) ? 'tab tab__active' : 'tab'} to={`${page.url}/?activeTab=${value}`}>
+              {label}
+            </Link>
+          </li>
         );
     }
 
     render() {
         return (
-            <Fragment>
-                <div className='tabs'>
-                    <ul>
-                        {this.renderTabButton('Documents', 'DOCUMENTS')}
-                        {this.renderTabButton('Summary', 'SUMMARY')}
-                        {this.renderTabButton('Timeline', 'TIMELINE')}
-                    </ul>
-                    {this.isActive('DOCUMENTS') && <DocumentPane />}
-                    {this.isActive('SUMMARY') && <StageSummary />}
-                    {this.isActive('TIMELINE') && <CaseNotes />}
-                </div>
-            </Fragment>
+          <Fragment>
+            <div className='tabs'>
+              <ul>
+                {this.renderTabButton('Documents', 'DOCUMENTS')}
+                {this.renderTabButton('Summary', 'SUMMARY')}
+                {this.renderTabButton('Timeline', 'TIMELINE')}
+              </ul>
+              {this.isActive('DOCUMENTS') && <DocumentPane />}
+              {this.isActive('SUMMARY') && <StageSummary />}
+              {this.isActive('TIMELINE') && <CaseNotes />}
+            </div>
+          </Fragment>
         );
     }
 
@@ -65,9 +65,9 @@ SideBar.propTypes = {
 };
 
 const WrappedSideBar = props => (
-    <ApplicationConsumer>
-        {({ track, page, activeTab }) => <SideBar {...props} track={track} page={page} activeTab={activeTab} />}
-    </ApplicationConsumer>
+  <ApplicationConsumer>
+    {({ track, page, activeTab }) => <SideBar {...props} track={track} page={page} activeTab={activeTab} />}
+  </ApplicationConsumer>
 );
 
 export default WrappedSideBar;

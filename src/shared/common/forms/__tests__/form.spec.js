@@ -6,12 +6,12 @@ jest.mock('../form-repository.jsx', () => {
     return {
         formComponentFactory: (field, { key }) => {
             return(
-                <div id={field} key={key} />
+              <div id={field} key={key} />
             );
         },
         secondaryActionFactory: (field, { key }) => {
             return (
-                <div id={field} key={key} />
+              <div id={field} key={key} />
             );
         }
     };
@@ -38,7 +38,7 @@ describe('Form component', () => {
     });
 
     it('should render with default props', () => {
-        const wrapper = mount(<Form schema={mockFormSchema}/>);
+        const wrapper = mount(<Form schema={mockFormSchema} />);
         expect(wrapper).toBeDefined();
     });
 
@@ -74,7 +74,7 @@ describe('Form component', () => {
     });
 
     it('should handle submit using provided callback method', async () => {
-        const wrapper = mount(<Form {...mockProps} schema={mockFormSchema} submitHandler={mockSubmitHandler}/>);
+        const wrapper = mount(<Form {...mockProps} schema={mockFormSchema} submitHandler={mockSubmitHandler} />);
         expect(wrapper).toBeDefined();
         expect(wrapper.find('Submit').length).toEqual(1);
         wrapper.find('Submit').simulate('submit');

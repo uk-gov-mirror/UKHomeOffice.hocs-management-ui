@@ -19,28 +19,30 @@ class ErrorSummary extends Component {
             heading
         } = this.props;
         return (
-            <div className="govuk-error-summary" role="alert" aria-labelledby="error-summary-heading-example-1" tabIndex="-1">
+          <div className="govuk-error-summary" role="alert" aria-labelledby="error-summary-heading-example-1" tabIndex="-1">
 
-                <h2 className="govuk-error-summary__title" id="error-summary-heading-example-1">
-                    {heading}
-                </h2>
-                <div className="govuk-error-summary__body">
-                    {description && <p>
-                        {description}
-                    </p>}
+            <h2 className="govuk-error-summary__title" id="error-summary-heading-example-1">
+              {heading}
+            </h2>
+            <div className="govuk-error-summary__body">
+              {description && (
+              <p>
+                {description}
+              </p>
+)}
 
-                    <ul className="govuk-list govuk-error-summary__list">
-                        {Object.entries(errors).map(([key, value]) => {
+              <ul className="govuk-list govuk-error-summary__list">
+                {Object.entries(errors).map(([key, value]) => {
                             const link = `${key}-error`;
                             return (
-                                <li key={key}>
-                                    <a href={`#${link}`} onClick={(e) => this.scrollInToView(e, link)} >{value}</a>
-                                </li>
+                              <li key={key}>
+                                <a href={`#${link}`} onClick={(e) => this.scrollInToView(e, link)}>{value}</a>
+                              </li>
                             );
                         })}
-                    </ul>
-                </div>
+              </ul>
             </div>
+          </div>
         );
     }
 }

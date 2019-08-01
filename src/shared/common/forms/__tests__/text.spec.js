@@ -29,7 +29,7 @@ describe('Form text component', () => {
     });
     it('should render disabled when passed', () => {
         expect(
-            render(<Text name="text-field" disabled={true} updateState={() => null} />)
+            render(<Text name="text-field" disabled updateState={() => null} />)
         ).toMatchSnapshot();
     });
     it('should render of type when passed', () => {
@@ -41,7 +41,7 @@ describe('Form text component', () => {
         const mockCallback = jest.fn();
         const fieldName = 'text-field';
         shallow(
-            <Text name={fieldName} updateState={mockCallback} />
+          <Text name={fieldName} updateState={mockCallback} />
         );
         expect(mockCallback).toHaveBeenCalledTimes(1);
         expect(mockCallback).toHaveBeenCalledWith({ [fieldName]: '' });
@@ -51,7 +51,7 @@ describe('Form text component', () => {
         const mockCallback = jest.fn();
         const fieldName = 'text-field';
         const wrapper = shallow(
-            <Text name={fieldName} updateState={mockCallback} />
+          <Text name={fieldName} updateState={mockCallback} />
         );
         mockCallback.mockReset();
         wrapper.find('input').simulate('blur', event);

@@ -1,13 +1,13 @@
 import React from 'react';
 import WrappedPage from '../page-enabled';
 
+import actions from '../../contexts/actions/index.jsx';
+
 jest.mock('../error.jsx', () => () => 'MOCK_ERROR_PAGE');
 jest.mock('../../contexts/actions/index.jsx', () => ({
     unsetError: jest.fn(),
     clearApiStatus: jest.fn()
 }));
-
-import actions from '../../contexts/actions/index.jsx';
 
 describe('Error component', () => {
 
@@ -28,9 +28,9 @@ describe('Error component', () => {
         const OUTER = shallow(<WrappedPage />);
         const Page = OUTER.props().children;
         const WRAPPER = render(
-            <Page {...DEFAULT_PROPS}>
-                <div>TEST</div>
-            </Page>
+          <Page {...DEFAULT_PROPS}>
+            <div>TEST</div>
+          </Page>
         );
         expect(WRAPPER).toMatchSnapshot();
     });
@@ -43,9 +43,9 @@ describe('Error component', () => {
         const OUTER = shallow(<WrappedPage />);
         const Page = OUTER.props().children;
         const WRAPPER = render(
-            <Page {...PROPS}>
-                <div>TEST</div>
-            </Page>
+          <Page {...PROPS}>
+            <div>TEST</div>
+          </Page>
         );
 
         expect(WRAPPER).toMatchSnapshot();
@@ -55,9 +55,9 @@ describe('Error component', () => {
         const OUTER = shallow(<WrappedPage />);
         const Page = OUTER.props().children;
         const WRAPPER = shallow(
-            <Page {...DEFAULT_PROPS}>
-                <div>TEST</div>
-            </Page>
+          <Page {...DEFAULT_PROPS}>
+            <div>TEST</div>
+          </Page>
         );
 
         WRAPPER.unmount();
@@ -73,9 +73,9 @@ describe('Error component', () => {
         const OUTER = shallow(<WrappedPage match={{ url: '/' }} />);
         const Page = OUTER.props().children;
         const WRAPPER = mount(
-            <Page {...PROPS}>
-                <div>TEST</div>
-            </Page>
+          <Page {...PROPS}>
+            <div>TEST</div>
+          </Page>
         );
 
         WRAPPER.unmount();

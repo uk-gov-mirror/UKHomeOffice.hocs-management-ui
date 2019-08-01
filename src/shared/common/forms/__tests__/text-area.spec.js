@@ -29,7 +29,7 @@ describe('Form text area component', () => {
     });
     it('should render disabled when passed', () => {
         expect(
-            render(<TextArea name="text-field" disabled={true} updateState={() => null} />)
+            render(<TextArea name="text-field" disabled updateState={() => null} />)
         ).toMatchSnapshot();
     });
     it('should render of type when passed', () => {
@@ -41,7 +41,7 @@ describe('Form text area component', () => {
         const mockCallback = jest.fn();
         const fieldName = 'text-field';
         shallow(
-            <TextArea name={fieldName} updateState={mockCallback} />
+          <TextArea name={fieldName} updateState={mockCallback} />
         );
         expect(mockCallback).toHaveBeenCalledTimes(1);
         expect(mockCallback).toHaveBeenCalledWith({ [fieldName]: '' });
@@ -51,7 +51,7 @@ describe('Form text area component', () => {
         const mockCallback = jest.fn();
         const fieldName = 'text-field';
         const wrapper = shallow(
-            <TextArea name={fieldName} updateState={mockCallback} />
+          <TextArea name={fieldName} updateState={mockCallback} />
         );
         mockCallback.mockReset();
         wrapper.find('textarea').simulate('blur', event);

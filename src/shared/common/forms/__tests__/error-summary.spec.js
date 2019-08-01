@@ -1,6 +1,6 @@
 import React from 'react';
-import ErrorSummary from '../error-summary.jsx';
 import { MemoryRouter } from 'react-router-dom';
+import ErrorSummary from '../error-summary.jsx';
 
 const errors = {
     field1: 'Error 1',
@@ -28,9 +28,9 @@ describe('Form text component', () => {
 
         expect(
             render(
-                < MemoryRouter >
-                    <ErrorSummary errors={errors} />
-                </MemoryRouter >
+              <MemoryRouter>
+                <ErrorSummary errors={errors} />
+              </MemoryRouter>
             )
         ).toMatchSnapshot();
     });

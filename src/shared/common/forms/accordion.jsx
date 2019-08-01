@@ -17,19 +17,19 @@ const createSection = (data) => {
         };
 
         return (
-            <div key={i} className={isVisible ? 'govuk-accordion__section govuk-accordion__section--expanded' : 'govuk-accordion__section'}>
-                <div className='govuk-accordion__section-header' onClick={clickHandler}>
-                    <h2 className='govuk-accordion__section-heading'>
-                        <button type='button' className='govuk-accordion__section-button' id={`accordion-default-heading-${i}`}>
-                            {title}
-                        </button>
-                    </h2>
-                    <span className='govuk-accordion__icon' aria-hidden='true'></span>
-                </div>
-                <div id={`accordion-default-content-${i}`} className='govuk-accordion__section-content' aria-labelledby={`accordion-default-heading-${i}`}>
-                    {Array.isArray(items) && items.map(createComponent)}
-                </div>
+          <div key={i} className={isVisible ? 'govuk-accordion__section govuk-accordion__section--expanded' : 'govuk-accordion__section'}>
+            <div className='govuk-accordion__section-header' onClick={clickHandler}>
+              <h2 className='govuk-accordion__section-heading'>
+                <button type='button' className='govuk-accordion__section-button' id={`accordion-default-heading-${i}`}>
+                  {title}
+                </button>
+              </h2>
+              <span className='govuk-accordion__icon' aria-hidden='true' />
             </div>
+            <div id={`accordion-default-content-${i}`} className='govuk-accordion__section-content' aria-labelledby={`accordion-default-heading-${i}`}>
+              {Array.isArray(items) && items.map(createComponent)}
+            </div>
+          </div>
         );
     }
     Section.propTypes = {
@@ -42,9 +42,9 @@ const createSection = (data) => {
 const getAccordionComponent = (data) => {
     function Accordion({ name, sections }) {
         return (
-            <div id={name} className='govuk-accordion' data-module='accordion'>
-                {Array.isArray(sections) && sections.map(createSection(data))}
-            </div>
+          <div id={name} className='govuk-accordion' data-module='accordion'>
+            {Array.isArray(sections) && sections.map(createSection(data))}
+          </div>
         );
     }
     Accordion.propTypes = {

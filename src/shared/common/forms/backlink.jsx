@@ -12,13 +12,15 @@ class BackLink extends Component {
             label
         } = this.props;
         return (
-            <p>
-                <Link
-                    className={`govuk-back-link${className ? ' ' + className : ''}`}
-                    disabled={disabled}
-                    to={action}
-                >{label}</Link>
-            </p>
+          <p>
+            <Link
+              className={`govuk-back-link${className ? ' ' + className : ''}`}
+              disabled={disabled}
+              to={action}
+            >
+              {label}
+            </Link>
+          </p>
         );
     }
 }

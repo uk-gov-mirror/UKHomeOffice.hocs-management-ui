@@ -7,24 +7,24 @@ import PageWrapper from '../layouts/page-enabled.jsx';
 class Router extends Component {
     render() {
         return (
-            <Layout>
-                <Switch>
-                    {routes.map(({ path, exact, component: Page, ...rest }, i) => {
+          <Layout>
+            <Switch>
+              {routes.map(({ path, exact, component: Page, ...rest }, i) => {
                         return (
-                            <Route
-                                key={i}
-                                path={path}
-                                exact={exact}
-                                render={(props) => (
-                                    <PageWrapper match={props.match}>
-                                        <Page {...props} {...rest} />
-                                    </PageWrapper>
+                          <Route
+                            key={i}
+                            path={path}
+                            exact={exact}
+                            render={(props) => (
+                              <PageWrapper match={props.match}>
+                                <Page {...props} {...rest} />
+                              </PageWrapper>
                                 )}
-                            />
+                          />
                         );
                     })}
-                </Switch>
-            </Layout>
+            </Switch>
+          </Layout>
         );
     }
 }

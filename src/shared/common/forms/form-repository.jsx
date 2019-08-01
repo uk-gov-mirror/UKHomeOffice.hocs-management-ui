@@ -39,11 +39,15 @@ function renderFormComponent(Component, options) {
     if (data) {
         value = dataAdapter ? dataAdapter(config.name, data) : defaultDataAdapter(config.name, data);
     }
-    return <Component key={key}
+    return (
+      <Component
+        key={key}
         {...config}
         error={errors && errors[config.name]}
         value={value}
-        updateState={callback ? data => callback(data) : null} />;
+        updateState={callback ? data => callback(data) : null}
+      />
+);
 }
 
 export function formComponentFactory(field, options) {
@@ -81,9 +85,9 @@ export function formComponentFactory(field, options) {
         });
     case 'heading':
         return (
-            <h2 key={key} className='govuk-heading-m'>
-                {config.label}
-            </h2>
+          <h2 key={key} className='govuk-heading-m'>
+            {config.label}
+          </h2>
         );
     case 'panel':
         return renderFormComponent(Panel, { key, config });
@@ -95,7 +99,14 @@ export function formComponentFactory(field, options) {
         return renderFormComponent(EntityManager, { key, config: { ...config, baseUrl: options.baseUrl } });
     case 'display':
         return (
-            <span className='govuk-body full-width'><strong>{config.label}: </strong>{data[config.name]}</span>
+          <span className='govuk-body full-width'>
+            <strong>
+              {config.label}
+:
+              {' '}
+            </strong>
+            {data[config.name]}
+          </span>
         );
     case 'accordion':
         return renderFormComponent(Accordion(data), { key, config });

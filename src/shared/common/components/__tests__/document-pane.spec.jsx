@@ -1,6 +1,6 @@
 import React from 'react';
-import WrappedDocumentPanel from '../document-pane';
 import { MemoryRouter } from 'react-router-dom';
+import WrappedDocumentPanel from '../document-pane';
 
 jest.mock('axios', () => ({
     get: jest.fn(() => Promise.resolve())
@@ -29,9 +29,9 @@ describe('Document pane component', () => {
         const outer = shallow(<WrappedDocumentPanel />);
         const DocumentPanel = outer.props().children;
         const wrapper = mount(
-            <MemoryRouter>
-                <DocumentPanel dispatch={mockDispatch} page={mockPage} />
-            </MemoryRouter>
+          <MemoryRouter>
+            <DocumentPanel dispatch={mockDispatch} page={mockPage} />
+          </MemoryRouter>
         );
         expect(wrapper).toBeDefined();
         expect(wrapper.find('DocumentPanel').props().dispatch).toBeDefined();
@@ -41,9 +41,9 @@ describe('Document pane component', () => {
         const outer = shallow(<WrappedDocumentPanel />);
         const DocumentPanel = outer.props().children;
         const wrapper = mount(
-            <MemoryRouter>
-                <DocumentPanel dispatch={mockDispatch} page={mockPage} documents={documentList} />
-            </MemoryRouter>
+          <MemoryRouter>
+            <DocumentPanel dispatch={mockDispatch} page={mockPage} documents={documentList} />
+          </MemoryRouter>
         );
         expect(wrapper).toBeDefined();
         expect(wrapper.find('DocumentPanel').props().dispatch).toBeDefined();

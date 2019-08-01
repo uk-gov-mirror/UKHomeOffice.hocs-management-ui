@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Submit from './submit.jsx';
 import ErrorSummary from './error-summary.jsx';
 import { formComponentFactory, secondaryActionFactory } from './form-repository.jsx';
-import Ribbon from '../forms/ribbon.jsx';
+import Ribbon from "./ribbon.jsx";
 
 class Form extends Component {
 
@@ -23,21 +23,21 @@ class Form extends Component {
             schema
         } = this.props;
         return (
-            <Fragment>
-                {meta && meta.allocationNote &&
-                    <Ribbon title={meta.allocationNote.type}>
-                        <p>{meta.allocationNote.message}</p>
-                    </Ribbon>
-                }
-                {errors && <ErrorSummary errors={errors} />}
-                < form
-                    action={action}
-                    method={method}
-                    onSubmit={this.props.submitHandler}
-                    encType="multipart/form-data"
-                >
-                    {children}
-                    {
+          <Fragment>
+            {meta && meta.allocationNote && (
+              <Ribbon title={meta.allocationNote.type}>
+                <p>{meta.allocationNote.message}</p>
+              </Ribbon>
+)}
+            {errors && <ErrorSummary errors={errors} />}
+            <form
+              action={action}
+              method={method}
+              onSubmit={this.props.submitHandler}
+              encType="multipart/form-data"
+            >
+              {children}
+              {
                         schema && schema.fields && schema.fields.map((field, key) => {
                             return formComponentFactory(field.component, {
                                 key,
@@ -49,8 +49,8 @@ class Form extends Component {
                             });
                         })
                     }
-                    {schema.showPrimaryAction !== false && < Submit label={schema.defaultActionLabel} />}
-                    {
+              {schema.showPrimaryAction !== false && <Submit label={schema.defaultActionLabel} />}
+              {
                         schema && schema.secondaryActions && schema.secondaryActions.map((field, key) => {
                             return secondaryActionFactory(field.component, {
                                 key,
@@ -61,8 +61,8 @@ class Form extends Component {
                             });
                         })
                     }
-                </form >
-            </Fragment >
+            </form>
+          </Fragment>
         );
     }
 }

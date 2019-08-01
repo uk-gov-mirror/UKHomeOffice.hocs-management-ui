@@ -21,9 +21,9 @@ describe('Form type ahead component (dropdown)', () => {
     it('should render with label when passed', () => {
         expect(
             render(<TypeAhead
-                name='type-ahead'
-                updateState={() => null}
-                label='Type-ahead'
+              name='type-ahead'
+              updateState={() => null}
+              label='Type-ahead'
             />)
         ).toMatchSnapshot();
     });
@@ -31,9 +31,9 @@ describe('Form type ahead component (dropdown)', () => {
     it('should render with hint when passed', () => {
         expect(
             render(<TypeAhead
-                name='type-ahead'
-                updateState={() => null}
-                hint='Select an option'
+              name='type-ahead'
+              updateState={() => null}
+              hint='Select an option'
             />)
         ).toMatchSnapshot();
     });
@@ -41,9 +41,9 @@ describe('Form type ahead component (dropdown)', () => {
     it('should render with error when passed', () => {
         expect(
             render(<TypeAhead
-                name='type-ahead'
-                updateState={() => null}
-                error='Some error message'
+              name='type-ahead'
+              updateState={() => null}
+              error='Some error message'
             />)
         ).toMatchSnapshot();
     });
@@ -51,9 +51,9 @@ describe('Form type ahead component (dropdown)', () => {
     it('should render disabled when passed', () => {
         expect(
             render(<TypeAhead
-                name='type-ahead'
-                updateState={() => null}
-                disabled={true}
+              name='type-ahead'
+              updateState={() => null}
+              disabled
             />)
         ).toMatchSnapshot();
     });
@@ -69,8 +69,8 @@ describe('Form type ahead component (select)', () => {
 
     it('should set componentMounted state when mounted', () => {
         const wrapper = mount(<TypeAhead
-            name='type-ahead'
-            updateState={() => null}
+          name='type-ahead'
+          updateState={() => null}
         />);
         expect(wrapper.state().componentMounted).toBeDefined();
         expect(wrapper.state().componentMounted).toEqual(true);
@@ -80,9 +80,9 @@ describe('Form type ahead component (select)', () => {
     it('should render with label when passed', () => {
         expect(
             mount(<TypeAhead
-                name='type-ahead'
-                updateState={() => null}
-                label='Type-ahead'
+              name='type-ahead'
+              updateState={() => null}
+              label='Type-ahead'
             />)
         ).toMatchSnapshot();
     });
@@ -90,9 +90,9 @@ describe('Form type ahead component (select)', () => {
     it('should render with hint when passed', () => {
         expect(
             mount(<TypeAhead
-                name='type-ahead'
-                updateState={() => null}
-                hint='Select an option'
+              name='type-ahead'
+              updateState={() => null}
+              hint='Select an option'
             />)
         ).toMatchSnapshot();
     });
@@ -100,9 +100,9 @@ describe('Form type ahead component (select)', () => {
     it('should render with error when passed', () => {
         expect(
             mount(<TypeAhead
-                name='type-ahead'
-                updateState={() => null}
-                error='Some error message'
+              name='type-ahead'
+              updateState={() => null}
+              error='Some error message'
             />)
         ).toMatchSnapshot();
     });
@@ -110,9 +110,9 @@ describe('Form type ahead component (select)', () => {
     it('should render disabled when passed', () => {
         expect(
             mount(<TypeAhead
-                name='type-ahead'
-                updateState={() => null}
-                disabled={true}
+              name='type-ahead'
+              updateState={() => null}
+              disabled
             />)
         ).toMatchSnapshot();
     });
@@ -120,7 +120,7 @@ describe('Form type ahead component (select)', () => {
     it('should execute callback on initialization', () => {
         const mockCallback = jest.fn();
         shallow(
-            <TypeAhead name='type-ahead' choices={choices} updateState={mockCallback} />
+          <TypeAhead name='type-ahead' choices={choices} updateState={mockCallback} />
         );
         expect(mockCallback).toHaveBeenCalledTimes(1);
         expect(mockCallback).toHaveBeenCalledWith({ 'dropdown': undefined });
@@ -130,7 +130,7 @@ describe('Form type ahead component (select)', () => {
         const mockCallback = jest.fn();
         let value = choices[0].options[0].value;
         const wrapper = mount(
-            <TypeAhead name='type-ahead' choices={choices} updateState={mockCallback} />
+          <TypeAhead name='type-ahead' choices={choices} updateState={mockCallback} />
         );
 
         mockCallback.mockReset();
@@ -143,7 +143,7 @@ describe('Form type ahead component (select)', () => {
     it('should execute callback on change and support null value', () => {
         const mockCallback = jest.fn();
         const wrapper = mount(
-            <TypeAhead name='type-ahead' choices={choices} updateState={mockCallback} />
+          <TypeAhead name='type-ahead' choices={choices} updateState={mockCallback} />
         );
 
         mockCallback.mockReset();
@@ -156,7 +156,7 @@ describe('Form type ahead component (select)', () => {
     it('should filter search results based on input', () => {
         const mockCallback = jest.fn();
         const wrapper = shallow(
-            <TypeAhead name='type-ahead' choices={choices} updateState={mockCallback} />
+          <TypeAhead name='type-ahead' choices={choices} updateState={mockCallback} />
         );
         const instance = wrapper.instance();
 
@@ -174,7 +174,7 @@ describe('Form type ahead component (select)', () => {
     it('should no search results based on empty', () => {
         const mockCallback = jest.fn();
         const wrapper = shallow(
-            <TypeAhead name='type-ahead' choices={choices} updateState={mockCallback} />
+          <TypeAhead name='type-ahead' choices={choices} updateState={mockCallback} />
         );
         const instance = wrapper.instance();
 

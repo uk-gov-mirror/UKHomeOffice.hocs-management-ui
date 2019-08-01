@@ -9,14 +9,14 @@ class Submit extends Component {
             label
         } = this.props;
         return (
-            <Fragment>
-                <input
-                    className={`govuk-button${className ? ' ' + className : ''}`}
-                    disabled={disabled}
-                    type="submit"
-                    value={label}
-                />
-            </Fragment>
+          <Fragment>
+            <input
+              className={`govuk-button${className ? ' ' + className : ''}`}
+              disabled={disabled}
+              type="submit"
+              value={label}
+            />
+          </Fragment>
         );
     }
 }

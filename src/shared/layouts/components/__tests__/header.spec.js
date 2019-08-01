@@ -10,7 +10,7 @@ describe('Layout header component', () => {
 
     it('should render without crest when service is not GOV.UK', () => {
         expect(
-            shallow(<Header service={'Test Service'}/>)
+            shallow(<Header service="Test Service" />)
         ).toMatchSnapshot();
     });
 });

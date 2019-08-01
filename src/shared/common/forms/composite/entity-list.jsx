@@ -37,50 +37,56 @@ class EntityList extends Component {
             type
         } = this.props;
         return (
-            <div className={`govuk-form-group${error ? ' govuk-form-group--error' : ''}`}>
+          <div className={`govuk-form-group${error ? ' govuk-form-group--error' : ''}`}>
 
-                <fieldset id={name} className={`govuk-fieldset ${className ? className : ''}`} disabled={disabled}>
+            <fieldset id={name} className={`govuk-fieldset ${className ? className : ''}`} disabled={disabled}>
 
-                    <legend id={`${name}-legend`} className="govuk-fieldset__legend">
-                        <span className="govuk-fieldset__heading govuk-label--s">{label}</span>
-                    </legend>
+              <legend id={`${name}-legend`} className="govuk-fieldset__legend">
+                <span className="govuk-fieldset__heading govuk-label--s">{label}</span>
+              </legend>
 
-                    {hint && <span className="govuk-form-hint">{hint}</span>}
-                    {error && <span id={`${name}-error`} className="govuk-error-message">{error}</span>}
+              {hint && <span className="govuk-form-hint">{hint}</span>}
+              {error && <span id={`${name}-error`} className="govuk-error-message">{error}</span>}
 
-                    <table className='govuk-table'>
-                        <tbody className='govuk-table__body'>
-                            {choices && choices.map((choice, i) => {
+              <table className='govuk-table'>
+                <tbody className='govuk-table__body'>
+                  {choices && choices.map((choice, i) => {
                                 return (
-                                    <tr className='govuk-radios govuk-table__row' key={i}>
-                                        <td className='govuk-table__cell'>
-                                            <div className='govuk-radios__item'>
-                                                <input id={`${name}-${choice.value}`}
-                                                    type={type}
-                                                    name={name}
-                                                    value={choice.value}
-                                                    checked={(this.state.value === choice.value)}
-                                                    onChange={e => this.handleChange(e)}
-                                                    className={'govuk-radios__input'}
-                                                />
-                                                <label className="govuk-label govuk-radios__label" htmlFor={`${name}-${choice.value}`}>
-                                                    {choice.label}
-                                                </label>
-                                            </div>
-                                        </td>
-                                        <td className='govuk-table__cell'>
-                                            {hasRemoveLink && <Link to={`/case/${page.params.caseId}/stage/${page.params.stageId}/entity/${entity}/${choice.value}/remove`} className="govuk-link">Remove</Link>}
-                                        </td>
-                                    </tr>
+                                  <tr className='govuk-radios govuk-table__row' key={i}>
+                                    <td className='govuk-table__cell'>
+                                      <div className='govuk-radios__item'>
+                                        <input
+                                          id={`${name}-${choice.value}`}
+                                          type={type}
+                                          name={name}
+                                          value={choice.value}
+                                          checked={(this.state.value === choice.value)}
+                                          onChange={e => this.handleChange(e)}
+                                          className="govuk-radios__input"
+                                        />
+                                        <label className="govuk-label govuk-radios__label" htmlFor={`${name}-${choice.value}`}>
+                                          {choice.label}
+                                        </label>
+                                      </div>
+                                    </td>
+                                    <td className='govuk-table__cell'>
+                                      {hasRemoveLink && <Link to={`/case/${page.params.caseId}/stage/${page.params.stageId}/entity/${entity}/${choice.value}/remove`} className="govuk-link">Remove</Link>}
+                                    </td>
+                                  </tr>
                                 );
                             })}
-                            <br />
-                            {hasAddLink && <Link to={`/case/${page.params.caseId}/stage/${page.params.stageId}/entity/${entity}/add`} className="govuk-body govuk-link">Add a {entity}</Link>}
-                        </tbody>
-                    </table>
-                </fieldset>
+                  <br />
+                  {hasAddLink && (
+                    <Link to={`/case/${page.params.caseId}/stage/${page.params.stageId}/entity/${entity}/add`} className="govuk-body govuk-link">
+Add a
+                      {entity}
+                    </Link>
+)}
+                </tbody>
+              </table>
+            </fieldset>
 
-            </div>
+          </div>
         );
     }
 }
@@ -111,9 +117,9 @@ EntityList.defaultProps = {
 };
 
 const WrappedEntityList = props => (
-    <ApplicationConsumer>
-        {({ page }) => <EntityList {...props} page={page} />}
-    </ApplicationConsumer>
+  <ApplicationConsumer>
+    {({ page }) => <EntityList {...props} page={page} />}
+  </ApplicationConsumer>
 );
 
 export default WrappedEntityList;

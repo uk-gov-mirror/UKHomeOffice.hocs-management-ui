@@ -19,14 +19,14 @@ class Layout extends Component {
             layout: { header, body, footer }
         } = this.props;
         return (
-            <Fragment>
-                {apiStatus && <Notification {...apiStatus.status} />}
-                <Header {...header} />
-                <Body {...body}>
-                    {children}
-                </Body>
-                {footer.isVisible && <Footer {...footer} />}
-            </Fragment>
+          <Fragment>
+            {apiStatus && <Notification {...apiStatus.status} />}
+            <Header {...header} />
+            <Body {...body}>
+              {children}
+            </Body>
+            {footer.isVisible && <Footer {...footer} />}
+          </Fragment>
         );
     }
 }
@@ -38,12 +38,12 @@ Layout.propTypes = {
 };
 
 const WrappedLayout = props => (
-    <ApplicationConsumer>
-        {({
+  <ApplicationConsumer>
+    {({
             apiStatus,
             layout
         }) => <Layout {...props} layout={layout} apiStatus={apiStatus} />}
-    </ApplicationConsumer>
+  </ApplicationConsumer>
 );
 
 export default WrappedLayout;

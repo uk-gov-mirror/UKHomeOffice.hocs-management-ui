@@ -31,9 +31,9 @@ class PageWrapper extends Component {
     render() {
         const { children, error } = this.props;
         return (
-            <Fragment>
-                {error ? <Error error={error} /> : children}
-            </Fragment>
+          <Fragment>
+            {error ? <Error error={error} /> : children}
+          </Fragment>
         );
     }
 }
@@ -47,16 +47,16 @@ PageWrapper.propTypes = {
 };
 
 const PageEnabledWrapper = props => (
-    <ApplicationConsumer >
-        {({ dispatch, error, track }) => (
-            <PageWrapper
-                {...props}
-                dispatch={dispatch}
-                track={track}
-                error={error}
-            />
+  <ApplicationConsumer>
+    {({ dispatch, error, track }) => (
+      <PageWrapper
+        {...props}
+        dispatch={dispatch}
+        track={track}
+        error={error}
+      />
         )}
-    </ApplicationConsumer>
+  </ApplicationConsumer>
 );
 
 export default PageEnabledWrapper;

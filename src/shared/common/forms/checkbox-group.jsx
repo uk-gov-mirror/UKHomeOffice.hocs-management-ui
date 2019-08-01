@@ -36,40 +36,41 @@ class Checkbox extends Component {
             type
         } = this.props;
         return (
-            <div className={`govuk-form-group${error ? ' govuk-form-group--error' : ''}`}>
+          <div className={`govuk-form-group${error ? ' govuk-form-group--error' : ''}`}>
 
-                <fieldset id={name} className={`govuk-fieldset ${className ?  className : ''}`} disabled={disabled}>
+            <fieldset id={name} className={`govuk-fieldset ${className ?  className : ''}`} disabled={disabled}>
 
-                    <legend id={`${name}-legend`} className="govuk-fieldset__legend">
-                        <span className="govuk-fieldset__heading govuk-label--s">{label}</span>
-                    </legend>
+              <legend id={`${name}-legend`} className="govuk-fieldset__legend">
+                <span className="govuk-fieldset__heading govuk-label--s">{label}</span>
+              </legend>
 
-                    {hint && <span className="govuk-hint">{hint}</span>}
-                    {error && <span id={`${name}-error`} className="govuk-error-message">{error}</span>}
+              {hint && <span className="govuk-hint">{hint}</span>}
+              {error && <span id={`${name}-error`} className="govuk-error-message">{error}</span>}
 
-                    <div className={'govuk-checkboxes'}>
-                        {choices && choices.map((choice, i) => {
+              <div className="govuk-checkboxes">
+                {choices && choices.map((choice, i) => {
                             return (
-                                <div key={i} className="govuk-checkboxes__item">
-                                    <input id={`${name}_${choice.value}`}
-                                        type={type}
-                                        name={name}
-                                        value={choice.value}
-                                        checked={
+                              <div key={i} className="govuk-checkboxes__item">
+                                <input
+                                  id={`${name}_${choice.value}`}
+                                  type={type}
+                                  name={name}
+                                  value={choice.value}
+                                  checked={
                                             this.state[`${name}_${choice.value}`]
                                         }
-                                        onChange={e => this.handleChange(e)}
-                                        className={'govuk-checkboxes__input'}
-                                    />
-                                    <label className="govuk-label govuk-checkboxes__label" htmlFor={`${name}_${choice.value}`}>{choice.label}</label>
-                                </div>
+                                  onChange={e => this.handleChange(e)}
+                                  className="govuk-checkboxes__input"
+                                />
+                                <label className="govuk-label govuk-checkboxes__label" htmlFor={`${name}_${choice.value}`}>{choice.label}</label>
+                              </div>
                             );
                         })}
 
-                        {choices.length === 0 && <p className="govuk-body">No options available</p>}
-                    </div>
-                </fieldset>
-            </div>
+                {choices.length === 0 && <p className="govuk-body">No options available</p>}
+              </div>
+            </fieldset>
+          </div>
         );
     }
 }

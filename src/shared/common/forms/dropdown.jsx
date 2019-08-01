@@ -29,26 +29,27 @@ class Dropdown extends Component {
         } = this.props;
         const { choices } = this.state;
         return (
-            <div className={`govuk-form-group${error ? ' govuk-form-group--error' : ''}`}>
+          <div className={`govuk-form-group${error ? ' govuk-form-group--error' : ''}`}>
 
-                <label htmlFor={name} id={`${name}-label`} className="govuk-label govuk-label--s">{label}</label>
-                {hint && <span className="govuk-hint">{hint}</span>}
-                {error && <span id={`${name}-error`} className="govuk-error-message">{error}</span>}
+            <label htmlFor={name} id={`${name}-label`} className="govuk-label govuk-label--s">{label}</label>
+            {hint && <span className="govuk-hint">{hint}</span>}
+            {error && <span id={`${name}-error`} className="govuk-error-message">{error}</span>}
 
-                <select className={`govuk-select ${error ? 'govuk-select--error' : ''}`}
-                    id={name}
-                    name={name}
-                    disabled={disabled}
-                    onChange={e => this.handleChange(e)}
-                    value={this.state.value}
-                >
-                    {choices && choices.map((choice, i) => {
+            <select
+              className={`govuk-select ${error ? 'govuk-select--error' : ''}`}
+              id={name}
+              name={name}
+              disabled={disabled}
+              onChange={e => this.handleChange(e)}
+              value={this.state.value}
+            >
+              {choices && choices.map((choice, i) => {
                         return (
-                            <option key={i} value={choice.value} >{choice.label}</option>
+                          <option key={i} value={choice.value}>{choice.label}</option>
                         );
                     })}
-                </select>
-            </div>
+            </select>
+          </div>
         );
     }
 }

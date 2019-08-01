@@ -30,25 +30,26 @@ class TextArea extends Component {
             rows
         } = this.props;
         return (
-            <div className={`govuk-form-group${error ? ' govuk-form-group--error' : ''}`}>
+          <div className={`govuk-form-group${error ? ' govuk-form-group--error' : ''}`}>
 
-                <label htmlFor={name} id={`${name}-label`} className="govuk-label govuk-label--s">{label}</label>
-
-
-                {hint && <span className="govuk-hint">{hint}</span>}
-                {error && <span id={`${name}-error`} className="govuk-error-message">{error}</span>}
+            <label htmlFor={name} id={`${name}-label`} className="govuk-label govuk-label--s">{label}</label>
 
 
-                <textarea className={`govuk-textarea form-control-3-4 ${error ? 'govuk-textarea--error' : ''}`}
-                    id={name}
-                    name={name}
-                    disabled={disabled}
-                    rows={rows}
-                    onChange={e => this._onChange(e)}
-                    onBlur={e => this._onBlur(e)}
-                    defaultValue={this.state.value}
-                />
-            </div>
+            {hint && <span className="govuk-hint">{hint}</span>}
+            {error && <span id={`${name}-error`} className="govuk-error-message">{error}</span>}
+
+
+            <textarea
+              className={`govuk-textarea form-control-3-4 ${error ? 'govuk-textarea--error' : ''}`}
+              id={name}
+              name={name}
+              disabled={disabled}
+              rows={rows}
+              onChange={e => this._onChange(e)}
+              onBlur={e => this._onBlur(e)}
+              defaultValue={this.state.value}
+            />
+          </div>
         );
     }
 }

@@ -6,9 +6,9 @@ import Router from './router/index.jsx';
 class App extends Component {
     render() {
         return (
-            <ApplicationProvider config={this.props.config}>
-                <Router />
-            </ApplicationProvider>
+          <ApplicationProvider config={this.props.config}>
+            <Router />
+          </ApplicationProvider>
         );
     }
 }

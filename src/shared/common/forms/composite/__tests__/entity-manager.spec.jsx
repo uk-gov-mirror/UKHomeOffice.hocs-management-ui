@@ -1,6 +1,6 @@
 import React from 'react';
-import EntityManager from '../entity-manager.jsx';
 import { MemoryRouter } from 'react-router-dom';
+import EntityManager from '../entity-manager.jsx';
 
 describe('Entity list component', () => {
 
@@ -22,7 +22,7 @@ describe('Entity list component', () => {
     });
 
     it('should render with default props', () => {
-        const WRAPPER = render(<EntityManager baseUrl={'/'} />);
+        const WRAPPER = render(<EntityManager baseUrl="/" />);
         expect(WRAPPER).toBeDefined();
         expect(WRAPPER).toMatchSnapshot();
     });
@@ -58,9 +58,9 @@ describe('Entity list component', () => {
             hasRemoveLink: true
         };
         const WRAPPER = render(
-            <MemoryRouter>
-                <EntityManager {...PROPS} />
-            </MemoryRouter>);
+          <MemoryRouter>
+            <EntityManager {...PROPS} />
+          </MemoryRouter>);
         expect(WRAPPER).toBeDefined();
         expect(WRAPPER).toMatchSnapshot();
     });
@@ -71,9 +71,9 @@ describe('Entity list component', () => {
             hasAddLink: true
         };
         const WRAPPER = render(
-            <MemoryRouter>
-                <EntityManager {...PROPS} />
-            </MemoryRouter>);
+          <MemoryRouter>
+            <EntityManager {...PROPS} />
+          </MemoryRouter>);
         expect(WRAPPER).toBeDefined();
         expect(WRAPPER).toMatchSnapshot();
     });
@@ -89,9 +89,9 @@ describe('Entity list component', () => {
             hasDownloadLink: true
         };
         const WRAPPER = render(
-            <MemoryRouter>
-                <EntityManager {...PROPS} />
-            </MemoryRouter>);
+          <MemoryRouter>
+            <EntityManager {...PROPS} />
+          </MemoryRouter>);
         expect(WRAPPER).toBeDefined();
         expect(WRAPPER).toMatchSnapshot();
     });
@@ -107,9 +107,9 @@ describe('Entity list component', () => {
             hasTemplateLink: true
         };
         const WRAPPER = render(
-            <MemoryRouter>
-                <EntityManager {...PROPS} />
-            </MemoryRouter>);
+          <MemoryRouter>
+            <EntityManager {...PROPS} />
+          </MemoryRouter>);
         expect(WRAPPER).toBeDefined();
         expect(WRAPPER).toMatchSnapshot();
     });
@@ -124,9 +124,9 @@ describe('Entity list component', () => {
             ]
         };
         const WRAPPER = render(
-            <MemoryRouter>
-                <EntityManager {...PROPS} />
-            </MemoryRouter>);
+          <MemoryRouter>
+            <EntityManager {...PROPS} />
+          </MemoryRouter>);
         expect(WRAPPER).toBeDefined();
         expect(WRAPPER).toMatchSnapshot();
     });
@@ -141,9 +141,9 @@ describe('Entity list component', () => {
             ]
         };
         const WRAPPER = render(
-            <MemoryRouter>
-                <EntityManager {...PROPS} />
-            </MemoryRouter>);
+          <MemoryRouter>
+            <EntityManager {...PROPS} />
+          </MemoryRouter>);
         expect(WRAPPER).toBeDefined();
         expect(WRAPPER).toMatchSnapshot();
     });

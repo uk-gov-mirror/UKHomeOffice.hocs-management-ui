@@ -1,6 +1,6 @@
 import React from 'react';
-import WrappedEntityList from '../entity-list.jsx';
 import { MemoryRouter } from 'react-router-dom';
+import WrappedEntityList from '../entity-list.jsx';
 
 describe('Entity list component', () => {
 
@@ -91,9 +91,9 @@ describe('Entity list component', () => {
         const OUTER = shallow(<WrappedEntityList {...PROPS} />);
         const EntityList = OUTER.props().children;
         const WRAPPER = render(
-            <MemoryRouter>
-                <EntityList page={PAGE} />
-            </MemoryRouter>);
+          <MemoryRouter>
+            <EntityList page={PAGE} />
+          </MemoryRouter>);
         expect(WRAPPER).toBeDefined();
         expect(WRAPPER).toMatchSnapshot();
     });
@@ -106,9 +106,9 @@ describe('Entity list component', () => {
         const OUTER = shallow(<WrappedEntityList {...PROPS} />);
         const EntityList = OUTER.props().children;
         const WRAPPER = render(
-            <MemoryRouter>
-                <EntityList page={PAGE} />
-            </MemoryRouter>);
+          <MemoryRouter>
+            <EntityList page={PAGE} />
+          </MemoryRouter>);
         expect(WRAPPER).toBeDefined();
         expect(WRAPPER).toMatchSnapshot();
     });

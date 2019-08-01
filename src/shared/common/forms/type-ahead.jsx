@@ -57,12 +57,12 @@ class TypeAhead extends Component {
         } = this.props;
         const { choices } = this.state;
         return (
-            <div className={`govuk-form-group${error ? ' govuk-form-group--error' : ''}`}>
-                <label htmlFor={name} id={`${name}-label`} className="govuk-label govuk-label--s">{label}</label>
-                {hint && <span className="govuk-hint">{hint}</span>}
-                {error && <span id={`${name}-error`} className="govuk-error-message">{error}</span>}
-                <Select
-                    styles={{
+          <div className={`govuk-form-group${error ? ' govuk-form-group--error' : ''}`}>
+            <label htmlFor={name} id={`${name}-label`} className="govuk-label govuk-label--s">{label}</label>
+            {hint && <span className="govuk-hint">{hint}</span>}
+            {error && <span id={`${name}-error`} className="govuk-error-message">{error}</span>}
+            <Select
+              styles={{
                         control: () => ({}),
                         indicators: () => ({}),
                         indicatorSeparator: () => ({}),
@@ -75,25 +75,25 @@ class TypeAhead extends Component {
                         valueContainer: () => ({}),
                         placeholder: () => ({})
                     }}
-                    components={{
+              components={{
                         Control: (props) => (
-                            <components.Control
-                                className={error ? ' govuk-typeahead__control--error' : null}
-                                {...props}
-                            />
+                          <components.Control
+                            className={error ? ' govuk-typeahead__control--error' : null}
+                            {...props}
+                          />
                         )
                     }}
-                    id={name}
-                    placeholder='Search'
-                    classNamePrefix='govuk-typeahead'
-                    options={choices}
-                    isDisabled={disabled}
-                    isClearable={clearable}
-                    error={error}
-                    onChange={this.handleChange.bind(this)}
-                    loadOptions={this.getOptions.bind(this)}
-                />
-            </div >
+              id={name}
+              placeholder='Search'
+              classNamePrefix='govuk-typeahead'
+              options={choices}
+              isDisabled={disabled}
+              isClearable={clearable}
+              error={error}
+              onChange={this.handleChange.bind(this)}
+              loadOptions={this.getOptions.bind(this)}
+            />
+          </div>
         );
     }
 
@@ -107,39 +107,40 @@ class TypeAhead extends Component {
         } = this.props;
         const { choices } = this.state;
         return (
-            <div className={`govuk-form-group${error ? ' govuk-form-group--error' : ''}`}>
+          <div className={`govuk-form-group${error ? ' govuk-form-group--error' : ''}`}>
 
-                <label htmlFor={name} id={`${name}-label`} className="govuk-label govuk-label--s">{label}</label>
-                {hint && <span className="govuk-hint">{hint}</span>}
-                {error && <span className="govuk-error-message">{error}</span>}
+            <label htmlFor={name} id={`${name}-label`} className="govuk-label govuk-label--s">{label}</label>
+            {hint && <span className="govuk-hint">{hint}</span>}
+            {error && <span className="govuk-error-message">{error}</span>}
 
-                <select className={`govuk-select ${error ? 'govuk-select--error' : ''}`}
-                    id={name}
-                    name={name}
-                    disabled={disabled}
-                    value={this.state.value}
-                >
-                    {choices && choices.map((group, i) => {
+            <select
+              className={`govuk-select ${error ? 'govuk-select--error' : ''}`}
+              id={name}
+              name={name}
+              disabled={disabled}
+              value={this.state.value}
+            >
+              {choices && choices.map((group, i) => {
                         return (
-                            <optgroup key={i} label={group.label} >
-                                {group.options && group.options.map((choice, j) => {
+                          <optgroup key={i} label={group.label}>
+                            {group.options && group.options.map((choice, j) => {
                                     return (
-                                        <option key={j} value={choice.value} >{choice.label}</option>
+                                      <option key={j} value={choice.value}>{choice.label}</option>
                                     );
                                 })}
-                            </optgroup>
+                          </optgroup>
                         );
                     })}
-                </select>
-            </div>
+            </select>
+          </div>
         );
     }
 
     render() {
         return (
-            <div>
-                {this.state.componentMounted ? this.renderSelect() : this.renderOptions()}
-            </div>
+          <div>
+            {this.state.componentMounted ? this.renderSelect() : this.renderOptions()}
+          </div>
         );
     }
 

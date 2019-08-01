@@ -35,13 +35,13 @@ describe('Form dropdown component', () => {
     });
     it('should render disabled when passed', () => {
         expect(
-            render(<Dropdown name="radio-group" choices={choices} disabled={true} updateState={() => null} />)
+            render(<Dropdown name="radio-group" choices={choices} disabled updateState={() => null} />)
         ).toMatchSnapshot();
     });
     it('should execute callback on initialization', () => {
         const mockCallback = jest.fn();
         shallow(
-            <Dropdown name="dropdown" choices={choices} updateState={mockCallback} />
+          <Dropdown name="dropdown" choices={choices} updateState={mockCallback} />
         );
         expect(mockCallback).toHaveBeenCalledTimes(1);
         expect(mockCallback).toHaveBeenCalledWith({ 'dropdown': undefined });
@@ -51,7 +51,7 @@ describe('Form dropdown component', () => {
         let firstValue = 'A';
         let secondValue = 'B';
         const wrapper = shallow(
-            <Dropdown name="dropdown" choices={choices} updateState={mockCallback} />
+          <Dropdown name="dropdown" choices={choices} updateState={mockCallback} />
         );
 
         mockCallback.mockReset();

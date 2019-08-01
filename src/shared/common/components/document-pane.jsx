@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import Document from './document.jsx';
 import DocumentList from './document-list.jsx';
 import { ApplicationConsumer } from '../../contexts/application.jsx';
@@ -9,7 +10,6 @@ import {
     clearApiStatus
 } from '../../contexts/actions/index.jsx';
 import status from '../../helpers/api-status.js';
-import { Link } from 'react-router-dom';
 
 class DocumentPanel extends Component {
 
@@ -77,21 +77,23 @@ class DocumentPanel extends Component {
         const { documents, activeDocument } = this.state;
         const { page } = this.props;
         return (
-            <Fragment>
-                <div className='govuk-grid-row'>
-                    <div className='govuk-grid-column-full'>
-                        {activeDocument && page.params.caseId && <Document caseId={page.params.caseId} activeDocument={activeDocument} />}
-                        {documents && documents.length > 0 && <DocumentList
-                            caseId={page.params.caseId}
-                            stageId={page.params.stageId}
-                            documents={documents}
-                            activeDocument={activeDocument}
-                            clickHandler={this.setActiveDocument.bind(this)}
-                        />}
-                        <Link className='govuk-body govuk-link' to={`/case/${page.params.caseId}/stage/${page.params.stageId}/entity/document/manage`} >Manage Documents</Link>
-                    </div>
-                </div>
-            </Fragment>
+          <Fragment>
+            <div className='govuk-grid-row'>
+              <div className='govuk-grid-column-full'>
+                {activeDocument && page.params.caseId && <Document caseId={page.params.caseId} activeDocument={activeDocument} />}
+                {documents && documents.length > 0 && (
+                  <DocumentList
+                    caseId={page.params.caseId}
+                    stageId={page.params.stageId}
+                    documents={documents}
+                    activeDocument={activeDocument}
+                    clickHandler={this.setActiveDocument.bind(this)}
+                  />
+)}
+                <Link className='govuk-body govuk-link' to={`/case/${page.params.caseId}/stage/${page.params.stageId}/entity/document/manage`}>Manage Documents</Link>
+              </div>
+            </div>
+          </Fragment>
         );
     }
 
@@ -108,9 +110,9 @@ DocumentPanel.propTypes = {
 };
 
 const WrappedDocumentPanel = props => (
-    <ApplicationConsumer>
-        {({ dispatch, documents, page }) => <DocumentPanel {...props} dispatch={dispatch} documents={documents} page={page} />}
-    </ApplicationConsumer>
+  <ApplicationConsumer>
+    {({ dispatch, documents, page }) => <DocumentPanel {...props} dispatch={dispatch} documents={documents} page={page} />}
+  </ApplicationConsumer>
 );
 
 export default WrappedDocumentPanel;

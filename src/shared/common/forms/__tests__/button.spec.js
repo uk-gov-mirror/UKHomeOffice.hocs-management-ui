@@ -1,6 +1,6 @@
 import React from 'react';
-import Button from '../button.jsx';
 import { MemoryRouter } from 'react-router-dom';
+import Button from '../button.jsx';
 
 describe('Form button component', () => {
 
@@ -14,21 +14,21 @@ describe('Form button component', () => {
         const outer = shallow(<Button action="/SOME/URL" />);
         const Children = outer.props().children;
         const wrapper = mount(
-            <MemoryRouter>
-                <Children dispatch={mockDispatch} />
-            </MemoryRouter>
+          <MemoryRouter>
+            <Children dispatch={mockDispatch} />
+          </MemoryRouter>
         );
         expect(wrapper).toBeDefined();
         expect(wrapper.find('Button')).toMatchSnapshot();
     });
 
     it('should render disabled when isDisabled is passed', () => {
-        const outer = shallow(<Button disabled={true} action="/SOME/URL" />);
+        const outer = shallow(<Button disabled action="/SOME/URL" />);
         const Children = outer.props().children;
         const wrapper = mount(
-            <MemoryRouter>
-                <Children dispatch={mockDispatch} />
-            </MemoryRouter>
+          <MemoryRouter>
+            <Children dispatch={mockDispatch} />
+          </MemoryRouter>
         );
         expect(wrapper).toBeDefined();
         expect(wrapper.find('Button')).toMatchSnapshot();
@@ -36,12 +36,12 @@ describe('Form button component', () => {
     });
 
     it('should render with correct label when passed', () => {
-        const outer = shallow(<Button label={'My Button'} action="/SOME/URL" />);
+        const outer = shallow(<Button label="My Button" action="/SOME/URL" />);
         const Children = outer.props().children;
         const wrapper = mount(
-            <MemoryRouter>
-                <Children dispatch={mockDispatch} />
-            </MemoryRouter>
+          <MemoryRouter>
+            <Children dispatch={mockDispatch} />
+          </MemoryRouter>
         );
         expect(wrapper).toBeDefined();
         expect(wrapper.find('Button')).toMatchSnapshot();
@@ -49,12 +49,12 @@ describe('Form button component', () => {
     });
 
     it('should render with additional styles when className is passed', () => {
-        const outer = shallow(<Button className={'test-class'} action="/SOME/URL" />);
+        const outer = shallow(<Button className="test-class" action="/SOME/URL" />);
         const Children = outer.props().children;
         const wrapper = mount(
-            <MemoryRouter>
-                <Children dispatch={mockDispatch} />
-            </MemoryRouter>
+          <MemoryRouter>
+            <Children dispatch={mockDispatch} />
+          </MemoryRouter>
         );
         expect(wrapper).toBeDefined();
         expect(wrapper.find('Button')).toMatchSnapshot();
@@ -65,9 +65,9 @@ describe('Form button component', () => {
         const outer = shallow(<Button action="/SOME/URL" />);
         const Children = outer.props().children;
         const wrapper = mount(
-            <MemoryRouter>
-                <Children dispatch={mockDispatch} />
-            </MemoryRouter>
+          <MemoryRouter>
+            <Children dispatch={mockDispatch} />
+          </MemoryRouter>
         );
         expect(wrapper).toBeDefined();
         wrapper.find('Link').simulate('click');

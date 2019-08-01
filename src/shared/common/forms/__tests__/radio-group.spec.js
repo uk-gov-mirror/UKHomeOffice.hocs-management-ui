@@ -35,13 +35,13 @@ describe('Form radio group component', () => {
     });
     it('should render disabled when passed', () => {
         expect(
-            render(<RadioGroup name="radio-group" choices={choices} disabled={true} updateState={() => null} />)
+            render(<RadioGroup name="radio-group" choices={choices} disabled updateState={() => null} />)
         ).toMatchSnapshot();
     });
     it('should execute callback on initialization', () => {
         const mockCallback = jest.fn();
         shallow(
-            <RadioGroup name="radio-group" choices={choices} updateState={mockCallback} />
+          <RadioGroup name="radio-group" choices={choices} updateState={mockCallback} />
         );
         expect(mockCallback).toHaveBeenCalledTimes(1);
         expect(mockCallback).toHaveBeenCalledWith({ 'radio-group': undefined });
@@ -51,7 +51,7 @@ describe('Form radio group component', () => {
         let firstValue = 'A';
         let secondValue = 'B';
         const wrapper = shallow(
-            <RadioGroup name="radio-group" choices={choices} updateState={mockCallback} />
+          <RadioGroup name="radio-group" choices={choices} updateState={mockCallback} />
         );
 
         mockCallback.mockReset();

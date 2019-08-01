@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import types from './actions/types.jsx';
 import ReactGA from 'react-ga';
+import types from './actions/types.jsx';
 
 export const Context = React.createContext();
 
@@ -122,9 +122,9 @@ export class ApplicationProvider extends Component {
     render() {
         const { state, props: { children } } = this;
         return (
-            <Context.Provider value={state}>
-                {children}
-            </Context.Provider>
+          <Context.Provider value={state}>
+            {children}
+          </Context.Provider>
         );
     }
 

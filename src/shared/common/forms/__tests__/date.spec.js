@@ -29,13 +29,13 @@ describe('Form date component', () => {
     });
     it('should render disabled when passed', () => {
         expect(
-            render(<DateInput name="date-field" disabled={true} updateState={() => null} />)
+            render(<DateInput name="date-field" disabled updateState={() => null} />)
         ).toMatchSnapshot();
     });
     it('should execute callback on initialization', () => {
         const mockCallback = jest.fn();
         shallow(
-            <DateInput name="date" updateState={mockCallback} />
+          <DateInput name="date" updateState={mockCallback} />
         );
         expect(mockCallback).toHaveBeenCalledTimes(1);
         expect(mockCallback).toHaveBeenCalledWith({ 'date-day': '', 'date-month': '', 'date-year': '' });
@@ -43,7 +43,7 @@ describe('Form date component', () => {
     it('should execute callback on change', () => {
         const mockCallback = jest.fn();
         const wrapper = shallow(
-            <DateInput name="date" updateState={mockCallback} />
+          <DateInput name="date" updateState={mockCallback} />
         );
 
         let event = { target: { value: '19' } };

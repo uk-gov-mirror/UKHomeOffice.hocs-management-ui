@@ -10,20 +10,20 @@ describe('Document list component', () => {
     ];
 
     it('should render with default props', () => {
-        const wrapper = render(<DocumentList caseId={'MOCK_CASE_ID'} clickHandler={() => { }} />);
+        const wrapper = render(<DocumentList caseId="MOCK_CASE_ID" clickHandler={() => { }} />);
         expect(wrapper).toBeDefined();
         expect(wrapper).toMatchSnapshot();
     });
 
     it('should render with a document list when provided in props', () => {
-        const wrapper = render(<DocumentList caseId={'MOCK_CASE_ID'} clickHandler={() => { }} documents={documentList} />);
+        const wrapper = render(<DocumentList caseId="MOCK_CASE_ID" clickHandler={() => { }} documents={documentList} />);
         expect(wrapper).toBeDefined();
         expect(wrapper).toMatchSnapshot();
     });
 
     it('should support a click handler when passed in props', () => {
         const mockClickHandler = jest.fn();
-        const wrapper = shallow(<DocumentList caseId={'MOCK_CASE_ID'} clickHandler={mockClickHandler} documents={documentList} />);
+        const wrapper = shallow(<DocumentList caseId="MOCK_CASE_ID" clickHandler={mockClickHandler} documents={documentList} />);
         expect(wrapper).toBeDefined();
         wrapper.find('#MOCK_DOC_ID_1-pdf').simulate('click', { preventDefault: jest.fn() });
         expect(mockClickHandler).toHaveBeenCalled();

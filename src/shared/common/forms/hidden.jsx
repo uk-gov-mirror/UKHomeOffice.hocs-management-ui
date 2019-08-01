@@ -27,14 +27,14 @@ class Hidden extends Component {
             type
         } = this.props;
         return (
-            <hidden
-                id={name}
-                type={type}
-                name={name}
-                value={this.state.value}
-                onChange={e => this._onChange(e)}
-                onBlur={e => this._onBlur(e)}
-            />
+          <hidden
+            id={name}
+            type={type}
+            name={name}
+            value={this.state.value}
+            onChange={e => this._onChange(e)}
+            onBlur={e => this._onBlur(e)}
+          />
         );
     }
 }

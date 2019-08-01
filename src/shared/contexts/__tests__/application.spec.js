@@ -1,5 +1,5 @@
-import { ApplicationProvider, ApplicationConsumer } from '../application.jsx';
 import React from 'react';
+import { ApplicationProvider, ApplicationConsumer } from '../application.jsx';
 import ActionTypes from '../actions/types';
 
 describe('Application Provider', () => {

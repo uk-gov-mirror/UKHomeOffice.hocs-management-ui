@@ -35,13 +35,13 @@ describe('Form checkbox group component', () => {
     });
     it('should render disabled when passed', () => {
         expect(
-            render(<CheckboxGroup name="checkbox-group" choices={choices} disabled={true} updateState={() => null} />)
+            render(<CheckboxGroup name="checkbox-group" choices={choices} disabled updateState={() => null} />)
         ).toMatchSnapshot();
     });
     it('should execute callback on initialization', () => {
         const mockCallback = jest.fn();
         shallow(
-            <CheckboxGroup name="checkbox-group" choices={choices} updateState={mockCallback} />
+          <CheckboxGroup name="checkbox-group" choices={choices} updateState={mockCallback} />
         );
         expect(mockCallback).toHaveBeenCalledTimes(1);
         expect(mockCallback).toHaveBeenCalledWith({ 'checkbox-group': [] });
@@ -51,7 +51,7 @@ describe('Form checkbox group component', () => {
         const firstValue = 'A';
         const secondValue = 'B';
         const wrapper = shallow(
-            <CheckboxGroup name="checkbox-group" choices={choices} updateState={mockCallback} />
+          <CheckboxGroup name="checkbox-group" choices={choices} updateState={mockCallback} />
         );
         mockCallback.mockReset();
 

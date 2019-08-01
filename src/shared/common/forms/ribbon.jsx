@@ -6,10 +6,10 @@ export default class Ribbon extends Component {
         const { title, children } = this.props;
 
         return (
-            <div className="ribbon">
-                <h1>{title}</h1>
-                <div>{children}</div>
-            </div>
+          <div className="ribbon">
+            <h1>{title}</h1>
+            <div>{children}</div>
+          </div>
         );
     }
 }

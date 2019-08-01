@@ -9,7 +9,11 @@ export default class Inset extends Component {
         const { children, value } = this.props;
 
         return (
-            <p className="govuk-inset-text">{children} {value}</p>
+          <p className="govuk-inset-text">
+            {children} 
+            {' '}
+            {value}
+          </p>
         );
     }
 }

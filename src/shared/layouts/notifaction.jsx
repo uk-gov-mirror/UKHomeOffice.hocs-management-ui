@@ -15,9 +15,9 @@ const Wrapper = (C) => function NotificationWrapper({ timeoutPeriod = 1000, ...p
 };
 
 const Notification = ({ type, display }) => (
-    <div className={`notification${type === 'ERROR' ? ' notification--error' : ''}`}>
-        {display}
-    </div>
+  <div className={`notification${type === 'ERROR' ? ' notification--error' : ''}`}>
+    {display}
+  </div>
 );
 
 Notification.propTypes = {
