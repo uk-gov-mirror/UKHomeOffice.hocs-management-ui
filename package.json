@@ -12,7 +12,8 @@
     "lint:jsx": "eslint ./ --ignore-path .gitignore",
     "lint:ts": "tslint -c tslint.json 'src/**/*.ts'",
     "lint:tsx": "tslint -c tslint.json 'src/**/*.tsx'",
-    "lint-staged": "node_modules/lint-staged/index.js"
+    "lint-staged": "node_modules/lint-staged/index.js",
+    "lint": "npm run lint:js & npm run lint:jsx & npm run lint:ts & npm run lint:tsx"
   },
   "repository": {
     "type": "git",
