@@ -1,5 +1,5 @@
-import * as Actions from '../index.jsx';
-import ActionTypes from '../types.jsx';
+import * as Actions from '../index.ts';
+import ActionTypes from '../types.ts';
 
 describe('Actions', () => {
     it('should only export functions that return actions objects', () => {

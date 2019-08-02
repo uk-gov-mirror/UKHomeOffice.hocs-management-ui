@@ -90,8 +90,6 @@ class Error extends Component<ErrorProps> {
     }
 
     render() {
-        console.log(this.props);
-        console.log(Error.defaultProps);
         const { error } = this.props;
         const {
             title,
@@ -103,7 +101,6 @@ class Error extends Component<ErrorProps> {
         } = error;
 
         const { defaultTitle, defaultBody } = this.getDefaultContent(status);
-        console.log(defaultBody);
         return (
             <div className="govuk-grid-row">
                 <div className="govuk-grid-column-full">
