@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from 'react';
-import PropTypes from 'prop-types';
 import Header, { HeaderProps } from './components/header';
 import Body, { BodyProps } from './components/body';
 import Footer, { FooterProps } from './components/footer';

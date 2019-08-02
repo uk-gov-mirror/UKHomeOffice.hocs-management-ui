@@ -1,6 +1,5 @@
-
 import React from 'react';
-import Error from '../error.jsx';
+import Error from '../error.tsx';
 
 describe('Error component', () => {
     it('should render with default props', () => {
@@ -65,6 +64,6 @@ describe('Error component', () => {
         };
         const wrapper = mount(<Error {...props} />);
         expect(wrapper).toBeDefined();
-        expect(wrapper.prop('staticContext')).toEqual({ status: 500 });
+        expect(wrapper.prop('staticContext')).toEqual({ statusCode: 500 });
     });
 });

@@ -1,5 +1,5 @@
 import React from 'react';
-import Layout from '../layout.jsx';
+import Layout from '../layout.tsx';
 
 jest.mock('react-router-dom', () => {
     return {

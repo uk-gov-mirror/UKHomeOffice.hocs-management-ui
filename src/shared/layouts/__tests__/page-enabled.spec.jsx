@@ -1,10 +1,10 @@
 import React from 'react';
-import WrappedPage from '../page-enabled';
+import WrappedPage from '../page-enabled.tsx';
 
-import actions from '../../contexts/actions/index.jsx';
+import actions from '../../contexts/actions/index.ts';
 
-jest.mock('../error.jsx', () => () => 'MOCK_ERROR_PAGE');
-jest.mock('../../contexts/actions/index.jsx', () => ({
+jest.mock('../error.tsx', () => () => 'MOCK_ERROR_PAGE');
+jest.mock('../../contexts/actions/index.ts', () => ({
     unsetError: jest.fn(),
     clearApiStatus: jest.fn()
 }));

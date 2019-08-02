@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import { StaticContext } from 'react-router';
 
 export interface ErrorContent {
     body?: string[];
@@ -13,9 +13,21 @@ export interface ErrorContent {
 }
 
 interface ErrorProps {
-    error?: ErrorContent;
+    error: ErrorContent;
+    staticContext?: StaticContext;
 }
+
 class Error extends Component<ErrorProps> {
+
+    static defaultProps = {
+        error: {
+            title: '',
+            location: { pathname: '' },
+            stack: '',
+            status: 500,
+            message: ''
+        }
+    };
 
     componentDidMount() {
         const { error } = this.props;
@@ -62,7 +74,11 @@ class Error extends Component<ErrorProps> {
     }
 
     UNSAFE_componentWillMount() {
-        // todo: was the static context bit needed here?
+        const { error, staticContext } = this.props;
+        if (staticContext) {
+            staticContext.statusCode = error.status;
+        }
+
     }
 
     buildParagraphs(body?: string[]) {
@@ -74,6 +90,8 @@ class Error extends Component<ErrorProps> {
     }
 
     render() {
+        console.log(this.props);
+        console.log(Error.defaultProps);
         const { error } = this.props;
         const {
             title,
@@ -82,33 +100,33 @@ class Error extends Component<ErrorProps> {
             status,
             body,
             message
-        } = error!;
+        } = error;
 
         const { defaultTitle, defaultBody } = this.getDefaultContent(status);
-
+        console.log(defaultBody);
         return (
-          <div className="govuk-grid-row">
-            <div className="govuk-grid-column-full">
-              <h1 className="govuk-heading-xl">
-                {title ? title : defaultTitle}
-                {message && <span className="govuk-caption-xl">{message}</span>}
-              </h1>
-              {body ? this.buildParagraphs(body) : this.buildParagraphs(defaultBody)}
-              {status === 404 && location && location.pathname && <p><code className="code">{location.pathname}</code></p>}
-              {stack && (
-                <details className="govuk-details" open>
-                  <summary className="govuk-details__summary">
-                    <span className="govuk-details__summary-text">
-                        Stack trace
-                    </span>
-                  </summary>
-                  <div className="govuk-details__text">
-                    <pre className="code overflow-scroll">{stack}</pre>
-                  </div>
-                </details>
-               )}
+            <div className="govuk-grid-row">
+                <div className="govuk-grid-column-full">
+                    <h1 className="govuk-heading-xl">
+                        {title ? title : defaultTitle}
+                        {message && <span className="govuk-caption-xl">{message}</span>}
+                    </h1>
+                    {body ? this.buildParagraphs(body) : this.buildParagraphs(defaultBody)}
+                    {status === 404 && location && location.pathname && <p><code className="code">{location.pathname}</code></p>}
+                    {stack && (
+                        <details className="govuk-details" open>
+                            <summary className="govuk-details__summary">
+                                <span className="govuk-details__summary-text">
+                                    Stack trace
+                                </span>
+                            </summary>
+                            <div className="govuk-details__text">
+                                <pre className="code overflow-scroll">{stack}</pre>
+                            </div>
+                        </details>
+                    )}
+                </div>
             </div>
-          </div>
         );
     }
 }

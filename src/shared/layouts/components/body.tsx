@@ -9,7 +9,7 @@ class Body extends Component<BodyProps> {
     render() {
         const {
             children,
-            phaseBanner
+            phaseBanner = { isVisible: false } as PhaseBannerComponentProps
         } = this.props;
         return (
           <div className="govuk-width-container">
