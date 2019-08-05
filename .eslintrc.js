@@ -1,62 +1,43 @@
 module.exports = {
-    "env": {
-        "es6": true,
-        "node": true
+    'env': {
+        'es6': true,
+        'node': true
     },
-    "extends": [
-        "airbnb",
-        "eslint:recommended",
-        "plugin:react/recommended"
+    'extends': [
+        'airbnb',
+        'eslint:recommended',
+        'plugin:react/recommended'
     ],
-    "parserOptions": {
-        "ecmaVersion": 2018,
-        "sourceType": "module"
+    'parser': 'babel-eslint',
+    'parserOptions': {
+        'ecmaVersion': 2018,
+        'sourceType': 'module'
     },
-    "rules": {
-        "indent": [
-            "error",
-            4
-        ],
-        "linebreak-style": [
-            "error",
-            "unix"
-        ],
-        "quotes": [
-            "error",
-            "single"
-        ],
-        "semi": [
-            "error",
-            "always"
-        ],
-        "object-curly-spacing": [
-            "error", "always"
-        ],
-        "no-trailing-spaces": [
-            "error"
-        ]
+    'rules': {
+        'react/forbid-prop-types': false,
+        'import/extensions': false
     },
-    "overrides": [
+    'overrides': [
         {
-            "files": [ "**/__tests__/**" ],
-            "env": {
-                "jest": true
+            'files': [ '**/__tests__/**' ],
+            'env': {
+                'jest': true
             },
-            "globals": {
-                "render": false,
-                "shallow": false,
-                "wrapper": false,
-                "mount": false
+            'globals': {
+                'render': false,
+                'shallow': false,
+                'wrapper': false,
+                'mount': false
             }
         },
         {
-            "files": [ "**/__snapshots__/**" ],
-            "excludedFiles": "*.js.snap"
+            'files': [ '**/__snapshots__/**' ],
+            'excludedFiles': '*.js.snap'
         },
         {
-            "files": [ "src/**" ],
-            "env": {
-                "commonjs": true
+            'files': [ 'src/**' ],
+            'env': {
+                'commonjs': true
             }
         }
     ]
