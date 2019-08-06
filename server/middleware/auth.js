@@ -27,6 +27,7 @@ function protect(permission) {
         if (User.hasRole(req.user, permission)) {
             return next();
         }
+        logger.error('path', req.path);
         logger.error('AUTH_FAILURE', { expected: permission, user: req.user.username, roles: req.user.roles });
         next(new AuthenticationError('Unauthorised'));
     };
