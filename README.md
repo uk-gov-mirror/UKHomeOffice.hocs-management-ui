@@ -8,6 +8,6 @@ For versioning this project uses [SemVer](https://semver.org/).
 
 This project is authored by the Home Office.
 
-### License 
+### License
 
 This project is licensed under the MIT license. For details please see [License](LICENSE) 
