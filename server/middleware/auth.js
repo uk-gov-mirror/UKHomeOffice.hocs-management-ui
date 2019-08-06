@@ -24,10 +24,11 @@ function authMiddleware(req, res, next) {
 function protect(permission) {
     return (req, res, next) => {
         const logger = getLogger(req.requestId);
+        logger.info('REQUEST', req);
         if (User.hasRole(req.user, permission)) {
             return next();
         }
-        logger.error('path', req.path);
+        logger.info('path', req.path);
         logger.error('AUTH_FAILURE', { expected: permission, user: req.user.username, roles: req.user.roles });
         next(new AuthenticationError('Unauthorised'));
     };
