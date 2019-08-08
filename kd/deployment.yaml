@@ -19,7 +19,7 @@ spec:
     metadata:
       labels:
         name: hocs-management-ui
-        role: hocs-management-ui
+        role: hocs-frontend
         version: {{.VERSION}}
     spec:
       containers:
