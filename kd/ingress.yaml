@@ -23,10 +23,6 @@ spec:
           serviceName: hocs-management-ui
           servicePort: 443
         path: /
-      - backend:
-          serviceName: hocs-audit
-          servicePort: 443
-        path: /export
 
   tls:
   - hosts:
