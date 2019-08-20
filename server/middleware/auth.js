@@ -24,7 +24,6 @@ function authMiddleware(req, res, next) {
 function protect(permission) {
     return (req, res, next) => {
         const logger = getLogger(req.requestId);
-        logger.info('REQUEST', req);
         if (User.hasRole(req.user, permission)) {
             return next();
         }
