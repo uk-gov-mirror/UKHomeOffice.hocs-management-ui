@@ -7,7 +7,6 @@ pipeline:
     commands:
       - docker build -t hocs-management-ui .
     when:
-      branch: [master, feature/HOCS-1022-create-build-pipeline]
       event: push
 
   install-docker-image:
@@ -23,7 +22,7 @@ pipeline:
       - docker push quay.io/ukhomeofficedigital/hocs-management-ui:build-$${DRONE_BUILD_NUMBER}
       - docker push quay.io/ukhomeofficedigital/hocs-management-ui:latest
     when:
-      branch: [master, feature/HOCS-1022-create-build-pipeline]
+      branch: [master, dev]
       event: push
 
   docker-semver-tag:
@@ -78,7 +77,7 @@ pipeline:
       - cd kube-hocs-management-ui
       - ./deploy.sh
     when:
-      branch: [master, feature/HOCS-1022-create-build-pipeline]
+      branch: [master, dev]
       event: [push, tag]
 
   deployment:
