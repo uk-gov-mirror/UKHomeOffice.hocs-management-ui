@@ -2,11 +2,13 @@ import React, { Fragment } from 'react';
 
 const Dashboard : React.FC = () => (
   <Fragment>
-    <div className="govuk-grid-row">
-      <div className="govuk-grid-column-one-third">
-        hello worlds
+      <div className="govuk-grid-column-two-thirds">
+          <ul className="govuk-list">
+              <li>
+                  <a className="govuk-link" href="/team_search">Add/Remove Users</a>
+              </li>
+          </ul>
       </div>
-    </div>
   </Fragment>
 );
 
