@@ -1,5 +1,7 @@
 import Error, { ErrorContent } from '../../layouts/error';
 import Dashboard from '../../pages/dashboard';
+import TeamSearch from '../../pages/team_search';
+
 
 export interface Route {
     component: React.FunctionComponent | Error;
@@ -14,6 +16,12 @@ const routes = [
         exact: true,
         component: Dashboard,
         title: 'Dashboard'
+    },
+    {
+        path: '/team_search',
+        exact: true,
+        component: TeamSearch,
+        title: 'TeamSearch'
     },
     {
         component: Error,
