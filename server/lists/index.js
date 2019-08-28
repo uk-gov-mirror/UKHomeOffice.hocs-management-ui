@@ -85,7 +85,13 @@ module.exports = {
             client: 'INFO',
             endpoint: '/member',
             adapter: membersAdapter
-        }
+        },
+        TEAMS: {
+            client: 'INFO',
+            endpoint: '/team',
+            type: listService.types.DYNAMIC,
+            adapter: teamsAdapter
+        },
     },
     clients: {
         CASEWORK: caseworkService,
