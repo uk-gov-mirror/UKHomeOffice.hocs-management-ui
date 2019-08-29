@@ -1,12 +1,12 @@
 import React, { } from 'react';
 // import Select from "react-select";
 // import axios from "axios";
-import config from "../../config";
+//import config from "../../config";
 
 
-const options = {
-    headers: config.headers
-};
+// const options = {
+//     headers: config.headers
+// };
 
 // interface teamsResponse {
 //     data: team[];
@@ -82,27 +82,26 @@ const TeamSearch : React.FC = () => {
     //     </div>
     // );
 
+    return (
+        <div className="govuk-grid-column-two-thirds">
+            <h1 className="govuk-heading-xl">
+                Team search
+            </h1>
 
-        return (
-            <div className="govuk-grid-column-two-thirds">
-                <h1 className="govuk-heading-xl">
-                    Team search
-                </h1>
+            {/*<Select*/}
+            {/*    value={selectedOption}*/}
+            {/*    // onChange={this.handleChange}*/}
+            {/*    options={teams.map(team => ({label: team.displayName, value: team.type}))}*/}
+            {/*    className= 'typeahead-input'*/}
+            {/*/>*/}
+            {/*<button type="submit" className="govuk-button find-user-button" onClick={() => this.getTeam(teamUUID)}>Find team</button>*/}
+            {/*{this.displayTeamTable(selectedTeam, teamUUID)}*/}
 
-                {/*<Select*/}
-                {/*    value={selectedOption}*/}
-                {/*    // onChange={this.handleChange}*/}
-                {/*    options={teams.map(team => ({label: team.displayName, value: team.type}))}*/}
-                {/*    className= 'typeahead-input'*/}
-                {/*/>*/}
-                {/*<button type="submit" className="govuk-button find-user-button" onClick={() => this.getTeam(teamUUID)}>Find team</button>*/}
-                {/*{this.displayTeamTable(selectedTeam, teamUUID)}*/}
+            <button className="govuk-button find-user-button" onClick={() => getTeams()}>Find team</button>
 
-                <button className="govuk-button find-user-button" onClick={() => getTeams()}>Find team</button>
-
-            </div>
-        )
-}
+        </div>
+    );
+};
 
 export default TeamSearch;
 // import React, { Fragment } from 'react';
