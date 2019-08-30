@@ -1,6 +1,6 @@
-import { getTeams } from '../teams';
+import { getTeams } from '../team';
 
-describe('Teams middleware', () => {
+describe('Team middleware', () => {
 
     let req = {};
     let res = {};

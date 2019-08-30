@@ -1,13 +1,7 @@
 const router = require('express').Router();
-const {
-    getTeams
-} = require('../../middleware/teams');
+const { getTeams } = require('../../middleware/team');
+const { returnTeamsJson } = require('./responseHelpers');
 
-
-router.get('', getTeams, (_req, res) => {
-    res.json({
-        teams: res.locals.teams
-    });
-});
+router.get('', getTeams, returnTeamsJson);
 
 module.exports = router;
