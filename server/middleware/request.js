@@ -4,8 +4,7 @@ const { ValidationError } = require('../models/error');
 const { isProduction } = require('../config');
 const listService = require('../services/list/');
 
-/* eslint-disable-next-line  no-unused-vars*/
-function apiErrorMiddleware(err, req, res, next) {
+function apiErrorMiddleware(err, req, res) {
 
     if (err instanceof ValidationError) {
         logger(req.requestId).info('VALIDATION_FAILED', { errors: Object.keys(err.fields) });
