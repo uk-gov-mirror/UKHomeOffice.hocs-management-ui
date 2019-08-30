@@ -18,16 +18,12 @@ async function getTeamMembers(req, res, next) {
     }
 }
 
-async function returnTeamsJson(_req, res) {
-    res.json({
-        teams: res.locals.teams
-    });
+async function returnTeamsJson(_, { json, locals: { teams } }) {
+    json({ teams });
 }
 
-async function returnTeamMembersJson(_req, res) {
-    res.json({
-        teams: res.locals.teamMembers
-    });
+async function returnTeamMembersJson(_, { json, locals: { teamMembers } }) {
+    json({ teamMembers });
 }
 
 module.exports = {
