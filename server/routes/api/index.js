@@ -5,6 +5,7 @@ const apiUserRouter = require('./user');
 const { apiErrorMiddleware } = require('../../middleware/request');
 
 router.post('*', bodyParser.json(), bodyParser.urlencoded())
+router.delete('*', bodyParser.json(), bodyParser.urlencoded())
 router.use('/team', apiTeamRouter);
 router.use('/user', apiUserRouter);
 router.use('*', apiErrorMiddleware);
