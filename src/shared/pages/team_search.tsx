@@ -1,63 +1,33 @@
-import React, { } from 'react';
-// import Select from "react-select";
-// import axios from "axios";
-//import config from "../../config";
+import React, { useState, useEffect } from 'react';
+import Select from "react-select";
+import axios from "axios";
 
+interface teamsResponse {
+    data: team[];
+}
 
-// const options = {
-//     headers: config.headers
-// };
-
-// interface teamsResponse {
-//     data: team[];
-// }
-
-// interface team {
-//     displayName: string;
-//     type: string
-// }
+interface team {
+    displayName: string;
+    type: string
+}
 
 const TeamSearch : React.FC = () => {
 
-// const [,setTeams] = useState <team[]>([]);
-// const [selectedOption] = useState(null);
+    const [, setTeams] = useState<team[]>([]);
+// const [selectedOption, setSelectedOption] = useState(null);
 // const [selectedTeam, setSelectedTeam] = useState(null);
 // const [teamUUID, setTeamUUID] = useState(null);
 
-
-    const getTeams = () => {
-        // axios.get(config.config.INFO_SERVICE + 'team', options)
-        //     .then((res: teamsResponse) => {
-        //     setTeams(res.data)
-        // })
-    };
-    //
-    // function getTeam = (teamUUID: string) => {
-    //     axios({
-    //         method: 'GET',
-    //         url: config.config.INFO_SERVICE + 'team/' + teamUUID,
-    //         options
-    //         //auth: config.config.WORKFLOW_BASIC_AUTH
-    //         // @ts-ignore
-    //     }).then(res => {
-    //         setSelectedTeam({
-    //             selectedTeam: res.data
-    //         })
-    //     })
-    // };
-    //
-    // // @ts-ignore
-    // handleChange = (selectedOption) => {
-    //     this.setState(
-    //         {
-    //             selectedOption,
-    //             teamUUID: selectedOption.value
-    //         });
-    //     console.log(`Option selected:`, selectedOption);
-    // };
+    useEffect(() => {
+        console.log('UseEffect `Called');
+        axios.get('api/team')
+            .then((res: teamsResponse) => {
+                setTeams(res.data);
+            });
+    }, []);
 
     // @ts-ignore
-    // displayTeamTable = ( selectedTeam ) => (
+    // const displayTeamTable = ( selectedTeam, teamUUID ) => (
     //     <div>
     //         <div>
     //         </div>
@@ -82,40 +52,51 @@ const TeamSearch : React.FC = () => {
     //     </div>
     // );
 
+    const SelectBox = (teams) => {
+
+        const options = [
+            {value: 'chocolate', label: 'Chocolate'},
+            {value: 'strawberry', label: 'Strawberry'},
+            {value: 'vanilla', label: 'Vanilla'},
+        ];
+
+        if (typeof window !== 'undefined') {
+                return (
+                    <div className="govuk-form-group">
+                        <label className="govuk-label" htmlFor="sort">
+                            Sort by
+                        </label>
+                        {/*{teams.map((teams: any) => {*/}
+                        {/*    console.log(teams.value)*/}
+                        {/*})*/}
+                        {/*}*/}
+                        <Select className="govuk-select" id="sort" name="sort">
+                            {/*value={selectedOption}*/}
+                            {/*onChange={this.handleChange}*/}
+                            options={options}
+                        </Select>
+                    </div>
+                )
+            } else {
+                console.log(typeof window);
+        }
+    };
+
     return (
-        <div className="govuk-grid-column-two-thirds">
-            <h1 className="govuk-heading-xl">
-                Team search
-            </h1>
+            <div className="govuk-grid-column-two-thirds">
+                <h1 className="govuk-heading-xl">
+                    Team search
+                </h1>
 
-            {/*<Select*/}
-            {/*    value={selectedOption}*/}
-            {/*    // onChange={this.handleChange}*/}
-            {/*    options={teams.map(team => ({label: team.displayName, value: team.type}))}*/}
-            {/*    className= 'typeahead-input'*/}
-            {/*/>*/}
-            {/*<button type="submit" className="govuk-button find-user-button" onClick={() => this.getTeam(teamUUID)}>Find team</button>*/}
-            {/*{this.displayTeamTable(selectedTeam, teamUUID)}*/}
+                <SelectBox />
 
-            <button className="govuk-button find-user-button" onClick={() => getTeams()}>Find team</button>
+                <button type="submit" className="govuk-button find-user-button">Find team</button>
+                {/*<button type="submit" className="govuk-button find-user-button" onClick={() => getTeam(teamUUID)}>Find team</button>*/}
+                {/*{displayTeamTable(selectedTeam, teamUUID)}*/}
+                {/*<button className="govuk-button find-user-button" onClick={() => getTeam(teamUUID)}>Find team</button>*/}
 
-        </div>
-    );
+            </div>
+    )
 };
 
 export default TeamSearch;
-// import React, { Fragment } from 'react';
-//
-// const TeamSearch : React.FC = () => (
-//     <Fragment>
-//         <div className="govuk-grid-column-two-thirds">
-//             <ul className="govuk-list">
-//                 <li>
-//                     <a className="govuk-link" href="/">Team search</a>
-//                 </li>
-//             </ul>
-//         </div>
-//     </Fragment>
-// );
-//
-// export default TeamSearch;
