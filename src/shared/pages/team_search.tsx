@@ -1,30 +1,32 @@
-import React, { useState, useEffect } from 'react';
-import Select from "react-select";
-import axios from "axios";
+import React from 'react';
+import TypeAhead from '../common/components/type-ahead';
 
-interface teamsResponse {
-    data: team[];
-}
+//import Select from 'react-select';
+//import axios from 'axios';
 
-interface team {
-    displayName: string;
-    type: string
-}
+// interface teamsResponse {
+//     data: team[];
+// }
+
+// interface team {
+//     displayName: string;
+//     type: string
+// }
 
 const TeamSearch : React.FC = () => {
 
-    const [, setTeams] = useState<team[]>([]);
+    // const [, setTeams] = useState<team[]>([]);
 // const [selectedOption, setSelectedOption] = useState(null);
 // const [selectedTeam, setSelectedTeam] = useState(null);
 // const [teamUUID, setTeamUUID] = useState(null);
 
-    useEffect(() => {
-        console.log('UseEffect `Called');
-        axios.get('api/team')
-            .then((res: teamsResponse) => {
-                setTeams(res.data);
-            });
-    }, []);
+    // useEffect(() => {
+    //     console.log('UseEffect `Called');
+    //     axios.get('api/team')
+    //         .then((res: teamsResponse) => {
+    //             setTeams(res.data);
+    //         });
+    // }, []);
 
     // @ts-ignore
     // const displayTeamTable = ( selectedTeam, teamUUID ) => (
@@ -52,43 +54,14 @@ const TeamSearch : React.FC = () => {
     //     </div>
     // );
 
-    const SelectBox = (teams) => {
-
-        const options = [
-            {value: 'chocolate', label: 'Chocolate'},
-            {value: 'strawberry', label: 'Strawberry'},
-            {value: 'vanilla', label: 'Vanilla'},
-        ];
-
-        if (typeof window !== 'undefined') {
-                return (
-                    <div className="govuk-form-group">
-                        <label className="govuk-label" htmlFor="sort">
-                            Sort by
-                        </label>
-                        {/*{teams.map((teams: any) => {*/}
-                        {/*    console.log(teams.value)*/}
-                        {/*})*/}
-                        {/*}*/}
-                        <Select className="govuk-select" id="sort" name="sort">
-                            {/*value={selectedOption}*/}
-                            {/*onChange={this.handleChange}*/}
-                            options={options}
-                        </Select>
-                    </div>
-                )
-            } else {
-                console.log(typeof window);
-        }
-    };
-
+    
     return (
             <div className="govuk-grid-column-two-thirds">
                 <h1 className="govuk-heading-xl">
                     Team search
                 </h1>
 
-                <SelectBox />
+                 <SelectBox />
 
                 <button type="submit" className="govuk-button find-user-button">Find team</button>
                 {/*<button type="submit" className="govuk-button find-user-button" onClick={() => getTeam(teamUUID)}>Find team</button>*/}
@@ -96,7 +69,37 @@ const TeamSearch : React.FC = () => {
                 {/*<button className="govuk-button find-user-button" onClick={() => getTeam(teamUUID)}>Find team</button>*/}
 
             </div>
-    )
+    );
+};
+
+const SelectBox = ({ }) => {
+
+    // const options = [
+    //     {value: 'chocolate', label: 'Chocolate'},
+    //     {value: 'strawberry', label: 'Strawberry'},
+    //     {value: 'vanilla', label: 'Vanilla'},
+    // ];
+
+    return (
+        <div className="govuk-form-group">
+            <label className="govuk-label" htmlFor="sort">
+                Sort by
+            </label>
+            {/*{teams.map((teams: any) => {*/}
+            {/*    console.log(teams.value)*/}
+            {/*})*/}
+            {/*}*/}
+            <TypeAhead
+                choices={[]}
+                clearable={true}
+                disabled={true}
+                label={'testlabel'}
+                name={'testname'}
+                updateState={(newValue) => { console.log(newValue); }}
+                value={'testvalue'}
+            ></TypeAhead>
+        </div>
+    );
 };
 
 export default TeamSearch;
