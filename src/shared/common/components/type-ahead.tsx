@@ -19,13 +19,13 @@ interface TypeAheadProps {
     label: string;
     name: string;
     updateState: ({}) => void;
-    value: string;
+    value?: string;
 }
 
 interface TypeAheadState {
     choices: Choice[];
     componentMounted: boolean;
-    value: string;
+    value?: string;
 }
 
 class TypeAhead extends Component<TypeAheadProps, TypeAheadState> {

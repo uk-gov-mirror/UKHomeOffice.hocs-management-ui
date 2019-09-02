@@ -90,13 +90,12 @@ const SelectBox = ({ }) => {
             {/*})*/}
             {/*}*/}
             <TypeAhead
-                choices={[]}
+                choices={[{ label: 'teams', options: [{ label: 'team 1', value: 'team1' }, { label: 'team 1', value: 'team1' }] }]}
                 clearable={true}
-                disabled={true}
+                disabled={false}
                 label={'testlabel'}
                 name={'testname'}
-                updateState={(newValue) => { console.log(newValue); }}
-                value={'testvalue'}
+                updateState={(newValue:any) => { console.log(newValue); }}
             ></TypeAhead>
         </div>
     );

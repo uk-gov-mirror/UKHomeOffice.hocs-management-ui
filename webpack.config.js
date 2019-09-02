@@ -8,6 +8,7 @@ const AutoPrefixer = require('autoprefixer');
 const browserConfig = env => {
     const mode = env.NODE_ENV;
     return {
+        target: 'web',
         entry: {
             main: './src/browser/index.tsx'
         },
@@ -140,6 +141,7 @@ const browserConfig = env => {
 
 
 const serverConfig = {
+    target: 'node',
     entry: {
         app: './src/shared/index.tsx'
     },
