@@ -18,12 +18,16 @@ async function getTeamMembers(req, res, next) {
     }
 }
 
-async function returnTeamsJson(_, { json, locals: { teams } }) {
-    json({ teams });
+// eslint-disable-next-line no-unused-vars
+async function returnTeamsJson(_, res) {
+    const { locals: { teams } } = res;
+    await res.json({ teams });
 }
 
-async function returnTeamMembersJson(_, { json, locals: { teamMembers } }) {
-    json({ teamMembers });
+// eslint-disable-next-line no-unused-vars
+async function returnTeamMembersJson(_, res) {
+    const { locals: { teamMembers } } = res;
+    await res.json({ teamMembers });
 }
 
 module.exports = {
