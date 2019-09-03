@@ -1,32 +1,33 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import TypeAhead from '../common/components/type-ahead';
 
 //import Select from 'react-select';
-//import axios from 'axios';
+import axios from 'axios';
 
-// interface teamsResponse {
-//     data: team[];
-// }
+interface teamsResponse {
+    data: team[];
+}
 
-// interface team {
-//     displayName: string;
-//     type: string
-// }
+interface team {
+    displayName: string;
+    type: string
+}
 
 const TeamSearch : React.FC = () => {
 
-    // const [, setTeams] = useState<team[]>([]);
+    const [teams, setTeams] = useState<team[]>([]);
 // const [selectedOption, setSelectedOption] = useState(null);
 // const [selectedTeam, setSelectedTeam] = useState(null);
 // const [teamUUID, setTeamUUID] = useState(null);
 
-    // useEffect(() => {
-    //     console.log('UseEffect `Called');
-    //     axios.get('api/team')
-    //         .then((res: teamsResponse) => {
-    //             setTeams(res.data);
-    //         });
-    // }, []);
+    useEffect(() => {
+        console.log('useEffect called');
+        axios.get('api/team')
+            .then((res: teamsResponse) => {
+                console.log('axios response', res.data);
+                setTeams(res.data);
+            });
+    }, []);
 
     // @ts-ignore
     // const displayTeamTable = ( selectedTeam, teamUUID ) => (
@@ -54,37 +55,15 @@ const TeamSearch : React.FC = () => {
     //     </div>
     // );
 
-    
-    return (
-            <div className="govuk-grid-column-two-thirds">
-                <h1 className="govuk-heading-xl">
-                    Team search
-                </h1>
-
-                 <SelectBox />
-
-                <button type="submit" className="govuk-button find-user-button">Find team</button>
-                {/*<button type="submit" className="govuk-button find-user-button" onClick={() => getTeam(teamUUID)}>Find team</button>*/}
-                {/*{displayTeamTable(selectedTeam, teamUUID)}*/}
-                {/*<button className="govuk-button find-user-button" onClick={() => getTeam(teamUUID)}>Find team</button>*/}
-
-            </div>
-    );
-};
-
-const SelectBox = ({ }) => {
-
-    // const options = [
-    //     {value: 'chocolate', label: 'Chocolate'},
-    //     {value: 'strawberry', label: 'Strawberry'},
-    //     {value: 'vanilla', label: 'Vanilla'},
-    // ];
-
     return (
         <div className="govuk-form-group">
+            <h1 className="govuk-heading-xl">
+                Team search
+            </h1>
             <label className="govuk-label" htmlFor="sort">
                 Sort by
             </label>
+            {console.log('teams', teams)}
             {/*{teams.map((teams: any) => {*/}
             {/*    console.log(teams.value)*/}
             {/*})*/}
@@ -97,6 +76,11 @@ const SelectBox = ({ }) => {
                 name={'testname'}
                 updateState={(newValue:any) => { console.log(newValue); }}
             ></TypeAhead>
+
+            <button type="submit" className="govuk-button find-user-button">Find team</button>
+            {/*<button type="submit" className="govuk-button find-user-button" onClick={() => getTeam(teamUUID)}>Find team</button>*/}
+            {/*{displayTeamTable(selectedTeam, teamUUID)}*/}
+            {/*<button className="govuk-button find-user-button" onClick={() => getTeam(teamUUID)}>Find team</button>*/}
         </div>
     );
 };
