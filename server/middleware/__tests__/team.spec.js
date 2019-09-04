@@ -58,12 +58,12 @@ describe('returnTeamsJson', () => {
 
     it('should return the teams as json', async () => {
         await returnTeamsJson(req, res, next);
-        expect(json).toHaveBeenCalledWith({ teams })
+        expect(json).toHaveBeenCalledWith(teams);
     });
 
     it('should be the last handler', async () => {
         await returnTeamsJson(req, res, next);
-        expect(next).not.toHaveBeenCalled()
+        expect(next).not.toHaveBeenCalled();
     });
 });
 
@@ -81,11 +81,11 @@ describe('returnTeamMembersJson', () => {
 
     it('should return the teams as json', async () => {
         await returnTeamMembersJson(req, res, next);
-        expect(json).toHaveBeenCalledWith({ teamMembers })
+        expect(json).toHaveBeenCalledWith(teamMembers);
     });
 
     it('should be the last handler', async () => {
         await returnTeamMembersJson(req, res, next);
-        expect(next).not.toHaveBeenCalled()
+        expect(next).not.toHaveBeenCalled();
     });
 });
