@@ -22,10 +22,10 @@ function createClient({ baseURL, auth }) {
     });
 
     return {
-        get: (endpoint, headers) => client.get(endpoint, headers),
-        post: (endpoint, body, headers) => client.post(endpoint, body, headers),
-        delete: (endpoint, headers) => client.delete(endpoint, headers),
-        put: (endpoint, body, headers) => client.put(endpoint, body, headers)
+        get: (endpoint, config) => client.get(endpoint, config),
+        post: (endpoint, body, config) => client.post(endpoint, body, config),
+        delete: (endpoint, config) => client.delete(endpoint, config),
+        put: (endpoint, body, config) => client.put(endpoint, body, config)
     };
 
 }

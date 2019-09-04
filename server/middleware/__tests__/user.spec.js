@@ -10,9 +10,8 @@ describe('User middleware addToTeam', () => {
 
     const userId = '__userId__';
     const teamId = '__teamId__';
-    const displayName = '__displayName__';
     const headers = '__headers__';
-    const req = { body: { displayName: displayName }, params: { userId: userId, teamId: teamId }, user: '__user__'} ;
+    const req = { params: { userId: userId, teamId: teamId }, user: '__user__'} ;
     let res = {};
     const next = jest.fn();
 
@@ -24,21 +23,7 @@ describe('User middleware addToTeam', () => {
     it('should call the post method on the info service', async () => {
         User.createHeaders.mockImplementation(() => headers)
         await addToTeam(req, res, next);
-        expect(infoService.post).toHaveBeenCalledWith(`/users/${userId}/team/${teamId}`, {
-            displayName: displayName,
-            permissions: [{
-                caseTypeCode: 'MIN',
-                accessLevel: 'OWNER'
-            },
-            {
-                caseTypeCode: 'TRO',
-                accessLevel: 'READ'
-            },
-            {
-                caseTypeCode: 'TRO',
-                accessLevel: 'WRITE'
-            }]
-        }, { headers: headers });
+        expect(infoService.post).toHaveBeenCalledWith(`/users/${userId}/team/${teamId}`, {}, { headers: headers });
     });
 
     it('should call the user create headers method', async () => {
@@ -70,9 +55,8 @@ describe('User middleware remove from team', () => {
 
     const userId = '__userId__';
     const teamId = '__teamId__';
-    const displayName = '__displayName__';
     const headers = '__headers__';
-    const req = { body: { displayName: displayName }, params: { userId: userId, teamId: teamId }, user: '__user__'} ;
+    const req = { params: { userId: userId, teamId: teamId }, user: '__user__'} ;
     let res = {};
     const next = jest.fn();
 
@@ -84,21 +68,7 @@ describe('User middleware remove from team', () => {
     it('should call the delete method on the info service', async () => {
         User.createHeaders.mockImplementation(() => headers)
         await removeFromTeam(req, res, next);
-        expect(infoService.delete).toHaveBeenCalledWith(`/users/${userId}/team/${teamId}`, {
-            displayName: displayName,
-            permissions: [{
-                caseTypeCode: 'MIN',
-                accessLevel: 'OWNER'
-            },
-            {
-                caseTypeCode: 'TRO',
-                accessLevel: 'READ'
-            },
-            {
-                caseTypeCode: 'TRO',
-                accessLevel: 'WRITE'
-            }]
-        }, { headers: headers });
+        expect(infoService.delete).toHaveBeenCalledWith(`/users/${userId}/team/${teamId}`, { headers: headers });
     });
 
     it('should call the user create headers method', async () => {
