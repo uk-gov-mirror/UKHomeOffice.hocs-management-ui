@@ -31,7 +31,8 @@
       "\\.(css|less|scss|sass)$": "identity-obj-proxy"
     },
     "testPathIgnorePatterns": [
-      "\\.spec.utils.(js|jsx)$"
+      "\\.spec.utils.(js|jsx)$",
+      "/build/"
     ],
     "collectCoverage": true,
     "collectCoverageFrom": [

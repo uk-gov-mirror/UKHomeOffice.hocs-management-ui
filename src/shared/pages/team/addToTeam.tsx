@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import TypeAhead, { Choice } from '../../common/components/type-ahead';
+import TypeAhead, { Item } from '../../common/components/type-ahead';
 import axios from 'axios';
 import { History } from 'history';
 import { RouteComponentProps } from 'react-router';
@@ -27,15 +27,15 @@ const handleOnSubmit = (history: History, teamId: string) => {
 
 const AddToTeam : React.FC <UserSearchProps> = ({ history, match }) => {
 
-    const [users, setUsers] = useState<Choice[]>([{ label: 'Loading Users...', options: [] }]);
-    const [usersLoaded, setUsersLoaded] = useState(false);
+    const [users, setUsers] = useState<Item[]>([{ label: 'Loading users...', value: '' }]);
+    const [, setUsersLoaded] = useState(false);
     // const [userUUID, setUserUUID] = useState('');
     const { params: { teamId } } = match;
 
     useEffect(() => {
         axios.get('/api/users')
             .then((res: UserResponse) => {
-                setUsers([{ label: 'Users', options: res.data }]);
+                setTimeout(() => setUsers(res.data), 3000);
                 setUsersLoaded(true);
             });
     }, []);
@@ -43,25 +43,18 @@ const AddToTeam : React.FC <UserSearchProps> = ({ history, match }) => {
     return (
         <div className="govuk-form-group">
             <h1 className="govuk-heading-xl">
-                { `Add users to the ${teamId} team` }
+                Add users to the team
             </h1>
-            {
-                usersLoaded ?
-                    <div>
-                        <TypeAhead
-                            choices={users}
-                            clearable={true}
-                            disabled={false}
-                            label={'Teams'}
-                            name={'Teams'}
-                            updateState={() => {}}
-                        ></TypeAhead>
-                    </div> :
-                    <div>
-                        ...loading
-                    </div>
-            }
-
+            <div>
+                <TypeAhead
+                    choices={users}
+                    clearable={true}
+                    disabled={false}
+                    label={'Users'}
+                    name={'Users'}
+                    updateState={() => {}}
+                ></TypeAhead>
+            </div>
             <button type="submit" className="govuk-button view-team-button" onClick={() => { handleOnSubmit(history, teamId); }}>Add users</button>
         </div>
     );

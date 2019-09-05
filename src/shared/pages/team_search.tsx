@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import TypeAhead from '../common/components/type-ahead';
+import TypeAhead, { Item } from '../common/components/type-ahead';
 import axios from 'axios';
 import { History } from 'history';
 
@@ -9,18 +9,18 @@ interface TeamsResponse {
 
 interface Team {
     label: string;
-    value: string
+    value: string;
 }
 
 interface TeamSearchProps {
-    history: History
+    history: History;
 }
 
 const TeamSearch : React.FC <TeamSearchProps> = ({ history }) => {
 
-    const [teams, setTeams] = useState<Team[]>([]);
+    const [teams, setTeams] = useState<Item[]>([{ label: 'Loading teams...', value: '' }]);
     const [teamsLoaded, setTeamsLoaded] = useState(false);
-    const [teamUUID, setTeamUUID] = useState("");
+    const [teamUUID, setTeamUUID] = useState('');
 
     useEffect(() => {
         axios.get('api/teams')
@@ -44,7 +44,7 @@ const TeamSearch : React.FC <TeamSearchProps> = ({ history }) => {
                 teamsLoaded ?
                 <div>
                     <TypeAhead
-                        choices={[{ label: 'Teams', options: teams }]}
+                        choices={teams}
                         clearable={true}
                         disabled={false}
                         label={'Teams'}
@@ -57,7 +57,7 @@ const TeamSearch : React.FC <TeamSearchProps> = ({ history }) => {
                 </div>
             }
 
-            <button type="submit" className="govuk-button view-team-button" onClick={() => { handleOnSubmit() }}>View team</button>
+            <button type="submit" className="govuk-button view-team-button" onClick={() => { handleOnSubmit(); }}>View team</button>
         </div>
     );
 };

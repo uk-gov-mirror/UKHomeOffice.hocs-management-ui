@@ -1,17 +1,13 @@
 import React, { Component } from 'react';
 import Select, { components } from 'react-select';
 
-interface Item {
+export interface Item {
     label: string;
     value: string;
 }
 
-export interface Choice {
-    label: string;
-    options: Item[];
-}
 interface TypeAheadProps {
-    choices: Choice[];
+    choices: Item[];
     clearable: boolean;
     disabled: boolean;
     error?: string;
@@ -23,7 +19,6 @@ interface TypeAheadProps {
 }
 
 interface TypeAheadState {
-    choices: Choice[];
     componentMounted: boolean;
     value?: string;
 }
@@ -32,10 +27,7 @@ class TypeAhead extends Component<TypeAheadProps, TypeAheadState> {
 
     constructor(props: TypeAheadProps) {
         super(props);
-        const choices = [...props.choices];
-        choices.unshift({ label: '', options: [{ label: '', value: '' }] });
         this.state = {
-            choices,
             value: this.props.value,
             componentMounted: false
         };
@@ -48,30 +40,26 @@ class TypeAhead extends Component<TypeAheadProps, TypeAheadState> {
     handleChange(e: any) {
         const value = e ? e.value : null;
         this.setState({ value });
-        this.props.updateState(value );
+        this.props.updateState(value);
     }
 
-    getOptions(input: string, callback: (options: Choice[]) => void) {
-        let options: Choice[];
+    getOptions(input: string, callback: (options: Item[]) => void) {
+        let options: Item[];
         if (input.length > 0) {
             const searchString = input.toLowerCase().trim();
-            options = this.state.choices.reduce((reducer: Choice[], group) => {
-                reducer.push({
-                    label: group.label,
-                    options: group.options
-                        .filter(item => item.label.toLowerCase().indexOf(searchString) !== -1)
-                        .slice(0, 100)
-                });
-                return reducer;
-            }, []);
+            options = this.props.choices
+                .filter(item => item.label.toLowerCase().indexOf(searchString) !== -1)
+                .slice(0, 100);
         } else {
             options = [];
         }
+
         return callback(options);
     }
 
     renderSelect() {
         const {
+            choices,
             clearable = true,
             disabled,
             error,
@@ -79,7 +67,6 @@ class TypeAhead extends Component<TypeAheadProps, TypeAheadState> {
             label,
             name
         } = this.props;
-        const { choices } = this.state;
         return (
             <div className={`govuk-form-group${error ? ' govuk-form-group--error' : ''}`}>
                 <label htmlFor={name} id={`${name}-label`} className="govuk-label govuk-label--s">{label}</label>
@@ -107,8 +94,8 @@ class TypeAhead extends Component<TypeAheadProps, TypeAheadState> {
                     }}
                     id={name}
                     placeholder="Search"
-                    classNamePrefix="govuk-typeahead"
                     options={choices}
+                    classNamePrefix="govuk-typeahead"
                     isDisabled={disabled}
                     isClearable={clearable}
                     error={error}
@@ -121,13 +108,13 @@ class TypeAhead extends Component<TypeAheadProps, TypeAheadState> {
 
     renderOptions() {
         const {
+            choices,
             disabled,
             error,
             hint,
             label,
             name
         } = this.props;
-        const { choices } = this.state;
         return (
             <div className={`govuk-form-group${error ? ' govuk-form-group--error' : ''}`}>
 
@@ -141,15 +128,9 @@ class TypeAhead extends Component<TypeAheadProps, TypeAheadState> {
                     disabled={disabled}
                     value={this.state.value}
                 >
-                    {choices && choices.map((group, i) => {
+                    {choices && choices.map(({ label, value }, i) => {
                         return (
-                            <optgroup key={i} label={group.label} >
-                                {group.options && group.options.map((choice, j) => {
-                                    return (
-                                        <option key={j} value={choice.value} >{choice.label}</option>
-                                    );
-                                })}
-                            </optgroup>
+                            <option key={value} value={value} >{label}</option>
                         );
                     })}
                 </select>

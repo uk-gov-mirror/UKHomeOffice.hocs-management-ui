@@ -76,7 +76,7 @@ const TeamView : React.FC <TeamMembersProps> = ({ history, match }) => {
                 teamMembersLoaded ?
                     <div>
                         <TypeAhead
-                            choices={[{ label: 'Teams', options: teamMembers }]}
+                            choices={teamMembers}
                             clearable={true}
                             disabled={false}
                             label={'TeamMembers'}
