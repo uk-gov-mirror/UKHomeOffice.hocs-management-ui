@@ -18,7 +18,7 @@ interface TypeAheadProps {
     hint?: string;
     label: string;
     name: string;
-    updateState: ({}) => void;
+    updateState: (newValue: string) => void;
     value?: string;
 }
 
@@ -43,13 +43,12 @@ class TypeAhead extends Component<TypeAheadProps, TypeAheadState> {
 
     componentDidMount() {
         this.setState({ componentMounted: true });
-        this.props.updateState({ [this.props.name]: this.state.value });
     }
 
     handleChange(e: any) {
         const value = e ? e.value : null;
         this.setState({ value });
-        this.props.updateState({ [this.props.name]: value });
+        this.props.updateState(value );
     }
 
     getOptions(input: string, callback: (options: Choice[]) => void) {

@@ -1,86 +1,62 @@
 import React, { useEffect, useState } from 'react';
 import TypeAhead from '../common/components/type-ahead';
-
-//import Select from 'react-select';
 import axios from 'axios';
-
-interface teamsResponse {
-    data: team[];
+import { History } from 'history';
+interface TeamsResponse {
+    data: Team[];
 }
 
-interface team {
-    displayName: string;
-    type: string
+interface Team {
+    label: string;
+    value: string
 }
 
-const TeamSearch : React.FC = () => {
+interface TeamSearchProps {
+    history: History
+}
 
-    const [teams, setTeams] = useState<team[]>([]);
-// const [selectedOption, setSelectedOption] = useState(null);
-// const [selectedTeam, setSelectedTeam] = useState(null);
-// const [teamUUID, setTeamUUID] = useState(null);
+const TeamSearch : React.FC <TeamSearchProps> = ({ history }) => {
+
+    const [teams, setTeams] = useState<Team[]>([]);
+    const [teamsLoaded, setTeamsLoaded] = useState(false);
+    const [teamUUID, setTeamUUID] = useState("");
 
     useEffect(() => {
-        console.log('useEffect called');
         axios.get('api/team')
-            .then((res: teamsResponse) => {
-                console.log('axios response', res.data);
+            .then((res: TeamsResponse) => {
                 setTeams(res.data);
+                setTeamsLoaded(true);
             });
     }, []);
 
-    // @ts-ignore
-    // const displayTeamTable = ( selectedTeam, teamUUID ) => (
-    //     <div>
-    //         <div>
-    //         </div>
-    //         <div>
-    //             {selectedTeam && (
-    //                 <table className="govuk-table">
-    //                     <thead className="govuk-table__head">
-    //                     <tr className="govuk-table__row">
-    //                         <th className="govuk-table__header" scope="col">Team</th>
-    //                         <th className="govuk-table__header" scope="col">Actions</th>
-    //                     </tr>
-    //                     </thead>
-    //                     <tbody className="govuk-table__body">
-    //                     <tr className="govuk-table__row" key={selectedTeam.type}>
-    //                         <td className="govuk-table__cell" key={selectedTeam.displayName}>{selectedTeam.displayName}</td>
-    //                         <td className="govuk-table__cell"><a href={"/team/" + selectedTeam.type}>View</a></td>
-    //                     </tr>
-    //                     </tbody>
-    //                 </table>
-    //             )}
-    //         </div>
-    //     </div>
-    // );
+    const handleOnSubmit = () => {
+        console.log(teamUUID);
+        history.push('/team_view/' + teamUUID);
+    };
 
     return (
         <div className="govuk-form-group">
             <h1 className="govuk-heading-xl">
                 Team search
             </h1>
-            <label className="govuk-label" htmlFor="sort">
-                Sort by
-            </label>
-            {console.log('teams', teams)}
-            {/*{teams.map((teams: any) => {*/}
-            {/*    console.log(teams.value)*/}
-            {/*})*/}
-            {/*}*/}
-            <TypeAhead
-                choices={[{ label: 'teams', options: [{ label: 'team 1', value: 'team1' }, { label: 'team 1', value: 'team1' }] }]}
-                clearable={true}
-                disabled={false}
-                label={'testlabel'}
-                name={'testname'}
-                updateState={(newValue:any) => { console.log(newValue); }}
-            ></TypeAhead>
+            {
+                teamsLoaded ?
+                <div>
+                    <TypeAhead
+                        choices={[{ label: 'Teams', options: teams }]}
+                        clearable={true}
+                        disabled={false}
+                        label={'Teams'}
+                        name={'Teams'}
+                        updateState={setTeamUUID}
+                    ></TypeAhead>
+                </div> :
+                <div>
+                    ...loading
+                </div>
+            }
 
-            <button type="submit" className="govuk-button find-user-button">Find team</button>
-            {/*<button type="submit" className="govuk-button find-user-button" onClick={() => getTeam(teamUUID)}>Find team</button>*/}
-            {/*{displayTeamTable(selectedTeam, teamUUID)}*/}
-            {/*<button className="govuk-button find-user-button" onClick={() => getTeam(teamUUID)}>Find team</button>*/}
+            <button type="submit" className="govuk-button view-team-button" onClick={() => { handleOnSubmit() }}>View team</button>
         </div>
     );
 };

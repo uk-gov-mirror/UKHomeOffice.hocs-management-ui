@@ -1,6 +1,8 @@
 import Error, { ErrorContent } from '../../layouts/error';
 import Dashboard from '../../pages/dashboard';
 import TeamSearch from '../../pages/team_search';
+import TeamView from '../../pages/team_view';
+
 
 
 export interface Route {
@@ -22,6 +24,12 @@ const routes = [
         exact: true,
         component: TeamSearch,
         title: 'TeamSearch'
+    },
+    {
+        path: '/team_view/:id',
+        exact: true,
+        component: TeamView,
+        title: 'TeamView'
     },
     {
         component: Error,
