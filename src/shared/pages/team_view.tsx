@@ -25,7 +25,7 @@ const TeamView : React.FC <TeamMembersProps> = ({ match }) => {
     const [teamMembersLoaded, setTeamMembersLoaded] = useState(false);
 
     useEffect(() => {
-        axios.get('api/team/c37fd816-7b35-48c7-a769-944a7f566fd8/members')
+        axios.get('/api/team/c37fd816-7b35-48c7-a769-944a7f566fd8/members')
             .then((res: TeamsMembersResponse) => {
                 setTeamMembers(res.data);
                 setTeamMembersLoaded(true);
