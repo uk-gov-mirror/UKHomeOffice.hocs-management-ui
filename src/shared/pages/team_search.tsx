@@ -23,7 +23,7 @@ const TeamSearch : React.FC <TeamSearchProps> = ({ history }) => {
     const [teamUUID, setTeamUUID] = useState("");
 
     useEffect(() => {
-        axios.get('api/team')
+        axios.get('api/teams')
             .then((res: TeamsResponse) => {
                 setTeams(res.data);
                 setTeamsLoaded(true);

@@ -6,7 +6,7 @@ interface Item {
     value: string;
 }
 
-interface Choice {
+export interface Choice {
     label: string;
     options: Item[];
 }
