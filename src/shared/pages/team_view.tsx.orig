@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { RouteComponentProps } from 'react-router';
-import axios from 'axios';
-import { History } from 'history';
-import TypeAhead from '../common/components/type-ahead';
+<<<<<<< Updated upstream
+import React, {useEffect, useState} from 'react';
+import TypeAhead from "../common/components/type-ahead";
+import axios from "axios";
+import { History } from "history";
+import { match } from 'react-router';
 
 interface TeamsMembersResponse {
     data: TeamMember[];
@@ -10,32 +11,22 @@ interface TeamsMembersResponse {
 
 interface TeamMember {
     label: string;
-    value: string;
+    value: string
 }
 
-interface MatchParams {
-    teamId: string;
+interface TeamMembersProps {
+    match: match
+    history: History
 }
 
-interface TeamMembersProps extends RouteComponentProps<MatchParams> {
-    history: History;
-}
-
-const onAddTeamMembersAddClick = (history: History, teamId: string) => {
-
-    history.push(`/addUsersToTeam/${teamId}`);
-};
-
-const TeamView : React.FC <TeamMembersProps> = ({ history, match }) => {
+const TeamView : React.FC <TeamMembersProps> = ({ match }) => {
 
     console.log('match.params', match.params);
     const [teamMembers, setTeamMembers] = useState <TeamMember[]>([]);
     const [teamMembersLoaded, setTeamMembersLoaded] = useState(false);
 
-    const { params: { teamId } } = match;
-
     useEffect(() => {
-        axios.get(`/api/team/${teamId}/members`)
+        axios.get('/api/team/c37fd816-7b35-48c7-a769-944a7f566fd8/members')
             .then((res: TeamsMembersResponse) => {
                 setTeamMembers(res.data);
                 setTeamMembersLoaded(true);
@@ -58,7 +49,7 @@ const TeamView : React.FC <TeamMembersProps> = ({ history, match }) => {
                         <tbody className="govuk-table__body">
                         <tr className="govuk-table__row">
                             <td className="govuk-table__cell"></td>
-                            <td className="govuk-table__cell"><a href={'#'}>Remove</a></td>
+                            <td className="govuk-table__cell"><a href={"#"}>Remove</a></td>
                         </tr>
                         </tbody>
                     </table>
@@ -66,12 +57,38 @@ const TeamView : React.FC <TeamMembersProps> = ({ history, match }) => {
             </div>
         </div>
     );
+=======
+import React from 'react';
+import { match } from 'react-router';
+
+import { History } from 'history';
+
+interface TeamViewProps {
+    history: History;
+    match: match;
+}
+
+interface Params {
+    teamId: string;
+}
+
+const onAddTeamMembersAddClick = (history: History, teamId: string) => {
+
+    history.push(`/addUsersToTeam/${teamId}`);
+};
+
+const TeamView : React.FC<TeamViewProps> = ({ history, match }) => {
+
+    const { params } = match;
+    const { teamId } = params as Params;
+>>>>>>> Stashed changes
 
     return (
         <div className="govuk-form-group">
             <h1 className="govuk-heading-xl">
                 Team search
             </h1>
+<<<<<<< Updated upstream
             {
                 teamMembersLoaded ?
                     <div>
@@ -90,7 +107,10 @@ const TeamView : React.FC <TeamMembersProps> = ({ history, match }) => {
                         ...loading
                     </div>
             }
+
+=======
             <button type="submit" className="govuk-button add-team-members-button" onClick={() => onAddTeamMembersAddClick(history, teamId as string)}>Add team members</button>
+>>>>>>> Stashed changes
         </div>
     );
 };
