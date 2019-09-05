@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import TypeAhead from '../common/components/type-ahead';
 import axios from 'axios';
 import { History } from 'history';
+
 interface TeamsResponse {
     data: Team[];
 }
