@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Select, { components } from 'react-select';
+import { ActionMeta } from 'react-select/src/types';
 
 export interface Item {
     label: string;
@@ -14,13 +15,12 @@ interface TypeAheadProps {
     hint?: string;
     label: string;
     name: string;
-    updateState: (newValue: string) => void;
-    value?: string;
+    onSelectedItemChange: (newItem: Item) => void;
+    value?: Item;
 }
 
 interface TypeAheadState {
     componentMounted: boolean;
-    value?: string;
 }
 
 class TypeAhead extends Component<TypeAheadProps, TypeAheadState> {
@@ -28,7 +28,6 @@ class TypeAhead extends Component<TypeAheadProps, TypeAheadState> {
     constructor(props: TypeAheadProps) {
         super(props);
         this.state = {
-            value: this.props.value,
             componentMounted: false
         };
     }
@@ -37,10 +36,10 @@ class TypeAhead extends Component<TypeAheadProps, TypeAheadState> {
         this.setState({ componentMounted: true });
     }
 
-    handleChange(e: any) {
-        const value = e ? e.value : null;
-        this.setState({ value });
-        this.props.updateState(value);
+    handleChange(selectedItem: Item, action: ActionMeta) {
+        if (action.action === 'select-option') {
+            this.props.onSelectedItemChange(selectedItem);
+        }
     }
 
     getOptions(input: string, callback: (options: Item[]) => void) {
@@ -65,7 +64,8 @@ class TypeAhead extends Component<TypeAheadProps, TypeAheadState> {
             error,
             hint,
             label,
-            name
+            name,
+            value
         } = this.props;
         return (
             <div className={`govuk-form-group${error ? ' govuk-form-group--error' : ''}`}>
@@ -101,6 +101,7 @@ class TypeAhead extends Component<TypeAheadProps, TypeAheadState> {
                     error={error}
                     onChange={this.handleChange.bind(this)}
                     loadOptions={this.getOptions.bind(this)}
+                    value={value}
                 />
             </div >
         );
@@ -113,7 +114,8 @@ class TypeAhead extends Component<TypeAheadProps, TypeAheadState> {
             error,
             hint,
             label,
-            name
+            name,
+            value
         } = this.props;
         return (
             <div className={`govuk-form-group${error ? ' govuk-form-group--error' : ''}`}>
@@ -126,7 +128,7 @@ class TypeAhead extends Component<TypeAheadProps, TypeAheadState> {
                     id={name}
                     name={name}
                     disabled={disabled}
-                    value={this.state.value}
+                    value={value ? value.value : undefined}
                 >
                     {choices && choices.map(({ label, value }, i) => {
                         return (

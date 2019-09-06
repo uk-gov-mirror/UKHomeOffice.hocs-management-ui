@@ -49,7 +49,7 @@ const TeamSearch : React.FC <TeamSearchProps> = ({ history }) => {
                         disabled={false}
                         label={'Teams'}
                         name={'Teams'}
-                        updateState={setTeamUUID}
+                        onSelectedItemChange={(selectedTeam: Item) => setTeamUUID(selectedTeam.value)}
                     ></TypeAhead>
                 </div> :
                 <div>

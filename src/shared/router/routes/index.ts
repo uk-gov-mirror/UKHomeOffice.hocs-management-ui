@@ -2,7 +2,7 @@ import Error, { ErrorContent } from '../../layouts/error';
 import Dashboard from '../../pages/dashboard';
 import TeamSearch from '../../pages/team_search';
 import TeamView from '../../pages/team_view';
-import AddUsersToTeam from '../../pages/team/addToTeam';
+import AddUsersToTeam from '../../pages/team/AddToTeam';
 
 export interface Route {
     component: React.FunctionComponent | Error;
@@ -31,7 +31,7 @@ const routes = [
         title: 'TeamView'
     },
     {
-        path: '/addUsersToTeam/:teamId',
+        path: '/team/:teamId/add-users',
         exact: true,
         component: AddUsersToTeam,
         title: 'AddUsersToTeam'

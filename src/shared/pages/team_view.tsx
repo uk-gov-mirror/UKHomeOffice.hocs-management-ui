@@ -23,7 +23,7 @@ interface TeamMembersProps extends RouteComponentProps<MatchParams> {
 
 const onAddTeamMembersAddClick = (history: History, teamId: string) => {
 
-    history.push(`/addUsersToTeam/${teamId}`);
+    history.push(`/team/${teamId}/add-users`);
 };
 
 const TeamView : React.FC <TeamMembersProps> = ({ history, match }) => {
@@ -81,7 +81,7 @@ const TeamView : React.FC <TeamMembersProps> = ({ history, match }) => {
                             disabled={false}
                             label={'TeamMembers'}
                             name={'TeamMembers'}
-                            updateState={() => {
+                            onSelectedItemChange={() => {
                             }}
                         ></TypeAhead>
                         <DisplayTeamTable/>
