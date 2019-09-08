@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback, useReducer } from 'react';
+import React, { useEffect, useCallback, useReducer, Reducer } from 'react';
 import { RouteComponentProps } from 'react-router';
 import { History } from 'history';
 import { addUserToTeam, getUsers, AddUserError } from '../../services/usersService';
@@ -23,62 +23,75 @@ interface UserSearchProps extends RouteComponentProps<MatchParams>{
     history: History;
 }
 
+type Action =
+    { payload: FormError, type: 'AddError' } |
+    { type: 'ClearErrors' } |
+    { payload: Item, type: 'AddToSelection' } |
+    { payload: Item, type: 'RemoveFromSelection' } |
+    { payload: Item[], type: 'PopulateUsers' } |
+    { payload: Item | undefined, type: 'ClearSelectedUser' };
+
+type State = {
+    selectedUser?: Item;
+    selectedUsers: Item[];
+    postErrors?: FormError[];
+    users: Item[];
+};
+
+const reducer = (state: State, action: Action) => {
+    switch (action.type) {
+    case 'AddError':
+        return { ...state, postErrors: [...state.postErrors || [], action.payload] };
+    case 'ClearErrors':
+        return { ...state, postErrors: undefined };
+    case 'AddToSelection':
+        return { ...state, selectedUsers: [...[], ...state.selectedUsers, action.payload] };
+    case 'RemoveFromSelection':
+        return { ...state, selectedUsers: [...state.selectedUsers.filter(user => user.value !== action.payload.value)] };
+    case 'ClearSelectedUser':
+        return { ...state, selectedUser: undefined };
+    case 'PopulateUsers':
+        return { ...state, users: action.payload };
+    }
+    return state;
+};
+
 const AddToTeam : React.FC <UserSearchProps> = ({ history, match }) => {
 
-    const [users, setUsers] = useState<Item[]>([{ label: 'Loading users...', value: '' }]);
-    const [selectedUsers, setSelectedUsers] = useState<Item[]>([]);
-    const [selectedUser, setSelectedUser] = useState<Item>();
-
-    type Action = { payload: FormError, type: 'AddError' } | { type: 'RemoveError' } | { type: 'ClearErrors' };
-
-    type State = {
-        postErrors?: FormError[];
-    };
-
-    const reducer = (state: State, action: Action) => {
-        switch (action.type) {
-        case 'AddError':
-            return { ...state, postErrors: [...state.postErrors || [], action.payload] };
-        case 'ClearErrors':
-            return { ...state, postErrors: undefined };
-        }
-        return state;
-    };
-
-    const [state, dispatch] = useReducer(reducer, { postErrors: undefined });
+    const [state, dispatch] = useReducer<Reducer<State, Action>>(reducer, {
+        selectedUser: undefined,
+        selectedUsers: [],
+        postErrors: undefined,
+        users: [{ label: 'Loading users...', value: '' }]
+    });
 
     const { params: { teamId } } = match;
+
+    const onSubmit = () => {
+        dispatch({ type: 'ClearErrors' });
+        Promise.all(state.selectedUsers.map(user =>
+            addUserToTeam(user, teamId)
+            .then(() => dispatch({ type: 'RemoveFromSelection', payload: user })))
+        )
+        .then(() => {
+            history.push(`/team_view/${teamId}`);
+        })
+        .catch(({ userToAdd: { label, value } }: AddUserError) => {
+            dispatch({ type: 'AddError', payload: { key: value, value: label } });
+        });
+    };
+
+    const onSelectedUserChange = useCallback((selectedUser: Item) => {
+        dispatch({ type:'AddToSelection', payload: selectedUser });
+        dispatch({ type:'ClearSelectedUser', payload: undefined });
+    }, []);
 
     useEffect(() => {
         getUsers()
             .then((res: UserResponse) => {
-                setTimeout(() => setUsers(res.data), 3000);
+                setTimeout(() => dispatch({ type: 'PopulateUsers', payload: res.data }), 3000);
             });
     }, []);
-
-    const removeFromSelection = useCallback((userToRemove: Item) =>
-        setSelectedUsers([...selectedUsers.filter(user => user.value !== userToRemove.value)])
-    , [selectedUsers]);
-
-    const addUsers = (teamId: string, users: Item[], successCallback: (user: Item) => void) =>
-        Promise.all(users.map(user => addUserToTeam(user, teamId).then(() => successCallback(user))));
-
-    // const addToPostErrors = (key: string, value: string) => setPostErrors([...postErrors || [], { key, value }]);
-
-    const onSubmit = () => {
-        dispatch({ type: 'ClearErrors' });
-        addUsers(teamId, selectedUsers, removeFromSelection)
-            .then(() => {
-                history.push(`/team_view/${teamId}`);
-            })
-            .catch(({ userToAdd: { label, value } }: AddUserError) => {
-                setTimeout(() => {
-                    dispatch({ type: 'AddError', payload: { key: value, value: label } });
-                }, 5000);
-            });
-    };
-
-    const onSelectedUserChangeHandler = onSelectedUserChange.bind(null, addToSelectionCreator(selectedUsers, setSelectedUsers), setSelectedUser);
 
     return (
         <>
@@ -88,13 +101,13 @@ const AddToTeam : React.FC <UserSearchProps> = ({ history, match }) => {
                 </h1>
                 <div>
                     <TypeAhead
-                        choices={users.filter(user => !selectedUsers.some(selectedUser => selectedUser.value === user.value))}
+                        choices={state.users.filter(user => !state.selectedUsers.some(selectedUser => selectedUser.value === user.value))}
                         clearable={true}
                         disabled={false}
                         label={'Users'}
                         name={'Users'}
-                        onSelectedItemChange={onSelectedUserChangeHandler}
-                        value={selectedUser}
+                        onSelectedItemChange={onSelectedUserChange}
+                        value={state.selectedUser}
                     ></TypeAhead>
                 </div>
             </div>
@@ -106,14 +119,14 @@ const AddToTeam : React.FC <UserSearchProps> = ({ history, match }) => {
             <h2 className="govuk-heading-l">Users to be added</h2>
             <table className="govuk-table">
                 <tbody className="govuk-table__body">
-                { selectedUsers.map(user => (
+                { state.selectedUsers.map(user => (
                     <tr key={user.value} className="govuk-table__row">
                         <th scope="row" className="govuk-table__header">
                             {user.label}
                         </th>
                         <td className="govuk-table__cell">
-                            <a className="govuk-link" href="#">
-                                Remove<span className="govuk-visually-hidden" onClick={() => removeFromSelection(user)}> user</span>
+                            <a className="govuk-link" href="#" onClick={() => dispatch({ type: 'RemoveFromSelection', payload: user })}>
+                                Remove<span className="govuk-visually-hidden"> user</span>
                             </a>
                         </td>
                     </tr>
@@ -127,17 +140,5 @@ const AddToTeam : React.FC <UserSearchProps> = ({ history, match }) => {
         </>
     );
 };
-
-const onSelectedUserChange = (
-    addToSelection: (user: Item) => void,
-    setSelectedUser: React.Dispatch<React.SetStateAction<string | undefined>>,
-    selectedUser: Item
-) => {
-    setSelectedUser('');
-    addToSelection(selectedUser);
-};
-
-const addToSelectionCreator = (selectedUsers: Item[], setSelectedUsers: React.Dispatch<React.SetStateAction<Item[]>>) =>
-    (userToAdd: Item) => setSelectedUsers([...[], ...selectedUsers, userToAdd]);
 
 export default AddToTeam;

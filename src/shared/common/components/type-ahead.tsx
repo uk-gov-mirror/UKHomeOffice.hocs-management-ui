@@ -60,8 +60,7 @@ class TypeAhead extends Component<TypeAheadProps, TypeAheadState> {
             error,
             hint,
             label,
-            name,
-            value
+            name
         } = this.props;
         return (
             <div className={`govuk-form-group${error ? ' govuk-form-group--error' : ''}`}>
@@ -97,7 +96,7 @@ class TypeAhead extends Component<TypeAheadProps, TypeAheadState> {
                     error={error}
                     onChange={this.handleChange.bind(this)}
                     loadOptions={this.getOptions.bind(this)}
-                    value={value}
+                    value={this.props.value}
                 />
             </div >
         );
