@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import TypeAhead, { Item } from '../common/components/type-ahead';
+import TypeAhead from '../common/components/type-ahead';
 import axios from 'axios';
 import { History } from 'history';
+import Item from '../models/item';
 
 interface TeamsResponse {
     data: Team[];

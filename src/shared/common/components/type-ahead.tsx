@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 import Select, { components } from 'react-select';
 import { ActionMeta } from 'react-select/src/types';
-
-export interface Item {
-    label: string;
-    value: string;
-}
+import Item from '../../models/item';
 
 interface TypeAheadProps {
     choices: Item[];
