@@ -31,7 +31,6 @@ type Action =
     { payload: Item, type: 'RemoveFromSelection' } |
     { payload: Item[], type: 'PopulateUsers' } |
     { payload: Item | undefined, type: 'ClearSelectedUser' } |
-    { type: 'EndSubmit' } |
     { type: 'SetEmptySumbitError' } |
     { type: 'SetTeamName', payload: string };
 
@@ -42,7 +41,6 @@ type State = {
     inputValue: string;
     selectedUser?: Item | string;
     selectedUsers: Item[];
-    submitting: boolean;
     teamName?: string;
     users: Item[];
 };
@@ -56,7 +54,7 @@ const reducer = (state: State, action: Action) => {
             errors: [...state.errors || [], action.payload]
         };
     case 'BeginSubmit':
-        return { ...state, errors: undefined, submitting: true };
+        return { ...state, errors: undefined };
     case 'AddToSelection':
         return { ...state, errors: undefined, selectedUsers: [...[], ...state.selectedUsers, action.payload] };
     case 'RemoveFromSelection':
@@ -65,8 +63,6 @@ const reducer = (state: State, action: Action) => {
         return { ...state, selectedUser: '' };
     case 'PopulateUsers':
         return { ...state, users: action.payload };
-    case 'EndSubmit':
-        return { ...state, submitting: false };
     case 'SetEmptySumbitError':
         return { ...state, errorDescription: 'Please select some users before submitting.', errorTitle: 'No users selected', errors: [] };
     case 'SetTeamName':
@@ -84,7 +80,6 @@ const AddToTeam : React.FC <UserSearchProps> = ({ history, match }) => {
         errors: undefined,
         selectedUser: undefined,
         selectedUsers: [],
-        submitting: false,
         users: []
     });
 
@@ -109,8 +104,7 @@ const AddToTeam : React.FC <UserSearchProps> = ({ history, match }) => {
         )
         .then(() => {
             history.push(`/team_view/${teamId}`);
-        })
-        .finally(() => dispatch({ type: 'EndSubmit' }));
+        });
     };
 
     const onSelectedUserChange = useCallback((selectedUser: Item) => {
