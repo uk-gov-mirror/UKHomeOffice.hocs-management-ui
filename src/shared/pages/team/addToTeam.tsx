@@ -30,25 +30,32 @@ type Action =
     { payload: Item, type: 'RemoveFromSelection' } |
     { payload: Item[], type: 'PopulateUsers' } |
     { payload: Item | undefined, type: 'ClearSelectedUser' } |
-    { type: 'EndSubmit' };
+    { type: 'EndSubmit' } |
+    { type: 'SetEmptySumbitError' };
 
 type State = {
+    errors?: FormError[];
+    errorDescription: string;
+    errorTitle: string;
     inputValue: string;
     selectedUser?: Item | string;
     selectedUsers: Item[];
     submitting: boolean;
-    postErrors?: FormError[];
     users: Item[];
 };
 
 const reducer = (state: State, action: Action) => {
     switch (action.type) {
     case 'AddError':
-        return { ...state, postErrors: [...state.postErrors || [], action.payload] };
+        return { ...state,
+            errorDescription: 'Something went wrong while adding the following users. Please try again.',
+            errorTitle: 'There was an error adding the users',
+            errors: [...state.errors || [], action.payload]
+        };
     case 'BeginSubmit':
-        return { ...state, postErrors: undefined, submitting: true };
+        return { ...state, errors: undefined, submitting: true };
     case 'AddToSelection':
-        return { ...state, selectedUsers: [...[], ...state.selectedUsers, action.payload] };
+        return { ...state, errors: undefined, selectedUsers: [...[], ...state.selectedUsers, action.payload] };
     case 'RemoveFromSelection':
         return { ...state, selectedUsers: [...state.selectedUsers.filter(user => user.value !== action.payload.value)] };
     case 'ClearSelectedUser':
@@ -57,6 +64,8 @@ const reducer = (state: State, action: Action) => {
         return { ...state, users: action.payload };
     case 'EndSubmit':
         return { ...state, submitting: false };
+    case 'SetEmptySumbitError':
+        return { ...state, errorDescription: 'Please select some users before submitting.', errorTitle: 'No users selected', errors: [] };
     }
     return state;
 };
@@ -64,8 +73,10 @@ const reducer = (state: State, action: Action) => {
 const AddToTeam : React.FC <UserSearchProps> = ({ history, match }) => {
 
     const [state, dispatch] = useReducer<Reducer<State, Action>>(reducer, {
+        errorDescription: '',
+        errorTitle: '',
         inputValue: '',
-        postErrors: undefined,
+        errors: undefined,
         selectedUser: undefined,
         selectedUsers: [],
         submitting: false,
@@ -75,16 +86,24 @@ const AddToTeam : React.FC <UserSearchProps> = ({ history, match }) => {
     const { params: { teamId } } = match;
 
     const onSubmit = () => {
+        if (state.selectedUsers.length === 0) {
+            dispatch({ type: 'SetEmptySumbitError' });
+            return;
+        }
+
         dispatch({ type: 'BeginSubmit' });
         Promise.all(state.selectedUsers.map(user =>
-            addUserToTeam(user, teamId)
-            .then(() => dispatch({ type: 'RemoveFromSelection', payload: user })))
+                addUserToTeam(user, teamId)
+                    .then(() => dispatch({ type: 'RemoveFromSelection', payload: user }))
+                    .catch((error: AddUserError) => {
+                        const { userToAdd: { label, value } } = error;
+                        dispatch({ type: 'AddError', payload: { key: value, value: label } });
+                        throw error;
+                    })
+            )
         )
         .then(() => {
             history.push(`/team_view/${teamId}`);
-        })
-        .catch(({ userToAdd: { label, value } }: AddUserError) => {
-            dispatch({ type: 'AddError', payload: { key: value, value: label } });
         })
         .finally(() => dispatch({ type: 'EndSubmit' }));
     };
@@ -104,6 +123,11 @@ const AddToTeam : React.FC <UserSearchProps> = ({ history, match }) => {
     return (
         <>
             <div className="govuk-form-group">
+                <ErrorSummary
+                    heading={state.errorTitle}
+                    description={state.errorDescription}
+                    errors={state.errors}
+                />
                 <h1 className="govuk-heading-xl">
                     Add users to the team
                 </h1>
@@ -119,11 +143,6 @@ const AddToTeam : React.FC <UserSearchProps> = ({ history, match }) => {
                     ></TypeAhead>
                 </div>
             </div>
-            <ErrorSummary
-                heading="Error adding users"
-                description="Something went wrong while adding the following users. Please try again."
-                errors={state.postErrors}
-            />
             <h2 className="govuk-heading-l">Users to be added</h2>
             <table className="govuk-table">
                 <tbody className="govuk-table__body">
@@ -142,7 +161,6 @@ const AddToTeam : React.FC <UserSearchProps> = ({ history, match }) => {
                 </tbody>
             </table>
             <button
-                disabled={state.submitting || state.selectedUsers.length === 0}
                 type="submit"
                 className="govuk-button view-team-button"
                 onClick={onSubmit}>Add selected users</button>
