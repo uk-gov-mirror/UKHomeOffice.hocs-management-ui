@@ -1,3 +1,22 @@
+const { infoService } = require('../clients/index');
+const getLogger = require('../libs/logger');
+const User = require('../models/user');
+
+async function getTeam(req, res, next) {
+    
+    const logger = getLogger(req.request);
+    const { teamId } = req.params;
+
+    try {
+        const response = await infoService.get(`/team/${teamId}`, {}, { headers: User.createHeaders(req.user) });
+        res.locals.team = response.data;
+        next();
+    } catch (error) {
+        logger.error(error);
+        next(error);
+    } 
+}
+
 async function getTeams(req, res, next) {
     try {
         const response = await req.listService.fetch('TEAMS', req.params);
@@ -18,6 +37,10 @@ async function getTeamMembers(req, res, next) {
     }
 }
 
+async function returnTeamJson(_, res) {
+    const { locals: { team } } = res;
+    await res.json(team);
+}
 async function returnTeamsJson(_, res) {
     const { locals: { teams } } = res;
     await res.json(teams);
@@ -29,8 +52,10 @@ async function returnTeamMembersJson(_, res) {
 }
 
 module.exports = {
+    getTeam,
     getTeams,
     getTeamMembers,
+    returnTeamJson,
     returnTeamsJson,
     returnTeamMembersJson
 }

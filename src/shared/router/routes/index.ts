@@ -2,7 +2,7 @@ import Error, { ErrorContent } from '../../layouts/error';
 import Dashboard from '../../pages/dashboard';
 import TeamSearch from '../../pages/team_search';
 import TeamView from '../../pages/team_view';
-import AddUsersToTeam from '../../pages/team/AddToTeam';
+import AddUsersToTeam from '../../pages/team/addToTeam';
 
 export interface Route {
     component: React.FunctionComponent | Error;
