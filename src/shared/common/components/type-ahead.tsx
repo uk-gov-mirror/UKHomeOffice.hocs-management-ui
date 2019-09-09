@@ -69,7 +69,7 @@ class TypeAhead extends Component<TypeAheadProps, TypeAheadState> {
                 {hint && <span className="govuk-hint">{hint}</span>}
                 {error && <span id={`${name}-error`} className="govuk-error-message">{error}</span>}
                 {this.props.value}
-                <Select
+                <Select<Item | string>
                     styles={{
                         control: () => ({}),
                         indicatorSeparator: () => ({}),
@@ -99,7 +99,6 @@ class TypeAhead extends Component<TypeAheadProps, TypeAheadState> {
                     onChange={this.handleChange.bind(this)}
                     loadOptions={this.getOptions.bind(this)}
                     noOptionsMessage={() => 'Loading...'}
-                    // @ts-ignore - setting to an empty string seems to be the only way to clear the selection
                     value={value}
                 />
             </div >
