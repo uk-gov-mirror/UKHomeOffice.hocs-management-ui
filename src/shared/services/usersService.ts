@@ -15,7 +15,7 @@ export const getUsers = () => usersApi.get('/api/users');
 
 export const addUserToTeam = (user: Item, teamId: string) => {
     return new Promise((resolve, reject) => usersApi
-        .post(`/api/users/${user}/team/${teamId}`)
+        .post(`/api/users/${user.value}/team/${teamId}`)
         .then(value => resolve(value.data))
         .catch(reason => reject(new AddUserError(reason, user))));
 };
