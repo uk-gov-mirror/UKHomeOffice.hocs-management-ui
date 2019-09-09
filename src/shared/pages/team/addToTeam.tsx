@@ -25,15 +25,18 @@ interface UserSearchProps extends RouteComponentProps<MatchParams>{
 
 type Action =
     { payload: FormError, type: 'AddError' } |
-    { type: 'ClearErrors' } |
+    { type: 'BeginSubmit' } |
     { payload: Item, type: 'AddToSelection' } |
     { payload: Item, type: 'RemoveFromSelection' } |
     { payload: Item[], type: 'PopulateUsers' } |
-    { payload: Item | undefined, type: 'ClearSelectedUser' };
+    { payload: Item | undefined, type: 'ClearSelectedUser' } |
+    { type: 'EndSubmit' };
 
 type State = {
-    selectedUser?: Item;
+    inputValue: string;
+    selectedUser?: Item | string;
     selectedUsers: Item[];
+    submitting: boolean;
     postErrors?: FormError[];
     users: Item[];
 };
@@ -42,16 +45,18 @@ const reducer = (state: State, action: Action) => {
     switch (action.type) {
     case 'AddError':
         return { ...state, postErrors: [...state.postErrors || [], action.payload] };
-    case 'ClearErrors':
-        return { ...state, postErrors: undefined };
+    case 'BeginSubmit':
+        return { ...state, postErrors: undefined, submitting: true };
     case 'AddToSelection':
         return { ...state, selectedUsers: [...[], ...state.selectedUsers, action.payload] };
     case 'RemoveFromSelection':
         return { ...state, selectedUsers: [...state.selectedUsers.filter(user => user.value !== action.payload.value)] };
     case 'ClearSelectedUser':
-        return { ...state, selectedUser: undefined };
+        return { ...state, selectedUser: '' };
     case 'PopulateUsers':
         return { ...state, users: action.payload };
+    case 'EndSubmit':
+        return { ...state, submitting: false };
     }
     return state;
 };
@@ -59,16 +64,18 @@ const reducer = (state: State, action: Action) => {
 const AddToTeam : React.FC <UserSearchProps> = ({ history, match }) => {
 
     const [state, dispatch] = useReducer<Reducer<State, Action>>(reducer, {
+        inputValue: '',
+        postErrors: undefined,
         selectedUser: undefined,
         selectedUsers: [],
-        postErrors: undefined,
-        users: [{ label: 'Loading users...', value: '' }]
+        submitting: false,
+        users: []
     });
 
     const { params: { teamId } } = match;
 
     const onSubmit = () => {
-        dispatch({ type: 'ClearErrors' });
+        dispatch({ type: 'BeginSubmit' });
         Promise.all(state.selectedUsers.map(user =>
             addUserToTeam(user, teamId)
             .then(() => dispatch({ type: 'RemoveFromSelection', payload: user })))
@@ -78,7 +85,8 @@ const AddToTeam : React.FC <UserSearchProps> = ({ history, match }) => {
         })
         .catch(({ userToAdd: { label, value } }: AddUserError) => {
             dispatch({ type: 'AddError', payload: { key: value, value: label } });
-        });
+        })
+        .finally(() => dispatch({ type: 'EndSubmit' }));
     };
 
     const onSelectedUserChange = useCallback((selectedUser: Item) => {
@@ -134,6 +142,7 @@ const AddToTeam : React.FC <UserSearchProps> = ({ history, match }) => {
                 </tbody>
             </table>
             <button
+                disabled={state.submitting || state.selectedUsers.length === 0}
                 type="submit"
                 className="govuk-button view-team-button"
                 onClick={onSubmit}>Add selected users</button>

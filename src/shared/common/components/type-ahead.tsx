@@ -12,7 +12,7 @@ interface TypeAheadProps {
     label: string;
     name: string;
     onSelectedItemChange: (newItem: Item) => void;
-    value?: Item;
+    value?: Item | string;
 }
 
 interface TypeAheadState {
@@ -60,13 +60,15 @@ class TypeAhead extends Component<TypeAheadProps, TypeAheadState> {
             error,
             hint,
             label,
-            name
+            name,
+            value
         } = this.props;
         return (
             <div className={`govuk-form-group${error ? ' govuk-form-group--error' : ''}`}>
                 <label htmlFor={name} id={`${name}-label`} className="govuk-label govuk-label--s">{label}</label>
                 {hint && <span className="govuk-hint">{hint}</span>}
                 {error && <span id={`${name}-error`} className="govuk-error-message">{error}</span>}
+                {this.props.value}
                 <Select
                     styles={{
                         control: () => ({}),
@@ -96,7 +98,9 @@ class TypeAhead extends Component<TypeAheadProps, TypeAheadState> {
                     error={error}
                     onChange={this.handleChange.bind(this)}
                     loadOptions={this.getOptions.bind(this)}
-                    value={this.props.value}
+                    noOptionsMessage={() => 'Loading...'}
+                    // @ts-ignore - setting to an empty string seems to be the only way to clear the selection
+                    value={value}
                 />
             </div >
         );
@@ -123,7 +127,7 @@ class TypeAhead extends Component<TypeAheadProps, TypeAheadState> {
                     id={name}
                     name={name}
                     disabled={disabled}
-                    value={value ? value.value : undefined}
+                    value={value ? typeof value === 'string' ? value : value.value : undefined}
                 >
                     {choices && choices.map(({ label, value }, i) => {
                         return (
