@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { RouteComponentProps } from 'react-router';
-import axios from 'axios';
 import { History } from 'history';
 import TypeAhead from '../common/components/type-ahead';
+import {deleteUserFromTeam, getTeamMembers} from "../services/usersService";
 
 interface TeamsMembersResponse {
     data: TeamMember[];
@@ -22,25 +22,41 @@ interface TeamMembersProps extends RouteComponentProps<MatchParams> {
 }
 
 const onAddTeamMembersAddClick = (history: History, teamId: string) => {
-
     history.push(`/team/${teamId}/add-users`);
 };
 
 const TeamView : React.FC <TeamMembersProps> = ({ history, match }) => {
 
-    console.log('match.params', match.params);
     const [teamMembers, setTeamMembers] = useState <TeamMember[]>([]);
     const [teamMembersLoaded, setTeamMembersLoaded] = useState(false);
 
     const { params: { teamId } } = match;
 
     useEffect(() => {
-        axios.get(`/api/teams/${teamId}/members`)
+        getTeamMembers(teamId)
             .then((res: TeamsMembersResponse) => {
+                console.log('response', res)
                 setTeamMembers(res.data);
                 setTeamMembersLoaded(true);
+                console.log('teamMembersLoaded', teamMembersLoaded)
             });
     }, []);
+
+    const removeTeamMember = (userUUID: string, teamId: string) => {
+        deleteUserFromTeam(userUUID, teamId)
+            .then(response => {
+                console.log('Getting updated user list');
+                getTeamMembers(teamId)
+                    .then(response => {
+                        console.log('response', response.data);
+                        setTeamMembers(response.data);
+                        console.log('teamMembers after update', teamMembers)
+                });
+            })
+            .catch(reason => {
+                console.log('**********caught*************');
+            })
+    };
 
     const DisplayTeamTable = () => (
         <div>
@@ -56,10 +72,16 @@ const TeamView : React.FC <TeamMembersProps> = ({ history, match }) => {
                         </tr>
                         </thead>
                         <tbody className="govuk-table__body">
-                        <tr className="govuk-table__row">
-                            <td className="govuk-table__cell"></td>
-                            <td className="govuk-table__cell"><a href={'#'}>Remove</a></td>
-                        </tr>
+                            {
+                                teamMembers.map((teamMember) => {
+                                    return (
+                                        <tr className="govuk-table__row">
+                                            <td className="govuk-table__cell">{teamMember.label}</td>
+                                            <td className="govuk-table__cell"><a href="#" onClick={() => removeTeamMember(teamMember.value, teamId as string)}>Remove</a></td>
+                                        </tr>
+                                    )
+                                })
+                            }
                         </tbody>
                     </table>
                 )}
@@ -70,7 +92,7 @@ const TeamView : React.FC <TeamMembersProps> = ({ history, match }) => {
     return (
         <div className="govuk-form-group">
             <h1 className="govuk-heading-xl">
-                Team search
+                Team View
             </h1>
             {
                 teamMembersLoaded ?
@@ -87,7 +109,7 @@ const TeamView : React.FC <TeamMembersProps> = ({ history, match }) => {
                         <DisplayTeamTable/>
                     </div> :
                     <div>
-                        ...loading
+                        <p className="govuk-body">Loading...</p>
                     </div>
             }
             <button type="submit" className="govuk-button add-team-members-button" onClick={() => onAddTeamMembersAddClick(history, teamId as string)}>Add team members</button>

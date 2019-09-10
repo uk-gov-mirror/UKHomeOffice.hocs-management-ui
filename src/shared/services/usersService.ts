@@ -13,6 +13,8 @@ export class AddUserError extends Error {
 
 export const getUsers = () => usersApi.get('/api/users');
 
+export const getTeamMembers = (teamId: string) => usersApi.get(`/api/teams/${teamId}/members`);
+
 export const addUserToTeam = (user: Item, teamId: string) => {
     return new Promise((resolve, reject) => usersApi
         .post(`/api/users/${user.value}/team/${teamId}`)
@@ -21,3 +23,5 @@ export const addUserToTeam = (user: Item, teamId: string) => {
 };
 
 export const deleteUserFromTeam = (userId: string, teamId: string) => usersApi.delete(`/api/users/${userId}/team/${teamId}`);
+
+
