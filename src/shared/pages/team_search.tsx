@@ -32,7 +32,6 @@ const TeamSearch : React.FC <TeamSearchProps> = ({ history }) => {
     }, []);
 
     const handleOnSubmit = () => {
-        console.log(teamUUID);
         history.push('/team_view/' + teamUUID);
     };
 
