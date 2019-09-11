@@ -1,11 +1,14 @@
 import React, { useEffect, useCallback, Reducer } from 'react';
 import { RouteComponentProps } from 'react-router';
-import { getTeam } from '../../services/teamsService';
-import { addUserToTeam, getUsers, AddUserError } from '../../services/usersService';
-import TypeAhead from '../../common/components/type-ahead';
-import ErrorSummary, { FormError } from '../../common/components/errorSummary';
-import Item from '../../models/item';
-import { User } from '../../models/user';
+import { getTeam } from '../../../services/teamsService';
+import { addUserToTeam, getUsers, AddUserError } from '../../../services/usersService';
+import TypeAhead from '../../../common/components/type-ahead';
+import ErrorSummary from '../../../common/components/errorSummary';
+import Item from '../../../models/item';
+import { User } from '../../../models/user';
+import { reducer } from './reducer';
+import { Action } from './action';
+import { State } from './state';
 
 interface UserResponse {
     data: User[];
@@ -16,54 +19,6 @@ interface MatchParams {
 }
 
 export interface AddToTeamProps extends RouteComponentProps<MatchParams> { }
-
-type Action =
-    { payload: FormError, type: 'AddError' } |
-    { type: 'BeginSubmit' } |
-    { payload: Item, type: 'AddToSelection' } |
-    { payload: Item, type: 'RemoveFromSelection' } |
-    { payload: Item[], type: 'PopulateUsers' } |
-    { payload: Item | undefined, type: 'ClearSelectedUser' } |
-    { type: 'SetEmptySumbitError' } |
-    { type: 'SetTeamName', payload: string };
-
-type State = {
-    errors?: FormError[];
-    errorDescription: string;
-    errorTitle: string;
-    inputValue: string;
-    selectedUser?: Item | string;
-    selectedUsers: Item[];
-    teamName?: string;
-    users: Item[];
-};
-
-const reducer = (state: State, action: Action) => {
-    switch (action.type) {
-        case 'AddError':
-            return {
-                ...state,
-                errorDescription: 'Something went wrong while adding the following users. Please try again.',
-                errorTitle: 'There was an error adding the users',
-                errors: [...state.errors || [], action.payload]
-            };
-        case 'BeginSubmit':
-            return { ...state, errors: undefined };
-        case 'AddToSelection':
-            return { ...state, errors: undefined, selectedUsers: [...[], ...state.selectedUsers, action.payload] };
-        case 'RemoveFromSelection':
-            return { ...state, selectedUsers: [...state.selectedUsers.filter(user => user.value !== action.payload.value)] };
-        case 'ClearSelectedUser':
-            return { ...state, selectedUser: '' };
-        case 'PopulateUsers':
-            return { ...state, users: action.payload };
-        case 'SetEmptySumbitError':
-            return { ...state, errorDescription: 'Please select some users before submitting.', errorTitle: 'No users selected', errors: [] };
-        case 'SetTeamName':
-            return { ...state, teamName: action.payload };
-    }
-    return state;
-};
 
 const AddToTeam: React.FC<AddToTeamProps> = ({ history, match }) => {
 

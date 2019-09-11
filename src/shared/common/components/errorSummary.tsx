@@ -1,9 +1,5 @@
 import React from 'react';
-
-export interface FormError {
-    key: string;
-    value: string;
-}
+import { FormError } from '../../models/formError';
 
 interface ErrorSummaryProps {
     description: string;
@@ -11,7 +7,7 @@ interface ErrorSummaryProps {
     heading?: string;
 }
 
-const ErrorSummary: React.FC<ErrorSummaryProps> = ({ description, errors, heading = 'There\'s a problem'  }) => {
+const ErrorSummary: React.FC<ErrorSummaryProps> = ({ description, errors, heading = 'There\'s a problem' }) => {
     return errors ?
         <div className="govuk-error-summary" role="alert" aria-labelledby="error-summary-heading-example-1" tabIndex={-1}>
             <h2 className="govuk-error-summary__title" id="error-summary-heading-example-1">

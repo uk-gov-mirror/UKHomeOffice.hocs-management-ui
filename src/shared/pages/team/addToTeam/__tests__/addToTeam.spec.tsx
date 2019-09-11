@@ -3,14 +3,14 @@ import { MemoryRouter, match } from 'react-router';
 import { createBrowserHistory, History, Location } from 'history';
 import { act, render, RenderResult, wait, fireEvent, getByText } from '@testing-library/react';
 import AddToTeam from '../addToTeam';
-import * as TeamsService from '../../../services/teamsService';
-import * as UsersService from '../../../services/usersService';
+import * as TeamsService from '../../../../services/teamsService';
+import * as UsersService from '../../../../services/usersService';
 
 let match: match<any>;
 let history: History<any>;
 let location: Location;
 
-jest.mock('../../../services/teamsService', () => ({
+jest.mock('../../../../services/teamsService', () => ({
     __esModule: true,
     getTeam: jest.fn().mockReturnValue(Promise.resolve({
         active: true,
@@ -21,7 +21,7 @@ jest.mock('../../../services/teamsService', () => ({
     }))
 }));
 
-jest.mock('../../../services/usersService', () => ({
+jest.mock('../../../../services/usersService', () => ({
     __esModule: true,
     addUserToTeam: jest.fn().mockReturnValue(Promise.resolve()),
     getUsers: jest.fn().mockReturnValue(Promise.resolve({

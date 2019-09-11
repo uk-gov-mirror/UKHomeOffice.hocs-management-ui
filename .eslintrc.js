@@ -15,11 +15,16 @@ module.exports = {
     },
     'rules': {
         'react/forbid-prop-types': false,
-        'import/extensions': false
+        'import/extensions': false,
+        'ter-indent': [
+            true,
+            4,
+            { 'SwitchCase': 1 }
+        ]
     },
     'overrides': [
         {
-            'files': [ '**/__tests__/**' ],
+            'files': ['**/__tests__/**'],
             'env': {
                 'jest': true
             },
@@ -31,11 +36,11 @@ module.exports = {
             }
         },
         {
-            'files': [ '**/__snapshots__/**' ],
+            'files': ['**/__snapshots__/**'],
             'excludedFiles': '*.js.snap'
         },
         {
-            'files': [ 'src/**' ],
+            'files': ['src/**'],
             'env': {
                 'commonjs': true
             }
