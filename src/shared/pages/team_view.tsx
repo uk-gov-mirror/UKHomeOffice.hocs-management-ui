@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { RouteComponentProps } from 'react-router';
 import { History } from 'history';
-import TypeAhead from '../common/components/type-ahead';
 import {deleteUserFromTeam, getTeamMembers} from "../services/usersService";
+import {getTeam} from "../services/teamsService";
 
 interface TeamsMembersResponse {
     data: TeamMember[];
@@ -29,46 +29,41 @@ const TeamView : React.FC <TeamMembersProps> = ({ history, match }) => {
 
     const [teamMembers, setTeamMembers] = useState <TeamMember[]>([]);
     const [teamMembersLoaded, setTeamMembersLoaded] = useState(false);
+    const [teamName, setTeamName] = useState('');
 
     const { params: { teamId } } = match;
 
     useEffect(() => {
+        getTeam(teamId).then( response => setTeamName(response.displayName));
         getTeamMembers(teamId)
             .then((res: TeamsMembersResponse) => {
-                console.log('response', res)
                 setTeamMembers(res.data);
                 setTeamMembersLoaded(true);
-                console.log('teamMembersLoaded', teamMembersLoaded)
             });
     }, []);
 
     const removeTeamMember = (userUUID: string, teamId: string) => {
         deleteUserFromTeam(userUUID, teamId)
             .then(response => {
-                console.log('Getting updated user list');
                 getTeamMembers(teamId)
                     .then(response => {
-                        console.log('response', response.data);
                         setTeamMembers(response.data);
-                        console.log('teamMembers after update', teamMembers)
                 });
             })
-            .catch(reason => {
-                console.log('**********caught*************');
+            .catch(error => {
+                throw error;
             })
     };
 
     const DisplayTeamTable = () => (
         <div>
             <div>
-            </div>
-            <div>
                 {teamMembersLoaded && (
                     <table className="govuk-table">
                         <thead className="govuk-table__head">
                         <tr className="govuk-table__row">
-                            <th className="govuk-table__header" scope="col">Team member</th>
-                            <th className="govuk-table__header" scope="col">Actions</th>
+                            <th className="govuk-table__header" scope="col">Team members</th>
+                            <th className="govuk-table__header" scope="col">Action</th>
                         </tr>
                         </thead>
                         <tbody className="govuk-table__body">
@@ -91,21 +86,17 @@ const TeamView : React.FC <TeamMembersProps> = ({ history, match }) => {
 
     return (
         <div className="govuk-form-group">
-            <h1 className="govuk-heading-xl">
-                Team View
-            </h1>
+            <div>
+                <h1 className="govuk-heading-xl">
+                    View and remove team members
+                </h1>
+                <h2 className="govuk-heading-l">
+                    {`Team: ${teamName}`}
+                </h2>
+            </div>
             {
                 teamMembersLoaded ?
                     <div>
-                        <TypeAhead
-                            choices={teamMembers}
-                            clearable={true}
-                            disabled={false}
-                            label={'TeamMembers'}
-                            name={'TeamMembers'}
-                            onSelectedItemChange={() => {
-                            }}
-                        ></TypeAhead>
                         <DisplayTeamTable/>
                     </div> :
                     <div>
