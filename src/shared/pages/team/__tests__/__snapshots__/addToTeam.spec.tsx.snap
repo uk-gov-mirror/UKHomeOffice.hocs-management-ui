@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`addToTeam component should render with default props 1`] = `
+exports[`when the addToTeam component is mounted should render with default props 1`] = `
 <div>
   <div
     class="govuk-form-group"
@@ -13,7 +13,7 @@ exports[`addToTeam component should render with default props 1`] = `
     <h2
       class="govuk-heading-l"
     >
-      Team: __displayName__
+      Team: __teamName__
     </h2>
     <div
       class="govuk-grid-row"
@@ -101,6 +101,77 @@ exports[`addToTeam component should render with default props 1`] = `
           </div>
         </div>
       </div>
+    </div>
+  </div>
+  <div
+    class="govuk-grid-row"
+  >
+    <div
+      class="govuk-grid-column-two-thirds-from-desktop"
+    >
+      <table
+        class="govuk-table"
+      >
+        <caption
+          class="govuk-table__caption"
+        >
+          Users to be added
+        </caption>
+        <tbody
+          class="govuk-table__body"
+        >
+          <tr
+            class="govuk-table__row"
+          >
+            <th
+              class="govuk-table__header"
+              scope="row"
+            >
+              __user1__
+            </th>
+            <td
+              class="govuk-table__cell"
+            >
+              <a
+                class="govuk-link"
+                href="#"
+              >
+                Remove
+                <span
+                  class="govuk-visually-hidden"
+                >
+                   user
+                </span>
+              </a>
+            </td>
+          </tr>
+          <tr
+            class="govuk-table__row"
+          >
+            <th
+              class="govuk-table__header"
+              scope="row"
+            >
+              __user2__
+            </th>
+            <td
+              class="govuk-table__cell"
+            >
+              <a
+                class="govuk-link"
+                href="#"
+              >
+                Remove
+                <span
+                  class="govuk-visually-hidden"
+                >
+                   user
+                </span>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
   <button

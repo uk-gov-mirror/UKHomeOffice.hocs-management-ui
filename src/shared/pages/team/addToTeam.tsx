@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useReducer, Reducer } from 'react';
+import React, { useEffect, useCallback, Reducer } from 'react';
 import { RouteComponentProps } from 'react-router';
 import { getTeam } from '../../services/teamsService';
 import { addUserToTeam, getUsers, AddUserError } from '../../services/usersService';
@@ -16,7 +16,7 @@ interface MatchParams {
     teamId: string;
 }
 
-export interface AddToTeamProps extends RouteComponentProps<MatchParams> {}
+export interface AddToTeamProps extends RouteComponentProps<MatchParams> { }
 
 type Action =
     { payload: FormError, type: 'AddError' } |
@@ -41,33 +41,34 @@ type State = {
 
 const reducer = (state: State, action: Action) => {
     switch (action.type) {
-    case 'AddError':
-        return { ...state,
-            errorDescription: 'Something went wrong while adding the following users. Please try again.',
-            errorTitle: 'There was an error adding the users',
-            errors: [...state.errors || [], action.payload]
-        };
-    case 'BeginSubmit':
-        return { ...state, errors: undefined };
-    case 'AddToSelection':
-        return { ...state, errors: undefined, selectedUsers: [...[], ...state.selectedUsers, action.payload] };
-    case 'RemoveFromSelection':
-        return { ...state, selectedUsers: [...state.selectedUsers.filter(user => user.value !== action.payload.value)] };
-    case 'ClearSelectedUser':
-        return { ...state, selectedUser: '' };
-    case 'PopulateUsers':
-        return { ...state, users: action.payload };
-    case 'SetEmptySumbitError':
-        return { ...state, errorDescription: 'Please select some users before submitting.', errorTitle: 'No users selected', errors: [] };
-    case 'SetTeamName':
-        return { ...state, teamName: action.payload };
+        case 'AddError':
+            return {
+                ...state,
+                errorDescription: 'Something went wrong while adding the following users. Please try again.',
+                errorTitle: 'There was an error adding the users',
+                errors: [...state.errors || [], action.payload]
+            };
+        case 'BeginSubmit':
+            return { ...state, errors: undefined };
+        case 'AddToSelection':
+            return { ...state, errors: undefined, selectedUsers: [...[], ...state.selectedUsers, action.payload] };
+        case 'RemoveFromSelection':
+            return { ...state, selectedUsers: [...state.selectedUsers.filter(user => user.value !== action.payload.value)] };
+        case 'ClearSelectedUser':
+            return { ...state, selectedUser: '' };
+        case 'PopulateUsers':
+            return { ...state, users: action.payload };
+        case 'SetEmptySumbitError':
+            return { ...state, errorDescription: 'Please select some users before submitting.', errorTitle: 'No users selected', errors: [] };
+        case 'SetTeamName':
+            return { ...state, teamName: action.payload };
     }
     return state;
 };
 
-const AddToTeam : React.FC <AddToTeamProps> = ({ history, match }) => {
+const AddToTeam: React.FC<AddToTeamProps> = ({ history, match }) => {
 
-    const [state, dispatch] = useReducer<Reducer<State, Action>>(reducer, {
+    const [state, dispatch] = React.useReducer<Reducer<State, Action>>(reducer, {
         errorDescription: '',
         errorTitle: '',
         inputValue: '',
@@ -91,34 +92,31 @@ const AddToTeam : React.FC <AddToTeamProps> = ({ history, match }) => {
 
         dispatch({ type: 'BeginSubmit' });
         Promise.all(state.selectedUsers.map(user =>
-                addUserToTeam(user, teamId)
-                    .then(() => dispatch({ type: 'RemoveFromSelection', payload: user }))
-                    .catch((error: AddUserError) => {
-                        const { userToAdd: { label, value } } = error;
-                        dispatch({ type: 'AddError', payload: { key: value, value: label } });
-                        throw error;
-                    })
-            )
-        )
-        .then(() => {
+            addUserToTeam(user, teamId)
+                .then(() => dispatch({ type: 'RemoveFromSelection', payload: user }))
+                .catch((error: AddUserError) => {
+                    const { userToAdd: { label, value } } = error;
+                    dispatch({ type: 'AddError', payload: { key: value, value: label } });
+                    throw error;
+                })
+        )).then(() => {
             history.push(`/team_view/${teamId}`);
         });
     };
 
     const onSelectedUserChange = useCallback((selectedUser: Item) => {
-        dispatch({ type:'AddToSelection', payload: selectedUser });
-        dispatch({ type:'ClearSelectedUser', payload: undefined });
+        dispatch({ type: 'AddToSelection', payload: selectedUser });
+        dispatch({ type: 'ClearSelectedUser', payload: undefined });
     }, []);
 
     useEffect(() => {
-        console.log(getTeam);
         getTeam(teamId)
             .then(team => dispatch({ type: 'SetTeamName', payload: team.displayName }));
         getUsers()
             .then((res: UserResponse) => dispatch({ type: 'PopulateUsers', payload: res.data }));
     }, []);
 
-    return ( state.teamName ?
+    return (state.teamName ?
         <>
             <div className="govuk-form-group">
                 <a href="" onClick={() => onBackLinkClick(history)} className="govuk-back-link">Back</a>
@@ -147,28 +145,28 @@ const AddToTeam : React.FC <AddToTeamProps> = ({ history, match }) => {
                     </div>
                 </div>
             </div>
-            { state.selectedUsers.length > 0 &&
-            <div className="govuk-grid-row">
-                <div className="govuk-grid-column-two-thirds-from-desktop">
-                    <table className="govuk-table">
-                        <caption className="govuk-table__caption">Users to be added</caption>
-                        <tbody className="govuk-table__body">
-                        { state.selectedUsers.map(user => (
-                            <tr key={user.value} className="govuk-table__row">
-                                <th scope="row" className="govuk-table__header">
-                                    {user.label}
-                                </th>
-                                <td className="govuk-table__cell">
-                                    <a className="govuk-link" href="#" onClick={() => dispatch({ type: 'RemoveFromSelection', payload: user })}>
-                                        Remove<span className="govuk-visually-hidden"> user</span>
-                                    </a>
-                                </td>
-                            </tr>
-                        )) }
-                        </tbody>
-                    </table>
+            {state.selectedUsers.length > 0 &&
+                <div className="govuk-grid-row">
+                    <div className="govuk-grid-column-two-thirds-from-desktop">
+                        <table className="govuk-table">
+                            <caption className="govuk-table__caption">Users to be added</caption>
+                            <tbody className="govuk-table__body">
+                                {state.selectedUsers.map(user => (
+                                    <tr key={user.value} className="govuk-table__row">
+                                        <th scope="row" className="govuk-table__header">
+                                            {user.label}
+                                        </th>
+                                        <td className="govuk-table__cell">
+                                            <a className="govuk-link" href="#" onClick={() => dispatch({ type: 'RemoveFromSelection', payload: user })}>
+                                                Remove<span className="govuk-visually-hidden"> user</span>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
             }
             <button
                 type="submit"
