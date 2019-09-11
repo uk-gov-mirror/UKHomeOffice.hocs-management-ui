@@ -5,10 +5,12 @@ import { act, render, RenderResult, wait, fireEvent, getByText } from '@testing-
 import AddToTeam from '../addToTeam';
 import * as TeamsService from '../../../../services/teamsService';
 import * as UsersService from '../../../../services/usersService';
+import { State } from '../state';
 
 let match: match<any>;
 let history: History<any>;
 let location: Location;
+let mockState: State;
 
 jest.mock('../../../../services/teamsService', () => ({
     __esModule: true,
@@ -38,6 +40,8 @@ jest.mock('../../../../services/usersService', () => ({
 const getTeamSpy = jest.spyOn(TeamsService, 'getTeam');
 const addUsersToTeamSpy = jest.spyOn(UsersService, 'addUserToTeam');
 const getUsersSpy = jest.spyOn(UsersService, 'getUsers');
+const useReducerSpy = jest.spyOn(React, 'useReducer');
+const dispatch = jest.fn();
 
 beforeEach(() => {
     history = createBrowserHistory();
@@ -55,6 +59,26 @@ beforeEach(() => {
         search: '',
         state: {}
     };
+    mockState = {
+        errorDescription: '',
+        errorTitle: '',
+        inputValue: '',
+        errors: undefined,
+        selectedUser: '',
+        selectedUsers: [{
+            label: '__user1__',
+            value: '__userId1__'
+        }, {
+            label: '__user2__',
+            value: '__userId2__'
+        }],
+        teamName: '__teamName__',
+        users: [{
+            label: '__user1__',
+            value: '__userId1__'
+        }]
+    };
+    useReducerSpy.mockImplementationOnce(() => [mockState, dispatch]);
 });
 
 describe('when the addToTeam component is mounted', () => {
@@ -70,29 +94,23 @@ describe('when the addToTeam component is mounted', () => {
             expect(wrapper.container).toMatchSnapshot();
         });
     });
+
+    it('should initially render null before the team name is returned', async () => {
+        let wrapper: RenderResult;
+        getTeamSpy.mockReturnValueOnce(Promise.resolve({
+            active: true,
+            displayName: undefined,
+            letterName: '__letterName__',
+            permissions: [],
+            type: '__type__'
+        }));
+        mockState.teamName = undefined;
+        wrapper = render(<MemoryRouter><AddToTeam history={history} location={location} match={match}></AddToTeam></MemoryRouter>);
+        expect(wrapper.container.outerHTML).toEqual('<div></div>');
+    });
 });
 
 describe('when the submit button is clicked', () => {
-    const dispatch = jest.fn();
-    const useReducerSpy = jest.spyOn(React, 'useReducer');
-    const mockState = {
-        errorDescription: '',
-        errorTitle: '',
-        inputValue: '',
-        errors: undefined,
-        selectedUser: '',
-        selectedUsers: [{
-            label: '__user1__',
-            value: '__userId1__'
-        }, {
-            label: '__user2__',
-            value: '__userId2__'
-        }],
-        teamName: '__teamName__',
-        users: []
-    };
-    useReducerSpy.mockImplementation(() => [mockState, dispatch]);
-
     let wrapper: RenderResult;
 
     beforeEach(() => {
@@ -165,5 +183,41 @@ describe('when the submit button is clicked', () => {
                 type: 'SetEmptySumbitError'
             });
         });
+    });
+});
+
+describe('when the back button is clicked', () => {
+    it('should push a new page into the history', async () => {
+        history.push = jest.fn();
+        let wrapper: RenderResult;
+        act(() => {
+            wrapper = render(<MemoryRouter><AddToTeam history={history} location={location} match={match}></AddToTeam></MemoryRouter>);
+        });
+
+        await wait(async () => {
+            const backButton = getByText(wrapper.container, 'Back');
+            fireEvent.click(backButton);
+        });
+
+        expect(history.push).toHaveBeenCalledWith('/team_view/__teamId__');
+    });
+});
+
+describe('when the remove button is clicked', () => {
+    it('should remove the row from the selected users collection', async () => {
+        let wrapper: RenderResult;
+        act(() => {
+            wrapper = render(<MemoryRouter><AddToTeam history={history} location={location} match={match}></AddToTeam></MemoryRouter>);
+        });
+
+        await wait(async () => {
+            const selectedUser = getByText(wrapper.container, '__user1__');
+            dispatch.mockReset();
+            const row = (selectedUser.closest('tr'));
+            const removeButton = getByText(row as HTMLElement, 'Remove');
+            fireEvent.click(removeButton);
+        });
+
+        expect(dispatch).nthCalledWith(1, { type: 'RemoveFromSelection', payload: { label: '__user1__', value: '__userId1__' } });
     });
 });

@@ -21,5 +21,5 @@ export type Action = {
     type: 'SetEmptySumbitError';
 } | {
     type: 'SetTeamName';
-    payload: string;
+    payload?: string;
 };
