@@ -56,7 +56,7 @@ const AddToTeam: React.FC<AddToTeamProps> = ({ history, match }) => {
                 })
         )).then(() => {
             history.push(`/team_view/${teamId}`);
-        });
+        }).catch(() => { });
     };
 
     const onSelectedUserChange = useCallback((selectedUser: Item) => {

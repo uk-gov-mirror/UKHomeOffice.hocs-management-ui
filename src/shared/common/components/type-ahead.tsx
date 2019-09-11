@@ -68,7 +68,6 @@ class TypeAhead extends Component<TypeAheadProps, TypeAheadState> {
                 <label htmlFor={name} id={`${name}-label`} className="govuk-label govuk-label--s">{label}</label>
                 {hint && <span className="govuk-hint">{hint}</span>}
                 {error && <span id={`${name}-error`} className="govuk-error-message">{error}</span>}
-                {this.props.value}
                 <Select<Item | string>
                     styles={{
                         control: () => ({}),

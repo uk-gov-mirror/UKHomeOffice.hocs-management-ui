@@ -80,7 +80,7 @@ describe('when the submit button is clicked', () => {
         errorTitle: '',
         inputValue: '',
         errors: undefined,
-        selectedUser: undefined,
+        selectedUser: '',
         selectedUsers: [{
             label: '__user1__',
             value: '__userId1__'
@@ -103,7 +103,6 @@ describe('when the submit button is clicked', () => {
     });
 
     it('should call the service and dispach actions for the selected options', async () => {
-
         await wait(async () => {
             const submitButton = getByText(wrapper.container, 'Add selected users');
             fireEvent.click(submitButton);
@@ -134,6 +133,24 @@ describe('when the submit button is clicked', () => {
                 }
             });
         });
+    });
+
+    it('should display errors for each erroring team member add request', async () => {
+        expect.assertions(2);
+        addUsersToTeamSpy.mockImplementation(() => Promise.reject({
+            userToAdd: {
+                label: '__label__',
+                value: '__value__'
+            }
+        }));
+
+        await wait(() => {
+            const submitButton = getByText(wrapper.container, 'Add selected users');
+            fireEvent.click(submitButton);
+        });
+
+        expect(dispatch).nthCalledWith(4, { type: 'AddError', payload: { key: '__value__', value: '__label__' } });
+        expect(dispatch).nthCalledWith(5, { type: 'AddError', payload: { key: '__value__', value: '__label__' } });
     });
 
     it('should set an error when no users are selected', async () => {
