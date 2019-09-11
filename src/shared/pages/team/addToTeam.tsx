@@ -1,28 +1,21 @@
 import React, { useEffect, useCallback, useReducer, Reducer } from 'react';
 import { RouteComponentProps } from 'react-router';
-import { History } from 'history';
 import { getTeam } from '../../services/teamsService';
 import { addUserToTeam, getUsers, AddUserError } from '../../services/usersService';
 import TypeAhead from '../../common/components/type-ahead';
 import ErrorSummary, { FormError } from '../../common/components/errorSummary';
 import Item from '../../models/item';
+import { User } from '../../models/user';
 
 interface UserResponse {
     data: User[];
-}
-
-interface User {
-    label: string;
-    value: string;
 }
 
 interface MatchParams {
     teamId: string;
 }
 
-interface UserSearchProps extends RouteComponentProps<MatchParams>{
-    history: History;
-}
+export interface AddToTeamProps extends RouteComponentProps<MatchParams> {}
 
 type Action =
     { payload: FormError, type: 'AddError' } |
@@ -71,7 +64,7 @@ const reducer = (state: State, action: Action) => {
     return state;
 };
 
-const AddToTeam : React.FC <UserSearchProps> = ({ history, match }) => {
+const AddToTeam : React.FC <AddToTeamProps> = ({ history, match }) => {
 
     const [state, dispatch] = useReducer<Reducer<State, Action>>(reducer, {
         errorDescription: '',
@@ -113,11 +106,11 @@ const AddToTeam : React.FC <UserSearchProps> = ({ history, match }) => {
     }, []);
 
     useEffect(() => {
-        getTeam(teamId).then(team => dispatch({ type: 'SetTeamName', payload: team.displayName }));
+        console.log(getTeam);
+        getTeam(teamId)
+            .then(team => dispatch({ type: 'SetTeamName', payload: team.displayName }));
         getUsers()
-            .then((res: UserResponse) => {
-                setTimeout(() => dispatch({ type: 'PopulateUsers', payload: res.data }), 3000);
-            });
+            .then((res: UserResponse) => dispatch({ type: 'PopulateUsers', payload: res.data }));
     }, []);
 
     return ( state.teamName ?

@@ -11,7 +11,13 @@ export class AddUserError extends Error {
     }
 }
 
-export const getUsers = () => usersApi.get('/api/users');
+export const getUsers = () => {
+    return new Promise((resolve, reject) => usersApi
+        .get('/api/users')
+        .then(value => resolve(value))
+        .catch(reason => reject(reason))
+    );
+};
 
 export const getTeamMembers = (teamId: string) => usersApi.get(`/api/teams/${teamId}/members`);
 
