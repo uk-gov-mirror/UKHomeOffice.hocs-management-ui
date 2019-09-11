@@ -6,6 +6,7 @@ import TypeAhead from '../../common/components/type-ahead';
 import ErrorSummary, { FormError } from '../../common/components/errorSummary';
 import Item from '../../models/item';
 import { User } from '../../models/user';
+import {History} from "history";
 
 interface UserResponse {
     data: User[];
@@ -78,6 +79,10 @@ const AddToTeam : React.FC <AddToTeamProps> = ({ history, match }) => {
 
     const { params: { teamId } } = match;
 
+    const onBackLinkClick = (history: History) => {
+        history.push(`/team_view/${teamId}`)
+    };
+
     const onSubmit = () => {
         if (state.selectedUsers.length === 0) {
             dispatch({ type: 'SetEmptySumbitError' });
@@ -116,6 +121,7 @@ const AddToTeam : React.FC <AddToTeamProps> = ({ history, match }) => {
     return ( state.teamName ?
         <>
             <div className="govuk-form-group">
+                <a href="" onClick={() => onBackLinkClick(history)} className="govuk-back-link">Back</a>
                 <ErrorSummary
                     heading={state.errorTitle}
                     description={state.errorDescription}

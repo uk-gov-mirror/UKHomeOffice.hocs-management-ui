@@ -25,6 +25,10 @@ const onAddTeamMembersAddClick = (history: History, teamId: string) => {
     history.push(`/team/${teamId}/add-users`);
 };
 
+const onBackLinkClick = (history: History) => {
+    history.push(`/team_search`);
+};
+
 const TeamView : React.FC <TeamMembersProps> = ({ history, match }) => {
 
     const [teamMembers, setTeamMembers] = useState <TeamMember[]>([]);
@@ -86,24 +90,23 @@ const TeamView : React.FC <TeamMembersProps> = ({ history, match }) => {
 
     return (
         <div className="govuk-form-group">
+                <a href="" onClick={() => onBackLinkClick(history)} className="govuk-back-link">Back</a>
             <div>
-                <h1 className="govuk-heading-xl">
-                    View and remove team members
-                </h1>
+                <h1 className="govuk-heading-xl">View and remove team members</h1>
                 <h2 className="govuk-heading-l">
                     {`Team: ${teamName}`}
                 </h2>
+                {
+                    teamMembersLoaded ?
+                        <div>
+                            <DisplayTeamTable/>
+                        </div> :
+                        <div>
+                            <p className="govuk-body">Loading...</p>
+                        </div>
+                }
+                <button type="submit" className="govuk-button add-team-members-button" onClick={() => onAddTeamMembersAddClick(history, teamId as string)}>Add team members</button>
             </div>
-            {
-                teamMembersLoaded ?
-                    <div>
-                        <DisplayTeamTable/>
-                    </div> :
-                    <div>
-                        <p className="govuk-body">Loading...</p>
-                    </div>
-            }
-            <button type="submit" className="govuk-button add-team-members-button" onClick={() => onAddTeamMembersAddClick(history, teamId as string)}>Add team members</button>
         </div>
     );
 };
