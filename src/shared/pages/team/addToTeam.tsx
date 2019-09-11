@@ -1,28 +1,21 @@
 import React, { useEffect, useCallback, useReducer, Reducer } from 'react';
 import { RouteComponentProps } from 'react-router';
-import { History } from 'history';
 import { getTeam } from '../../services/teamsService';
 import { addUserToTeam, getUsers, AddUserError } from '../../services/usersService';
 import TypeAhead from '../../common/components/type-ahead';
 import ErrorSummary, { FormError } from '../../common/components/errorSummary';
 import Item from '../../models/item';
+import { User } from '../../models/user';
 
 interface UserResponse {
     data: User[];
-}
-
-interface User {
-    label: string;
-    value: string;
 }
 
 interface MatchParams {
     teamId: string;
 }
 
-interface UserSearchProps extends RouteComponentProps<MatchParams>{
-    history: History;
-}
+export interface AddToTeamProps extends RouteComponentProps<MatchParams> {}
 
 type Action =
     { payload: FormError, type: 'AddError' } |
@@ -31,7 +24,6 @@ type Action =
     { payload: Item, type: 'RemoveFromSelection' } |
     { payload: Item[], type: 'PopulateUsers' } |
     { payload: Item | undefined, type: 'ClearSelectedUser' } |
-    { type: 'EndSubmit' } |
     { type: 'SetEmptySumbitError' } |
     { type: 'SetTeamName', payload: string };
 
@@ -42,7 +34,6 @@ type State = {
     inputValue: string;
     selectedUser?: Item | string;
     selectedUsers: Item[];
-    submitting: boolean;
     teamName?: string;
     users: Item[];
 };
@@ -56,7 +47,7 @@ const reducer = (state: State, action: Action) => {
             errors: [...state.errors || [], action.payload]
         };
     case 'BeginSubmit':
-        return { ...state, errors: undefined, submitting: true };
+        return { ...state, errors: undefined };
     case 'AddToSelection':
         return { ...state, errors: undefined, selectedUsers: [...[], ...state.selectedUsers, action.payload] };
     case 'RemoveFromSelection':
@@ -65,8 +56,6 @@ const reducer = (state: State, action: Action) => {
         return { ...state, selectedUser: '' };
     case 'PopulateUsers':
         return { ...state, users: action.payload };
-    case 'EndSubmit':
-        return { ...state, submitting: false };
     case 'SetEmptySumbitError':
         return { ...state, errorDescription: 'Please select some users before submitting.', errorTitle: 'No users selected', errors: [] };
     case 'SetTeamName':
@@ -75,7 +64,7 @@ const reducer = (state: State, action: Action) => {
     return state;
 };
 
-const AddToTeam : React.FC <UserSearchProps> = ({ history, match }) => {
+const AddToTeam : React.FC <AddToTeamProps> = ({ history, match }) => {
 
     const [state, dispatch] = useReducer<Reducer<State, Action>>(reducer, {
         errorDescription: '',
@@ -84,7 +73,6 @@ const AddToTeam : React.FC <UserSearchProps> = ({ history, match }) => {
         errors: undefined,
         selectedUser: undefined,
         selectedUsers: [],
-        submitting: false,
         users: []
     });
 
@@ -109,8 +97,7 @@ const AddToTeam : React.FC <UserSearchProps> = ({ history, match }) => {
         )
         .then(() => {
             history.push(`/team_view/${teamId}`);
-        })
-        .finally(() => dispatch({ type: 'EndSubmit' }));
+        });
     };
 
     const onSelectedUserChange = useCallback((selectedUser: Item) => {
@@ -119,11 +106,11 @@ const AddToTeam : React.FC <UserSearchProps> = ({ history, match }) => {
     }, []);
 
     useEffect(() => {
-        getTeam(teamId).then(team => dispatch({ type: 'SetTeamName', payload: team.displayName }));
+        console.log(getTeam);
+        getTeam(teamId)
+            .then(team => dispatch({ type: 'SetTeamName', payload: team.displayName }));
         getUsers()
-            .then((res: UserResponse) => {
-                setTimeout(() => dispatch({ type: 'PopulateUsers', payload: res.data }), 3000);
-            });
+            .then((res: UserResponse) => dispatch({ type: 'PopulateUsers', payload: res.data }));
     }, []);
 
     return ( state.teamName ?
