@@ -35,8 +35,13 @@ const TeamSearch : React.FC <TeamSearchProps> = ({ history }) => {
         history.push('/team_view/' + teamUUID);
     };
 
+    const onBackLinkClick = (history: History) => {
+        history.push(`/`)
+    };
+
     return (
         <div className="govuk-form-group">
+            <a href="" onClick={() => onBackLinkClick(history)} className="govuk-back-link">Back</a>
             <h1 className="govuk-heading-xl">
                 Team search
             </h1>

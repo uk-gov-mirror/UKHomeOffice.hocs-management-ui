@@ -5,6 +5,12 @@ exports[`when the addToTeam component is mounted should render with default prop
   <div
     class="govuk-form-group"
   >
+    <a
+      class="govuk-back-link"
+      href=""
+    >
+      Back
+    </a>
     <h1
       class="govuk-heading-xl"
     >

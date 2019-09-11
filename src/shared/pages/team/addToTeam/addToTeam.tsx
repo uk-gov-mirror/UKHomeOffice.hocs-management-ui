@@ -1,5 +1,6 @@
 import React, { useEffect, useCallback, Reducer } from 'react';
 import { RouteComponentProps } from 'react-router';
+import { History } from 'history';
 import { getTeam } from '../../../services/teamsService';
 import { addUserToTeam, getUsers, AddUserError } from '../../../services/usersService';
 import TypeAhead from '../../../common/components/type-ahead';
@@ -33,6 +34,10 @@ const AddToTeam: React.FC<AddToTeamProps> = ({ history, match }) => {
     });
 
     const { params: { teamId } } = match;
+
+    const onBackLinkClick = (history: History) => {
+        history.push(`/team_view/${teamId}`);
+    };
 
     const onSubmit = () => {
         if (state.selectedUsers.length === 0) {
@@ -69,6 +74,7 @@ const AddToTeam: React.FC<AddToTeamProps> = ({ history, match }) => {
     return (state.teamName ?
         <>
             <div className="govuk-form-group">
+                <a href="" onClick={() => onBackLinkClick(history)} className="govuk-back-link">Back</a>
                 <ErrorSummary
                     heading={state.errorTitle}
                     description={state.errorDescription}
