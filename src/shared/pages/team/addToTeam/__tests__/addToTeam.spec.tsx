@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, match } from 'react-router';
+import { match } from 'react-router';
 import { createBrowserHistory, History, Location } from 'history';
 import { act, render, RenderResult, wait, fireEvent, getByText } from '@testing-library/react';
 import AddToTeam from '../addToTeam';
@@ -85,7 +85,7 @@ describe('when the addToTeam component is mounted', () => {
     it('should render with default props', async () => {
         let wrapper: RenderResult;
         act(() => {
-            wrapper = render(<MemoryRouter><AddToTeam history={history} location={location} match={match}></AddToTeam></MemoryRouter>);
+            wrapper = render(<AddToTeam history={history} location={location} match={match}></AddToTeam>);
         });
 
         await wait(() => {
@@ -105,7 +105,7 @@ describe('when the addToTeam component is mounted', () => {
             type: '__type__'
         }));
         mockState.teamName = undefined;
-        wrapper = render(<MemoryRouter><AddToTeam history={history} location={location} match={match}></AddToTeam></MemoryRouter>);
+        wrapper = render(<AddToTeam history={history} location={location} match={match}></AddToTeam>);
         expect(wrapper.container.outerHTML).toEqual('<div></div>');
     });
 });
@@ -115,7 +115,7 @@ describe('when the submit button is clicked', () => {
 
     beforeEach(() => {
         act(() => {
-            wrapper = render(<MemoryRouter><AddToTeam history={history} location={location} match={match}></AddToTeam></MemoryRouter>);
+            wrapper = render(<AddToTeam history={history} location={location} match={match}></AddToTeam>);
         });
         dispatch.mockReset();
     });
@@ -180,7 +180,7 @@ describe('when the submit button is clicked', () => {
 
         await wait(async () => {
             expect(dispatch).nthCalledWith(3, {
-                type: 'SetEmptySumbitError'
+                type: 'SetEmptySubmitError'
             });
         });
     });
@@ -191,7 +191,7 @@ describe('when the back button is clicked', () => {
         history.push = jest.fn();
         let wrapper: RenderResult;
         act(() => {
-            wrapper = render(<MemoryRouter><AddToTeam history={history} location={location} match={match}></AddToTeam></MemoryRouter>);
+            wrapper = render(<AddToTeam history={history} location={location} match={match}></AddToTeam>);
         });
 
         await wait(async () => {
@@ -207,7 +207,7 @@ describe('when the remove button is clicked', () => {
     it('should remove the row from the selected users collection', async () => {
         let wrapper: RenderResult;
         act(() => {
-            wrapper = render(<MemoryRouter><AddToTeam history={history} location={location} match={match}></AddToTeam></MemoryRouter>);
+            wrapper = render(<AddToTeam history={history} location={location} match={match}></AddToTeam>);
         });
 
         await wait(async () => {

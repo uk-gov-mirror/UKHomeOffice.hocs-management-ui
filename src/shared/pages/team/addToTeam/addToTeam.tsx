@@ -8,8 +8,9 @@ import ErrorSummary from '../../../common/components/errorSummary';
 import Item from '../../../models/item';
 import { User } from '../../../models/user';
 import { reducer } from './reducer';
-import { Action } from './action';
+import { Action } from './actions';
 import { State } from './state';
+import { initialState } from './initialState';
 
 interface UserResponse {
     data: User[];
@@ -23,15 +24,7 @@ export interface AddToTeamProps extends RouteComponentProps<MatchParams> { }
 
 const AddToTeam: React.FC<AddToTeamProps> = ({ history, match }) => {
 
-    const [state, dispatch] = React.useReducer<Reducer<State, Action>>(reducer, {
-        errorDescription: '',
-        errorTitle: '',
-        inputValue: '',
-        errors: undefined,
-        selectedUser: undefined,
-        selectedUsers: [],
-        users: []
-    });
+    const [state, dispatch] = React.useReducer<Reducer<State, Action>>(reducer, initialState);
 
     const { params: { teamId } } = match;
 
@@ -41,7 +34,7 @@ const AddToTeam: React.FC<AddToTeamProps> = ({ history, match }) => {
 
     const onSubmit = () => {
         if (state.selectedUsers.length === 0) {
-            dispatch({ type: 'SetEmptySumbitError' });
+            dispatch({ type: 'SetEmptySubmitError' });
             return;
         }
 
@@ -61,7 +54,7 @@ const AddToTeam: React.FC<AddToTeamProps> = ({ history, match }) => {
 
     const onSelectedUserChange = useCallback((selectedUser: Item) => {
         dispatch({ type: 'AddToSelection', payload: selectedUser });
-        dispatch({ type: 'ClearSelectedUser', payload: undefined });
+        dispatch({ type: 'ClearSelectedUser' });
     }, []);
 
     useEffect(() => {
