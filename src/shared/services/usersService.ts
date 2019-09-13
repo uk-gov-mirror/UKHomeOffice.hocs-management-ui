@@ -29,5 +29,3 @@ export const addUserToTeam = (user: Item, teamId: string) => {
 };
 
 export const deleteUserFromTeam = (userId: string, teamId: string) => usersApi.delete(`/api/users/${userId}/team/${teamId}`);
-
-
