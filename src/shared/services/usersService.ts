@@ -1,7 +1,5 @@
-import apiClient from './apiClient';
+import axios from 'axios';
 import Item from '../models/item';
-
-const usersApi = apiClient.createClient();
 
 export class AddUserError extends Error {
     userToAdd: Item;
@@ -11,21 +9,26 @@ export class AddUserError extends Error {
     }
 }
 
-export const getUsers = () => {
-    return new Promise((resolve, reject) => usersApi
-        .get('/api/users')
-        .then(value => resolve(value))
-        .catch(reason => reject(reason))
-    );
-};
+export const getUsers = () => new Promise((resolve, reject) => axios
+    .get('/api/users')
+    .then(response => resolve(response.data))
+    .catch(reason => reject(reason))
+);
 
-export const getTeamMembers = (teamId: string) => usersApi.get(`/api/teams/${teamId}/members`);
+export const getTeamMembers = (teamId: string) => new Promise((resolve, reject) => axios
+    .get(`/api/teams/${teamId}/members`)
+    .then(response => resolve(response.data))
+    .catch(reason => reject(reason))
+);
 
-export const addUserToTeam = (user: Item, teamId: string) => {
-    return new Promise((resolve, reject) => usersApi
-        .post(`/api/users/${user.value}/team/${teamId}`)
-        .then(value => resolve(value.data))
-        .catch(reason => reject(new AddUserError(reason, user))));
-};
+export const addUserToTeam = (user: Item, teamId: string) => new Promise((resolve, reject) => axios
+    .post(`/api/users/${user.value}/team/${teamId}`)
+    .then(response => resolve(response.data))
+    .catch(reason => reject(new AddUserError(reason.message, user)))
+);
 
-export const deleteUserFromTeam = (userId: string, teamId: string) => usersApi.delete(`/api/users/${userId}/team/${teamId}`);
+export const deleteUserFromTeam = (userId: string, teamId: string) => new Promise((resolve, reject) => axios
+    .delete(`/api/users/${userId}/team/${teamId}`)
+    .then(response => resolve(response.data))
+    .catch(reason => reject(reason))
+);

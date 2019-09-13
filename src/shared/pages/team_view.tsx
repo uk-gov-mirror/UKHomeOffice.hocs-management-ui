@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { RouteComponentProps } from 'react-router';
 import { History } from 'history';
-import {deleteUserFromTeam, getTeamMembers} from "../services/usersService";
-import {getTeam} from "../services/teamsService";
-
-interface TeamsMembersResponse {
-    data: TeamMember[];
-}
+import { deleteUserFromTeam, getTeamMembers } from '../services/usersService';
+import { getTeam } from '../services/teamsService';
 
 interface TeamMember {
     label: string;
@@ -26,37 +22,37 @@ const onAddTeamMembersAddClick = (history: History, teamId: string) => {
 };
 
 const onBackLinkClick = (history: History) => {
-    history.push(`/team_search`);
+    history.push('/team_search');
 };
 
-const TeamView : React.FC <TeamMembersProps> = ({ history, match }) => {
+const TeamView: React.FC<TeamMembersProps> = ({ history, match }) => {
 
-    const [teamMembers, setTeamMembers] = useState <TeamMember[]>([]);
+    const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
     const [teamMembersLoaded, setTeamMembersLoaded] = useState(false);
-    const [teamName, setTeamName] = useState('');
+    const [teamName, setTeamName] = useState<string | undefined>('');
 
     const { params: { teamId } } = match;
 
     useEffect(() => {
-        getTeam(teamId).then( response => setTeamName(response.displayName));
+        getTeam(teamId).then(response => setTeamName(response.displayName));
         getTeamMembers(teamId)
-            .then((res: TeamsMembersResponse) => {
-                setTeamMembers(res.data);
+            .then((teamMembers: TeamMember[]) => {
+                setTeamMembers(teamMembers);
                 setTeamMembersLoaded(true);
             });
     }, []);
 
     const removeTeamMember = (userUUID: string, teamId: string) => {
         deleteUserFromTeam(userUUID, teamId)
-            .then(response => {
+            .then(() => {
                 getTeamMembers(teamId)
-                    .then(response => {
-                        setTeamMembers(response.data);
-                });
+                    .then((teamMembers: TeamMember[]) => {
+                        setTeamMembers(teamMembers);
+                    });
             })
             .catch(error => {
                 throw error;
-            })
+            });
     };
 
     const DisplayTeamTable = () => (
@@ -65,10 +61,10 @@ const TeamView : React.FC <TeamMembersProps> = ({ history, match }) => {
                 {teamMembersLoaded && (
                     <table className="govuk-table">
                         <thead className="govuk-table__head">
-                        <tr className="govuk-table__row">
-                            <th className="govuk-table__header" scope="col">Team members</th>
-                            <th className="govuk-table__header" scope="col">Action</th>
-                        </tr>
+                            <tr className="govuk-table__row">
+                                <th className="govuk-table__header" scope="col">Team members</th>
+                                <th className="govuk-table__header" scope="col">Action</th>
+                            </tr>
                         </thead>
                         <tbody className="govuk-table__body">
                             {
@@ -90,7 +86,7 @@ const TeamView : React.FC <TeamMembersProps> = ({ history, match }) => {
 
     return (
         <div className="govuk-form-group">
-                <a href="" onClick={() => onBackLinkClick(history)} className="govuk-back-link">Back</a>
+            <a href="" onClick={() => onBackLinkClick(history)} className="govuk-back-link">Back</a>
             <div>
                 <h1 className="govuk-heading-xl">View and remove team members</h1>
                 <h2 className="govuk-heading-l">
@@ -99,7 +95,7 @@ const TeamView : React.FC <TeamMembersProps> = ({ history, match }) => {
                 {
                     teamMembersLoaded ?
                         <div>
-                            <DisplayTeamTable/>
+                            <DisplayTeamTable />
                         </div> :
                         <div>
                             <p className="govuk-body">Loading...</p>

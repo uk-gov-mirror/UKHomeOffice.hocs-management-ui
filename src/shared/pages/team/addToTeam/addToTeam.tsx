@@ -12,10 +12,6 @@ import { Action } from './actions';
 import { State } from './state';
 import { initialState } from './initialState';
 
-interface UserResponse {
-    data: User[];
-}
-
 interface MatchParams {
     teamId: string;
 }
@@ -61,7 +57,7 @@ const AddToTeam: React.FC<AddToTeamProps> = ({ history, match }) => {
         getTeam(teamId)
             .then(team => dispatch({ type: 'SetTeamName', payload: team.displayName }));
         getUsers()
-            .then((res: UserResponse) => dispatch({ type: 'PopulateUsers', payload: res.data }));
+            .then((users: User[]) => dispatch({ type: 'PopulateUsers', payload: users }));
     }, []);
 
     return (state.teamName ?
