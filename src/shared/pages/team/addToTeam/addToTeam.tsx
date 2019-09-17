@@ -11,6 +11,7 @@ import { reducer } from './reducer';
 import { Action } from './actions';
 import { State } from './state';
 import { initialState } from './initialState';
+import { EMPTY_SUBMIT_ERROR_DESCRIPTION, EMPTY_SUBMIT_ERROR_TITLE, GENERAL_ERROR_TITLE, LOAD_TEAM_ERROR_DESCRIPTION, LOAD_USERS_ERROR_DESCRIPTION } from '../../../models/constants';
 
 interface MatchParams {
     teamId: string;
@@ -30,7 +31,7 @@ const AddToTeam: React.FC<AddToTeamProps> = ({ history, match }) => {
 
     const onSubmit = () => {
         if (state.selectedUsers.length === 0) {
-            dispatch({ type: 'SetEmptySubmitError' });
+            dispatch({ type: 'SetGeneralError', payload: { description: EMPTY_SUBMIT_ERROR_DESCRIPTION, title: EMPTY_SUBMIT_ERROR_TITLE } });
             return;
         }
 
@@ -40,7 +41,7 @@ const AddToTeam: React.FC<AddToTeamProps> = ({ history, match }) => {
                 .then(() => dispatch({ type: 'RemoveFromSelection', payload: user }))
                 .catch((error: AddUserError) => {
                     const { userToAdd: { label, value } } = error;
-                    dispatch({ type: 'AddError', payload: { key: value, value: label } });
+                    dispatch({ type: 'AddSubmitError', payload: { key: value, value: label } });
                     throw error;
                 })
         )).then(() => {
@@ -55,40 +56,48 @@ const AddToTeam: React.FC<AddToTeamProps> = ({ history, match }) => {
 
     useEffect(() => {
         getTeam(teamId)
-            .then(team => dispatch({ type: 'SetTeamName', payload: team.displayName }));
+            .then(team => dispatch({ type: 'SetTeamName', payload: team.displayName }))
+            .catch(() => {
+                dispatch({ type: 'SetGeneralError', payload: { description: LOAD_TEAM_ERROR_DESCRIPTION, title: GENERAL_ERROR_TITLE } });
+            });
         getUsers()
-            .then((users: User[]) => dispatch({ type: 'PopulateUsers', payload: users }));
+            .then((users: User[]) => dispatch({ type: 'PopulateUsers', payload: users }))
+            .catch(() => {
+                dispatch({ type: 'SetGeneralError', payload: { description: LOAD_USERS_ERROR_DESCRIPTION, title: GENERAL_ERROR_TITLE } });
+            });
     }, []);
 
-    return (state.teamName ?
+    return (
         <>
-            <div className="govuk-form-group">
-                <a href="" onClick={() => onBackLinkClick(history)} className="govuk-back-link">Back</a>
-                <ErrorSummary
-                    heading={state.errorTitle}
-                    description={state.errorDescription}
-                    errors={state.errors}
-                />
-                <h1 className="govuk-heading-xl">
-                    Add users
+            <a href="" onClick={() => onBackLinkClick(history)} className="govuk-back-link">Back</a>
+            <ErrorSummary
+                heading={state.errorTitle}
+                description={state.errorDescription}
+                errors={state.errors}
+            />
+            {state.teamName &&
+                <div className="govuk-form-group">
+                    <h1 className="govuk-heading-xl">
+                        Add users
                 </h1>
-                <h2 className="govuk-heading-l">
-                    {`Team: ${state.teamName}`}
-                </h2>
-                <div className="govuk-grid-row">
-                    <div className="govuk-grid-column-one-half-from-desktop">
-                        <TypeAhead
-                            choices={state.users.filter(user => !state.selectedUsers.some(selectedUser => selectedUser.value === user.value))}
-                            clearable={true}
-                            disabled={false}
-                            label={'Select Users'}
-                            name={'Users'}
-                            onSelectedItemChange={onSelectedUserChange}
-                            value={state.selectedUser}
-                        ></TypeAhead>
+                    <h2 className="govuk-heading-l">
+                        {`Team: ${state.teamName}`}
+                    </h2>
+                    <div className="govuk-grid-row">
+                        <div className="govuk-grid-column-one-half-from-desktop">
+                            <TypeAhead
+                                choices={state.users.filter(user => !state.selectedUsers.some(selectedUser => selectedUser.value === user.value))}
+                                clearable={true}
+                                disabled={false}
+                                label={'Select Users'}
+                                name={'Users'}
+                                onSelectedItemChange={onSelectedUserChange}
+                                value={state.selectedUser}
+                            ></TypeAhead>
+                        </div>
                     </div>
                 </div>
-            </div>
+            }
             {state.selectedUsers.length > 0 &&
                 <div className="govuk-grid-row">
                     <div className="govuk-grid-column-two-thirds-from-desktop">
@@ -119,8 +128,7 @@ const AddToTeam: React.FC<AddToTeamProps> = ({ history, match }) => {
             >
                 Add selected users
             </button>
-        </> :
-        null
+        </>
     );
 };
 

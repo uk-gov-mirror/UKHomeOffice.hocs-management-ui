@@ -6,6 +6,7 @@ import AddToTeam from '../addToTeam';
 import * as TeamsService from '../../../../services/teamsService';
 import * as UsersService from '../../../../services/usersService';
 import { State } from '../state';
+import { GENERAL_ERROR_TITLE, LOAD_TEAM_ERROR_DESCRIPTION, LOAD_USERS_ERROR_DESCRIPTION } from '../../../../models/constants';
 
 let match: match<any>;
 let history: History<any>;
@@ -79,10 +80,12 @@ beforeEach(() => {
         }]
     };
     useReducerSpy.mockImplementationOnce(() => [mockState, dispatch]);
+    dispatch.mockReset();
 });
 
 describe('when the addToTeam component is mounted', () => {
     it('should render with default props', async () => {
+        expect.assertions(3);
         let wrapper: RenderResult;
         act(() => {
             wrapper = render(<AddToTeam history={history} location={location} match={match}></AddToTeam>);
@@ -106,7 +109,29 @@ describe('when the addToTeam component is mounted', () => {
         }));
         mockState.teamName = undefined;
         wrapper = render(<AddToTeam history={history} location={location} match={match}></AddToTeam>);
-        expect(wrapper.container.outerHTML).toEqual('<div></div>');
+        expect(wrapper.container.outerHTML).toMatchSnapshot();
+    });
+    it('should display an error if the call to retrieve the team fails', async () => {
+        expect.assertions(1);
+        getTeamSpy.mockImplementation(() => Promise.reject('error'));
+
+        render(<AddToTeam history={history} location={location} match={match}></AddToTeam>);
+
+        await wait(() => {
+            expect(dispatch).nthCalledWith(2, { type: 'SetGeneralError', payload: { title: GENERAL_ERROR_TITLE, description: LOAD_TEAM_ERROR_DESCRIPTION } });
+        });
+
+    });
+    it('should display an error if the call to retrieve the users fails', async () => {
+        expect.assertions(1);
+        getUsersSpy.mockImplementation(() => Promise.reject('error'));
+
+        render(<AddToTeam history={history} location={location} match={match}></AddToTeam>);
+
+        await wait(() => {
+            expect(dispatch).nthCalledWith(2, { type: 'SetGeneralError', payload: { title: GENERAL_ERROR_TITLE, description: LOAD_USERS_ERROR_DESCRIPTION } });
+        });
+
     });
 });
 
@@ -167,8 +192,8 @@ describe('when the submit button is clicked', () => {
             fireEvent.click(submitButton);
         });
 
-        expect(dispatch).nthCalledWith(4, { type: 'AddError', payload: { key: '__value__', value: '__label__' } });
-        expect(dispatch).nthCalledWith(5, { type: 'AddError', payload: { key: '__value__', value: '__label__' } });
+        expect(dispatch).nthCalledWith(4, { type: 'AddSubmitError', payload: { key: '__value__', value: '__label__' } });
+        expect(dispatch).nthCalledWith(5, { type: 'AddSubmitError', payload: { key: '__value__', value: '__label__' } });
     });
 
     it('should set an error when no users are selected', async () => {
@@ -180,7 +205,11 @@ describe('when the submit button is clicked', () => {
 
         await wait(async () => {
             expect(dispatch).nthCalledWith(3, {
-                type: 'SetEmptySubmitError'
+                payload: {
+                    description: 'Please select some users before submitting.',
+                    title: 'No users selected'
+                },
+                type: 'SetGeneralError'
             });
         });
     });

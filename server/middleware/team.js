@@ -3,7 +3,7 @@ const getLogger = require('../libs/logger');
 const User = require('../models/user');
 
 async function getTeam(req, res, next) {
-    
+
     const logger = getLogger(req.request);
     const { teamId } = req.params;
 
@@ -14,7 +14,7 @@ async function getTeam(req, res, next) {
     } catch (error) {
         logger.error(error);
         next(error);
-    } 
+    }
 }
 
 async function getTeams(req, res, next) {
