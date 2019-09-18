@@ -37,40 +37,7 @@ exports[`Layout header component should render with default props 1`] = `
             id="navigation"
           >
             <li
-              className="govuk-header__navigation-item"
-            >
-              <Link
-                className="govuk-header__link"
-                replace={false}
-                to="/action/create/workflow"
-              >
-                Create Single Case
-              </Link>
-            </li>
-            <li
-              className="govuk-header__navigation-item"
-            >
-              <Link
-                className="govuk-header__link"
-                replace={false}
-                to="/action/bulk/workflow"
-              >
-                Create Bulk Cases
-              </Link>
-            </li>
-            <li
-              className="govuk-header__navigation-item"
-            >
-              <Link
-                className="govuk-header__link"
-                replace={false}
-                to="/search"
-              >
-                Search
-              </Link>
-            </li>
-            <li
-              className="govuk-header__navigation-item"
+              className="govuk-header__navigation--end"
             >
               <a
                 className="govuk-header__link"
@@ -124,40 +91,7 @@ exports[`Layout header component should render without crest when service is not
             id="navigation"
           >
             <li
-              className="govuk-header__navigation-item"
-            >
-              <Link
-                className="govuk-header__link"
-                replace={false}
-                to="/action/create/workflow"
-              >
-                Create Single Case
-              </Link>
-            </li>
-            <li
-              className="govuk-header__navigation-item"
-            >
-              <Link
-                className="govuk-header__link"
-                replace={false}
-                to="/action/bulk/workflow"
-              >
-                Create Bulk Cases
-              </Link>
-            </li>
-            <li
-              className="govuk-header__navigation-item"
-            >
-              <Link
-                className="govuk-header__link"
-                replace={false}
-                to="/search"
-              >
-                Search
-              </Link>
-            </li>
-            <li
-              className="govuk-header__navigation-item"
+              className="govuk-header__navigation--end"
             >
               <a
                 className="govuk-header__link"

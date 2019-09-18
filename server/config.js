@@ -8,11 +8,11 @@ const config = {
             js: ['runtime', 'vendor'],
             css: ['main'],
             react: 'main',
-            title: 'Correspondence System',
+            title: 'Correspondence System Management',
         },
         case: {
             header: {
-                service: 'Correspondence System',
+                service: 'Correspondence System Management',
                 serviceLink: '/',
                 logoLinkTitle: '',
                 propositionHeader: '',

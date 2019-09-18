@@ -175,4 +175,3 @@ describe('Form type ahead component (select)', () => {
     });
 
 });
-
