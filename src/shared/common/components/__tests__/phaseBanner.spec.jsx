@@ -1,5 +1,5 @@
 import React from 'react';
-import PhaseBanner from '../phase-banner.tsx';
+import PhaseBanner from '../phaseBanner.tsx';
 
 describe('Phase Banner component', () => {
     it('should render with default props', () => {
