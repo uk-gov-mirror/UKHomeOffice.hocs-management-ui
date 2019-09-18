@@ -3,7 +3,7 @@ import { RouteComponentProps } from 'react-router';
 import { History } from 'history';
 import { getTeam } from '../../../services/teamsService';
 import { addUserToTeam, getUsers, AddUserError } from '../../../services/usersService';
-import TypeAhead from '../../../common/components/type-ahead';
+import TypeAhead from '../../../common/components/typeAhead';
 import ErrorSummary from '../../../common/components/errorSummary';
 import Item from '../../../models/item';
 import { User } from '../../../models/user';

@@ -4,12 +4,12 @@ import { ActionMeta } from 'react-select/src/types';
 import Item from '../../models/item';
 
 interface TypeAheadProps {
-    choices: Item[];
-    clearable: boolean;
-    disabled: boolean;
+    choices?: Item[];
+    clearable?: boolean;
+    disabled?: boolean;
     error?: string;
     hint?: string;
-    label: string;
+    label?: string;
     name: string;
     onSelectedItemChange: (newItem: Item) => void;
     value?: Item | string;
@@ -40,7 +40,7 @@ class TypeAhead extends Component<TypeAheadProps, TypeAheadState> {
 
     getOptions(input: string, callback: (options: Item[]) => void) {
         let options: Item[];
-        if (input.length > 0) {
+        if (this.props.choices && input.length > 0) {
             const searchString = input.toLowerCase().trim();
             options = this.props.choices
                 .filter(item => item.label.toLowerCase().indexOf(searchString) !== -1)
@@ -54,9 +54,9 @@ class TypeAhead extends Component<TypeAheadProps, TypeAheadState> {
 
     renderSelect() {
         const {
-            choices,
+            choices = [],
             clearable = true,
-            disabled,
+            disabled = false,
             error,
             hint,
             label,
@@ -106,8 +106,8 @@ class TypeAhead extends Component<TypeAheadProps, TypeAheadState> {
 
     renderOptions() {
         const {
-            choices,
-            disabled,
+            choices = [],
+            disabled = false,
             error,
             hint,
             label,

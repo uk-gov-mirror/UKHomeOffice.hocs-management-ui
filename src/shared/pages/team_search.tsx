@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import TypeAhead from '../common/components/type-ahead';
+import TypeAhead from '../common/components/typeAhead';
 import axios from 'axios';
 import { History } from 'history';
 import Item from '../models/item';
@@ -17,7 +17,7 @@ interface TeamSearchProps {
     history: History;
 }
 
-const TeamSearch : React.FC <TeamSearchProps> = ({ history }) => {
+const TeamSearch: React.FC<TeamSearchProps> = ({ history }) => {
 
     const [teams, setTeams] = useState<Item[]>([{ label: 'Loading teams...', value: '' }]);
     const [teamsLoaded, setTeamsLoaded] = useState(false);
@@ -47,18 +47,18 @@ const TeamSearch : React.FC <TeamSearchProps> = ({ history }) => {
             </h1>
             {
                 teamsLoaded ?
-                <div>
-                    <TypeAhead
-                        choices={teams}
-                        clearable={true}
-                        disabled={false}
-                        label={'Teams'}
-                        name={'Teams'}
-                        onSelectedItemChange={(selectedTeam: Item) => setTeamUUID(selectedTeam.value)}
-                    ></TypeAhead>
-                </div> :
-                <div>
-                    ...loading
+                    <div>
+                        <TypeAhead
+                            choices={teams}
+                            clearable={true}
+                            disabled={false}
+                            label={'Teams'}
+                            name={'Teams'}
+                            onSelectedItemChange={(selectedTeam: Item) => setTeamUUID(selectedTeam.value)}
+                        ></TypeAhead>
+                    </div> :
+                    <div>
+                        ...loading
                 </div>
             }
 
