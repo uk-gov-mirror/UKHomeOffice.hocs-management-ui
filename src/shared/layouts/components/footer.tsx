@@ -1,17 +1,7 @@
 import React, { Component } from 'react';
+import { FooterConfig } from 'shared/models/config';
 
-export interface Link {
-    // todo: this might exist elsewhere
-    label: string;
-    target: string;
-}
-
-export interface FooterProps {
-    isVisible: boolean;
-    links: Link[];
-}
-
-class Footer extends Component<FooterProps> {
+class Footer extends Component<FooterConfig> {
     render() {
         const { links = [] } = this.props;
 

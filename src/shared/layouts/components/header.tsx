@@ -1,13 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { HeaderConfig } from 'shared/models/config';
 
-export interface HeaderProps {
-    isVisible: boolean;
-    service: string;
-    serviceLink: string;
-}
-
-class Header extends Component<HeaderProps> {
+class Header extends Component<HeaderConfig> {
 
     createLogotype(service: string, serviceLink: string) {
         return (

@@ -2,12 +2,11 @@ import React, { Component } from 'react';
 import ReactGA from 'react-ga';
 import types from './actions/types';
 import { Action } from './actions/index';
-import { BodyProps } from '../layouts/components/body';
-import { FooterProps } from '../layouts/components/footer';
-import { HeaderProps } from '../layouts/components/header';
 import { ErrorContent } from '../layouts/error';
+import Config, { AnalyticsConfig, LayoutConfig } from '../models/config';
 
 interface ApplicationState {
+    analytics?: AnalyticsConfig;
     apiStatus?: {
         status: {
             display: string;
@@ -15,21 +14,16 @@ interface ApplicationState {
             type: string;
         }
     };
-    config?: any;
+    csrf?: string;
     dispatch(action: Action<any>): Promise<any>;
-    // todo: not any
     error?: ErrorContent;
-    layout?: {
-        body: BodyProps;
-        footer: FooterProps;
-        header: HeaderProps;
-    };
+    layout?: LayoutConfig;
     track?(event: string, payload: any): void;
 }
 
 interface ApplicationProps {
     children: React.ReactElement;
-    config: any;
+    config: Config;
 }
 
 const defaultState: ApplicationState = {
@@ -45,22 +39,22 @@ const reducer = (state: ApplicationState, action: Action<any>): ApplicationState
     // ------------
     switch (action.type) {
 
-    case types.UNSET_ERROR:
-        return { ...state, error: undefined };
-    case types.CLEAR_API_STATUS:
-        return { ...state, apiStatus: undefined };
-    default:
-        // TODO: Remove
-        /* eslint-disable-next-line  no-console*/
-        console.warn('Unsupported action');
-        return state;
+        case types.UNSET_ERROR:
+            return { ...state, error: undefined };
+        case types.CLEAR_API_STATUS:
+            return { ...state, apiStatus: undefined };
+        default:
+            // TODO: Remove
+            /* eslint-disable-next-line  no-console*/
+            console.warn('Unsupported action');
+            return state;
     }
 };
 
 export class ApplicationProvider extends Component<ApplicationProps, ApplicationState> {
     useAnalytics: boolean = false;
 
-    constructor(props:ApplicationProps) {
+    constructor(props: ApplicationProps) {
         super(props);
         const { config } = props;
 
@@ -72,7 +66,7 @@ export class ApplicationProvider extends Component<ApplicationProps, Application
 
         this.state = {
             ...props.config,
-            apiStatus: null,
+            apiStatus: undefined,
             dispatch: (action: Action<any>) => {
                 try {
                     this.setState(state => reducer(state, action));
@@ -88,23 +82,23 @@ export class ApplicationProvider extends Component<ApplicationProps, Application
     track(event: string, payload: any) {
         if (this.useAnalytics) {
             switch (event) {
-            case 'EVENT':
-                ReactGA.event({
-                    category: payload.category,
-                    action: payload.action,
-                    label: payload.label
-                });
-                break;
-            case 'PAGE_VIEW':
-                ReactGA.pageview(
-                    payload.path,
-                    undefined,
-                    payload.title
-                );
-                break;
-            default:
-                /* eslint-disable-next-line  no-console*/
-                console.warn('Unsupported analytics event');
+                case 'EVENT':
+                    ReactGA.event({
+                        category: payload.category,
+                        action: payload.action,
+                        label: payload.label
+                    });
+                    break;
+                case 'PAGE_VIEW':
+                    ReactGA.pageview(
+                        payload.path,
+                        undefined,
+                        payload.title
+                    );
+                    break;
+                default:
+                    /* eslint-disable-next-line  no-console*/
+                    console.warn('Unsupported analytics event');
             }
         }
     }
@@ -112,10 +106,9 @@ export class ApplicationProvider extends Component<ApplicationProps, Application
     render() {
         const { children } = this.props;
         return (
-            // todo: is it necessary/ok to use the component state to store the context state?
-          <Context.Provider value={this.state}>
-            {children}
-          </Context.Provider>
+            <Context.Provider value={this.state}>
+                {children}
+            </Context.Provider>
         );
     }
 
