@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const assets = require('../../build/assets.json');
 const html = require('../layout/html');
@@ -18,6 +19,7 @@ const { flushCachedLists } = require('../services/list');
 
 html.use(assets);
 
+router.use(bodyParser.urlencoded());
 router.use(cookieParser());
 router.use(csrfMiddleware);
 router.use('/health', healthRouter);
