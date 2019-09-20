@@ -13,7 +13,6 @@ interface AddUnitProps extends RouteComponentProps {
 const reducer = (state: Unit, eventData: InputEventData) => {
 
     const newState = { ...state, [eventData.name]: eventData.value };
-    console.log(newState);
     return newState;
 };
 

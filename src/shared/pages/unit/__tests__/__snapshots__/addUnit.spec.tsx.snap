@@ -1,0 +1,59 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`when the addToTeam component is mounted should render with default props 1`] = `
+<div>
+  <div>
+    <form
+      action="/api/units"
+      method="POST"
+    >
+      <input
+        name="_csrf"
+        type="hidden"
+        value=""
+      />
+      <div
+        class="govuk-form-group"
+      >
+        <label
+          class="govuk-label govuk-label--s"
+          for="displayName"
+          id="displayName-label"
+        >
+          Display Name
+        </label>
+        <input
+          class="govuk-input"
+          id="displayName"
+          name="displayName"
+          type="text"
+          value=""
+        />
+      </div>
+      <div
+        class="govuk-form-group"
+      >
+        <label
+          class="govuk-label govuk-label--s"
+          for="shortCode"
+          id="shortCode-label"
+        >
+          Short Code
+        </label>
+        <input
+          class="govuk-input"
+          id="shortCode"
+          name="shortCode"
+          type="text"
+          value=""
+        />
+      </div>
+      <input
+        class="govuk-button"
+        type="submit"
+        value="Submit"
+      />
+    </form>
+  </div>
+</div>
+`;

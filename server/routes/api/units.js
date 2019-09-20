@@ -1,7 +1,6 @@
 const router = require('express').Router();
+const { addUnit } = require('../../middleware/unit')
 
-router.post('', (req, res) => {
-    res.json({ done: 'done' });
-});
+router.post('', addUnit);
 
 module.exports = router;
