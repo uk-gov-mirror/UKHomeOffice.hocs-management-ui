@@ -6,3 +6,14 @@ export const getTeam = (teamId: string) => new Promise<Team>((resolve, reject) =
         .then(response => resolve(response.data))
         .catch(error => reject(error))
 );
+
+export const getTeams = () => new Promise<[Team]>((resolve, reject) =>
+    axios.get(`/api/teams`)
+        .then(response => {
+            console.log('getTeamsResponse', response.data);
+            resolve(response.data)
+        })
+        .catch(error => reject(error))
+);
+
+

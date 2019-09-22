@@ -1,17 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import TypeAhead from '../common/components/type-ahead';
-import axios from 'axios';
+import React, { useEffect, Reducer} from 'react';
+import TypeAhead from '../../../common/components/type-ahead';
+import {getTeams} from '../../../services/teamsService';
 import { History } from 'history';
-import Item from '../models/item';
-
-interface TeamsResponse {
-    data: Team[];
-}
-
-interface Team {
-    label: string;
-    value: string;
-}
+import {State} from "./state";
+import {Action} from "./actions";
+import {reducer} from "./reducer";
+import {initialState} from "./initialState";
+import Team from "../../../models/team";
 
 interface TeamSearchProps {
     history: History;
@@ -19,20 +14,25 @@ interface TeamSearchProps {
 
 const TeamSearch : React.FC <TeamSearchProps> = ({ history }) => {
 
-    const [teams, setTeams] = useState<Item[]>([{ label: 'Loading teams...', value: '' }]);
-    const [teamsLoaded, setTeamsLoaded] = useState(false);
-    const [teamUUID, setTeamUUID] = useState('');
+    const [state, dispatch] = React.useReducer<Reducer<State, Action>>(reducer, initialState);
 
     useEffect(() => {
-        axios.get('api/teams')
-            .then((res: TeamsResponse) => {
-                setTeams(res.data);
-                setTeamsLoaded(true);
+        getTeams()
+            .then((teams: Team[]) => {
+                // @ts-ignore
+                dispatch(  { type: 'SetTeams', payload: teams })
             });
     }, []);
 
+    // @ts-ignore
+    const onSelectedTeamChange = (selectedTeam) => {
+        console.log('selected team', selectedTeam)
+        dispatch({ type: 'AddTeamUUID', payload: selectedTeam.value });
+
+    }
+
     const handleOnSubmit = () => {
-        history.push('/team_view/' + teamUUID);
+        history.push('/team_view/' + state.teamUUID);
     };
 
     const onBackLinkClick = (history: History) => {
@@ -46,15 +46,15 @@ const TeamSearch : React.FC <TeamSearchProps> = ({ history }) => {
                 Team search
             </h1>
             {
-                teamsLoaded ?
+                state.teamsLoaded ?
                 <div>
                     <TypeAhead
-                        choices={teams}
+                        choices={state.teams}
                         clearable={true}
                         disabled={false}
                         label={'Teams'}
                         name={'Teams'}
-                        onSelectedItemChange={(selectedTeam: Item) => setTeamUUID(selectedTeam.value)}
+                        onSelectedItemChange={onSelectedTeamChange}
                     ></TypeAhead>
                 </div> :
                 <div>

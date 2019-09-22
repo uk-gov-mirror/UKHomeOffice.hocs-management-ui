@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, {Reducer, useEffect} from 'react';
 import { RouteComponentProps } from 'react-router';
 import { History } from 'history';
-import { deleteUserFromTeam, getTeamMembers } from '../services/usersService';
-import { getTeam } from '../services/teamsService';
-
-interface TeamMember {
-    label: string;
-    value: string;
-}
+import {deleteUserFromTeam, getTeamMembers } from "../../../services/usersService";
+import {getTeam} from "../../../services/teamsService";
+import {State} from "./state";
+import {Action} from "./actions";
+import {reducer} from "./reducer";
+import {initialState} from "./initialState";
+import {User} from "../../../models/user";
 
 interface MatchParams {
     teamId: string;
@@ -27,38 +27,30 @@ const onBackLinkClick = (history: History) => {
 
 const TeamView: React.FC<TeamMembersProps> = ({ history, match }) => {
 
-    const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
-    const [teamMembersLoaded, setTeamMembersLoaded] = useState(false);
-    const [teamName, setTeamName] = useState<string | undefined>('');
+    const [state, dispatch] = React.useReducer<Reducer<State, Action>>(reducer, initialState);
 
     const { params: { teamId } } = match;
 
     useEffect(() => {
-        getTeam(teamId).then(response => setTeamName(response.displayName));
+        getTeam(teamId)
+            .then(team => dispatch({ type: 'SetTeamName', payload: team.displayName }));
         getTeamMembers(teamId)
-            .then((teamMembers: TeamMember[]) => {
-                setTeamMembers(teamMembers);
-                setTeamMembersLoaded(true);
-            });
+            .then((users: User[]) => dispatch({ type: 'PopulateTeamMembers', payload: users }));
     }, []);
+
 
     const removeTeamMember = (userUUID: string, teamId: string) => {
         deleteUserFromTeam(userUUID, teamId)
             .then(() => {
                 getTeamMembers(teamId)
-                    .then((teamMembers: TeamMember[]) => {
-                        setTeamMembers(teamMembers);
-                    });
+                    .then((users: User[]) => dispatch({ type: 'PopulateTeamMembers', payload: users }));
             })
-            .catch(error => {
-                throw error;
-            });
     };
 
     const DisplayTeamTable = () => (
         <div>
             <div>
-                {teamMembersLoaded && (
+                {state.teamMembersLoaded && (
                     <table className="govuk-table">
                         <thead className="govuk-table__head">
                             <tr className="govuk-table__row">
@@ -68,7 +60,7 @@ const TeamView: React.FC<TeamMembersProps> = ({ history, match }) => {
                         </thead>
                         <tbody className="govuk-table__body">
                             {
-                                teamMembers.map((teamMember) => {
+                                state.teamMembers.map((teamMember) => {
                                     return (
                                         <tr className="govuk-table__row">
                                             <td className="govuk-table__cell">{teamMember.label}</td>
@@ -90,10 +82,10 @@ const TeamView: React.FC<TeamMembersProps> = ({ history, match }) => {
             <div>
                 <h1 className="govuk-heading-xl">View and remove team members</h1>
                 <h2 className="govuk-heading-l">
-                    {`Team: ${teamName}`}
+                    {`Team: ${state.teamUUID}`}
                 </h2>
                 {
-                    teamMembersLoaded ?
+                    state.teamMembersLoaded ?
                         <div>
                             <DisplayTeamTable />
                         </div> :
