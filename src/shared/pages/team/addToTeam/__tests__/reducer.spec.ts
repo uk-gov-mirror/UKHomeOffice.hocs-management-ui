@@ -7,7 +7,7 @@ describe('when an action is dispatched', () => {
         it('will add the error to the state', () => {
 
             const { errorDescription: initialErrorDescription, errorTitle: initialErrorTitle, errors: initialErrors, ...initialOtherState } = initialState;
-            const state = reducer(initialState, { type: 'AddError', payload: { key: '__key__', value: '__value__' } });
+            const state = reducer(initialState, { type: 'AddSubmitError', payload: { key: '__key__', value: '__value__' } });
             const { errorDescription, errorTitle, errors, ...otherState } = state;
 
             expect(errorDescription).toBe(ADD_USER_ERROR_DESCRIPTION);
@@ -90,11 +90,11 @@ describe('when an action is dispatched', () => {
             expect(otherState).toStrictEqual(initialOtherState);
         });
     });
-    describe('and it is an SetEmptySubmitError action', () => {
+    describe('and it is an SetGeneralError action', () => {
         it('will add the error to the state', () => {
 
             const { errorDescription: initialErrorDescription, errorTitle: initialErrorTitle, errors: initialErrors, ...initialOtherState } = initialState;
-            const state = reducer(initialState, { type: 'SetEmptySubmitError' });
+            const state = reducer(initialState, { type: 'SetGeneralError', payload: { description: EMPTY_SUBMIT_ERROR_DESCRIPTION, title: EMPTY_SUBMIT_ERROR_TITLE } });
             const { errorDescription, errorTitle, errors, ...otherState } = state;
 
             expect(errorDescription).toBe(EMPTY_SUBMIT_ERROR_DESCRIPTION);

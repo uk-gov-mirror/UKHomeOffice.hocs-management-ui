@@ -1,9 +1,10 @@
 import { FormError } from '../../../models/formError';
 import Item from '../../../models/item';
+import ErrorMessage from '../../../models/errorMessage';
 
-export type AddError = {
+export type AddSubmitError = {
     payload: FormError;
-    type: 'AddError';
+    type: 'AddSubmitError';
 };
 export type AddToSelection = {
     payload: Item;
@@ -23,8 +24,9 @@ export type RemoveFromSelection = {
     payload: Item;
     type: 'RemoveFromSelection';
 };
-export type SetEmptySubmitError = {
-    type: 'SetEmptySubmitError';
+export type SetGeneralError = {
+    type: 'SetGeneralError';
+    payload: ErrorMessage;
 };
 export type SetTeamName = {
     type: 'SetTeamName';
@@ -32,11 +34,11 @@ export type SetTeamName = {
 };
 
 export type Action =
-    AddError |
+    AddSubmitError |
     AddToSelection |
     BeginSubmit |
     ClearSelectedUser |
     PopulateUsers |
     RemoveFromSelection |
-    SetEmptySubmitError |
+    SetGeneralError |
     SetTeamName;
