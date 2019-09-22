@@ -1,12 +1,6 @@
-<<<<<<< HEAD:src/shared/pages/team/teamSearch/teamSearch.tsx
 import React, { useEffect, Reducer} from 'react';
-import TypeAhead from '../../../common/components/type-ahead';
+import TypeAhead from '../../../common/components/typeAhead';
 import {getTeams} from '../../../services/teamsService';
-=======
-import React, { useEffect, useState } from 'react';
-import TypeAhead from '../common/components/typeAhead';
-import axios from 'axios';
->>>>>>> 6b6db1fcfb0edd640e7415c9ef2bb62192148dee:src/shared/pages/team_search.tsx
 import { History } from 'history';
 import {State} from "./state";
 import {Action} from "./actions";
@@ -52,7 +46,6 @@ const TeamSearch: React.FC<TeamSearchProps> = ({ history }) => {
                 Team search
             </h1>
             {
-<<<<<<< HEAD:src/shared/pages/team/teamSearch/teamSearch.tsx
                 state.teamsLoaded ?
                 <div>
                     <TypeAhead
@@ -66,21 +59,6 @@ const TeamSearch: React.FC<TeamSearchProps> = ({ history }) => {
                 </div> :
                 <div>
                     ...loading
-=======
-                teamsLoaded ?
-                    <div>
-                        <TypeAhead
-                            choices={teams}
-                            clearable={true}
-                            disabled={false}
-                            label={'Teams'}
-                            name={'Teams'}
-                            onSelectedItemChange={(selectedTeam: Item) => setTeamUUID(selectedTeam.value)}
-                        ></TypeAhead>
-                    </div> :
-                    <div>
-                        ...loading
->>>>>>> 6b6db1fcfb0edd640e7415c9ef2bb62192148dee:src/shared/pages/team_search.tsx
                 </div>
             }
 
