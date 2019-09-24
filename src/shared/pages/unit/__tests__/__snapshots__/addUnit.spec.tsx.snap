@@ -1,59 +1,84 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when the addToTeam component is mounted should render with default props 1`] = `
+exports[`when the addUnit component is mounted should render with default props 1`] = `
 <div>
-  <div>
-    <form
-      action="/api/units"
-      method="POST"
+  <div
+    class="govuk-grid-row"
+  >
+    <div
+      class="govuk-grid-column-two-thirds-from-desktop"
     >
-      <input
-        name="_csrf"
-        type="hidden"
-        value=""
-      />
-      <div
-        class="govuk-form-group"
+      <a
+        class="govuk-back-link"
+        href=""
       >
-        <label
-          class="govuk-label govuk-label--s"
-          for="displayName"
-          id="displayName-label"
-        >
-          Display Name
-        </label>
+        Back
+      </a>
+      <h1
+        class="govuk-heading-xl"
+      >
+        Add Unit
+      </h1>
+    </div>
+  </div>
+  <div
+    class="govuk-grid-row"
+  >
+    <div
+      class="govuk-grid-column-one-half-from-desktop"
+    >
+      <form
+        action="/api/units"
+        method="POST"
+      >
         <input
-          class="govuk-input"
-          id="displayName"
-          name="displayName"
-          type="text"
+          name="_csrf"
+          type="hidden"
           value=""
         />
-      </div>
-      <div
-        class="govuk-form-group"
-      >
-        <label
-          class="govuk-label govuk-label--s"
-          for="shortCode"
-          id="shortCode-label"
+        <div
+          class="govuk-form-group"
         >
-          Short Code
-        </label>
+          <label
+            class="govuk-label govuk-label--s"
+            for="displayName"
+            id="displayName-label"
+          >
+            Display Name
+          </label>
+          <input
+            class="govuk-input"
+            id="displayName"
+            name="displayName"
+            type="text"
+            value=""
+          />
+        </div>
+        <div
+          class="govuk-form-group"
+        >
+          <label
+            class="govuk-label govuk-label--s"
+            for="shortCode"
+            id="shortCode-label"
+          >
+            Short Code
+          </label>
+          <input
+            class="govuk-input"
+            id="shortCode"
+            name="shortCode"
+            type="text"
+            value=""
+          />
+        </div>
         <input
-          class="govuk-input"
-          id="shortCode"
-          name="shortCode"
-          type="text"
-          value=""
+          class="govuk-button"
+          type="submit"
+          value="Submit"
         />
-      </div>
-      <input
-        class="govuk-button"
-        type="submit"
-        value="Submit"
-      />
-    </form>
+      </form>
+    </div>
   </div>
 </div>
 `;

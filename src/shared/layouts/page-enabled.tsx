@@ -24,6 +24,7 @@ class PageWrapper extends Component<PageWrapperProps> {
         }
     }
 
+    // tslint:disable-next-line: function-name
     UNSAFE_componentWillReceiveProps(nextProps: PageWrapperProps) {
         const { track } = this.props;
         const nextPage = nextProps.match.url;
@@ -36,9 +37,9 @@ class PageWrapper extends Component<PageWrapperProps> {
     render() {
         const { children, error } = this.props;
         return (
-          <Fragment>
-            {error ? <Error error={error} /> : children}
-          </Fragment>
+            <Fragment>
+                {error ? <Error error={error} /> : children}
+            </Fragment>
         );
     }
 }
@@ -48,16 +49,16 @@ interface PageEnabledWrapperProps {
 }
 
 const PageEnabledWrapper: React.FC<PageEnabledWrapperProps> = props => (
-  <ApplicationConsumer>
-    {({ dispatch, error, track }) => (
-      <PageWrapper
-        {...props}
-        dispatch={dispatch!}
-        track={track}
-        error={error}
-      />
-    )}
-  </ApplicationConsumer>
+    <ApplicationConsumer>
+        {({ dispatch, error, track }) => (
+            <PageWrapper
+                {...props}
+                dispatch={dispatch!}
+                track={track}
+                error={error}
+            />
+        )}
+    </ApplicationConsumer>
 );
 
 export default PageEnabledWrapper;
