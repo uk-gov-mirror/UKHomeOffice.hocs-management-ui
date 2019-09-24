@@ -26,7 +26,6 @@ const TeamSearch: React.FC<TeamSearchProps> = ({ history }) => {
 
     // @ts-ignore
     const onSelectedTeamChange = (selectedTeam) => {
-        console.log('selected team', selectedTeam)
         dispatch({ type: 'AddTeamUUID', payload: selectedTeam.value });
 
     }
