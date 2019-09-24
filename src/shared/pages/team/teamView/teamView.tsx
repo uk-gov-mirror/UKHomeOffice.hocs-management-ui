@@ -82,7 +82,7 @@ const TeamView: React.FC<TeamMembersProps> = ({ history, match }) => {
             <div>
                 <h1 className="govuk-heading-xl">View and remove team members</h1>
                 <h2 className="govuk-heading-l">
-                    {`Team: ${state.teamUUID}`}
+                    {`Team: ${state.teamName}`}
                 </h2>
                 {
                     state.teamMembersLoaded ?
