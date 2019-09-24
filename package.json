@@ -16,10 +16,6 @@
         "lint-staged": "node_modules/lint-staged/index.js",
         "lint": "npm run lint:js & npm run lint:jsx & npm run lint:ts & npm run lint:tsx"
     },
-    "repository": {
-        "type": "git",
-        "url": "ssh://git@gitlab.digital.homeoffice.gov.uk:2222/hocs/hocs-management-ui.git"
-    },
     "jest": {
         "setupFiles": [
             "./test/jestsetup.js"
