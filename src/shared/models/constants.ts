@@ -6,4 +6,4 @@ export const EMPTY_SUBMIT_ERROR_TITLE = 'No users selected';
 export const GENERAL_ERROR_TITLE = 'Something went wrong';
 export const LOAD_TEAM_ERROR_DESCRIPTION = 'There was an error retrieving the team.  Please try refreshing the page.';
 export const LOAD_USERS_ERROR_DESCRIPTION = 'There was an arror retriving the list of users.  Please try refreshing the page.';
-export const VALIDATION_ERROR_MESSAGE = "There's a problem";
+export const VALIDATION_ERROR_TITLE = "There's a problem";

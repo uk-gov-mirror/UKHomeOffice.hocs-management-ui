@@ -1,6 +1,6 @@
 import { Action } from './actions';
 import { State } from './state';
-import { VALIDATION_ERROR_MESSAGE } from '../../models/constants';
+import { VALIDATION_ERROR_TITLE } from '../../models/constants';
 
 export const reducer = (state: State, action: Action) => {
     switch (action.type) {
@@ -8,7 +8,7 @@ export const reducer = (state: State, action: Action) => {
             return {
                 ...state,
                 errorDescription: '',
-                errorTitle: VALIDATION_ERROR_MESSAGE,
+                errorTitle: VALIDATION_ERROR_TITLE,
                 errors: [...state.errors || [], action.payload]
             };
         case 'BeginSubmit':

@@ -5,6 +5,7 @@ import { act, render, RenderResult, wait, fireEvent, waitForElement } from '@tes
 import AddUnit from '../addUnit';
 import * as UnitsService from '../../../services/unitsService';
 import { State } from '../state';
+import { ADD_UNIT_ERROR_DESCRIPTION, GENERAL_ERROR_TITLE } from '../../../models/constants';
 
 let match: match<any>;
 let history: History<any>;
@@ -39,7 +40,7 @@ beforeEach(() => {
             shortCode: ''
         }
     };
-    useReducerSpy.mockImplementationOnce(() => [mockState, dispatch]);
+    useReducerSpy.mockImplementation(() => [mockState, dispatch]);
     history.push = jest.fn();
     dispatch.mockReset();
     act(() => {
@@ -90,29 +91,83 @@ describe('when the short code is entered', () => {
 });
 
 describe('when the submit button is clicked', () => {
+    beforeAll(() => {
+        jest.spyOn(UnitsService, 'createUnit').mockImplementationOnce(() => Promise.resolve());
+    });
+
     describe('and the data is filled in', () => {
-        beforeEach(() => {
+
+        beforeEach(async () => {
             mockState.unit = { displayName: '__displayName__', shortCode: '__shortCode__' };
+            const submitButton = await waitForElement(async () => {
+                return await wrapper.findByText('Submit');
+            });
+
+            fireEvent.click(submitButton);
         });
 
         describe('and the service call is successful', () => {
-            beforeAll(() => {
-                jest.spyOn(UnitsService, 'createUnit').mockImplementation(() => Promise.resolve());
-            });
-
             it('should redirect to the home page', async () => {
                 expect.assertions(1);
-
-                const submitButton = await waitForElement(async () => {
-                    return await wrapper.findByText('Submit');
-                });
-
-                fireEvent.click(submitButton);
 
                 await wait(() => {
                     expect(history.push).toHaveBeenCalledWith('/');
                 });
             });
+            it('should call the begin submit action', async () => {
+                expect.assertions(1);
+
+                await wait(() => {
+                    expect(dispatch).toHaveBeenNthCalledWith(1, { type: 'BeginSubmit' });
+                });
+            });
+        });
+
+        describe('and the service call fails', () => {
+            beforeAll(() => {
+                jest.spyOn(UnitsService, 'createUnit').mockImplementationOnce(() => Promise.reject('error'));
+            });
+
+            it('should set the error state', () => {
+                expect(dispatch).toHaveBeenNthCalledWith(2, { type: 'SetGeneralError', payload: { description: ADD_UNIT_ERROR_DESCRIPTION, title: GENERAL_ERROR_TITLE } });
+            });
+            it('should call the begin submit action', async () => {
+                expect(dispatch).toHaveBeenNthCalledWith(1, { type: 'BeginSubmit' });
+            });
+        });
+    });
+    describe('and the data is not filled in', () => {
+        beforeEach(async () => {
+            const submitButton = await waitForElement(async () => {
+                return await wrapper.findByText('Submit');
+            });
+
+            fireEvent.click(submitButton);
+        });
+
+        it('should call the begin submit action', () => {
+            expect(dispatch).toHaveBeenNthCalledWith(1, { type: 'BeginSubmit' });
+        });
+
+        it('should set the error state', () => {
+            expect(dispatch).toHaveBeenNthCalledWith(2, { type: 'AddValidationError', payload: { key: 'displayName', value: 'Display Name is required' } });
+            expect(dispatch).toHaveBeenNthCalledWith(3, { type: 'AddValidationError', payload: { key: 'shortCode', value: 'Short Code is required' } });
+        });
+    });
+});
+
+describe('when the back link is clicked', () => {
+    it('will navigate to the homepage', async () => {
+        expect.assertions(1);
+
+        const backButton = await waitForElement(async () => {
+            return await wrapper.findByText('Back');
+        });
+
+        fireEvent.click(backButton);
+
+        await wait(() => {
+            expect(history.push).toHaveBeenCalledWith('/');
         });
     });
 });

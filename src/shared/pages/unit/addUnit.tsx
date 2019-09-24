@@ -23,14 +23,14 @@ const validate = (state: State, dispatch: (value: Action) => void) => {
     if (state.unit.displayName === '') {
         dispatch({
             type: 'AddValidationError',
-            payload: { key: 'displayName', value: 'Display name is required' }
+            payload: { key: 'displayName', value: 'Display Name is required' }
         });
         valid = false;
     }
     if (state.unit.shortCode === '') {
         dispatch({
             type: 'AddValidationError',
-            payload: { key: 'shortCode', value: 'Short code is required' }
+            payload: { key: 'shortCode', value: 'Short Code is required' }
         });
         valid = false;
     }
