@@ -23,4 +23,15 @@ describe('when an action is dispatched', () => {
             expect(otherState).toStrictEqual(otherInitialState);
         });
     });
+    describe('and it is a SetTeamName action', () => {
+        it('it will set the team name in state', () => {
+
+            const { teamName: initialTeamName, ...initialOtherState } = initialState;
+            const state = reducer(initialState, { type: 'SetTeamName', payload: '__teamName__' });
+            const { teamName, ...otherState } = state;
+
+            expect(teamName).toBe('__teamName__');
+            expect(otherState).toStrictEqual(initialOtherState);
+        });
+    });
 });
