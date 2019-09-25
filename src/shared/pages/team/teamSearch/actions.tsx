@@ -1,6 +1,8 @@
+import Item from "../../../models/item";
+
 export type SetTeams = {
     type: 'SetTeams';
-    payload?: [];
+    payload?: Item[];
 };
 
 export type AddTeamUUID = {

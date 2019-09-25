@@ -4,14 +4,13 @@ import { reducer } from '../reducer';
 
 describe('when an action is dispatched', () => {
     describe('and it is a SetTeams action', () => {
-        it.skip('it will add teams to the team collection', () => {
+        it('it will add teams to the team collection', () => {
 
             const {teams: initialTeams, teamsLoaded: initialTeamsLoaded, ...otherInitialState} = initialState;
             const state = reducer(initialState, {
                 type: 'SetTeams', payload: [
-                    // {label: '__team1__', value: '__teamId1__'},
-                    // {label: '__team2__', value: '__teamId2__'}
-                ]
+                    {label: '__team1__', value: '__teamId1__'},
+                    {label: '__team2__', value: '__teamId2__'}]
             });
             const {teams, teamsLoaded, ...otherState} = state;
 

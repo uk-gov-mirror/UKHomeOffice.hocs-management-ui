@@ -6,7 +6,7 @@ import {State} from "./state";
 import {Action} from "./actions";
 import {reducer} from "./reducer";
 import {initialState} from "./initialState";
-import Team from "../../../models/team";
+import Item from "../../../models/item";
 
 interface TeamSearchProps {
     history: History;
@@ -18,14 +18,12 @@ const TeamSearch: React.FC<TeamSearchProps> = ({ history }) => {
 
     useEffect(() => {
         getTeams()
-            .then((teams: Team[]) => {
-                // @ts-ignore
+            .then((teams: Item[]) => {
                 dispatch(  { type: 'SetTeams', payload: teams })
             });
     }, []);
 
-    // @ts-ignore
-    const onSelectedTeamChange = (selectedTeam) => {
+    const onSelectedTeamChange = (selectedTeam: any) => {
         dispatch({ type: 'AddTeamUUID', payload: selectedTeam.value });
 
     }
