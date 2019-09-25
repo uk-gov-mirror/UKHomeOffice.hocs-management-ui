@@ -10,7 +10,7 @@ import { State } from './state';
 import { Action } from './actions';
 import { initialState } from './initialState';
 import ErrorSummary from '../../common/components/errorSummary';
-import { GENERAL_ERROR_TITLE, ADD_UNIT_ERROR_DESCRIPTION } from '../../models/constants';
+import { GENERAL_ERROR_TITLE, ADD_UNIT_ERROR_DESCRIPTION, VALIDATION_ERROR_TITLE, DUPLICATE_UNIT_DESCRIPTION } from '../../models/constants';
 
 interface AddUnitProps extends RouteComponentProps {
     csrfToken?: string;
@@ -51,8 +51,12 @@ const AddUnit: React.FC<AddUnitProps> = ({ csrfToken, history }) => {
         if (validate(state, dispatch)) {
             createUnit(state.unit).then(() => {
                 history.push('/');
-            }).catch(() => {
-                dispatch({ type: 'SetGeneralError', payload: { title: GENERAL_ERROR_TITLE, description: ADD_UNIT_ERROR_DESCRIPTION } });
+            }).catch((error) => {
+                if (error.response.status === 409) {
+                    dispatch({ type: 'SetGeneralError', payload: { title: VALIDATION_ERROR_TITLE, description: DUPLICATE_UNIT_DESCRIPTION } });
+                } else {
+                    dispatch({ type: 'SetGeneralError', payload: { title: GENERAL_ERROR_TITLE, description: ADD_UNIT_ERROR_DESCRIPTION } });
+                }
             });
         }
     };
