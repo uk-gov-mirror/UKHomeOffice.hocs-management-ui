@@ -1,4 +1,4 @@
-import Item from "../../../models/item";
+import Item from '../../../models/item';
 
 export type SetTeamName = {
     type: 'SetTeamName';
@@ -13,4 +13,3 @@ export type PopulateTeamMembers = {
 export type Action =
     SetTeamName |
     PopulateTeamMembers;
-

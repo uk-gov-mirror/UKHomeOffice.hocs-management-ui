@@ -1,7 +1,7 @@
-import Item from "../../../models/item";
+import Item from '../../../models/item';
 
 export interface State {
-    teamMembers: Item[],
-    teamMembersLoaded: boolean,
-    teamName: string
+    teamMembers: Item[];
+    teamMembersLoaded: boolean;
+    teamName: string;
 }

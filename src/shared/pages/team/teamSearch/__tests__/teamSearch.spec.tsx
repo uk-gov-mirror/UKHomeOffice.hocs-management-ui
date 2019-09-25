@@ -1,63 +1,58 @@
 import React from 'react';
-//import { match } from 'react-router';
 import { createBrowserHistory, History } from 'history';
-import { act, wait, fireEvent, getByText } from '@testing-library/react';
-//import { act, render, RenderResult, wait, fireEvent, getByText } from '@testing-library/react';
-import { render, RenderResult } from '@testing-library/react';
+import { act, wait, fireEvent, getByText, render, RenderResult } from '@testing-library/react';
 import TeamSearch from '../teamSearch';
 import * as TeamsService from '../../../../services/teamsService';
 import { State } from '../state';
-//import Item from "../../../../models/item";
 
 let history: History<any>;
 let mockState: State;
 
 jest.mock('../../../../services/teamsService', () => ({
     __esModule: true,
-    getTeams:jest.fn().mockReturnValue(Promise.resolve( {
+    getTeams:jest.fn().mockReturnValue(Promise.resolve({
         data: [{
-            "displayName": "Home Office General Property",
-            "permissions": [
+            displayName: 'Home Office General Property',
+            permissions: [
                 {
-                    "caseTypeCode": "DTEN",
-                    "accessLevel": "OWNER"
+                    caseTypeCode: 'DTEN',
+                    accessLevel: 'OWNER'
                 },
                 {
-                    "caseTypeCode": "MIN",
-                    "accessLevel": "OWNER"
+                    caseTypeCode: 'MIN',
+                    accessLevel: 'OWNER'
                 },
                 {
-                    "caseTypeCode": "TRO",
-                    "accessLevel": "OWNER"
+                    caseTypeCode: 'TRO',
+                    accessLevel: 'OWNER'
                 }
             ],
-            "letterName": null,
-            "type": "1aa9055d-0572-436b-a69d-4a97588f4ce4",
-            "active": true
+            letterName: null,
+            type: '1aa9055d-0572-436b-a69d-4a97588f4ce4',
+            active: true
         }, {
-                "displayName": "Home Office General Property",
-                "permissions": [
-                    {
-                        "caseTypeCode": "DTEN",
-                        "accessLevel": "OWNER"
-                    },
-                    {
-                        "caseTypeCode": "MIN",
-                        "accessLevel": "OWNER"
-                    },
-                    {
-                        "caseTypeCode": "TRO",
-                        "accessLevel": "OWNER"
-                    }
-                ],
-                "letterName": null,
-                "type": "1aa9055d-0572-436b-a69d-4a97588f4ce4",
-                "active": true
-            }
+            displayName: 'Home Office General Property',
+            permissions: [
+                {
+                    caseTypeCode: 'DTEN',
+                    accessLevel: 'OWNER'
+                },
+                {
+                    caseTypeCode: 'MIN',
+                    accessLevel: 'OWNER'
+                },
+                {
+                    caseTypeCode: 'TRO',
+                    accessLevel: 'OWNER'
+                }
+            ],
+            letterName: null,
+            type: '1aa9055d-0572-436b-a69d-4a97588f4ce4',
+            active: true
+        }
         ]
     }))
 }));
-
 
 const getTeamsSpy = jest.spyOn(TeamsService, 'getTeams');
 const useReducerSpy = jest.spyOn(React, 'useReducer');
@@ -146,5 +141,3 @@ describe('when the view team button is clicked', () => {
         expect(history.push).toHaveBeenCalledWith('/team_view/__teamName__');
     });
 });
-
-

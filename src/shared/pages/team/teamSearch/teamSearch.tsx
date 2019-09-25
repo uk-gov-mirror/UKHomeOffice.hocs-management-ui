@@ -1,12 +1,12 @@
-import React, { useEffect, Reducer} from 'react';
+import React, { useEffect, Reducer } from 'react';
 import TypeAhead from '../../../common/components/typeAhead';
-import {getTeams} from '../../../services/teamsService';
+import { getTeams } from '../../../services/teamsService';
 import { History } from 'history';
-import {State} from "./state";
-import {Action} from "./actions";
-import {reducer} from "./reducer";
-import {initialState} from "./initialState";
-import Item from "../../../models/item";
+import { State } from './state';
+import { Action } from './actions';
+import { reducer } from './reducer';
+import { initialState } from './initialState';
+import Item from '../../../models/item';
 
 interface TeamSearchProps {
     history: History;
@@ -19,21 +19,21 @@ const TeamSearch: React.FC<TeamSearchProps> = ({ history }) => {
     useEffect(() => {
         getTeams()
             .then((teams: Item[]) => {
-                dispatch(  { type: 'SetTeams', payload: teams })
+                dispatch({ type: 'SetTeams', payload: teams });
             });
     }, []);
 
     const onSelectedTeamChange = (selectedTeam: any) => {
         dispatch({ type: 'AddTeamUUID', payload: selectedTeam.value });
 
-    }
+    };
 
     const handleOnSubmit = () => {
-        history.push('/team_view/' + state.teamUUID);
+        history.push(`/team_view/${state.teamUUID}`);
     };
 
     const onBackLinkClick = (history: History) => {
-        history.push(`/`)
+        history.push('/');
     };
 
     return (

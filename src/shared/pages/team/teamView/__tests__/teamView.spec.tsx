@@ -1,16 +1,11 @@
 import React from 'react';
 import { match } from 'react-router';
 import { createBrowserHistory, History, Location } from 'history';
-import { act, wait, fireEvent, getByText } from '@testing-library/react';
-//import { act, render, RenderResult, wait, fireEvent, getByText } from '@testing-library/react';
-import { render, RenderResult } from '@testing-library/react';
-
+import { act, wait, fireEvent, getByText, render, RenderResult } from '@testing-library/react';
 import TeamView from '../teamView';
 import * as TeamsService from '../../../../services/teamsService';
 import * as UsersService from '../../../../services/usersService';
 import { State } from '../state';
-//import Item from "../../../../models/item";
-//import { GENERAL_ERROR_TITLE, LOAD_TEAM_ERROR_DESCRIPTION, LOAD_USERS_ERROR_DESCRIPTION } from '../../../../models/constants';
 
 let match: match<any>;
 let history: History<any>;
@@ -33,15 +28,14 @@ jest.mock('../../../../services/usersService', () => ({
     addUserToTeam: jest.fn().mockReturnValue(Promise.resolve()),
     deleteUserFromTeam: jest.fn().mockReturnValue(Promise.resolve()),
     getTeamMembers: jest.fn().mockReturnValue(Promise.resolve({
-            data: [{
-                label: '__user1__',
-                value: '__userId1__'
-            }, {
-                label: '__user2__',
-                value: '__userId2__'
-            }]
-        }
-    )),
+        data: [{
+            label: '__user1__',
+            value: '__userId1__'
+        }, {
+            label: '__user2__',
+            value: '__userId2__'
+        }]
+    })),
     getUsers: jest.fn().mockReturnValue(Promise.resolve({
         data: [{
             label: '__user1__',
@@ -55,7 +49,7 @@ jest.mock('../../../../services/usersService', () => ({
 
 const getTeamSpy = jest.spyOn(TeamsService, 'getTeam');
 const getTeamMembersSpy = jest.spyOn(UsersService, 'getTeamMembers');
-const deleteUserFromTeamSpy = jest.spyOn(UsersService, 'deleteUserFromTeam')
+const deleteUserFromTeamSpy = jest.spyOn(UsersService, 'deleteUserFromTeam');
 const useReducerSpy = jest.spyOn(React, 'useReducer');
 const dispatch = jest.fn();
 
@@ -84,7 +78,7 @@ beforeEach(() => {
             label: '__user2__',
             value: '__userId2__'
         }],
-        teamName: '__teamName__',
+        teamName: '__teamName__'
     };
     useReducerSpy.mockImplementationOnce(() => [mockState, dispatch]);
     dispatch.mockReset();

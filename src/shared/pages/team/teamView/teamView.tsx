@@ -1,13 +1,13 @@
-import React, {Reducer, useEffect} from 'react';
+import React, { Reducer, useEffect } from 'react';
 import { RouteComponentProps } from 'react-router';
 import { History } from 'history';
-import {deleteUserFromTeam, getTeamMembers } from "../../../services/usersService";
-import {getTeam} from "../../../services/teamsService";
-import {State} from "./state";
-import {Action} from "./actions";
-import {reducer} from "./reducer";
-import {initialState} from "./initialState";
-import {User} from "../../../models/user";
+import { deleteUserFromTeam, getTeamMembers } from '../../../services/usersService';
+import { getTeam } from '../../../services/teamsService';
+import { State } from './state';
+import { Action } from './actions';
+import { reducer } from './reducer';
+import { initialState } from './initialState';
+import { User } from '../../../models/user';
 
 interface MatchParams {
     teamId: string;
@@ -38,13 +38,12 @@ const TeamView: React.FC<TeamMembersProps> = ({ history, match }) => {
             .then((users: User[]) => dispatch({ type: 'PopulateTeamMembers', payload: users }));
     }, []);
 
-
     const removeTeamMember = (userUUID: string, teamId: string) => {
         deleteUserFromTeam(userUUID, teamId)
             .then(() => {
                 getTeamMembers(teamId)
                     .then((users: User[]) => dispatch({ type: 'PopulateTeamMembers', payload: users }));
-            })
+            });
     };
 
     const DisplayTeamTable = () => (
@@ -66,7 +65,7 @@ const TeamView: React.FC<TeamMembersProps> = ({ history, match }) => {
                                             <td className="govuk-table__cell">{teamMember.label}</td>
                                             <td className="govuk-table__cell"><a href="#" onClick={() => removeTeamMember(teamMember.value, teamId as string)}>Remove</a></td>
                                         </tr>
-                                    )
+                                    );
                                 })
                             }
                         </tbody>
