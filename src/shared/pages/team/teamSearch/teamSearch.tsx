@@ -7,6 +7,8 @@ import { Action } from './actions';
 import { reducer } from './reducer';
 import { initialState } from './initialState';
 import Item from '../../../models/item';
+import ErrorSummary from "../../../common/components/errorSummary";
+import { GENERAL_ERROR_TITLE, LOAD_TEAMS_ERROR_DESCRIPTION } from "../../../models/constants";
 
 interface TeamSearchProps {
     history: History;
@@ -18,9 +20,9 @@ const TeamSearch: React.FC<TeamSearchProps> = ({ history }) => {
 
     useEffect(() => {
         getTeams()
-            .then((teams: Item[]) => {
-                dispatch({ type: 'SetTeams', payload: teams });
-            });
+            .then((teams: Item[]) => {dispatch({ type: 'SetTeams', payload: teams })})
+            .catch(() => {dispatch({ type: 'SetGeneralError', payload: { description: LOAD_TEAMS_ERROR_DESCRIPTION, title: GENERAL_ERROR_TITLE } });
+        });
     }, []);
 
     const onSelectedTeamChange = (selectedTeam: any) => {
@@ -39,6 +41,10 @@ const TeamSearch: React.FC<TeamSearchProps> = ({ history }) => {
     return (
         <div className="govuk-form-group">
             <a href="" onClick={() => onBackLinkClick(history)} className="govuk-back-link">Back</a>
+            <ErrorSummary
+                heading={state.errorTitle}
+                description={state.errorDescription}
+            />
             <h1 className="govuk-heading-xl">
                 Team search
             </h1>

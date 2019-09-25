@@ -61,6 +61,8 @@ const dispatch = jest.fn();
 beforeEach(() => {
     history = createBrowserHistory();
     mockState = {
+        errorDescription: '',
+        errorTitle: '',
         teams: [{
             label: '__teamName1__',
             value: '__teamId1__'
