@@ -16,6 +16,7 @@
         "lint-staged": "node_modules/lint-staged/index.js",
         "lint": "npm run lint:js & npm run lint:jsx & npm run lint:ts & npm run lint:tsx"
     },
+    "repository": "github:UKHomeOffice/hocs-management-ui",
     "jest": {
         "setupFiles": [
             "./test/jestsetup.js"
