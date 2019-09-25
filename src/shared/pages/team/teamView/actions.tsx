@@ -1,4 +1,5 @@
 import Item from '../../../models/item';
+import ErrorMessage from '../../../models/errorMessage';
 
 export type SetTeamName = {
     type: 'SetTeamName';
@@ -10,6 +11,12 @@ export type PopulateTeamMembers = {
     type: 'PopulateTeamMembers';
 };
 
+export type SetGeneralError = {
+    type: 'SetGeneralError';
+    payload: ErrorMessage;
+};
+
 export type Action =
     SetTeamName |
-    PopulateTeamMembers;
+    PopulateTeamMembers |
+    SetGeneralError;

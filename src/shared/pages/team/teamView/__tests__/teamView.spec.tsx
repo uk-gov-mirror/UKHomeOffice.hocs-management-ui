@@ -70,6 +70,8 @@ beforeEach(() => {
         state: {}
     };
     mockState = {
+        errorDescription: '',
+        errorTitle: '',
         teamMembersLoaded: true,
         teamMembers: [{
             label: '__user1__',

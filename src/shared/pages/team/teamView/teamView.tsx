@@ -8,6 +8,8 @@ import { Action } from './actions';
 import { reducer } from './reducer';
 import { initialState } from './initialState';
 import { User } from '../../../models/user';
+import { GENERAL_ERROR_TITLE, LOAD_TEAM_ERROR_DESCRIPTION, LOAD_TEAM_MEMBERS_ERROR_DESCRIPTION } from '../../../models/constants';
+import ErrorSummary from '../../../common/components/errorSummary';
 
 interface MatchParams {
     teamId: string;
@@ -33,16 +35,25 @@ const TeamView: React.FC<TeamMembersProps> = ({ history, match }) => {
 
     useEffect(() => {
         getTeam(teamId)
-            .then(team => dispatch({ type: 'SetTeamName', payload: team.displayName }));
+            .then(team => dispatch({ type: 'SetTeamName', payload: team.displayName }))
+            .catch(() => {
+                dispatch({ type: 'SetGeneralError', payload: { description: LOAD_TEAM_ERROR_DESCRIPTION, title: GENERAL_ERROR_TITLE } });
+            });
         getTeamMembers(teamId)
-            .then((users: User[]) => dispatch({ type: 'PopulateTeamMembers', payload: users }));
+            .then((users: User[]) => dispatch({ type: 'PopulateTeamMembers', payload: users }))
+            .catch(() => {
+                dispatch({ type: 'SetGeneralError', payload: { description: LOAD_TEAM_MEMBERS_ERROR_DESCRIPTION, title: GENERAL_ERROR_TITLE } });
+            });
     }, []);
 
     const removeTeamMember = (userUUID: string, teamId: string) => {
         deleteUserFromTeam(userUUID, teamId)
             .then(() => {
                 getTeamMembers(teamId)
-                    .then((users: User[]) => dispatch({ type: 'PopulateTeamMembers', payload: users }));
+                    .then((users: User[]) => dispatch({ type: 'PopulateTeamMembers', payload: users }))
+                    .catch(() => {
+                        dispatch({ type: 'SetGeneralError', payload: { description: LOAD_TEAM_MEMBERS_ERROR_DESCRIPTION, title: GENERAL_ERROR_TITLE } });
+                    });
             });
     };
 
@@ -78,6 +89,10 @@ const TeamView: React.FC<TeamMembersProps> = ({ history, match }) => {
     return (
         <div className="govuk-form-group">
             <a href="" onClick={() => onBackLinkClick(history)} className="govuk-back-link">Back</a>
+            <ErrorSummary
+                heading={state.errorTitle}
+                description={state.errorDescription}
+            />
             <div>
                 <h1 className="govuk-heading-xl">View and remove team members</h1>
                 <h2 className="govuk-heading-l">

@@ -1,5 +1,5 @@
 import Item from '../../../models/item';
-import ErrorMessage from "../../../models/errorMessage";
+import ErrorMessage from '../../../models/errorMessage';
 
 export type SetTeams = {
     type: 'SetTeams';
@@ -15,6 +15,7 @@ export type SetGeneralError = {
     type: 'SetGeneralError';
     payload: ErrorMessage;
 };
+
 export type Action =
     SetTeams |
     AddTeamUUID |

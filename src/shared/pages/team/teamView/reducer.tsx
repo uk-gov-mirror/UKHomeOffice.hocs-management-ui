@@ -8,6 +8,8 @@ export const reducer = (state: State, action: Action): State => {
             return { ...state, teamName: action.payload };
         case 'PopulateTeamMembers':
             return { ...state, teamMembers: action.payload, teamMembersLoaded: true };
+        case 'SetGeneralError':
+            return { ...state, errorDescription: action.payload.description, errorTitle: action.payload.title };
     }
     return state;
 };
