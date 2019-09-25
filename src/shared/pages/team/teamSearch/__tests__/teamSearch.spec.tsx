@@ -113,6 +113,23 @@ describe('when the back button is clicked', () => {
     });
 });
 
+describe('when the team drop down selection is changed', () => {
+    it('should add the TeamUUID of the selection', async () => {
+        history.push = jest.fn();
+        let wrapper: RenderResult;
+        act(() => {
+            wrapper = render(<TeamSearch history={history}></TeamSearch>);
+        });
+
+        await wait(async () => {
+            const teamDropDown = getByText(wrapper.container, 'Back');
+            fireEvent.click(teamDropDown);
+        });
+
+        expect(history.push).toHaveBeenCalledWith('/');
+    });
+});
+
 describe('when the view team button is clicked', () => {
     it('should push a new page into the history', async () => {
         history.push = jest.fn();
