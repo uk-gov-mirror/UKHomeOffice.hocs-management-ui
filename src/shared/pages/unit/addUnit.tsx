@@ -52,7 +52,7 @@ const AddUnit: React.FC<AddUnitProps> = ({ csrfToken, history }) => {
             createUnit(state.unit).then(() => {
                 history.push('/');
             }).catch((error) => {
-                if (error.response.status === 409) {
+                if (error && error.response && error.response.status === 409) {
                     dispatch({ type: 'SetGeneralError', payload: { title: VALIDATION_ERROR_TITLE, description: DUPLICATE_UNIT_DESCRIPTION } });
                 } else {
                     dispatch({ type: 'SetGeneralError', payload: { title: GENERAL_ERROR_TITLE, description: ADD_UNIT_ERROR_DESCRIPTION } });

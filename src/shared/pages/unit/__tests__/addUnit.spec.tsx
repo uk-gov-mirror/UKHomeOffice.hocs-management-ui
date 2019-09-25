@@ -5,7 +5,7 @@ import { act, render, RenderResult, wait, fireEvent, waitForElement } from '@tes
 import AddUnit from '../addUnit';
 import * as UnitsService from '../../../services/unitsService';
 import { State } from '../state';
-import { ADD_UNIT_ERROR_DESCRIPTION, GENERAL_ERROR_TITLE } from '../../../models/constants';
+import { ADD_UNIT_ERROR_DESCRIPTION, GENERAL_ERROR_TITLE, DUPLICATE_UNIT_DESCRIPTION, VALIDATION_ERROR_TITLE } from '../../../models/constants';
 
 let match: match<any>;
 let history: History<any>;
@@ -15,6 +15,8 @@ let wrapper: RenderResult;
 
 const useReducerSpy = jest.spyOn(React, 'useReducer');
 const dispatch = jest.fn();
+
+jest.spyOn(UnitsService, 'createUnit').mockImplementation(() => Promise.resolve());
 
 beforeEach(() => {
     history = createBrowserHistory();
@@ -91,10 +93,6 @@ describe('when the short code is entered', () => {
 });
 
 describe('when the submit button is clicked', () => {
-    beforeAll(() => {
-        jest.spyOn(UnitsService, 'createUnit').mockImplementationOnce(() => Promise.resolve());
-    });
-
     describe('and the data is filled in', () => {
 
         beforeEach(async () => {
@@ -125,14 +123,23 @@ describe('when the submit button is clicked', () => {
 
         describe('and the service call fails', () => {
             beforeAll(() => {
-                jest.spyOn(UnitsService, 'createUnit').mockImplementationOnce(() => Promise.reject('error'));
+                jest.spyOn(UnitsService, 'createUnit').mockImplementationOnce(() => Promise.reject({ response: { status: 500 } }));
             });
 
             it('should set the error state', () => {
                 expect(dispatch).toHaveBeenNthCalledWith(2, { type: 'SetGeneralError', payload: { description: ADD_UNIT_ERROR_DESCRIPTION, title: GENERAL_ERROR_TITLE } });
             });
-            it('should call the begin submit action', async () => {
+            it('should call the begin submit action', () => {
                 expect(dispatch).toHaveBeenNthCalledWith(1, { type: 'BeginSubmit' });
+            });
+        });
+        describe('and the service call fails with a 409', () => {
+            beforeAll(() => {
+                jest.spyOn(UnitsService, 'createUnit').mockImplementationOnce(() => Promise.reject({ response: { status: 409 } }));
+            });
+
+            it('should set the error state', () => {
+                expect(dispatch).toHaveBeenNthCalledWith(2, { type: 'SetGeneralError', payload: { description: DUPLICATE_UNIT_DESCRIPTION, title: VALIDATION_ERROR_TITLE } });
             });
         });
     });
