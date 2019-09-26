@@ -1,5 +1,8 @@
 import Error, { ErrorContent } from '../../layouts/error';
 import Dashboard from '../../pages/dashboard';
+import TeamSearch from '../../pages/team/teamSearch/teamSearch';
+import TeamView from '../../pages/team/teamView/teamView';
+import AddUsersToTeam from '../../pages/team/addToTeam/addToTeam';
 
 export interface Route {
     component: React.FunctionComponent | Error;
@@ -14,6 +17,24 @@ const routes = [
         exact: true,
         component: Dashboard,
         title: 'Dashboard'
+    },
+    {
+        path: '/team-search',
+        exact: true,
+        component: TeamSearch,
+        title: 'TeamSearch'
+    },
+    {
+        path: '/team-view/:teamId',
+        exact: true,
+        component: TeamView,
+        title: 'TeamView'
+    },
+    {
+        path: '/team/:teamId/add-users',
+        exact: true,
+        component: AddUsersToTeam,
+        title: 'AddUsersToTeam'
     },
     {
         component: Error,

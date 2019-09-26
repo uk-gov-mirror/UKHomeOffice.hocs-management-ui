@@ -1,0 +1,61 @@
+const { infoService } = require('../clients/index');
+const getLogger = require('../libs/logger');
+const User = require('../models/user');
+
+async function getTeam(req, res, next) {
+
+    const logger = getLogger(req.request);
+    const { teamId } = req.params;
+
+    try {
+        const response = await infoService.get(`/team/${teamId}`, {}, { headers: User.createHeaders(req.user) });
+        res.locals.team = response.data;
+        next();
+    } catch (error) {
+        logger.error(error);
+        next(error);
+    }
+}
+
+async function getTeams(req, res, next) {
+    try {
+        const response = await req.listService.fetch('TEAMS', req.params);
+        res.locals.teams = response;
+        next();
+    } catch (error) {
+        next(error);
+    }
+}
+
+async function getTeamMembers(req, res, next) {
+    try {
+        const response = await req.listService.fetch('USERS_IN_TEAM', req.params);
+        res.locals.teamMembers = response;
+        next();
+    } catch (error) {
+        next(error);
+    }
+}
+
+async function returnTeamJson(_, res) {
+    const { locals: { team } } = res;
+    await res.json(team);
+}
+async function returnTeamsJson(_, res) {
+    const { locals: { teams } } = res;
+    await res.json(teams);
+}
+
+async function returnTeamMembersJson(_, res) {
+    const { locals: { teamMembers } } = res;
+    await res.json(teamMembers);
+}
+
+module.exports = {
+    getTeam,
+    getTeams,
+    getTeamMembers,
+    returnTeamJson,
+    returnTeamsJson,
+    returnTeamMembersJson
+}
