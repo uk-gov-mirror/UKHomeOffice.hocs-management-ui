@@ -16,6 +16,16 @@ const Dashboard: React.FC = () => (
                             </li>
                         </ul>
                     </li>
+                    <li>
+                        <h3 className="govuk-heading-m">
+                            Topic Management
+                        </h3>
+                        <ul className="govuk-list">
+                            <li>
+                                <a className="govuk-link" href="/topic_to_team_link">Link topic to team</a>
+                            </li>
+                        </ul>
+                    </li>
                 </ol>
             </div>
         </div>
