@@ -5,5 +5,5 @@ export interface State {
     errorTitle: string;
     teamMembers: Item[];
     teamMembersLoaded: boolean;
-    teamName: string;
+    teamName?: string;
 }

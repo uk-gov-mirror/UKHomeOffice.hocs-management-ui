@@ -1,8 +1,8 @@
-import React, { Reducer, useEffect } from 'react';
+import React, { Reducer, useEffect, Fragment } from 'react';
 import { RouteComponentProps } from 'react-router';
 import { History } from 'history';
-import { deleteUserFromTeam, getTeamMembers } from '../../../services/usersService';
-import { getTeam } from '../../../services/teamsService';
+import { deleteUserFromTeam } from '../../../services/usersService';
+import { getTeam, getTeamMembers } from '../../../services/teamsService';
 import { State } from './state';
 import { Action } from './actions';
 import { reducer } from './reducer';
@@ -15,16 +15,14 @@ interface MatchParams {
     teamId: string;
 }
 
-interface TeamMembersProps extends RouteComponentProps<MatchParams> {
-    history: History;
-}
+interface TeamMembersProps extends RouteComponentProps<MatchParams> {}
 
 const onAddTeamMembersAddClick = (history: History, teamId: string) => {
     history.push(`/team/${teamId}/add-users`);
 };
 
 const onBackLinkClick = (history: History) => {
-    history.push('/team_search');
+    history.push('/team-search');
 };
 
 const TeamView: React.FC<TeamMembersProps> = ({ history, match }) => {
@@ -58,32 +56,30 @@ const TeamView: React.FC<TeamMembersProps> = ({ history, match }) => {
     };
 
     const DisplayTeamTable = () => (
-        <div>
-            <div>
-                {state.teamMembersLoaded && (
-                    <table className="govuk-table">
-                        <thead className="govuk-table__head">
-                            <tr className="govuk-table__row">
-                                <th className="govuk-table__header" scope="col">Team members</th>
-                                <th className="govuk-table__header" scope="col">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody className="govuk-table__body">
-                            {
-                                state.teamMembers.map((teamMember) => {
-                                    return (
-                                        <tr className="govuk-table__row">
-                                            <td className="govuk-table__cell">{teamMember.label}</td>
-                                            <td className="govuk-table__cell"><a href="#" onClick={() => removeTeamMember(teamMember.value, teamId as string)}>Remove</a></td>
-                                        </tr>
-                                    );
-                                })
-                            }
-                        </tbody>
-                    </table>
-                )}
-            </div>
-        </div>
+        <Fragment>
+            {state.teamMembersLoaded && (
+            <table className="govuk-table">
+                <thead className="govuk-table__head">
+                    <tr className="govuk-table__row">
+                        <th className="govuk-table__header" scope="col">Team members</th>
+                        <th className="govuk-table__header" scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody className="govuk-table__body">
+                    {
+                        state.teamMembers.map((teamMember) => {
+                            return (
+                                <tr className="govuk-table__row">
+                                    <td className="govuk-table__cell">{teamMember.label}</td>
+                                    <td className="govuk-table__cell"><a href="#" onClick={() => removeTeamMember(teamMember.value, teamId as string)}>Remove</a></td>
+                                </tr>
+                            );
+                        })
+                    }
+                </tbody>
+            </table>
+        )}
+        </Fragment>
     );
 
     return (

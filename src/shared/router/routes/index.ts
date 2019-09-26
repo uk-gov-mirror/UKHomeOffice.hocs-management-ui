@@ -19,13 +19,13 @@ const routes = [
         title: 'Dashboard'
     },
     {
-        path: '/team_search',
+        path: '/team-search',
         exact: true,
         component: TeamSearch,
         title: 'TeamSearch'
     },
     {
-        path: '/team_view/:teamId',
+        path: '/team-view/:teamId',
         exact: true,
         component: TeamView,
         title: 'TeamView'

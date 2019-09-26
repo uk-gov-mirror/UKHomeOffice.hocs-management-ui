@@ -33,7 +33,7 @@ const TeamSearch: React.FC<TeamSearchProps> = ({ history }) => {
     };
 
     const handleOnSubmit = () => {
-        history.push(`/team_view/${state.teamUUID}`);
+        history.push(`/team-view/${state.teamUUID}`);
     };
 
     const onBackLinkClick = (history: History) => {

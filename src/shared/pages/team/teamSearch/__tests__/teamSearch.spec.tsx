@@ -140,6 +140,6 @@ describe('when the view team button is clicked', () => {
             fireEvent.click(addTeamMembersButton);
         });
 
-        expect(history.push).toHaveBeenCalledWith('/team_view/__teamName__');
+        expect(history.push).toHaveBeenCalledWith('/team-view/__teamName__');
     });
 });
