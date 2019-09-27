@@ -1,6 +1,6 @@
 const timeout = {
     ERROR: 10000,
-    STANDARD: 5000
+    STANDARD: 1000
 };
 
 const status = {

@@ -17,3 +17,5 @@ function createAction<Payload>(actionType: string): ActionFunctionAny<ContextAct
 export const unsetError = createAction(types.UNSET_ERROR);
 
 export const clearApiStatus = createAction(types.CLEAR_API_STATUS);
+
+export const updateApiStatus = createAction(types.UPDATE_API_STATUS);

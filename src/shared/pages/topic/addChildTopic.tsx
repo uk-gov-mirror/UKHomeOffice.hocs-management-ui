@@ -9,7 +9,7 @@ import { State } from './state';
 import { Action } from './actions';
 import { initialState } from './initialState';
 import ApiStatus from '../../models/apiStatus';
-import { ContextAction } from '../../contexts/actions';
+import { ContextAction, updateApiStatus } from '../../contexts/actions';
 import status from '../../helpers/api-status.js';
 import Item from '../../models/item';
 
@@ -30,20 +30,14 @@ const AddUnit: React.FC<AddUnitProps> = ({ apiStatus, csrfToken, contextDispatch
     const [, dispatch] = React.useReducer<Reducer<State, Action>>(reducer, initialState);
 
     React.useEffect(() => {
-        contextDispatch({
-            type: 'UPDATE_API_STATUS', payload: status.REQUEST_PARENT_TOPICS
-        });
+        contextDispatch(updateApiStatus(status.REQUEST_PARENT_TOPICS));
         getUsers()
             .then((users: Item[]) => {
                 dispatch({ type: 'SetParentTopics', payload: users });
-                contextDispatch({
-                    type: 'UPDATE_API_STATUS', payload: status.REQUEST_PARENT_TOPICS_SUCCESS
-                });
+                contextDispatch(updateApiStatus(status.REQUEST_PARENT_TOPICS_SUCCESS));
             })
             .catch(() => {
-                contextDispatch({
-                    type: 'UPDATE_API_STATUS', payload: status.REQUEST_PARENT_TOPICS_FAILURE
-                });
+                contextDispatch(updateApiStatus(status.REQUEST_PARENT_TOPICS_FAILURE));
             });
     }, []);
 
