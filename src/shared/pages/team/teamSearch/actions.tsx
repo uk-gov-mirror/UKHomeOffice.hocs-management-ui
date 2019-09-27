@@ -3,12 +3,12 @@ import ErrorMessage from '../../../models/errorMessage';
 
 export type SetTeams = {
     type: 'SetTeams';
-    payload?: Item[];
+    payload: Item[];
 };
 
 export type AddTeamUUID = {
     type: 'AddTeamUUID'
-    payload: any;
+    payload: string;
 };
 
 export type SetGeneralError = {

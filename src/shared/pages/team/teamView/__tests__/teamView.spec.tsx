@@ -14,6 +14,15 @@ let mockState: State;
 
 jest.mock('../../../../services/teamsService', () => ({
     __esModule: true,
+    getTeamMembers: jest.fn().mockReturnValue(Promise.resolve({
+        data: [{
+            label: '__user1__',
+            value: '__userId1__'
+        }, {
+            label: '__user2__',
+            value: '__userId2__'
+        }]
+    })),
     getTeam: jest.fn().mockReturnValue(Promise.resolve({
         active: true,
         displayName: '__displayName__',
@@ -27,15 +36,6 @@ jest.mock('../../../../services/usersService', () => ({
     __esModule: true,
     addUserToTeam: jest.fn().mockReturnValue(Promise.resolve()),
     deleteUserFromTeam: jest.fn().mockReturnValue(Promise.resolve()),
-    getTeamMembers: jest.fn().mockReturnValue(Promise.resolve({
-        data: [{
-            label: '__user1__',
-            value: '__userId1__'
-        }, {
-            label: '__user2__',
-            value: '__userId2__'
-        }]
-    })),
     getUsers: jest.fn().mockReturnValue(Promise.resolve({
         data: [{
             label: '__user1__',
@@ -48,7 +48,7 @@ jest.mock('../../../../services/usersService', () => ({
 }));
 
 const getTeamSpy = jest.spyOn(TeamsService, 'getTeam');
-const getTeamMembersSpy = jest.spyOn(UsersService, 'getTeamMembers');
+const getTeamMembersSpy = jest.spyOn(TeamsService, 'getTeamMembers');
 const deleteUserFromTeamSpy = jest.spyOn(UsersService, 'deleteUserFromTeam');
 const useReducerSpy = jest.spyOn(React, 'useReducer');
 const dispatch = jest.fn();
@@ -115,7 +115,7 @@ describe('when the back button is clicked', () => {
             fireEvent.click(backButton);
         });
 
-        expect(history.push).toHaveBeenCalledWith('/team_search');
+        expect(history.push).toHaveBeenCalledWith('/team-search');
     });
 });
 
