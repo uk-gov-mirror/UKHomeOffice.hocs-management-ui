@@ -3,6 +3,7 @@ import Dashboard from '../../pages/dashboard';
 import TeamSearch from '../../pages/team/teamSearch/teamSearch';
 import TeamView from '../../pages/team/teamView/teamView';
 import AddUsersToTeam from '../../pages/team/addToTeam/addToTeam';
+import AddUnit from '../../pages/unit/addUnit';
 
 export interface Route {
     component: React.FunctionComponent | Error;
@@ -35,6 +36,12 @@ const routes = [
         exact: true,
         component: AddUsersToTeam,
         title: 'AddUsersToTeam'
+    },
+    {
+        path: '/add-unit',
+        exact: true,
+        component: AddUnit,
+        title: 'Add Unit'
     },
     {
         component: Error,

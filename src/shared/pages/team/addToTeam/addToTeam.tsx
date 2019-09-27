@@ -79,7 +79,7 @@ const AddToTeam: React.FC<AddToTeamProps> = ({ history, match }) => {
                 <div className="govuk-form-group">
                     <h1 className="govuk-heading-xl">
                         Add users
-                </h1>
+                    </h1>
                     <h2 className="govuk-heading-l">
                         {`Team: ${state.teamName}`}
                     </h2>

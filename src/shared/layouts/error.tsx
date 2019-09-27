@@ -73,6 +73,7 @@ class Error extends Component<ErrorProps> {
         }
     }
 
+    // tslint:disable-next-line: function-name
     UNSAFE_componentWillMount() {
         const { error, staticContext } = this.props;
         if (staticContext) {
