@@ -3,7 +3,7 @@ import { RouteComponentProps } from 'react-router';
 import { History } from 'history';
 import Submit from '../../common/components/forms/submit';
 import { ApplicationConsumer } from '../../contexts/application';
-import { getUsers } from '../../services/usersService';
+import { getParentTopics } from '../../services/topicsService';
 import { reducer } from './reducer';
 import { State } from './state';
 import { Action } from './actions';
@@ -12,6 +12,9 @@ import ApiStatus from '../../models/apiStatus';
 import { ContextAction, updateApiStatus } from '../../contexts/actions';
 import status from '../../helpers/api-status.js';
 import Item from '../../models/item';
+import useError from '../../hooks/useError';
+import { GENERAL_ERROR_TITLE, LOAD_PARENT_TOPICS_ERROR_DESCRIPTION } from '../../models/constants';
+import ErrorSummary from '../../common/components/errorSummary';
 
 interface AddUnitProps extends RouteComponentProps {
     apiStatus?: ApiStatus;
@@ -27,17 +30,21 @@ const AddUnit: React.FC<AddUnitProps> = ({ apiStatus, csrfToken, contextDispatch
 
     // const [validationErrors, setValidationErrors] = React.useState<FormError[]>();
 
+    const [pageError, , setErrorDescription, setErrorTitle] = useError();
+
     const [, dispatch] = React.useReducer<Reducer<State, Action>>(reducer, initialState);
 
     React.useEffect(() => {
         contextDispatch(updateApiStatus(status.REQUEST_PARENT_TOPICS));
-        getUsers()
+        getParentTopics()
             .then((users: Item[]) => {
                 dispatch({ type: 'SetParentTopics', payload: users });
                 contextDispatch(updateApiStatus(status.REQUEST_PARENT_TOPICS_SUCCESS));
             })
             .catch(() => {
                 contextDispatch(updateApiStatus(status.REQUEST_PARENT_TOPICS_FAILURE));
+                setErrorDescription(LOAD_PARENT_TOPICS_ERROR_DESCRIPTION);
+                setErrorTitle(GENERAL_ERROR_TITLE);
             });
     }, []);
 
@@ -46,9 +53,11 @@ const AddUnit: React.FC<AddUnitProps> = ({ apiStatus, csrfToken, contextDispatch
             <div className="govuk-grid-row">
                 <div className="govuk-grid-column-two-thirds-from-desktop">
                     <a href="" onClick={() => onBackLinkClick(history)} className="govuk-back-link">Back</a>
-
+                    <ErrorSummary
+                        pageError={pageError}
+                    />
                     <h1 className="govuk-heading-xl">
-                        Add Unit
+                        Add Child Topic
                     </h1>
                 </div>
             </div>

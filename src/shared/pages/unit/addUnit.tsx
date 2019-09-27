@@ -67,9 +67,13 @@ const AddUnit: React.FC<AddUnitProps> = ({ csrfToken, history }) => {
                 <div className="govuk-grid-column-two-thirds-from-desktop">
                     <a href="" onClick={() => onBackLinkClick(history)} className="govuk-back-link">Back</a>
                     <ErrorSummary
-                        heading={state.errorTitle}
-                        description={state.errorDescription}
-                        errors={state.errors}
+                        pageError={{
+                            error: {
+                                title: state.errorTitle,
+                                description: state.errorDescription,
+                                formErrors: state.errors
+                            }
+                        }}
                     />
                     <h1 className="govuk-heading-xl">
                         Add Unit

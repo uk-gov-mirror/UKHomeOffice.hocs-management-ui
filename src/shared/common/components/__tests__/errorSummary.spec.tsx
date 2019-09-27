@@ -12,17 +12,17 @@ const errors = [
 describe('Form text component', () => {
     it('should render with default props', () => {
         expect(
-            render(<ErrorSummary description="Displaying a list of the errors on the page" />)
+            render(<ErrorSummary pageError={{ error: { description: 'Displaying a list of the errors on the page' } }} />)
         ).toMatchSnapshot();
     });
     it('should render with heading when passed', () => {
         expect(
-            render(<ErrorSummary description="Displaying a list of the errors on the page" heading="Error summary" />)
+            render(<ErrorSummary pageError={{ error: { description: 'Displaying a list of the errors on the page', title: 'Error summary' } }} />)
         ).toMatchSnapshot();
     });
     it('should render with description when passed', () => {
         expect(
-            render(<ErrorSummary description="Displaying a list of the errors on the page" />)
+            render(<ErrorSummary pageError={{ error: { description: 'Displaying a list of the errors on the page' } }} />)
         ).toMatchSnapshot();
     });
     it('should render list of errors when passed', () => {
@@ -30,7 +30,7 @@ describe('Form text component', () => {
         expect(
             render(
                 < MemoryRouter >
-                    <ErrorSummary description="Displaying a list of the errors on the page" errors={errors} />
+                    <ErrorSummary pageError={{ error: { description: 'Displaying a list of the errors on the page', formErrors: errors } }} />
                 </MemoryRouter >
             )
         ).toMatchSnapshot();

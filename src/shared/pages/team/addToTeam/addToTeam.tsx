@@ -71,9 +71,13 @@ const AddToTeam: React.FC<AddToTeamProps> = ({ history, match }) => {
         <>
             <a href="" onClick={() => onBackLinkClick(history)} className="govuk-back-link">Back</a>
             <ErrorSummary
-                heading={state.errorTitle}
-                description={state.errorDescription}
-                errors={state.errors}
+                pageError={{
+                    error: {
+                        title: state.errorTitle,
+                        description: state.errorDescription,
+                        formErrors: state.errors
+                    }
+                }}
             />
             {state.teamName &&
                 <div className="govuk-form-group">
