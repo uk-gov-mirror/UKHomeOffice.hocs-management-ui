@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { ApplicationConsumer } from '../contexts/application';
-import { unsetError, clearApiStatus, Action } from '../contexts/actions/index';
+import { unsetError, clearApiStatus, Action } from '../contexts/actions';
 import Error, { ErrorContent } from './error';
 
 interface PageWrapperProps {

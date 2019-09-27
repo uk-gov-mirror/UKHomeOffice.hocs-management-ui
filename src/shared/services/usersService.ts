@@ -15,12 +15,6 @@ export const getUsers = () => new Promise((resolve, reject) => axios
     .catch(reason => reject(reason))
 );
 
-export const getTeamMembers = (teamId: string) => new Promise((resolve, reject) => axios
-    .get(`/api/teams/${teamId}/members`)
-    .then(response => resolve(response.data))
-    .catch(reason => reject(reason))
-);
-
 export const addUserToTeam = (user: Item, teamId: string) => new Promise((resolve, reject) => axios
     .post(`/api/users/${user.value}/team/${teamId}`)
     .then(response => resolve(response.data))

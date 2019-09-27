@@ -12,7 +12,7 @@ const Dashboard: React.FC = () => (
                         </h3>
                         <ul className="govuk-list govuk-list--bullet">
                             <li>
-                                <a className="govuk-link" href="/team_search">Add/Remove Users</a>
+                                <a className="govuk-link" href="/team-search">Add/Remove Users</a>
                             </li>
                         </ul>
                     </li>

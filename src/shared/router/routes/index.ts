@@ -1,7 +1,7 @@
 import Error, { ErrorContent } from '../../layouts/error';
 import Dashboard from '../../pages/dashboard';
-import TeamSearch from '../../pages/team_search';
-import TeamView from '../../pages/team_view';
+import TeamSearch from '../../pages/team/teamSearch/teamSearch';
+import TeamView from '../../pages/team/teamView/teamView';
 import AddUsersToTeam from '../../pages/team/addToTeam/addToTeam';
 import AddUnit from '../../pages/unit/addUnit';
 
@@ -20,13 +20,13 @@ const routes = [
         title: 'Dashboard'
     },
     {
-        path: '/team_search',
+        path: '/team-search',
         exact: true,
         component: TeamSearch,
         title: 'TeamSearch'
     },
     {
-        path: '/team_view/:teamId',
+        path: '/team-view/:teamId',
         exact: true,
         component: TeamView,
         title: 'TeamView'
