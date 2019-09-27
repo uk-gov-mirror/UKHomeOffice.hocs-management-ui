@@ -11,7 +11,9 @@ import { reducer } from './reducer';
 import { Action } from './actions';
 import { State } from './state';
 import { initialState } from './initialState';
-import { EMPTY_SUBMIT_ERROR_DESCRIPTION, EMPTY_SUBMIT_ERROR_TITLE, GENERAL_ERROR_TITLE, LOAD_TEAM_ERROR_DESCRIPTION, LOAD_USERS_ERROR_DESCRIPTION } from '../../../models/constants';
+import { EMPTY_SUBMIT_ERROR_DESCRIPTION, EMPTY_SUBMIT_ERROR_TITLE, GENERAL_ERROR_TITLE, LOAD_TEAM_ERROR_DESCRIPTION, LOAD_USERS_ERROR_DESCRIPTION, ADD_USER_ERROR_TITLE, ADD_USER_ERROR_DESCRIPTION } from '../../../models/constants';
+import useError from '../../../hooks/useError';
+import ErrorMessage from '../../../models/errorMessage';
 
 interface MatchParams {
     teamId: string;
@@ -21,6 +23,7 @@ export interface AddToTeamProps extends RouteComponentProps<MatchParams> { }
 
 const AddToTeam: React.FC<AddToTeamProps> = ({ history, match }) => {
 
+    const [pageError, addFormError, clearErrors, setErrorMessage] = useError(ADD_USER_ERROR_DESCRIPTION, ADD_USER_ERROR_TITLE);
     const [state, dispatch] = React.useReducer<Reducer<State, Action>>(reducer, initialState);
 
     const { params: { teamId } } = match;
@@ -30,18 +33,18 @@ const AddToTeam: React.FC<AddToTeamProps> = ({ history, match }) => {
     };
 
     const onSubmit = () => {
+        clearErrors();
         if (state.selectedUsers.length === 0) {
-            dispatch({ type: 'SetGeneralError', payload: { description: EMPTY_SUBMIT_ERROR_DESCRIPTION, title: EMPTY_SUBMIT_ERROR_TITLE } });
+            setErrorMessage(new ErrorMessage(EMPTY_SUBMIT_ERROR_DESCRIPTION, EMPTY_SUBMIT_ERROR_TITLE));
             return;
         }
 
-        dispatch({ type: 'BeginSubmit' });
         Promise.all(state.selectedUsers.map(user =>
             addUserToTeam(user, teamId)
                 .then(() => dispatch({ type: 'RemoveFromSelection', payload: user }))
                 .catch((error: AddUserError) => {
                     const { userToAdd: { label, value } } = error;
-                    dispatch({ type: 'AddSubmitError', payload: { key: value, value: label } });
+                    addFormError({ key: value, value: label });
                     throw error;
                 })
         )).then(() => {
@@ -50,6 +53,7 @@ const AddToTeam: React.FC<AddToTeamProps> = ({ history, match }) => {
     };
 
     const onSelectedUserChange = useCallback((selectedUser: Item) => {
+        clearErrors();
         dispatch({ type: 'AddToSelection', payload: selectedUser });
         dispatch({ type: 'ClearSelectedUser' });
     }, []);
@@ -58,12 +62,12 @@ const AddToTeam: React.FC<AddToTeamProps> = ({ history, match }) => {
         getTeam(teamId)
             .then(team => dispatch({ type: 'SetTeamName', payload: team.displayName }))
             .catch(() => {
-                dispatch({ type: 'SetGeneralError', payload: { description: LOAD_TEAM_ERROR_DESCRIPTION, title: GENERAL_ERROR_TITLE } });
+                setErrorMessage(new ErrorMessage(LOAD_TEAM_ERROR_DESCRIPTION, GENERAL_ERROR_TITLE));
             });
         getUsers()
             .then((users: User[]) => dispatch({ type: 'PopulateUsers', payload: users }))
             .catch(() => {
-                dispatch({ type: 'SetGeneralError', payload: { description: LOAD_USERS_ERROR_DESCRIPTION, title: GENERAL_ERROR_TITLE } });
+                setErrorMessage(new ErrorMessage(LOAD_USERS_ERROR_DESCRIPTION, GENERAL_ERROR_TITLE));
             });
     }, []);
 
@@ -71,13 +75,7 @@ const AddToTeam: React.FC<AddToTeamProps> = ({ history, match }) => {
         <>
             <a href="" onClick={() => onBackLinkClick(history)} className="govuk-back-link">Back</a>
             <ErrorSummary
-                pageError={{
-                    error: {
-                        title: state.errorTitle,
-                        description: state.errorDescription,
-                        formErrors: state.errors
-                    }
-                }}
+                pageError={pageError}
             />
             {state.teamName &&
                 <div className="govuk-form-group">

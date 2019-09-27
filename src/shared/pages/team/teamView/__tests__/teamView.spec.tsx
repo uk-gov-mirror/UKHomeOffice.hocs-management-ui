@@ -6,6 +6,7 @@ import TeamView from '../teamView';
 import * as TeamsService from '../../../../services/teamsService';
 import * as UsersService from '../../../../services/usersService';
 import { State } from '../state';
+import * as useError from '../../../../hooks/useError';
 
 let match: match<any>;
 let history: History<any>;
@@ -51,7 +52,7 @@ const getTeamSpy = jest.spyOn(TeamsService, 'getTeam');
 const getTeamMembersSpy = jest.spyOn(TeamsService, 'getTeamMembers');
 const deleteUserFromTeamSpy = jest.spyOn(UsersService, 'deleteUserFromTeam');
 const useReducerSpy = jest.spyOn(React, 'useReducer');
-const dispatch = jest.fn();
+const useErrorSpy = jest.spyOn(useError, 'default');
 
 beforeEach(() => {
     history = createBrowserHistory();
@@ -70,8 +71,6 @@ beforeEach(() => {
         state: {}
     };
     mockState = {
-        errorDescription: '',
-        errorTitle: '',
         teamMembersLoaded: true,
         teamMembers: [{
             label: '__user1__',
@@ -82,8 +81,8 @@ beforeEach(() => {
         }],
         teamName: '__teamName__'
     };
-    useReducerSpy.mockImplementationOnce(() => [mockState, dispatch]);
-    dispatch.mockReset();
+    useReducerSpy.mockImplementationOnce(() => [mockState, jest.fn()]);
+    useErrorSpy.mockImplementation(() => [{}, jest.fn(), jest.fn(), jest.fn()]);
 });
 
 describe('when the teamView component is mounted', () => {
@@ -145,13 +144,12 @@ describe('when the remove user button is clicked', () => {
 
         await wait(async () => {
             const selectedUser = getByText(wrapper.container, '__user1__');
-            dispatch.mockReset();
             const row = (selectedUser.closest('tr'));
             const removeButton = getByText(row as HTMLElement, 'Remove');
             fireEvent.click(removeButton);
         });
 
-        expect(deleteUserFromTeamSpy).nthCalledWith(1,  '__userId1__', '__teamId__');
+        expect(deleteUserFromTeamSpy).nthCalledWith(1, '__userId1__', '__teamId__');
         expect(getTeamMembersSpy).nthCalledWith(1, '__teamId__');
 
     });

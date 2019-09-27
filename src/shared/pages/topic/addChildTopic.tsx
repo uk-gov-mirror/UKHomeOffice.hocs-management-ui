@@ -15,6 +15,7 @@ import Item from '../../models/item';
 import useError from '../../hooks/useError';
 import { GENERAL_ERROR_TITLE, LOAD_PARENT_TOPICS_ERROR_DESCRIPTION } from '../../models/constants';
 import ErrorSummary from '../../common/components/errorSummary';
+import ErrorMessage from '../../models/errorMessage';
 
 interface AddUnitProps extends RouteComponentProps {
     apiStatus?: ApiStatus;
@@ -28,9 +29,7 @@ const onBackLinkClick = (history: History) => {
 
 const AddUnit: React.FC<AddUnitProps> = ({ apiStatus, csrfToken, contextDispatch, history }) => {
 
-    // const [validationErrors, setValidationErrors] = React.useState<FormError[]>();
-
-    const [pageError, , setErrorDescription, setErrorTitle] = useError();
+    const [pageError, , , setErrorMessage] = useError();
 
     const [, dispatch] = React.useReducer<Reducer<State, Action>>(reducer, initialState);
 
@@ -43,8 +42,7 @@ const AddUnit: React.FC<AddUnitProps> = ({ apiStatus, csrfToken, contextDispatch
             })
             .catch(() => {
                 contextDispatch(updateApiStatus(status.REQUEST_PARENT_TOPICS_FAILURE));
-                setErrorDescription(LOAD_PARENT_TOPICS_ERROR_DESCRIPTION);
-                setErrorTitle(GENERAL_ERROR_TITLE);
+                setErrorMessage(new ErrorMessage(LOAD_PARENT_TOPICS_ERROR_DESCRIPTION, GENERAL_ERROR_TITLE));
             });
     }, []);
 
