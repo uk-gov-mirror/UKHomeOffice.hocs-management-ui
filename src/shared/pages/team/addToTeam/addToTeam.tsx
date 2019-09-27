@@ -45,7 +45,7 @@ const AddToTeam: React.FC<AddToTeamProps> = ({ history, match }) => {
                     throw error;
                 })
         )).then(() => {
-            history.push(`/team_view/${teamId}`);
+            history.push(`/team-view/${teamId}`);
         }).catch(() => { });
     };
 

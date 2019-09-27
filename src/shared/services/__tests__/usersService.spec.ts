@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { getUsers, getTeamMembers, addUserToTeam, AddUserError, deleteUserFromTeam } from '../usersService';
+import { getUsers, addUserToTeam, AddUserError, deleteUserFromTeam } from '../usersService';
+import { getTeamMembers } from "../teamsService";
 import { User } from '../../models/user';
 
 jest.mock('axios');
