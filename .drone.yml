@@ -24,6 +24,21 @@ pipeline:
     when:
       event: push
 
+  docker-semver-tag:
+    image: quay.io/ukhomeofficedigital/hocs-version-bot:build-25
+    environment:
+      - DOCKER_HOST=tcp://172.17.0.1:2375
+      - DOCKER_API_VERSION=1.37
+    secrets:
+      - github_password
+      - docker_password
+      - git_password
+    commands:
+      - /app/hocs-deploy --version=$${SEMVER} --serviceGitToken=$${GIT_PASSWORD} --service=hocs-management-ui --gitToken=$${GITHUB_PASSWORD} --gitRepo="https://gitlab.digital.homeoffice.gov.uk/hocs/hocs-versions.git" --environment=qa --dockerRepository=quay.io/ukhomeofficedigital --sourceBuild=$${IMAGE_VERSION} --registryUser=ukhomeofficedigital+hocs --registryPassword=$${DOCKER_PASSWORD}
+    when:
+      event: deployment
+      environment: qa
+
   clone-kube-project:
     image: plugins/git
     commands:
@@ -32,7 +47,7 @@ pipeline:
       event: [push, deployment, tag]
 
   deploy-to-qa:
-    image: quay.io/ukhomeofficedigital/kd:v1.12.1
+    image: quay.io/ukhomeofficedigital/kd:v1.12.2
     environment:
       - KUBE_NAMESPACE=cs-qa
       - ENVIRONMENT=qa
@@ -49,7 +64,7 @@ pipeline:
       environment: qa
 
   deploy-to-dev-from-build-number:
-    image: quay.io/ukhomeofficedigital/kd:v0.8.0
+    image: quay.io/ukhomeofficedigital/kd:v1.12.2
     environment:
       - KUBE_NAMESPACE=cs-dev
       - ENVIRONMENT=dev
@@ -65,7 +80,7 @@ pipeline:
       event: [push, tag]
 
   deployment:
-    image: quay.io/ukhomeofficedigital/kd:v0.8.0
+    image: quay.io/ukhomeofficedigital/kd:v1.12.2
     environment:
       - KUBE_NAMESPACE=cs-${DRONE_DEPLOY_TO}
       - ENVIRONMENT=${DRONE_DEPLOY_TO}
@@ -81,7 +96,7 @@ pipeline:
       environment: [dev, demo]
 
   deploy-to-prod:
-    image: quay.io/ukhomeofficedigital/kd:v0.8.0
+    image: quay.io/ukhomeofficedigital/kd:v1.12.2
     environment:
       - KUBE_NAMESPACE=cs-prod
       - ENVIRONMENT=prod
