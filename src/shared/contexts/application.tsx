@@ -1,21 +1,16 @@
 import React, { Component } from 'react';
 import ReactGA from 'react-ga';
 import types from './actions/types';
-import { Action } from './actions/index';
+import { ContextAction } from './actions/index';
 import { ErrorContent } from '../layouts/error';
 import Config, { AnalyticsConfig, LayoutConfig } from '../models/config';
+import ApiStatus from '../models/apiStatus';
 
 interface ApplicationState {
     analytics?: AnalyticsConfig;
-    apiStatus?: {
-        status: {
-            display: string;
-            timeoutPeriod: number;
-            type: string;
-        }
-    };
+    apiStatus?: ApiStatus;
     csrf?: string;
-    dispatch(action: Action<any>): Promise<any>;
+    dispatch(action: ContextAction<any>): Promise<any>;
     error?: ErrorContent;
     layout?: LayoutConfig;
     track?(event: string, payload: any): void;
@@ -32,23 +27,30 @@ const defaultState: ApplicationState = {
 
 export const Context = React.createContext<ApplicationState>(defaultState);
 
-const reducer = (state: ApplicationState, action: Action<any>): ApplicationState => {
+const reducer = (state: ApplicationState, action: ContextAction<any>): ApplicationState => {
     // TODO: REMOVE
     /* eslint-disable-next-line  no-console*/
     console.log(`ACTION: ${action.type} PAYLOAD: ${JSON.stringify(action.payload)}`);
     // ------------
+    let newState;
     switch (action.type) {
 
         case types.UNSET_ERROR:
-            return { ...state, error: undefined };
+            newState = { ...state, error: undefined };
+            break;
         case types.CLEAR_API_STATUS:
-            return { ...state, apiStatus: undefined };
+            newState = { ...state, apiStatus: undefined };
+            break;
+        case types.UPDATE_API_STATUS:
+            newState = { ...state, apiStatus: { ...action.payload } };
+            break;
         default:
             // TODO: Remove
             /* eslint-disable-next-line  no-console*/
             console.warn('Unsupported action');
-            return state;
+            newState = state;
     }
+    return newState;
 };
 
 export class ApplicationProvider extends Component<ApplicationProps, ApplicationState> {
@@ -67,7 +69,7 @@ export class ApplicationProvider extends Component<ApplicationProps, Application
         this.state = {
             ...props.config,
             apiStatus: undefined,
-            dispatch: (action: Action<any>) => {
+            dispatch: (action: ContextAction<any>) => {
                 try {
                     this.setState(state => reducer(state, action));
                     return Promise.resolve();
