@@ -3,10 +3,12 @@ import { State } from './state';
 
 export const reducer = (state: State, action: Action) => {
     switch (action.type) {
-        case 'SetTopicValues':
-            return { ...state, unit: { ...state.topic, [action.payload.name]: action.payload.value } };
+        case 'SetDisplayName':
+            return { ...state, displayName: action.payload };
         case 'SetParentTopics':
             return { ...state, parentTopics: action.payload };
+        case 'SetSelectedParentTopic':
+            return { ...state, selectedParentTopic: action.payload };
         default:
             return state;
     }
