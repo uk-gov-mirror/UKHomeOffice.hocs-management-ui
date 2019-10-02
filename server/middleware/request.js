@@ -12,9 +12,10 @@ function apiErrorMiddleware(err, req, res, _) {
         return res.status(err.status).json({ errors: err.fields });
     } else {
         logger(req.requestId).error('ERROR', { message: err.message, stack: err.stack });
-        return res.status(err.status || 500).json({
+        const status = err.status || (err.response && err.response.status) || 500;
+        return res.status(status).json({
             message: err.message,
-            status: err.status || 500,
+            status: status,
             stack: isProduction ? null : err.stack,
             title: err.title
         });
