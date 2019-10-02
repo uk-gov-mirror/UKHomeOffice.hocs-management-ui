@@ -16,6 +16,12 @@ async function getParentTopics(req, res, next) {
     }
 }
 
+async function returnParentTopicsJson(_, res) {
+    const { locals: { parentTopics } } = res;
+    await res.json(parentTopics);
+}
+
 module.exports = {
-    getParentTopics
+    getParentTopics,
+    returnParentTopicsJson
 }

@@ -1,7 +1,7 @@
 import { infoService } from '../../clients/index';
 import getLogger from '../../libs/logger';
 import { createHeaders } from '../../models/user';
-import { getParentTopics } from '../topic';
+import { getParentTopics, returnParentTopicsJson } from '../topic';
 
 jest.mock('../../clients/index');
 jest.mock('../../libs/logger');
@@ -60,3 +60,26 @@ describe('When the Topic middleware getParentTopics method is called', () => {
         });
     });
 });
+
+describe('when the json handler is called', () => {
+    const req = {};
+    let res = {};
+    const next = jest.fn();
+    const json = jest.fn();
+    const parentTopics = ['parentTopic1', 'parentTopic2', 'parentTopic3'];
+
+    beforeEach(() => {
+        next.mockReset();
+        res = { json, locals: { parentTopics } };
+    });
+
+    it('should return the parentTopics as json', async () => {
+        await returnParentTopicsJson(req, res, next);
+        expect(json).toHaveBeenCalledWith(parentTopics);
+    });
+
+    it('should be the last handler', async () => {
+        await returnParentTopicsJson(req, res, next);
+        expect(next).not.toHaveBeenCalled();
+    });
+})
