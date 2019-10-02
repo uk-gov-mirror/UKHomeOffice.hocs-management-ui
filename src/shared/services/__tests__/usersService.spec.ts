@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { getUsers, addUserToTeam, AddUserError, deleteUserFromTeam } from '../usersService';
-import { getTeamMembers } from '../teamsService';
 import { User } from '../../models/user';
 
 jest.mock('axios');
@@ -42,34 +41,6 @@ describe('when the getUsers method is called', () => {
             expect.assertions(2);
 
             await getUsers().catch((error: Error) => {
-                expect(axios.get).toHaveBeenCalledTimes(1);
-                expect(error.message).toEqual('__error__');
-            });
-        });
-    });
-});
-
-describe('when the getTeamMembers method is called', () => {
-    describe('and the request is sucessful', () => {
-        it('should return a resolved promise with the users collection', async () => {
-            expect.assertions(2);
-
-            await getTeamMembers('__teamId__').then((payload: User[]) => {
-                expect(axios.get).toHaveBeenCalledTimes(1);
-                expect(payload).toStrictEqual([
-                    { label: '__user1__', value: '__userId1__' },
-                    { label: '__user2__', value: '__userId2__' }
-                ]);
-            });
-        });
-    });
-
-    describe('and the request fails', () => {
-        it('should return a resolved promise with the team object', async () => {
-            jest.spyOn(axios, 'get').mockReturnValue(Promise.reject(new Error('__error__')));
-            expect.assertions(2);
-
-            await getTeamMembers('__teamId__').catch((error: Error) => {
                 expect(axios.get).toHaveBeenCalledTimes(1);
                 expect(error.message).toEqual('__error__');
             });

@@ -64,4 +64,17 @@ describe('Application context', () => {
         expect(wrapper.state().apiStatus).toBeUndefined();
     });
 
+    it('should handle the UPDATE_API_STATUS action', () => {
+        const action = {
+            type: ActionTypes.UPDATE_API_STATUS,
+            payload: { status: 'TEST_STATUS' }
+        };
+        const defaultState = {
+            apiStatus: null
+        };
+        const wrapper = shallow(<ApplicationProvider config={defaultState} />);
+        wrapper.state().dispatch(action);
+        expect(wrapper.state().apiStatus).toEqual({ status: 'TEST_STATUS' });
+    });
+
 });

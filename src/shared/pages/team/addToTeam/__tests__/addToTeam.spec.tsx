@@ -7,6 +7,7 @@ import * as TeamsService from '../../../../services/teamsService';
 import * as UsersService from '../../../../services/usersService';
 import { State } from '../state';
 import { GENERAL_ERROR_TITLE, LOAD_TEAM_ERROR_DESCRIPTION, LOAD_USERS_ERROR_DESCRIPTION } from '../../../../models/constants';
+import * as useError from '../../../../hooks/useError';
 
 let match: match<any>;
 let history: History<any>;
@@ -42,7 +43,11 @@ const getTeamSpy = jest.spyOn(TeamsService, 'getTeam');
 const addUsersToTeamSpy = jest.spyOn(UsersService, 'addUserToTeam');
 const getUsersSpy = jest.spyOn(UsersService, 'getUsers');
 const useReducerSpy = jest.spyOn(React, 'useReducer');
-const dispatch = jest.fn();
+const reducerDispatch = jest.fn();
+const useErrorSpy = jest.spyOn(useError, 'default');
+const addFormErrorSpy = jest.fn();
+const clearErrorsSpy = jest.fn();
+const setMessageSpy = jest.fn();
 
 beforeEach(() => {
     history = createBrowserHistory();
@@ -61,10 +66,7 @@ beforeEach(() => {
         state: {}
     };
     mockState = {
-        errorDescription: '',
-        errorTitle: '',
         inputValue: '',
-        errors: undefined,
         selectedUser: '',
         selectedUsers: [{
             label: '__user1__',
@@ -79,8 +81,12 @@ beforeEach(() => {
             value: '__userId1__'
         }]
     };
-    useReducerSpy.mockImplementationOnce(() => [mockState, dispatch]);
-    dispatch.mockReset();
+    useReducerSpy.mockImplementationOnce(() => [mockState, reducerDispatch]);
+    useErrorSpy.mockImplementation(() => [{}, addFormErrorSpy, clearErrorsSpy, setMessageSpy]);
+    reducerDispatch.mockReset();
+    addFormErrorSpy.mockReset();
+    clearErrorsSpy.mockReset();
+    setMessageSpy.mockReset();
 });
 
 describe('when the addToTeam component is mounted', () => {
@@ -118,7 +124,7 @@ describe('when the addToTeam component is mounted', () => {
         render(<AddToTeam history={history} location={location} match={match}></AddToTeam>);
 
         await wait(() => {
-            expect(dispatch).nthCalledWith(2, { type: 'SetGeneralError', payload: { title: GENERAL_ERROR_TITLE, description: LOAD_TEAM_ERROR_DESCRIPTION } });
+            expect(setMessageSpy).toBeCalledWith({ title: GENERAL_ERROR_TITLE, description: LOAD_TEAM_ERROR_DESCRIPTION });
         });
 
     });
@@ -129,7 +135,7 @@ describe('when the addToTeam component is mounted', () => {
         render(<AddToTeam history={history} location={location} match={match}></AddToTeam>);
 
         await wait(() => {
-            expect(dispatch).nthCalledWith(2, { type: 'SetGeneralError', payload: { title: GENERAL_ERROR_TITLE, description: LOAD_USERS_ERROR_DESCRIPTION } });
+            expect(setMessageSpy).toBeCalledWith({ title: GENERAL_ERROR_TITLE, description: LOAD_USERS_ERROR_DESCRIPTION });
         });
 
     });
@@ -142,7 +148,7 @@ describe('when the submit button is clicked', () => {
         act(() => {
             wrapper = render(<AddToTeam history={history} location={location} match={match}></AddToTeam>);
         });
-        dispatch.mockReset();
+        // dispatch.mockReset();
     });
 
     it('should call the service and dispach actions for the selected options', async () => {
@@ -160,16 +166,14 @@ describe('when the submit button is clicked', () => {
                 label: '__user2__',
                 value: '__userId2__'
             }, '__teamId__');
-            expect(dispatch).nthCalledWith(3, {
-                type: 'BeginSubmit'
-            });
-            expect(dispatch).nthCalledWith(4, {
+            expect(clearErrorsSpy).toBeCalled();
+            expect(reducerDispatch).nthCalledWith(1, {
                 type: 'RemoveFromSelection', payload: {
                     label: '__user1__',
                     value: '__userId1__'
                 }
             });
-            expect(dispatch).nthCalledWith(5, {
+            expect(reducerDispatch).nthCalledWith(2, {
                 type: 'RemoveFromSelection', payload: {
                     label: '__user2__',
                     value: '__userId2__'
@@ -192,8 +196,8 @@ describe('when the submit button is clicked', () => {
             fireEvent.click(submitButton);
         });
 
-        expect(dispatch).nthCalledWith(4, { type: 'AddSubmitError', payload: { key: '__value__', value: '__label__' } });
-        expect(dispatch).nthCalledWith(5, { type: 'AddSubmitError', payload: { key: '__value__', value: '__label__' } });
+        expect(addFormErrorSpy).nthCalledWith(1, { key: '__value__', value: '__label__' });
+        expect(addFormErrorSpy).nthCalledWith(2, { key: '__value__', value: '__label__' });
     });
 
     it('should set an error when no users are selected', async () => {
@@ -204,12 +208,9 @@ describe('when the submit button is clicked', () => {
         });
 
         await wait(async () => {
-            expect(dispatch).nthCalledWith(3, {
-                payload: {
-                    description: 'Please select some users before submitting.',
-                    title: 'No users selected'
-                },
-                type: 'SetGeneralError'
+            expect(setMessageSpy).toBeCalledWith({
+                description: 'Please select some users before submitting.',
+                title: 'No users selected'
             });
         });
     });
@@ -241,12 +242,12 @@ describe('when the remove button is clicked', () => {
 
         await wait(async () => {
             const selectedUser = getByText(wrapper.container, '__user1__');
-            dispatch.mockReset();
+            // dispatch.mockReset();
             const row = (selectedUser.closest('tr'));
             const removeButton = getByText(row as HTMLElement, 'Remove');
             fireEvent.click(removeButton);
         });
 
-        expect(dispatch).nthCalledWith(1, { type: 'RemoveFromSelection', payload: { label: '__user1__', value: '__userId1__' } });
+        expect(reducerDispatch).nthCalledWith(1, { type: 'RemoveFromSelection', payload: { label: '__user1__', value: '__userId1__' } });
     });
 });

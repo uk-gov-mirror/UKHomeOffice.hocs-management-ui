@@ -4,17 +4,22 @@ import { createBrowserHistory, History, Location } from 'history';
 import { act, render, RenderResult, wait, fireEvent, waitForElement } from '@testing-library/react';
 import AddUnit from '../addUnit';
 import * as UnitsService from '../../../services/unitsService';
-import { State } from '../state';
 import { ADD_UNIT_ERROR_DESCRIPTION, GENERAL_ERROR_TITLE, DUPLICATE_UNIT_DESCRIPTION, VALIDATION_ERROR_TITLE } from '../../../models/constants';
+import Unit from '../../../models/unit';
+import * as useError from '../../../hooks/useError';
 
 let match: match<any>;
 let history: History<any>;
 let location: Location;
-let mockState: State;
+let mockUnit: Unit;
 let wrapper: RenderResult;
 
 const useReducerSpy = jest.spyOn(React, 'useReducer');
-const dispatch = jest.fn();
+const reducerDispatch = jest.fn();
+const useErrorSpy = jest.spyOn(useError, 'default');
+const addFormErrorSpy = jest.fn();
+const clearErrorsSpy = jest.fn();
+const setMessageSpy = jest.fn();
 
 jest.spyOn(UnitsService, 'createUnit').mockImplementation(() => Promise.resolve());
 
@@ -34,17 +39,17 @@ beforeEach(() => {
         search: '',
         state: {}
     };
-    mockState = {
-        errorDescription: '',
-        errorTitle: '',
-        unit: {
-            displayName: '',
-            shortCode: ''
-        }
+    mockUnit = {
+        displayName: '',
+        shortCode: ''
     };
-    useReducerSpy.mockImplementation(() => [mockState, dispatch]);
+    useReducerSpy.mockImplementation(() => [mockUnit, reducerDispatch]);
+    useErrorSpy.mockImplementation(() => [{}, addFormErrorSpy, clearErrorsSpy, setMessageSpy]);
     history.push = jest.fn();
-    dispatch.mockReset();
+    reducerDispatch.mockReset();
+    addFormErrorSpy.mockReset();
+    clearErrorsSpy.mockReset();
+    setMessageSpy.mockReset();
     act(() => {
         wrapper = render(<AddUnit history={history} location={location} match={match}></AddUnit>);
     });
@@ -71,7 +76,7 @@ describe('when the display name is entered', () => {
         fireEvent.blur(displayNameElement, { target: { name: 'displayName', value: '__displayName__' } });
 
         await wait(() => {
-            expect(dispatch).toHaveBeenCalledWith({ payload: { name: 'displayName', value: '__displayName__' }, type: 'SetUnitValues' });
+            expect(reducerDispatch).toHaveBeenCalledWith({ name: 'displayName', value: '__displayName__' });
         });
     });
 });
@@ -87,7 +92,7 @@ describe('when the short code is entered', () => {
         fireEvent.blur(shortCodeElement, { target: { name: 'shortCode', value: '__shortCode__' } });
 
         await wait(() => {
-            expect(dispatch).toHaveBeenCalledWith({ payload: { name: 'shortCode', value: '__shortCode__' }, type: 'SetUnitValues' });
+            expect(reducerDispatch).toHaveBeenCalledWith({ name: 'shortCode', value: '__shortCode__' });
         });
     });
 });
@@ -96,7 +101,8 @@ describe('when the submit button is clicked', () => {
     describe('and the data is filled in', () => {
 
         beforeEach(async () => {
-            mockState.unit = { displayName: '__displayName__', shortCode: '__shortCode__' };
+            mockUnit.displayName = '__displayName__';
+            mockUnit.shortCode = '__shortCode__';
             const submitButton = await waitForElement(async () => {
                 return await wrapper.findByText('Submit');
             });
@@ -116,7 +122,7 @@ describe('when the submit button is clicked', () => {
                 expect.assertions(1);
 
                 await wait(() => {
-                    expect(dispatch).toHaveBeenNthCalledWith(1, { type: 'BeginSubmit' });
+                    expect(clearErrorsSpy).toHaveBeenCalled();
                 });
             });
         });
@@ -127,10 +133,10 @@ describe('when the submit button is clicked', () => {
             });
 
             it('should set the error state', () => {
-                expect(dispatch).toHaveBeenNthCalledWith(2, { type: 'SetGeneralError', payload: { description: ADD_UNIT_ERROR_DESCRIPTION, title: GENERAL_ERROR_TITLE } });
+                expect(setMessageSpy).toHaveBeenCalledWith({ description: ADD_UNIT_ERROR_DESCRIPTION, title: GENERAL_ERROR_TITLE });
             });
             it('should call the begin submit action', () => {
-                expect(dispatch).toHaveBeenNthCalledWith(1, { type: 'BeginSubmit' });
+                expect(clearErrorsSpy).toHaveBeenCalled();
             });
         });
         describe('and the service call fails with a 409', () => {
@@ -139,7 +145,7 @@ describe('when the submit button is clicked', () => {
             });
 
             it('should set the error state', () => {
-                expect(dispatch).toHaveBeenNthCalledWith(2, { type: 'SetGeneralError', payload: { description: DUPLICATE_UNIT_DESCRIPTION, title: VALIDATION_ERROR_TITLE } });
+                expect(setMessageSpy).toHaveBeenCalledWith({ description: DUPLICATE_UNIT_DESCRIPTION, title: VALIDATION_ERROR_TITLE });
             });
         });
     });
@@ -153,12 +159,12 @@ describe('when the submit button is clicked', () => {
         });
 
         it('should call the begin submit action', () => {
-            expect(dispatch).toHaveBeenNthCalledWith(1, { type: 'BeginSubmit' });
+            expect(clearErrorsSpy).toHaveBeenCalled();
         });
 
         it('should set the error state', () => {
-            expect(dispatch).toHaveBeenNthCalledWith(2, { type: 'AddValidationError', payload: { key: 'displayName', value: 'Display Name is required' } });
-            expect(dispatch).toHaveBeenNthCalledWith(3, { type: 'AddValidationError', payload: { key: 'shortCode', value: 'Short Code is required' } });
+            expect(addFormErrorSpy).toHaveBeenNthCalledWith(1, { key: 'displayName', value: 'Display Name is required' });
+            expect(addFormErrorSpy).toHaveBeenNthCalledWith(2, { key: 'shortCode', value: 'Short Code is required' });
         });
     });
 });

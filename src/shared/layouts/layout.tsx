@@ -8,12 +8,10 @@ import { BodyConfig, FooterConfig, HeaderConfig } from 'shared/models/config';
 
 interface LayoutProps {
     apiStatus: {
-        status: {
-            display: string;
-            timeoutPeriod: number;
-            type: string;
-        }
-    };
+        display: string;
+        timeoutPeriod: number;
+        type: string;
+    },
     layout: {
         body: BodyConfig;
         footer: FooterConfig;
@@ -35,7 +33,7 @@ class Layout extends Component<LayoutProps> {
         } = this.props;
         return (
             <Fragment>
-                {apiStatus && <Notification {...apiStatus.status} />}
+                {apiStatus && <Notification {...apiStatus} />}
                 <Header {...header} />
                 <Body {...body}>
                     {children}

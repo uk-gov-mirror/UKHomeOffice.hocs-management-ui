@@ -1,10 +1,10 @@
 import React, { Component, Fragment } from 'react';
 import { ApplicationConsumer } from '../contexts/application';
-import { unsetError, clearApiStatus, Action } from '../contexts/actions';
+import { unsetError, clearApiStatus, ContextAction } from '../contexts/actions/index';
 import Error, { ErrorContent } from './error';
 
 interface PageWrapperProps {
-    dispatch(action: Action<any>): Promise<any>;
+    dispatch(action: ContextAction<any>): Promise<any>;
     // todo: not any
     track: any;
     error?: ErrorContent;

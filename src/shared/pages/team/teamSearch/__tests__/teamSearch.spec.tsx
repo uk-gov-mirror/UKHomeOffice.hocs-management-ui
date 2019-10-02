@@ -4,13 +4,14 @@ import { act, wait, fireEvent, getByText, render, RenderResult } from '@testing-
 import TeamSearch from '../teamSearch';
 import * as TeamsService from '../../../../services/teamsService';
 import { State } from '../state';
+import * as useError from '../../../../hooks/useError';
 
 let history: History<any>;
 let mockState: State;
 
 jest.mock('../../../../services/teamsService', () => ({
     __esModule: true,
-    getTeams:jest.fn().mockReturnValue(Promise.resolve({
+    getTeams: jest.fn().mockReturnValue(Promise.resolve({
         data: [{
             displayName: 'Home Office General Property',
             permissions: [
@@ -56,13 +57,11 @@ jest.mock('../../../../services/teamsService', () => ({
 
 const getTeamsSpy = jest.spyOn(TeamsService, 'getTeams');
 const useReducerSpy = jest.spyOn(React, 'useReducer');
-const dispatch = jest.fn();
+const useErrorSpy = jest.spyOn(useError, 'default');
 
 beforeEach(() => {
     history = createBrowserHistory();
     mockState = {
-        errorDescription: '',
-        errorTitle: '',
         teams: [{
             label: '__teamName1__',
             value: '__teamId1__'
@@ -74,8 +73,8 @@ beforeEach(() => {
         teamsLoaded: true,
         teamUUID: '__teamName__'
     };
-    useReducerSpy.mockImplementationOnce(() => [mockState, dispatch]);
-    dispatch.mockReset();
+    useReducerSpy.mockImplementationOnce(() => [mockState, jest.fn()]);
+    useErrorSpy.mockImplementation(() => [{}, jest.fn(), jest.fn(), jest.fn()]);
 });
 
 describe('when the teamView component is mounted', () => {

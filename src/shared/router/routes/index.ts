@@ -5,6 +5,7 @@ import TeamView from '../../pages/team/teamView/teamView';
 import AddUsersToTeam from '../../pages/team/addToTeam/addToTeam';
 import AddUnit from '../../pages/unit/addUnit';
 import TopicSearch from "../../pages/topic/topicSearch/topicSearch";
+import AddChildTopic from '../../pages/topic/addChildTopic';
 
 export interface Route {
     component: React.FunctionComponent | Error;
@@ -49,6 +50,12 @@ const routes = [
         exact: true,
         component: TopicSearch,
         title: 'TopicSearch'
+    },
+    {
+        path: '/add-child-topic',
+        exact: true,
+        component: AddChildTopic,
+        title: 'Add Unit'
     },
     {
         component: Error,
