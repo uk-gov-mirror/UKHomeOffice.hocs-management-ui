@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { getUsers, addUserToTeam, AddUserError, deleteUserFromTeam } from '../usersService';
-import { getTeamMembers } from "../teamsService";
+import { getTeamMembers } from '../teamsService';
 import { User } from '../../models/user';
 
 jest.mock('axios');
@@ -22,7 +22,7 @@ beforeEach(() => {
 });
 
 describe('when the getUsers method is called', () => {
-    describe('and the request is sucessful', () => {
+    describe('and the request is successful', () => {
         it('should return a resolved promise with the users collection', async () => {
             expect.assertions(2);
 

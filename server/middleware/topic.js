@@ -19,7 +19,7 @@ async function getTopic(req, res, next) {
 
 async function getTopics(req, res, next) {
     try {
-        const response = await req.listService.fetch('TEAMS', req.params);
+        const response = await req.listService.fetch('TOPICS', req.params);
         res.locals.topics = response;
         next();
     } catch (error) {
