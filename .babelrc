@@ -11,7 +11,11 @@
                 "modules": false,
                 "useBuiltIns": "usage",
                 "debug": false,
-                "forceAllTransforms": true
+                "forceAllTransforms": true,
+                "corejs": {
+                    "version": 3,
+                    "proposals": true
+                }
             }
         ],
         "@babel/preset-react"
