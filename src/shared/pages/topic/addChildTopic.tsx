@@ -1,4 +1,4 @@
-import React, { Reducer } from 'react';
+import React, { Reducer, useCallback } from 'react';
 import { RouteComponentProps } from 'react-router';
 import { History } from 'history';
 import Submit from '../../common/components/forms/submit';
@@ -20,7 +20,7 @@ import TypeAhead from '../../common/components/typeAhead';
 import Text from '../../common/components/forms/text';
 import { FormError } from '../../models/formError';
 
-interface AddUnitProps extends RouteComponentProps {
+interface AddChildTopicProps extends RouteComponentProps {
     apiStatus?: ApiStatus;
     csrfToken?: string;
     contextDispatch: (action: ContextAction<any>) => Promise<any>;
@@ -44,7 +44,7 @@ const validate = (state: State, addFormError: (value: FormError) => void) => {
     return valid;
 };
 
-const AddUnit: React.FC<AddUnitProps> = ({ apiStatus, csrfToken, contextDispatch, history }) => {
+const AddChildTopic: React.FC<AddChildTopicProps> = ({ apiStatus, csrfToken, contextDispatch, history }) => {
 
     const [pageError, addFormError, clearErrors, setErrorMessage] = useError('', VALIDATION_ERROR_TITLE);
 
@@ -63,11 +63,11 @@ const AddUnit: React.FC<AddUnitProps> = ({ apiStatus, csrfToken, contextDispatch
             });
     }, []);
 
-    const onSelectedParentTopicChange = React.useCallback((selectedParentTopic: Item) => {
+    const onSelectedParentTopicChange = useCallback((selectedParentTopic: Item) => {
         dispatch({ type: 'SetSelectedParentTopic', payload: selectedParentTopic });
     }, []);
 
-    const onDisplayNameChange = React.useCallback(({ value }) => dispatch({ type: 'SetDisplayName', payload: value }), []);
+    const onDisplayNameChange = useCallback(({ value }) => dispatch({ type: 'SetDisplayName', payload: value }), []);
 
     const onSubmit = (event: React.FormEvent) => {
         event.preventDefault();
@@ -127,12 +127,12 @@ const AddUnit: React.FC<AddUnitProps> = ({ apiStatus, csrfToken, contextDispatch
     );
 };
 
-const WrappedAddUnit = ({ history, location, match }: RouteComponentProps) => (
+const WrappedAddChildTopic = ({ history, location, match }: RouteComponentProps) => (
     <ApplicationConsumer>
         {({ csrf, dispatch, apiStatus }) => (
-            <AddUnit apiStatus={apiStatus} csrfToken={csrf} contextDispatch={dispatch} history={history} location={location} match={match} />
+            <AddChildTopic apiStatus={apiStatus} csrfToken={csrf} contextDispatch={dispatch} history={history} location={location} match={match} />
         )}
     </ApplicationConsumer>
 );
 
-export default WrappedAddUnit;
+export default WrappedAddChildTopic;

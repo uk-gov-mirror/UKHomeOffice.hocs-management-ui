@@ -148,7 +148,6 @@ describe('when the submit button is clicked', () => {
         act(() => {
             wrapper = render(<AddToTeam history={history} location={location} match={match}></AddToTeam>);
         });
-        // dispatch.mockReset();
     });
 
     it('should call the service and dispach actions for the selected options', async () => {
