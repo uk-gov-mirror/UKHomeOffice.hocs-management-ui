@@ -1,35 +1,42 @@
 import React from 'react';
-import { FormError } from '../../models/formError';
+import PageError from '../../models/pageError';
 
 interface ErrorSummaryProps {
-    description: string;
-    errors?: FormError[];
-    heading?: string;
+    pageError: PageError;
 }
 
-const ErrorSummary: React.FC<ErrorSummaryProps> = ({ description, errors, heading = 'There\'s a problem' }) => {
-    return errors ?
-        <div className="govuk-error-summary" role="alert" aria-labelledby="error-summary-heading-example-1" tabIndex={-1}>
-            <h2 className="govuk-error-summary__title" id="error-summary-heading-example-1">
-                {heading}
-            </h2>
-            <div className="govuk-error-summary__body">
-                {description && <p>
-                    {description}
-                </p>}
+const ErrorSummary: React.FC<ErrorSummaryProps> = ({ pageError: { error } }) => {
 
-                <ul className="govuk-list govuk-error-summary__list">
-                    {errors.map(({ key, value }) => {
-                        const link = `${key}-error`;
-                        return (
-                            <li key={key}>
-                                <a href={`#${link}`} onClick={scrollInToView.bind(null, link)} >{value}</a>
-                            </li>
-                        );
-                    })}
-                </ul>
+    if (error) {
+        const { formErrors: errors, description, title: heading } = error;
+
+        return (
+            <div className="govuk-error-summary" role="alert" aria-labelledby="error-summary-heading-example-1" tabIndex={-1}>
+                <h2 className="govuk-error-summary__title" id="error-summary-heading-example-1">
+                    {heading}
+                </h2>
+                <div className="govuk-error-summary__body">
+                    {description && <p>
+                        {description}
+                    </p>}
+                    {errors &&
+                        <ul className="govuk-list govuk-error-summary__list">
+                            {errors.map(({ key, value }) => {
+                                const link = `${key}-error`;
+                                return (
+                                    <li key={key}>
+                                        <a href={`#${link}`} onClick={scrollInToView.bind(null, link)} >{value}</a>
+                                    </li>
+                                );
+                            })}
+                        </ul>
+                    }
+                </div>
             </div>
-        </div> : null;
+        );
+    }
+    return null;
+
 };
 
 const scrollInToView = (link: string, e: React.FormEvent<HTMLLinkElement>) => {

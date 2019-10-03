@@ -2,36 +2,30 @@ import React, { Reducer } from 'react';
 import { RouteComponentProps } from 'react-router';
 import { History } from 'history';
 import Submit from '../../common/components/forms/submit';
-import Text from '../../common/components/forms/text';
+import Text, { InputEventData } from '../../common/components/forms/text';
 import { ApplicationConsumer } from '../../contexts/application';
 import { createUnit } from '../../services/unitsService';
 import { reducer } from './reducer';
-import { State } from './state';
-import { Action } from './actions';
-import { initialState } from './initialState';
 import ErrorSummary from '../../common/components/errorSummary';
 import { GENERAL_ERROR_TITLE, ADD_UNIT_ERROR_DESCRIPTION, VALIDATION_ERROR_TITLE, DUPLICATE_UNIT_DESCRIPTION } from '../../models/constants';
+import useError from '../../hooks/useError';
+import ErrorMessage from '../../models/errorMessage';
+import { FormError } from '../../models/formError';
+import Unit from '../../models/unit';
 
 interface AddUnitProps extends RouteComponentProps {
     csrfToken?: string;
 }
 
-const validate = (state: State, dispatch: (value: Action) => void) => {
-    // todo: validation framework
+const validate = (unit: Unit, addFormError: (value: FormError) => void) => {
     let valid = true;
 
-    if (state.unit.displayName === '') {
-        dispatch({
-            type: 'AddValidationError',
-            payload: { key: 'displayName', value: 'Display Name is required' }
-        });
+    if (unit.displayName === '') {
+        addFormError({ key: 'displayName', value: 'Display Name is required' });
         valid = false;
     }
-    if (state.unit.shortCode === '') {
-        dispatch({
-            type: 'AddValidationError',
-            payload: { key: 'shortCode', value: 'Short Code is required' }
-        });
+    if (unit.shortCode === '') {
+        addFormError({ key: 'shortCode', value: 'Short Code is required' });
         valid = false;
     }
     return valid;
@@ -43,19 +37,23 @@ const onBackLinkClick = (history: History) => {
 
 const AddUnit: React.FC<AddUnitProps> = ({ csrfToken, history }) => {
 
-    const [state, dispatch] = React.useReducer<Reducer<State, Action>>(reducer, initialState);
+    const [pageError, addFormError, clearErrors, setErrorMessage] = useError('', VALIDATION_ERROR_TITLE);
+    const [unit, dispatch] = React.useReducer<Reducer<Unit, InputEventData>>(reducer, {
+        displayName: '',
+        shortCode: ''
+    });
 
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
-        dispatch({ type: 'BeginSubmit' });
-        if (validate(state, dispatch)) {
-            createUnit(state.unit).then(() => {
+        clearErrors();
+        if (validate(unit, addFormError)) {
+            createUnit(unit).then(() => {
                 history.push('/');
             }).catch((error) => {
                 if (error && error.response && error.response.status === 409) {
-                    dispatch({ type: 'SetGeneralError', payload: { title: VALIDATION_ERROR_TITLE, description: DUPLICATE_UNIT_DESCRIPTION } });
+                    setErrorMessage(new ErrorMessage(DUPLICATE_UNIT_DESCRIPTION, VALIDATION_ERROR_TITLE));
                 } else {
-                    dispatch({ type: 'SetGeneralError', payload: { title: GENERAL_ERROR_TITLE, description: ADD_UNIT_ERROR_DESCRIPTION } });
+                    setErrorMessage(new ErrorMessage(ADD_UNIT_ERROR_DESCRIPTION, GENERAL_ERROR_TITLE));
                 }
             });
         }
@@ -67,9 +65,7 @@ const AddUnit: React.FC<AddUnitProps> = ({ csrfToken, history }) => {
                 <div className="govuk-grid-column-two-thirds-from-desktop">
                     <a href="" onClick={() => onBackLinkClick(history)} className="govuk-back-link">Back</a>
                     <ErrorSummary
-                        heading={state.errorTitle}
-                        description={state.errorDescription}
-                        errors={state.errors}
+                        pageError={pageError}
                     />
                     <h1 className="govuk-heading-xl">
                         Add Unit
@@ -84,15 +80,15 @@ const AddUnit: React.FC<AddUnitProps> = ({ csrfToken, history }) => {
                             label="Display Name"
                             name="displayName"
                             type="text"
-                            updateState={({ name, value }) => dispatch({ type: 'SetUnitValues', payload: { name, value } })}
-                            value={state.unit.displayName}
+                            updateState={({ name, value }) => dispatch({ name, value })}
+                            value={unit.displayName}
                         />
                         <Text
                             label="Short Code"
                             name="shortCode"
                             type="text"
-                            updateState={({ name, value }) => dispatch({ type: 'SetUnitValues', payload: { name, value } })}
-                            value={state.unit.shortCode}
+                            updateState={({ name, value }) => dispatch({ name, value })}
+                            value={unit.shortCode}
                         />
                         <Submit />
                     </form>

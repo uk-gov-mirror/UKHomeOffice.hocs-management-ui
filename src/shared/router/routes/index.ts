@@ -4,7 +4,7 @@ import TeamSearch from '../../pages/team/teamSearch/teamSearch';
 import TeamView from '../../pages/team/teamView/teamView';
 import AddUsersToTeam from '../../pages/team/addToTeam/addToTeam';
 import AddUnit from '../../pages/unit/addUnit';
-
+import AddChildTopic from '../../pages/topic/addChildTopic';
 export interface Route {
     component: React.FunctionComponent | Error;
     error?: ErrorContent;
@@ -41,6 +41,12 @@ const routes = [
         path: '/add-unit',
         exact: true,
         component: AddUnit,
+        title: 'Add Unit'
+    },
+    {
+        path: '/add-child-topic',
+        exact: true,
+        component: AddChildTopic,
         title: 'Add Unit'
     },
     {

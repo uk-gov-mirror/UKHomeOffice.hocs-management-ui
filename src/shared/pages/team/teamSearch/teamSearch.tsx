@@ -9,6 +9,8 @@ import { initialState } from './initialState';
 import Item from '../../../models/item';
 import ErrorSummary from '../../../common/components/errorSummary';
 import { GENERAL_ERROR_TITLE, LOAD_TEAMS_ERROR_DESCRIPTION } from '../../../models/constants';
+import ErrorMessage from '../../../models/errorMessage';
+import useError from '../../../hooks/useError';
 
 interface TeamSearchProps {
     history: History;
@@ -16,15 +18,13 @@ interface TeamSearchProps {
 
 const TeamSearch: React.FC<TeamSearchProps> = ({ history }) => {
 
+    const [pageError, , , setErrorMessage] = useError();
     const [state, dispatch] = React.useReducer<Reducer<State, Action>>(reducer, initialState);
 
     useEffect(() => {
         getTeams()
             .then((teams: Item[]) => { dispatch({ type: 'SetTeams', payload: teams }); })
-            .catch(() => {
-                dispatch({ type: 'SetGeneralError', payload: { description: LOAD_TEAMS_ERROR_DESCRIPTION, title: GENERAL_ERROR_TITLE }
-                });
-            });
+            .catch(() => setErrorMessage(new ErrorMessage(LOAD_TEAMS_ERROR_DESCRIPTION, GENERAL_ERROR_TITLE)));
     }, []);
 
     const onSelectedTeamChange = (selectedTeam: any) => {
@@ -44,26 +44,25 @@ const TeamSearch: React.FC<TeamSearchProps> = ({ history }) => {
         <div className="govuk-form-group">
             <a href="" onClick={() => onBackLinkClick(history)} className="govuk-back-link">Back</a>
             <ErrorSummary
-                heading={state.errorTitle}
-                description={state.errorDescription}
+                pageError={pageError}
             />
             <h1 className="govuk-heading-xl">
                 Team search
             </h1>
             {
                 state.teamsLoaded ?
-                <div>
-                    <TypeAhead
-                        choices={state.teams}
-                        clearable={true}
-                        disabled={false}
-                        label={'Teams'}
-                        name={'Teams'}
-                        onSelectedItemChange={onSelectedTeamChange}
-                    ></TypeAhead>
-                </div> :
-                <div>
-                    ...loading
+                    <div>
+                        <TypeAhead
+                            choices={state.teams}
+                            clearable={true}
+                            disabled={false}
+                            label={'Teams'}
+                            name={'Teams'}
+                            onSelectedItemChange={onSelectedTeamChange}
+                        ></TypeAhead>
+                    </div> :
+                    <div>
+                        ...loading
                 </div>
             }
 

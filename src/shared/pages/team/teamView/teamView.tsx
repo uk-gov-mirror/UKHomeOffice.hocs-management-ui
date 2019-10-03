@@ -10,12 +10,14 @@ import { initialState } from './initialState';
 import { User } from '../../../models/user';
 import { GENERAL_ERROR_TITLE, LOAD_TEAM_ERROR_DESCRIPTION, LOAD_TEAM_MEMBERS_ERROR_DESCRIPTION } from '../../../models/constants';
 import ErrorSummary from '../../../common/components/errorSummary';
+import ErrorMessage from '../../../models/errorMessage';
+import useError from '../../../hooks/useError';
 
 interface MatchParams {
     teamId: string;
 }
 
-interface TeamMembersProps extends RouteComponentProps<MatchParams> {}
+interface TeamMembersProps extends RouteComponentProps<MatchParams> { }
 
 const onAddTeamMembersAddClick = (history: History, teamId: string) => {
     history.push(`/team/${teamId}/add-users`);
@@ -27,6 +29,7 @@ const onBackLinkClick = (history: History) => {
 
 const TeamView: React.FC<TeamMembersProps> = ({ history, match }) => {
 
+    const [pageError, , , setErrorMessage] = useError();
     const [state, dispatch] = React.useReducer<Reducer<State, Action>>(reducer, initialState);
 
     const { params: { teamId } } = match;
@@ -35,12 +38,12 @@ const TeamView: React.FC<TeamMembersProps> = ({ history, match }) => {
         getTeam(teamId)
             .then(team => dispatch({ type: 'SetTeamName', payload: team.displayName }))
             .catch(() => {
-                dispatch({ type: 'SetGeneralError', payload: { description: LOAD_TEAM_ERROR_DESCRIPTION, title: GENERAL_ERROR_TITLE } });
+                setErrorMessage(new ErrorMessage(LOAD_TEAM_ERROR_DESCRIPTION, GENERAL_ERROR_TITLE));
             });
         getTeamMembers(teamId)
             .then((users: User[]) => dispatch({ type: 'PopulateTeamMembers', payload: users }))
             .catch(() => {
-                dispatch({ type: 'SetGeneralError', payload: { description: LOAD_TEAM_MEMBERS_ERROR_DESCRIPTION, title: GENERAL_ERROR_TITLE } });
+                setErrorMessage(new ErrorMessage(LOAD_TEAM_MEMBERS_ERROR_DESCRIPTION, GENERAL_ERROR_TITLE));
             });
     }, []);
 
@@ -50,7 +53,7 @@ const TeamView: React.FC<TeamMembersProps> = ({ history, match }) => {
                 getTeamMembers(teamId)
                     .then((users: User[]) => dispatch({ type: 'PopulateTeamMembers', payload: users }))
                     .catch(() => {
-                        dispatch({ type: 'SetGeneralError', payload: { description: LOAD_TEAM_MEMBERS_ERROR_DESCRIPTION, title: GENERAL_ERROR_TITLE } });
+                        setErrorMessage(new ErrorMessage(LOAD_TEAM_MEMBERS_ERROR_DESCRIPTION, GENERAL_ERROR_TITLE));
                     });
             });
     };
@@ -86,8 +89,7 @@ const TeamView: React.FC<TeamMembersProps> = ({ history, match }) => {
         <div className="govuk-form-group">
             <a href="" onClick={() => onBackLinkClick(history)} className="govuk-back-link">Back</a>
             <ErrorSummary
-                heading={state.errorTitle}
-                description={state.errorDescription}
+                pageError={pageError}
             />
             <div>
                 <h1 className="govuk-heading-xl">View and remove team members</h1>
