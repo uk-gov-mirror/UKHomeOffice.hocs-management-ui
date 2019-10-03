@@ -69,7 +69,7 @@ const TeamView: React.FC<TeamMembersProps> = ({ history, match }) => {
                     {
                         state.teamMembers.map((teamMember) => {
                             return (
-                                <tr className="govuk-table__row">
+                                <tr className="govuk-table__row" key={teamMember.value}>
                                     <td className="govuk-table__cell">{teamMember.label}</td>
                                     <td className="govuk-table__cell"><a href="#" onClick={() => removeTeamMember(teamMember.value, teamId as string)}>Remove</a></td>
                                 </tr>
