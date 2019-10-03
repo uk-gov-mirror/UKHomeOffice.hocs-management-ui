@@ -1,10 +1,11 @@
 import axios from 'axios';
-import { getParentTopics } from '../topicsService';
+import { addChildTopic, getParentTopics } from '../topicsService';
 import Item from '../../models/item';
 
 jest.mock('axios');
 
 const axiosGetSpy: jest.SpyInstance = jest.spyOn(axios, 'get');
+const axiosPostSpy: jest.SpyInstance = jest.spyOn(axios, 'post');
 
 beforeEach(() => {
     jest.resetAllMocks();
@@ -40,6 +41,32 @@ describe('when the getParentTopics method is called', () => {
 
             await getParentTopics().catch((error: Error) => {
                 expect(axios.get).toHaveBeenCalledTimes(1);
+                expect(error.message).toEqual('__error__');
+            });
+        });
+    });
+});
+
+describe('when the addChildTopic method is called', () => {
+    describe('and the request is sucessful', () => {
+        it('should make an api call and return a resolved promise', async () => {
+            axiosPostSpy.mockReturnValue(Promise.resolve());
+            expect.assertions(2);
+
+            await addChildTopic('__parentTopicId__', '__displayName__').then(() => {
+                expect(axiosPostSpy).toHaveBeenCalledTimes(1);
+                expect(axiosPostSpy).toHaveBeenCalledWith('/api/topics/parents/__parentTopicId__', { displayName: '__displayName__' });
+            });
+        });
+    });
+
+    describe('and the request fails', () => {
+        it('should return a resolved promise with the team object', async () => {
+            axiosPostSpy.mockReturnValue(Promise.reject(new Error('__error__')));
+            expect.assertions(2);
+
+            await addChildTopic('__parentTopicId__', '__displayName__').catch((error: Error) => {
+                expect(axiosPostSpy).toHaveBeenCalledTimes(1);
                 expect(error.message).toEqual('__error__');
             });
         });
