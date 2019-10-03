@@ -35,7 +35,7 @@ exports[`when the addToTeam component is mounted should render with default prop
           >
             <label
               class="govuk-label govuk-label--s"
-              for="Users"
+              for="Users-input"
               id="Users-label"
             >
               Select Users
@@ -67,7 +67,7 @@ exports[`when the addToTeam component is mounted should render with default prop
                         autocapitalize="none"
                         autocomplete="off"
                         autocorrect="off"
-                        id="react-select-2-input"
+                        id="Users-input"
                         spellcheck="false"
                         style="box-sizing: content-box; width: 2px; border: 0px; font-size: inherit; opacity: 1; outline: 0; padding: 0px;"
                         tabindex="0"

@@ -108,7 +108,7 @@ const AddChildTopic: React.FC<AddChildTopicProps> = ({ apiStatus, csrfToken, con
                             clearable={true}
                             disabled={false}
                             label={'Select The Parent Topic'}
-                            name={'ParentTopics'}
+                            name={'parent-topics'}
                             onSelectedItemChange={onSelectedParentTopicChange}
                             value={state.selectedParentTopic}
                         />

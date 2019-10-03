@@ -41,14 +41,14 @@ exports[`when the addUnit component is mounted should render with default props 
           >
             <label
               class="govuk-label govuk-label--s"
-              for="ParentTopics"
-              id="ParentTopics-label"
+              for="parent-topics-input"
+              id="parent-topics-label"
             >
               Select The Parent Topic
             </label>
             <div
               class=" css-2b097c-container"
-              id="ParentTopics"
+              id="parent-topics"
             >
               <div
                 class="govuk-typeahead__control css-ia584n-Control"
@@ -73,7 +73,7 @@ exports[`when the addUnit component is mounted should render with default props 
                         autocapitalize="none"
                         autocomplete="off"
                         autocorrect="off"
-                        id="react-select-2-input"
+                        id="parent-topics-input"
                         spellcheck="false"
                         style="box-sizing: content-box; width: 2px; border: 0px; font-size: inherit; opacity: 1; outline: 0; padding: 0px;"
                         tabindex="0"
