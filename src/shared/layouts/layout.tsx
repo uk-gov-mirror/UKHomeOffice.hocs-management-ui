@@ -4,19 +4,12 @@ import Body from './components/body';
 import Footer from './components/footer';
 import Notification from './notification';
 import { ApplicationConsumer } from '../contexts/application';
-import { BodyConfig, FooterConfig, HeaderConfig } from 'shared/models/config';
+import { LayoutConfig } from '../models/config';
+import ApiStatus from '../models/apiStatus';
 
 interface LayoutProps {
-    apiStatus: {
-        display: string;
-        timeoutPeriod: number;
-        type: string;
-    },
-    layout: {
-        body: BodyConfig;
-        footer: FooterConfig;
-        header: HeaderConfig;
-    };
+    apiStatus: ApiStatus;
+    layout: LayoutConfig;
 }
 
 class Layout extends Component<LayoutProps> {

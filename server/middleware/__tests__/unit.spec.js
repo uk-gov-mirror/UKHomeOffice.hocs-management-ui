@@ -6,7 +6,7 @@ const { addUnit } = require('../unit');
 const getLogger = require('../../libs/logger');
 const User = require('../../models/user');
 
-describe('User middleware addToTeam', () => {
+describe('Unit middleware addUnit', () => {
 
     const headers = '__headers__';
     const unitToCreate = { displayName: '__displayName__', shortCode: '__shortCode__' }

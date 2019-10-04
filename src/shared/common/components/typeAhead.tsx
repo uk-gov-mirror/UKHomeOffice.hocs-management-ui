@@ -65,7 +65,7 @@ class TypeAhead extends Component<TypeAheadProps, TypeAheadState> {
         } = this.props;
         return (
             <div className={`govuk-form-group${error ? ' govuk-form-group--error' : ''}`}>
-                <label htmlFor={name} id={`${name}-label`} className="govuk-label govuk-label--s">{label}</label>
+                <label htmlFor={`${name}-input`} id={`${name}-label`} className="govuk-label govuk-label--s">{label}</label>
                 {hint && <span className="govuk-hint">{hint}</span>}
                 {error && <span id={`${name}-error`} className="govuk-error-message">{error}</span>}
                 <Select<Item | string>
@@ -89,6 +89,7 @@ class TypeAhead extends Component<TypeAheadProps, TypeAheadState> {
                         )
                     }}
                     id={name}
+                    inputId={`${name}-input`}
                     placeholder="Search"
                     options={choices}
                     classNamePrefix="govuk-typeahead"

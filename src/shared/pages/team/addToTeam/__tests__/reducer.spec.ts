@@ -33,7 +33,7 @@ describe('when an action is dispatched', () => {
         });
     });
     describe('and it is a PopulateUsers action', () => {
-        it('will clear any previous errors', () => {
+        it('will add the users to the state', () => {
 
             const { users: initialUsers, ...otherInitialState } = initialState;
             const state = reducer(initialState, {
