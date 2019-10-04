@@ -4,7 +4,8 @@ import TeamSearch from '../../pages/team/teamSearch/teamSearch';
 import TeamView from '../../pages/team/teamView/teamView';
 import AddUsersToTeam from '../../pages/team/addToTeam/addToTeam';
 import AddUnit from '../../pages/unit/addUnit';
-import TopicSearch from "../../pages/topic/topicSearch/topicSearch";
+import TopicView from '../../pages/topic/topicView/topicView';
+import TopicSearch from '../../pages/topic/topicSearch/topicSearch';
 import AddChildTopic from '../../pages/topic/addChildTopic';
 
 export interface Route {
@@ -50,6 +51,12 @@ const routes = [
         exact: true,
         component: TopicSearch,
         title: 'TopicSearch'
+    },
+    {
+        path: '/topic/:topicId',
+        exact: true,
+        component: TopicView,
+        title: 'TopicView'
     },
     {
         path: '/add-child-topic',
