@@ -61,27 +61,27 @@ const TeamView: React.FC<TeamMembersProps> = ({ history, match }) => {
     const DisplayTeamTable = () => (
         <Fragment>
             {state.teamMembersLoaded && (
-                <table className="govuk-table">
-                    <thead className="govuk-table__head">
-                        <tr className="govuk-table__row">
-                            <th className="govuk-table__header" scope="col">Team members</th>
-                            <th className="govuk-table__header" scope="col">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody className="govuk-table__body">
-                        {
-                            state.teamMembers.map((teamMember) => {
-                                return (
-                                    <tr className="govuk-table__row">
-                                        <td className="govuk-table__cell">{teamMember.label}</td>
-                                        <td className="govuk-table__cell"><a href="#" onClick={() => removeTeamMember(teamMember.value, teamId as string)}>Remove</a></td>
-                                    </tr>
-                                );
-                            })
-                        }
-                    </tbody>
-                </table>
-            )}
+            <table className="govuk-table">
+                <thead className="govuk-table__head">
+                    <tr className="govuk-table__row">
+                        <th className="govuk-table__header" scope="col">Team members</th>
+                        <th className="govuk-table__header" scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody className="govuk-table__body">
+                    {
+                        state.teamMembers.map((teamMember) => {
+                            return (
+                                <tr className="govuk-table__row" key={teamMember.value}>
+                                    <td className="govuk-table__cell">{teamMember.label}</td>
+                                    <td className="govuk-table__cell"><a href="#" onClick={() => removeTeamMember(teamMember.value, teamId as string)}>Remove</a></td>
+                                </tr>
+                            );
+                        })
+                    }
+                </tbody>
+            </table>
+        )}
         </Fragment>
     );
 
