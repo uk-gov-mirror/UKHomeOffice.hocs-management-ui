@@ -13,7 +13,7 @@ import {
     GENERAL_ERROR_TITLE,
     LOAD_TOPICS_ERROR_DESCRIPTION
 } from '../../../models/constants';
-import { getTopic } from '../../../services/topicService';
+import { getTopic } from '../../../services/topicsService';
 import Topic from '../../../models/topic';
 import ErrorMessage from "../../../models/errorMessage";
 

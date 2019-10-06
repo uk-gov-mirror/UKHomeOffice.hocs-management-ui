@@ -28,10 +28,6 @@ const defaultState: ApplicationState = {
 export const Context = React.createContext<ApplicationState>(defaultState);
 
 const reducer = (state: ApplicationState, action: ContextAction<any>): ApplicationState => {
-    // TODO: REMOVE
-    /* eslint-disable-next-line  no-console*/
-    console.log(`ACTION: ${action.type} PAYLOAD: ${JSON.stringify(action.payload)}`);
-    // ------------
     let newState;
     switch (action.type) {
 
@@ -45,8 +41,6 @@ const reducer = (state: ApplicationState, action: ContextAction<any>): Applicati
             newState = { ...state, apiStatus: { ...action.payload } };
             break;
         default:
-            // TODO: Remove
-            /* eslint-disable-next-line  no-console*/
             console.warn('Unsupported action');
             newState = state;
     }
@@ -99,8 +93,6 @@ export class ApplicationProvider extends Component<ApplicationProps, Application
                     );
                     break;
                 default:
-                    /* eslint-disable-next-line  no-console*/
-                    console.warn('Unsupported analytics event');
             }
         }
     }

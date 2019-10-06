@@ -13,7 +13,7 @@ import {
     GENERAL_ERROR_TITLE,
     LOAD_TOPICS_ERROR_DESCRIPTION
 } from '../../../models/constants';
-import { getTopics } from '../../../services/topicService';
+import { getTopics } from '../../../services/topicsService';
 import Topic from '../../../models/topic';
 import ErrorMessage from "../../../models/errorMessage";
 
@@ -24,12 +24,14 @@ interface TeamSearchProps {
 const TopicSearch: React.FC<TeamSearchProps> = ({ history }) => {
 
     const [pageError, , , setErrorMessage] = useError();
-
     const [state, dispatch] = React.useReducer<Reducer<State, Action>>(reducer, initialState);
+
+
 
     useEffect(() => {
         getTopics()
-            .then((topics: Topic[]) => { dispatch({ type: 'SetTopics', payload: topics }); })
+            .then((topics: Topic[]) => {
+                dispatch({ type: 'SetTopics', payload: topics }); })
             .catch(() => {
                 dispatch({ type: 'SetGeneralError', payload: { description: LOAD_TOPICS_ERROR_DESCRIPTION, title: GENERAL_ERROR_TITLE }
                 });
@@ -64,8 +66,10 @@ const TopicSearch: React.FC<TeamSearchProps> = ({ history }) => {
             {
                 state.topicsLoaded ?
                     <div>
+                        state topics
+                        {state.topics}
                         <TypeAhead
-                            choices={state.topics}
+                            choices={[ {label: 'one', value: 'one'}]}
                             clearable={true}
                             disabled={false}
                             label={'Topics'}

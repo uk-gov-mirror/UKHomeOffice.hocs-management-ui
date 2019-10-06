@@ -1,9 +1,8 @@
-import { InputEventData } from '../../common/components/forms/text';
 import Item from '../../models/item';
 
-export type SetTopicValues = {
-    payload: InputEventData;
-    type: 'SetTopicValues';
+export type SetDisplayName = {
+    payload: string;
+    type: 'SetDisplayName';
 };
 
 export type SetParentTopics = {
@@ -11,6 +10,12 @@ export type SetParentTopics = {
     type: 'SetParentTopics';
 };
 
+export type SetSelectedParentTopic = {
+    payload: Item;
+    type: 'SetSelectedParentTopic';
+};
+
 export type Action =
-    SetTopicValues |
-    SetParentTopics;
+    SetDisplayName |
+    SetParentTopics |
+    SetSelectedParentTopic;
