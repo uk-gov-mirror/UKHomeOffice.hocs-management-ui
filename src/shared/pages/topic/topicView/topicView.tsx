@@ -1,4 +1,5 @@
 import React, { useEffect, Reducer } from 'react';
+import { RouteComponentProps } from 'react-router';
 import TypeAhead from '../../../common/components/typeAhead';
 import { History } from 'history';
 import { State } from './state';
@@ -10,41 +11,53 @@ import ErrorSummary from '../../../common/components/errorSummary';
 import {
     EMPTY_SUBMIT_TOPIC_ERROR_DESCRIPTION,
     EMPTY_SUBMIT_TOPIC_ERROR_TITLE,
-    GENERAL_ERROR_TITLE,
+    GENERAL_ERROR_TITLE, LOAD_TEAMS_ERROR_DESCRIPTION,
     LOAD_TOPICS_ERROR_DESCRIPTION
 } from '../../../models/constants';
 import { getTopic } from '../../../services/topicsService';
 import Topic from '../../../models/topic';
 import ErrorMessage from "../../../models/errorMessage";
+import {getTeams} from "../../../services/teamsService";
 
-interface TeamSearchProps {
-    history: History;
+interface MatchParams {
+    topicId: string;
 }
 
-const TopicView: React.FC<TeamSearchProps> = ({ history }) => {
+interface TeamViewProps extends RouteComponentProps<MatchParams> { }
+
+const TopicView: React.FC<TeamViewProps> = ({ history, match }) => {
 
     const [pageError, , , setErrorMessage] = useError();
-
     const [state, dispatch] = React.useReducer<Reducer<State, Action>>(reducer, initialState);
 
+    const { params: { topicId } } = match;
+
+
     useEffect(() => {
-        getTopic(state.topicValue)
-            .then((topic: Topic[]) => { dispatch({ type: 'SetTopic', payload: topic}); })
+        getTopic(topicId)
+            .then((topic) => { dispatch({ type: 'SetTopicName', payload: topic.label}); })
             .catch(() => {
                 dispatch({ type: 'SetGeneralError', payload: { description: LOAD_TOPICS_ERROR_DESCRIPTION, title: GENERAL_ERROR_TITLE }
                 });
             });
+        getTeams()
+            .then((teams: Topic[]) => { dispatch({ type: 'SetTeams', payload: teams }); })
+            .catch(() => setErrorMessage(new ErrorMessage(LOAD_TEAMS_ERROR_DESCRIPTION, GENERAL_ERROR_TITLE)));
     }, []);
 
-    const onSelectedTopicChange = (selectedTopic: any) => {
-        dispatch({ type: 'SetTopicValue', payload: selectedTopic.value });
+    const onSelectedPrivateMinisterChange = (selectedTeamAssignment: any) => {
+        dispatch({ type: 'SetPrivateMinisterTeam', payload: selectedTeamAssignment.value });
+    };
+
+    const onSelectedDraftQAChange = (selectedTeamAssignment: any) => {
+        dispatch({ type: 'SetDraftQATeam', payload: selectedTeamAssignment.value });
     };
 
     const handleOnSubmit = () => {
-        if (state.topicValue === '') {
+        if (state.topicName === '') {
             setErrorMessage(new ErrorMessage(EMPTY_SUBMIT_TOPIC_ERROR_DESCRIPTION, EMPTY_SUBMIT_TOPIC_ERROR_TITLE));
         } else {
-            history.push(`/topic/${state.topicValue}`);
+            history.push(`/topic/${state.topicName}`);
         }
     };
 
@@ -62,18 +75,18 @@ const TopicView: React.FC<TeamSearchProps> = ({ history }) => {
                 Topic View
             </h1>
             <h2 className="govuk-heading-l">
-                {`Topic: ${state.topicValue}`}
+                {`Topic: ${state.topicName}`}
             </h2>
             {
-                state.topicsLoaded ?
+                state.teamsLoaded ?
                     <div>
                         <TypeAhead
-                            choices={state.topic}
+                            choices={state.teams}
                             clearable={true}
                             disabled={false}
-                            label={'Team assignment for Initial Draft and QA Response stages'}
+                            label={'Team assignment for Initial Draft and QA response stages'}
                             name={'Draft-QA'}
-                            onSelectedItemChange={onSelectedTopicChange}
+                            onSelectedItemChange={onSelectedDraftQAChange}
                         ></TypeAhead>
                     </div> :
                     <div>
@@ -81,15 +94,15 @@ const TopicView: React.FC<TeamSearchProps> = ({ history }) => {
                     </div>
             }
             {
-                state.topicsLoaded ?
+                state.teamsLoaded ?
                     <div>
                         <TypeAhead
-                            choices={state.topic}
+                            choices={state.teams}
                             clearable={true}
                             disabled={false}
-                            label={'Team assignment for Private Office/Minister Sign Off stages'}
+                            label={'Team assignment for Private Office/Minister sign off stages'}
                             name={'Private-Minister'}
-                            onSelectedItemChange={onSelectedTopicChange}
+                            onSelectedItemChange={onSelectedPrivateMinisterChange}
                         ></TypeAhead>
                     </div> :
                     <div>

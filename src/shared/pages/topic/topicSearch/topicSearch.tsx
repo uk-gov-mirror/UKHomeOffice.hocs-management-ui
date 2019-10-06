@@ -1,5 +1,6 @@
 import React, { useEffect, Reducer } from 'react';
 import TypeAhead from '../../../common/components/typeAhead';
+import { getTopics } from '../../../services/topicsService';
 import { History } from 'history';
 import { State } from './state';
 import { Action } from './actions';
@@ -13,15 +14,14 @@ import {
     GENERAL_ERROR_TITLE,
     LOAD_TOPICS_ERROR_DESCRIPTION
 } from '../../../models/constants';
-import { getTopics } from '../../../services/topicsService';
 import Topic from '../../../models/topic';
 import ErrorMessage from "../../../models/errorMessage";
 
-interface TeamSearchProps {
+interface TopicSearchProps {
     history: History;
 }
 
-const TopicSearch: React.FC<TeamSearchProps> = ({ history }) => {
+const TopicSearch: React.FC<TopicSearchProps> = ({ history }) => {
 
     const [pageError, , , setErrorMessage] = useError();
     const [state, dispatch] = React.useReducer<Reducer<State, Action>>(reducer, initialState);

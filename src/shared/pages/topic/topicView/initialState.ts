@@ -3,10 +3,11 @@ import { State } from './state';
 export const initialState: State = {
     errorDescription: '',
     errorTitle: '',
-    topic: [{
-        label: '',
-        value: ''
-    }],
-    topicValue: '',
-    topicsLoaded: false
+    topic: [],
+    topicName: '',
+    topicsLoaded: false,
+    teamsLoaded: false,
+    teams: [],
+    privateMinisterTeam: '',
+    draftQATeam: ''
 };
