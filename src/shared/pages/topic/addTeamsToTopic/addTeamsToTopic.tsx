@@ -67,18 +67,18 @@ const addTeamToTopicView: React.FC<addTeamToTopicProps> = ({ history, match }) =
                 <tbody className="govuk-table__body">
                     <tr className="govuk-table__row">
                         <th scope="row" className="govuk-table__header">
-                            Private Office/Minister
-                        </th>
-                        <td className="govuk-table__cell">
-                            {state.privateMinisterTeam}
-                        </td>
-                    </tr>
-                    <tr className="govuk-table__row">
-                        <th scope="row" className="govuk-table__header">
                             Draft/QA
                         </th>
                         <td className="govuk-table__cell">
                             {state.draftQaTeam}
+                        </td>
+                    </tr>
+                    <tr className="govuk-table__row">
+                        <th scope="row" className="govuk-table__header">
+                            Private Office/Minister
+                        </th>
+                        <td className="govuk-table__cell">
+                            {state.privateMinisterTeam}
                         </td>
                     </tr>
                 </tbody>
