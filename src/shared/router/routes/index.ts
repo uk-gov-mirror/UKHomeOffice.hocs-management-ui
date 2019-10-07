@@ -7,6 +7,8 @@ import AddUnit from '../../pages/unit/addUnit';
 import TopicView from '../../pages/topic/topicView/topicView';
 import TopicSearch from '../../pages/topic/topicSearch/topicSearch';
 import AddChildTopic from '../../pages/topic/addChildTopic';
+import AddTeamsToTopic from '../../pages/topic/addTeamsToTopic/addTeamsToTopic';
+
 
 export interface Route {
     component: React.FunctionComponent | Error;
@@ -57,6 +59,12 @@ const routes = [
         exact: true,
         component: TopicView,
         title: 'TopicView'
+    },
+    {
+        path: '/topic/:topicName/private-minister/:privateMinister/draft-qa/:draftQa',
+        exact: true,
+        component: AddTeamsToTopic,
+        title: 'AddTeamsToTopic'
     },
     {
         path: '/add-child-topic',
