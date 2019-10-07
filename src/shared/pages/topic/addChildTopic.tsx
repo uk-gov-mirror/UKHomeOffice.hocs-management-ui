@@ -67,7 +67,6 @@ const AddChildTopic: React.FC<AddChildTopicProps> = ({ csrfToken, contextDispatc
 
     const onSubmit = (event: React.FormEvent) => {
         event.preventDefault();
-        console.log(state);
         clearErrors();
         if (validate(validationSchema, state, addFormError)) {
             addChildTopic(state.selectedParentTopic!.value, state.displayName)

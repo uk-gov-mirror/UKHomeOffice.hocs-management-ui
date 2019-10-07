@@ -12,7 +12,7 @@ import { GENERAL_ERROR_TITLE, ADD_UNIT_ERROR_DESCRIPTION, VALIDATION_ERROR_TITLE
 import useError from '../../hooks/useError';
 import ErrorMessage from '../../models/errorMessage';
 import Unit from '../../models/unit';
-import { validate } from 'shared/validation';
+import { validate } from '../../validation';
 
 interface AddUnitProps extends RouteComponentProps {
     csrfToken?: string;
