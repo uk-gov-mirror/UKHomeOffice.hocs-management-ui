@@ -11,48 +11,13 @@ let mockState: State;
 
 jest.mock('../../../../services/teamsService', () => ({
     __esModule: true,
-    getTeams: jest.fn().mockReturnValue(Promise.resolve({
-        data: [{
-            displayName: 'Home Office General Property',
-            permissions: [
-                {
-                    caseTypeCode: 'DTEN',
-                    accessLevel: 'OWNER'
-                },
-                {
-                    caseTypeCode: 'MIN',
-                    accessLevel: 'OWNER'
-                },
-                {
-                    caseTypeCode: 'TRO',
-                    accessLevel: 'OWNER'
-                }
-            ],
-            letterName: null,
-            type: '1aa9055d-0572-436b-a69d-4a97588f4ce4',
-            active: true
-        }, {
-            displayName: 'Home Office General Property',
-            permissions: [
-                {
-                    caseTypeCode: 'DTEN',
-                    accessLevel: 'OWNER'
-                },
-                {
-                    caseTypeCode: 'MIN',
-                    accessLevel: 'OWNER'
-                },
-                {
-                    caseTypeCode: 'TRO',
-                    accessLevel: 'OWNER'
-                }
-            ],
-            letterName: null,
-            type: '1aa9055d-0572-436b-a69d-4a97588f4ce4',
-            active: true
-        }
-        ]
-    }))
+    getTeams: jest.fn().mockReturnValue(Promise.resolve([{
+        label: 'Home Office General Property',
+        value: '1aa9055d-0572-436b-a69d-4a97588f4ce4'
+    }, {
+        label: 'Home Office General Property',
+        value: '1aa9055d-0572-436b-a69d-4a97588f4ce4'
+    }]))
 }));
 
 const getTeamsSpy = jest.spyOn(TeamsService, 'getTeams');
@@ -62,15 +27,6 @@ const useErrorSpy = jest.spyOn(useError, 'default');
 beforeEach(() => {
     history = createBrowserHistory();
     mockState = {
-        teams: [{
-            label: '__teamName1__',
-            value: '__teamId1__'
-        }, {
-            label: '__teamName2',
-            value: '__teamId2__'
-        }
-        ],
-        teamsLoaded: true,
         teamUUID: '__teamName__'
     };
     useReducerSpy.mockImplementationOnce(() => [mockState, jest.fn()]);

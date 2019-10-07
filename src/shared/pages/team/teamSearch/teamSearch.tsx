@@ -1,4 +1,4 @@
-import React, { useEffect, Reducer } from 'react';
+import React, { Reducer, useCallback } from 'react';
 import TypeAhead from '../../../common/components/typeAhead';
 import { getTeams } from '../../../services/teamsService';
 import { History } from 'history';
@@ -21,12 +21,6 @@ const TeamSearch: React.FC<TeamSearchProps> = ({ history }) => {
     const [pageError, , , setErrorMessage] = useError();
     const [state, dispatch] = React.useReducer<Reducer<State, Action>>(reducer, initialState);
 
-    useEffect(() => {
-        getTeams()
-            .then((teams: Item[]) => { dispatch({ type: 'SetTeams', payload: teams }); })
-            .catch(() => setErrorMessage(new ErrorMessage(LOAD_TEAMS_ERROR_DESCRIPTION, GENERAL_ERROR_TITLE)));
-    }, []);
-
     const onSelectedTeamChange = (selectedTeam: any) => {
         dispatch({ type: 'AddTeamUUID', payload: selectedTeam.value });
 
@@ -40,6 +34,13 @@ const TeamSearch: React.FC<TeamSearchProps> = ({ history }) => {
         history.push('/');
     };
 
+    const getTeamsForTypeahead = useCallback(() => new Promise<Item[]>(resolve => getTeams()
+        .then((teams: Item[]) => resolve(teams))
+        .catch(() => {
+            setErrorMessage(new ErrorMessage(LOAD_TEAMS_ERROR_DESCRIPTION, GENERAL_ERROR_TITLE));
+            resolve([]);
+        })), []);
+
     return (
         <div className="govuk-form-group">
             <a href="" onClick={() => onBackLinkClick(history)} className="govuk-back-link">Back</a>
@@ -49,23 +50,14 @@ const TeamSearch: React.FC<TeamSearchProps> = ({ history }) => {
             <h1 className="govuk-heading-xl">
                 Team search
             </h1>
-            {
-                state.teamsLoaded ?
-                    <div>
-                        <TypeAhead
-                            choices={state.teams}
-                            clearable={true}
-                            disabled={false}
-                            label={'Teams'}
-                            name={'Teams'}
-                            onSelectedItemChange={onSelectedTeamChange}
-                        ></TypeAhead>
-                    </div> :
-                    <div>
-                        ...loading
-                </div>
-            }
-
+            <TypeAhead
+                clearable={true}
+                disabled={false}
+                getOptions={getTeamsForTypeahead}
+                label={'Teams'}
+                name={'Teams'}
+                onSelectedItemChange={onSelectedTeamChange}
+            />
             <button type="submit" className="govuk-button view-team-button" onClick={() => { handleOnSubmit(); }}>View team</button>
         </div>
     );
