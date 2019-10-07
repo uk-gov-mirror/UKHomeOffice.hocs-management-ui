@@ -15,9 +15,9 @@ import {
     LOAD_TOPICS_ERROR_DESCRIPTION
 } from '../../../models/constants';
 import { getTopic } from '../../../services/topicsService';
+import { getTeams } from "../../../services/teamsService";
 import Topic from '../../../models/topic';
 import ErrorMessage from "../../../models/errorMessage";
-import {getTeams} from "../../../services/teamsService";
 
 interface MatchParams {
     topicId: string;
