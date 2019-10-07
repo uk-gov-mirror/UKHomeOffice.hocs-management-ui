@@ -28,7 +28,6 @@ const addTeamToTopicView: React.FC<addTeamToTopicProps> = ({ history, match }) =
 
     const { params: { topicName, privateMinister, draftQA } } = match;
 
-
     useEffect(() => {
         dispatch({ type: 'SetPrivateMinisterTeam', payload: privateMinister });
         dispatch({ type: 'SetDraftQATeam', payload: draftQA });
