@@ -176,8 +176,8 @@ describe('when the submit button is clicked', () => {
         });
 
         it('should set the error state', () => {
-            expect(addFormErrorSpy).toHaveBeenNthCalledWith(1, { key: 'selectedParentTopic', value: 'A Parent Topic is required' });
-            expect(addFormErrorSpy).toHaveBeenNthCalledWith(2, { key: 'displayName', value: 'A Display Name is required' });
+            expect(addFormErrorSpy).toHaveBeenNthCalledWith(1, { key: 'displayName', value: 'A Display Name is required' });
+            expect(addFormErrorSpy).toHaveBeenNthCalledWith(2, { key: 'selectedParentTopic.label', value: 'A Parent Topic is required' });
         });
     });
 });
