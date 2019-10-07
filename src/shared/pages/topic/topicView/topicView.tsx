@@ -46,18 +46,18 @@ const TopicView: React.FC<TeamViewProps> = ({ history, match }) => {
     }, []);
 
     const onSelectedPrivateMinisterChange = (selectedTeamAssignment: any) => {
-        dispatch({ type: 'SetPrivateMinisterTeam', payload: selectedTeamAssignment.value });
+        dispatch({ type: 'SetPrivateMinisterTeam', payload: selectedTeamAssignment.label });
     };
 
     const onSelectedDraftQAChange = (selectedTeamAssignment: any) => {
-        dispatch({ type: 'SetDraftQATeam', payload: selectedTeamAssignment.value });
+        dispatch({ type: 'SetDraftQATeam', payload: selectedTeamAssignment.label });
     };
 
     const handleOnSubmit = () => {
-        if (state.topicName === '') {
+        if (state.privateMinisterTeam === '' || state.draftQATeam === '') {
             setErrorMessage(new ErrorMessage(EMPTY_SUBMIT_TOPIC_ERROR_DESCRIPTION, EMPTY_SUBMIT_TOPIC_ERROR_TITLE));
         } else {
-            history.push(`/topic/${state.topicName}`);
+            history.push(`/topic/${state.topicName}/private-minister/${state.privateMinisterTeam}/draft-qa/${state.draftQATeam}`);
         }
     };
 

@@ -3,5 +3,5 @@ export interface State {
     errorTitle: string;
     topicName: string;
     privateMinisterTeam: string;
-    draftQATeam: string;
+    draftQaTeam: string;
 }

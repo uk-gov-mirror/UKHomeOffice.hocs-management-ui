@@ -15,7 +15,7 @@ import ErrorMessage from "../../../models/errorMessage";
 
 interface MatchParams {
     privateMinister: string;
-    draftQA: string;
+    draftQa: string;
     topicName: string;
 }
 
@@ -26,11 +26,10 @@ const addTeamToTopicView: React.FC<addTeamToTopicProps> = ({ history, match }) =
     const [pageError, , , setErrorMessage] = useError();
     const [state, dispatch] = React.useReducer<Reducer<State, Action>>(reducer, initialState);
 
-    const { params: { topicName, privateMinister, draftQA } } = match;
-
+    const { params: { topicName, privateMinister, draftQa } } = match;
     useEffect(() => {
         dispatch({ type: 'SetPrivateMinisterTeam', payload: privateMinister });
-        dispatch({ type: 'SetDraftQATeam', payload: draftQA });
+        dispatch({ type: 'SetDraftQATeam', payload: draftQa });
         dispatch({ type: 'SetTopicName', payload: topicName });
     }, []);
 
@@ -38,7 +37,7 @@ const addTeamToTopicView: React.FC<addTeamToTopicProps> = ({ history, match }) =
         if (state.topicName === '') {
             setErrorMessage(new ErrorMessage(EMPTY_SUBMIT_TOPIC_ERROR_DESCRIPTION, EMPTY_SUBMIT_TOPIC_ERROR_TITLE));
         } else {
-            history.push(`/topic/${state.topicName}/privateMinister/${state.privateMinisterTeam}/draftQA/${state.draftQATeam}`);
+            history.push(`/topic/${state.topicName}/privateMinister/${state.privateMinisterTeam}/draftQA/${state.draftQaTeam}`);
         }
     };
 
@@ -53,9 +52,28 @@ const addTeamToTopicView: React.FC<addTeamToTopicProps> = ({ history, match }) =
                 pageError={pageError}
             />
             <h1 className="govuk-heading-xl">
-                Assign the following teams to topic
+                Summary
             </h1>
-            <button type="submit" className="govuk-button view-team-button" onClick={() => { handleOnSubmit(); }}>Continue</button>
+            <h2>
+                The following teams:
+            </h2>
+                <ul>
+                    <li>
+                        {`Private/Minister Team: ${state.privateMinisterTeam}`}
+                    </li>
+                    <li>
+                        {`Draft/QA Team: ${state.draftQaTeam}`}
+                    </li>
+                </ul>
+            <h2>
+                will be assigned to topic:
+            </h2>
+            <ul>
+                <li>
+                    {`Topic Name: ${state.topicName}`}
+                </li>
+            </ul>
+            <button type="submit" className="govuk-button view-team-button" onClick={() => { handleOnSubmit(); }}>Confirm and Submit</button>
         </div>
     );
 };

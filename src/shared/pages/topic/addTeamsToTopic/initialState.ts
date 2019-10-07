@@ -5,5 +5,5 @@ export const initialState: State = {
     errorTitle: '',
     topicName: '',
     privateMinisterTeam: '',
-    draftQATeam: ''
+    draftQaTeam: ''
 };
