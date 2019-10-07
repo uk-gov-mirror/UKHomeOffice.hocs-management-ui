@@ -4,7 +4,7 @@ const Dashboard: React.FC = () => (
     <Fragment>
         <div className="govuk-grid-row">
             <div className="govuk-grid-column-two-thirds">
-                <h1 className="govuk-heading-l">Choose an area to manage</h2>
+                <h1 className="govuk-heading-l">Choose an area to manage</h1>
                 <ul className="govuk-list">
                     <li>
                         <h3 className="govuk-heading-m">
