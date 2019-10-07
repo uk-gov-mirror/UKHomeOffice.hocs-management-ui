@@ -163,8 +163,8 @@ describe('when the submit button is clicked', () => {
         });
 
         it('should set the error state', () => {
-            expect(addFormErrorSpy).toHaveBeenNthCalledWith(1, { key: 'displayName', value: 'Display Name is required' });
-            expect(addFormErrorSpy).toHaveBeenNthCalledWith(2, { key: 'shortCode', value: 'Short Code is required' });
+            expect(addFormErrorSpy).toHaveBeenNthCalledWith(1, { key: 'displayName', value: 'A Display Name is required' });
+            expect(addFormErrorSpy).toHaveBeenNthCalledWith(2, { key: 'shortCode', value: 'A Short Code is required' });
         });
     });
 });
