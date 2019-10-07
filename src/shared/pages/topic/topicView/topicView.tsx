@@ -84,7 +84,7 @@ const TopicView: React.FC<TeamViewProps> = ({ history, match }) => {
                             choices={state.teams}
                             clearable={true}
                             disabled={false}
-                            label={'Team assignment for Initial Draft and QA response stages'}
+                            label={'Select team assignment for Initial Draft and QA response stages'}
                             name={'Draft-QA'}
                             onSelectedItemChange={onSelectedDraftQAChange}
                         ></TypeAhead>
@@ -100,7 +100,7 @@ const TopicView: React.FC<TeamViewProps> = ({ history, match }) => {
                             choices={state.teams}
                             clearable={true}
                             disabled={false}
-                            label={'Team assignment for Private Office/Minister sign off stages'}
+                            label={'Select team assignment for Private Office/Minister sign off stages'}
                             name={'Private-Minister'}
                             onSelectedItemChange={onSelectedPrivateMinisterChange}
                         ></TypeAhead>
@@ -110,7 +110,7 @@ const TopicView: React.FC<TeamViewProps> = ({ history, match }) => {
                     </div>
             }
 
-            <button type="submit" className="govuk-button view-team-button" onClick={() => { handleOnSubmit(); }}>View linked teams</button>
+            <button type="submit" className="govuk-button view-team-button" onClick={() => { handleOnSubmit(); }}>Continue</button>
         </div>
     );
 };
