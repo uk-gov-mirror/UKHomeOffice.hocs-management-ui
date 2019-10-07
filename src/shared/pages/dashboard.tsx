@@ -4,7 +4,7 @@ const Dashboard: React.FC = () => (
     <Fragment>
         <div className="govuk-grid-row">
             <div className="govuk-grid-column-two-thirds">
-                <h2 className="govuk-heading-l">Choose an area to manage</h2>
+                <h1 className="govuk-heading-l">Choose an area to manage</h2>
                 <ul className="govuk-list">
                     <li>
                         <h3 className="govuk-heading-m">
@@ -13,6 +13,16 @@ const Dashboard: React.FC = () => (
                         <ul className="govuk-list govuk-list--bullet">
                             <li>
                                 <a className="govuk-link" href="/team-search">Add/Remove Users</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <h3 className="govuk-heading-m">
+                            Topic Management
+                        </h3>
+                        <ul className="govuk-list govuk-list--bullet">
+                            <li>
+                                <a className="govuk-link" href="/add-child-topic">Add Child Topic</a>
                             </li>
                         </ul>
                     </li>
