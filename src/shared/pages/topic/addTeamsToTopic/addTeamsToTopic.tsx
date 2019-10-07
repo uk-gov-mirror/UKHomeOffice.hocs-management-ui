@@ -54,25 +54,35 @@ const addTeamToTopicView: React.FC<addTeamToTopicProps> = ({ history, match }) =
             <h1 className="govuk-heading-xl">
                 Summary
             </h1>
-            <h2>
-                The following teams:
+            <h2 className="govuk-heading-l">
+                {`Topic: ${state.topicName}`}
             </h2>
-                <ul>
-                    <li>
-                        {`Private/Minister Team: ${state.privateMinisterTeam}`}
-                    </li>
-                    <li>
-                        {`Draft/QA Team: ${state.draftQaTeam}`}
-                    </li>
-                </ul>
-            <h2>
-                will be assigned to topic:
-            </h2>
-            <ul>
-                <li>
-                    {`Topic Name: ${state.topicName}`}
-                </li>
-            </ul>
+            <table className="govuk-table">
+                <thead className="govuk-table__head">
+                <tr className="govuk-table__row">
+                    <th scope="col" className="govuk-table__header">Stages</th>
+                    <th scope="col" className="govuk-table__header">Team assignment</th>
+                </tr>
+                </thead>
+                <tbody className="govuk-table__body">
+                    <tr className="govuk-table__row">
+                        <th scope="row" className="govuk-table__header">
+                            Private Office/Minister
+                        </th>
+                        <td className="govuk-table__cell">
+                            {state.privateMinisterTeam}
+                        </td>
+                    </tr>
+                    <tr className="govuk-table__row">
+                        <th scope="row" className="govuk-table__header">
+                            Draft/QA
+                        </th>
+                        <td className="govuk-table__cell">
+                            {state.draftQaTeam}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
             <button type="submit" className="govuk-button view-team-button" onClick={() => { handleOnSubmit(); }}>Confirm and Submit</button>
         </div>
     );
