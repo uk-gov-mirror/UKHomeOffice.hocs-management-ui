@@ -4,5 +4,4 @@ export interface State {
     selectedUser?: Item | string;
     selectedUsers: Item[];
     teamName?: string;
-    users: Item[];
 }

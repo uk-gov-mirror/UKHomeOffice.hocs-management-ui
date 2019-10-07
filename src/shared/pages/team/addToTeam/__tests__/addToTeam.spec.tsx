@@ -1,5 +1,5 @@
 import React from 'react';
-import { match } from 'react-router';
+import { match, MemoryRouter } from 'react-router-dom';
 import { createBrowserHistory, History, Location } from 'history';
 import { act, render, RenderResult, wait, fireEvent, getByText } from '@testing-library/react';
 import AddToTeam from '../addToTeam';
@@ -28,15 +28,15 @@ jest.mock('../../../../services/teamsService', () => ({
 jest.mock('../../../../services/usersService', () => ({
     __esModule: true,
     addUserToTeam: jest.fn().mockReturnValue(Promise.resolve()),
-    getUsers: jest.fn().mockReturnValue(Promise.resolve({
-        data: [{
+    getUsers: jest.fn().mockReturnValue(Promise.resolve(
+        [{
             label: '__user1__',
             value: '__userId1__'
         }, {
             label: '__user2__',
             value: '__userId2__'
         }]
-    }))
+    ))
 }));
 
 const getTeamSpy = jest.spyOn(TeamsService, 'getTeam');
@@ -48,6 +48,12 @@ const useErrorSpy = jest.spyOn(useError, 'default');
 const addFormErrorSpy = jest.fn();
 const clearErrorsSpy = jest.fn();
 const setMessageSpy = jest.fn();
+
+const renderComponent = () => render(
+    <MemoryRouter>
+        <AddToTeam history={history} location={location} match={match}></AddToTeam>
+    </MemoryRouter>
+);
 
 beforeEach(() => {
     history = createBrowserHistory();
@@ -75,11 +81,7 @@ beforeEach(() => {
             label: '__user2__',
             value: '__userId2__'
         }],
-        teamName: '__teamName__',
-        users: [{
-            label: '__user1__',
-            value: '__userId1__'
-        }]
+        teamName: '__teamName__'
     };
     useReducerSpy.mockImplementationOnce(() => [mockState, reducerDispatch]);
     useErrorSpy.mockImplementation(() => [{}, addFormErrorSpy, clearErrorsSpy, setMessageSpy]);
@@ -94,7 +96,7 @@ describe('when the addToTeam component is mounted', () => {
         expect.assertions(3);
         let wrapper: RenderResult;
         act(() => {
-            wrapper = render(<AddToTeam history={history} location={location} match={match}></AddToTeam>);
+            wrapper = renderComponent();
         });
 
         await wait(() => {
@@ -114,14 +116,14 @@ describe('when the addToTeam component is mounted', () => {
             type: '__type__'
         }));
         mockState.teamName = undefined;
-        wrapper = render(<AddToTeam history={history} location={location} match={match}></AddToTeam>);
+        wrapper = renderComponent();
         expect(wrapper.container.outerHTML).toMatchSnapshot();
     });
     it('should display an error if the call to retrieve the team fails', async () => {
         expect.assertions(1);
         getTeamSpy.mockImplementation(() => Promise.reject('error'));
 
-        render(<AddToTeam history={history} location={location} match={match}></AddToTeam>);
+        renderComponent();
 
         await wait(() => {
             expect(setMessageSpy).toBeCalledWith({ title: GENERAL_ERROR_TITLE, description: LOAD_TEAM_ERROR_DESCRIPTION });
@@ -132,7 +134,7 @@ describe('when the addToTeam component is mounted', () => {
         expect.assertions(1);
         getUsersSpy.mockImplementation(() => Promise.reject('error'));
 
-        render(<AddToTeam history={history} location={location} match={match}></AddToTeam>);
+        renderComponent();
 
         await wait(() => {
             expect(setMessageSpy).toBeCalledWith({ title: GENERAL_ERROR_TITLE, description: LOAD_USERS_ERROR_DESCRIPTION });
@@ -146,7 +148,7 @@ describe('when the submit button is clicked', () => {
 
     beforeEach(() => {
         act(() => {
-            wrapper = render(<AddToTeam history={history} location={location} match={match}></AddToTeam>);
+            wrapper = renderComponent();
         });
     });
 
@@ -215,28 +217,11 @@ describe('when the submit button is clicked', () => {
     });
 });
 
-describe('when the back button is clicked', () => {
-    it('should push a new page into the history', async () => {
-        history.push = jest.fn();
-        let wrapper: RenderResult;
-        act(() => {
-            wrapper = render(<AddToTeam history={history} location={location} match={match}></AddToTeam>);
-        });
-
-        await wait(async () => {
-            const backButton = getByText(wrapper.container, 'Back');
-            fireEvent.click(backButton);
-        });
-
-        expect(history.push).toHaveBeenCalledWith('/team_view/__teamId__');
-    });
-});
-
 describe('when the remove button is clicked', () => {
     it('should remove the row from the selected users collection', async () => {
         let wrapper: RenderResult;
         act(() => {
-            wrapper = render(<AddToTeam history={history} location={location} match={match}></AddToTeam>);
+            wrapper = renderComponent();
         });
 
         await wait(async () => {

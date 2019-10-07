@@ -1,12 +1,10 @@
 import React, { useEffect, useCallback, Reducer } from 'react';
 import { RouteComponentProps } from 'react-router';
-import { History } from 'history';
 import { getTeam } from '../../../services/teamsService';
 import { addUserToTeam, getUsers, AddUserError } from '../../../services/usersService';
 import TypeAhead from '../../../common/components/typeAhead';
 import ErrorSummary from '../../../common/components/errorSummary';
 import Item from '../../../models/item';
-import { User } from '../../../models/user';
 import { reducer } from './reducer';
 import { Action } from './actions';
 import { State } from './state';
@@ -14,6 +12,7 @@ import { initialState } from './initialState';
 import { EMPTY_SUBMIT_ERROR_DESCRIPTION, EMPTY_SUBMIT_ERROR_TITLE, GENERAL_ERROR_TITLE, LOAD_TEAM_ERROR_DESCRIPTION, LOAD_USERS_ERROR_DESCRIPTION, ADD_USER_ERROR_TITLE, ADD_USER_ERROR_DESCRIPTION } from '../../../models/constants';
 import useError from '../../../hooks/useError';
 import ErrorMessage from '../../../models/errorMessage';
+import { Link } from 'react-router-dom';
 
 interface MatchParams {
     teamId: string;
@@ -27,10 +26,6 @@ const AddToTeam: React.FC<AddToTeamProps> = ({ history, match }) => {
     const [state, dispatch] = React.useReducer<Reducer<State, Action>>(reducer, initialState);
 
     const { params: { teamId } } = match;
-
-    const onBackLinkClick = (history: History) => {
-        history.push(`/team_view/${teamId}`);
-    };
 
     const onSubmit = () => {
         clearErrors();
@@ -58,22 +53,24 @@ const AddToTeam: React.FC<AddToTeamProps> = ({ history, match }) => {
         dispatch({ type: 'ClearSelectedUser' });
     }, []);
 
+    const getUsersForTypeahead = () => new Promise<Item[]>(resolve => getUsers()
+        .then((users: Item[]) => resolve(users))
+        .catch(() => {
+            setErrorMessage(new ErrorMessage(LOAD_USERS_ERROR_DESCRIPTION, GENERAL_ERROR_TITLE));
+            resolve([]);
+        }));
+
     useEffect(() => {
         getTeam(teamId)
             .then(team => dispatch({ type: 'SetTeamName', payload: team.displayName }))
             .catch(() => {
                 setErrorMessage(new ErrorMessage(LOAD_TEAM_ERROR_DESCRIPTION, GENERAL_ERROR_TITLE));
             });
-        getUsers()
-            .then((users: User[]) => dispatch({ type: 'PopulateUsers', payload: users }))
-            .catch(() => {
-                setErrorMessage(new ErrorMessage(LOAD_USERS_ERROR_DESCRIPTION, GENERAL_ERROR_TITLE));
-            });
     }, []);
 
     return (
         <>
-            <a href="" onClick={() => onBackLinkClick(history)} className="govuk-back-link">Back</a>
+            <Link className="govuk-back-link" to={`/team-view/${teamId}`}>Back</Link>
             <ErrorSummary
                 pageError={pageError}
             />
@@ -88,11 +85,11 @@ const AddToTeam: React.FC<AddToTeamProps> = ({ history, match }) => {
                     <div className="govuk-grid-row">
                         <div className="govuk-grid-column-one-half-from-desktop">
                             <TypeAhead
-                                choices={state.users.filter(user => !state.selectedUsers.some(selectedUser => selectedUser.value === user.value))}
                                 clearable={true}
                                 disabled={false}
+                                getOptions={getUsersForTypeahead}
                                 label={'Select Users'}
-                                name={'Users'}
+                                name={'users'}
                                 onSelectedItemChange={onSelectedUserChange}
                                 value={state.selectedUser}
                             ></TypeAhead>

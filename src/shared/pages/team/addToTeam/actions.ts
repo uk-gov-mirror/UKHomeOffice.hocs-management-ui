@@ -7,10 +7,6 @@ export type AddToSelection = {
 export type ClearSelectedUser = {
     type: 'ClearSelectedUser';
 };
-export type PopulateUsers = {
-    payload: Item[];
-    type: 'PopulateUsers';
-};
 export type RemoveFromSelection = {
     payload: Item;
     type: 'RemoveFromSelection';
@@ -23,6 +19,5 @@ export type SetTeamName = {
 export type Action =
     AddToSelection |
     ClearSelectedUser |
-    PopulateUsers |
     RemoveFromSelection |
     SetTeamName;

@@ -1,12 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when the addToTeam component is mounted should initially render null before the team name is returned 1`] = `"<div><a href=\\"\\" class=\\"govuk-back-link\\">Back</a><div class=\\"govuk-grid-row\\"><div class=\\"govuk-grid-column-two-thirds-from-desktop\\"><table class=\\"govuk-table\\"><caption class=\\"govuk-table__caption\\">Users to be added</caption><tbody class=\\"govuk-table__body\\"><tr class=\\"govuk-table__row\\"><th scope=\\"row\\" class=\\"govuk-table__header\\">__user1__</th><td class=\\"govuk-table__cell\\"><a class=\\"govuk-link\\" href=\\"#\\">Remove<span class=\\"govuk-visually-hidden\\"> user</span></a></td></tr><tr class=\\"govuk-table__row\\"><th scope=\\"row\\" class=\\"govuk-table__header\\">__user2__</th><td class=\\"govuk-table__cell\\"><a class=\\"govuk-link\\" href=\\"#\\">Remove<span class=\\"govuk-visually-hidden\\"> user</span></a></td></tr></tbody></table></div></div><button type=\\"submit\\" class=\\"govuk-button view-team-button\\">Add selected users</button></div>"`;
+exports[`when the addToTeam component is mounted should initially render null before the team name is returned 1`] = `"<div><a class=\\"govuk-back-link\\" href=\\"/team-view/__teamId__\\">Back</a><div class=\\"govuk-grid-row\\"><div class=\\"govuk-grid-column-two-thirds-from-desktop\\"><table class=\\"govuk-table\\"><caption class=\\"govuk-table__caption\\">Users to be added</caption><tbody class=\\"govuk-table__body\\"><tr class=\\"govuk-table__row\\"><th scope=\\"row\\" class=\\"govuk-table__header\\">__user1__</th><td class=\\"govuk-table__cell\\"><a class=\\"govuk-link\\" href=\\"#\\">Remove<span class=\\"govuk-visually-hidden\\"> user</span></a></td></tr><tr class=\\"govuk-table__row\\"><th scope=\\"row\\" class=\\"govuk-table__header\\">__user2__</th><td class=\\"govuk-table__cell\\"><a class=\\"govuk-link\\" href=\\"#\\">Remove<span class=\\"govuk-visually-hidden\\"> user</span></a></td></tr></tbody></table></div></div><button type=\\"submit\\" class=\\"govuk-button view-team-button\\">Add selected users</button></div>"`;
 
 exports[`when the addToTeam component is mounted should render with default props 1`] = `
 <div>
   <a
     class="govuk-back-link"
-    href=""
+    href="/team-view/__teamId__"
   >
     Back
   </a>
@@ -35,14 +35,14 @@ exports[`when the addToTeam component is mounted should render with default prop
           >
             <label
               class="govuk-label govuk-label--s"
-              for="Users-input"
-              id="Users-label"
+              for="users-input"
+              id="users-label"
             >
               Select Users
             </label>
             <div
               class=" css-2b097c-container"
-              id="Users"
+              id="users"
             >
               <div
                 class="govuk-typeahead__control css-ia584n-Control"
@@ -67,7 +67,7 @@ exports[`when the addToTeam component is mounted should render with default prop
                         autocapitalize="none"
                         autocomplete="off"
                         autocorrect="off"
-                        id="Users-input"
+                        id="users-input"
                         spellcheck="false"
                         style="box-sizing: content-box; width: 2px; border: 0px; font-size: inherit; opacity: 1; outline: 0; padding: 0px;"
                         tabindex="0"
