@@ -53,12 +53,12 @@ const AddToTeam: React.FC<AddToTeamProps> = ({ history, match }) => {
         dispatch({ type: 'ClearSelectedUser' });
     }, []);
 
-    const getUsersForTypeahead = () => new Promise<Item[]>(resolve => getUsers()
+    const getUsersForTypeahead = useCallback(() => new Promise<Item[]>(resolve => getUsers()
         .then((users: Item[]) => resolve(users))
         .catch(() => {
             setErrorMessage(new ErrorMessage(LOAD_USERS_ERROR_DESCRIPTION, GENERAL_ERROR_TITLE));
             resolve([]);
-        }));
+        })), []);
 
     useEffect(() => {
         getTeam(teamId)

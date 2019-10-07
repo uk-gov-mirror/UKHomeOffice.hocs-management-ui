@@ -5,8 +5,6 @@ export const reducer = (state: State, action: Action) => {
     switch (action.type) {
         case 'SetDisplayName':
             return { ...state, displayName: action.payload };
-        case 'SetParentTopics':
-            return { ...state, parentTopics: action.payload };
         case 'SetSelectedParentTopic':
             return { ...state, selectedParentTopic: action.payload };
         default:

@@ -24,15 +24,13 @@ const setMessageSpy = jest.fn();
 jest.mock('../../../services/topicsService', () => ({
     __esModule: true,
     addChildTopic: () => Promise.resolve(),
-    getParentTopics: () => Promise.resolve({
-        data: [{
-            label: '__parentTopic1__',
-            value: '__parentTopicId1__'
-        }, {
-            label: '__parentTopic2__',
-            value: '__parentTopicId2__'
-        }]
-    })
+    getParentTopics: () => Promise.resolve([{
+        label: '__parentTopic1__',
+        value: '__parentTopicId1__'
+    }, {
+        label: '__parentTopic2__',
+        value: '__parentTopicId2__'
+    }])
 }));
 
 const getParentTopicsSpy = jest.spyOn(TopicsService, 'getParentTopics');
@@ -54,8 +52,7 @@ beforeEach(() => {
         state: {}
     };
     mockState = {
-        displayName: '',
-        parentTopics: []
+        displayName: ''
     };
     useReducerSpy.mockImplementation(() => [mockState, reducerDispatch]);
     useErrorSpy.mockImplementation(() => [{}, addFormErrorSpy, clearErrorsSpy, setMessageSpy]);
