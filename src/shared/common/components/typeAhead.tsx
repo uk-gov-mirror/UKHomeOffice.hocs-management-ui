@@ -5,11 +5,10 @@ import { ActionMeta } from 'react-select/src/types';
 import Item from '../../models/item';
 
 interface TypeAheadProps {
-    choices?: Item[];
     clearable?: boolean;
     disabled?: boolean;
     error?: string;
-    getOptions?: () => Promise<Item[]>;
+    getOptions: () => Promise<Item[]>;
     hint?: string;
     label?: string;
     name: string;
@@ -41,20 +40,6 @@ class TypeAhead extends Component<TypeAheadProps, TypeAheadState> {
         }
     }
 
-    getOptions(input: string, callback: (options: Item[]) => void) {
-        let options: Item[];
-        if (this.props.choices && input.length > 0) {
-            const searchString = input.toLowerCase().trim();
-            options = this.props.choices
-                .filter(item => item.label.toLowerCase().indexOf(searchString) !== -1)
-                .slice(0, 100);
-        } else {
-            options = [];
-        }
-
-        return callback(options);
-    }
-
     filterItems = (inputValue: string, items: Item[]) => items
         .filter(item => item
             .label
@@ -74,9 +59,8 @@ class TypeAhead extends Component<TypeAheadProps, TypeAheadState> {
             }
         })
 
-    renderSelect() {
+    render() {
         const {
-            choices = [],
             clearable = true,
             disabled = false,
             error,
@@ -110,7 +94,7 @@ class TypeAhead extends Component<TypeAheadProps, TypeAheadState> {
                     loadOptions={this.promiseOptions}
                     noOptionsMessage={() => 'No matches'}
                     onChange={this.handleChange.bind(this)}
-                    options={choices}
+                    options={[]}
                     placeholder="Search"
                     styles={{
                         control: () => ({}),
@@ -128,48 +112,6 @@ class TypeAhead extends Component<TypeAheadProps, TypeAheadState> {
             </div >
         );
     }
-
-    renderOptions() {
-        const {
-            choices = [],
-            disabled = false,
-            error,
-            hint,
-            label,
-            name,
-            value
-        } = this.props;
-        return (
-            <div className={`govuk-form-group${error ? ' govuk-form-group--error' : ''}`}>
-
-                <label htmlFor={name} id={`${name}-label`} className="govuk-label govuk-label--s">{label}</label>
-                {hint && <span className="govuk-hint">{hint}</span>}
-                {error && <span className="govuk-error-message">{error}</span>}
-
-                <select className={`govuk-select ${error ? 'govuk-select--error' : ''}`}
-                    id={name}
-                    name={name}
-                    disabled={disabled}
-                    value={value ? typeof value === 'string' ? value : value.value : undefined}
-                >
-                    {choices && choices.map(({ label, value }, i) => {
-                        return (
-                            <option key={value} value={value} >{label}</option>
-                        );
-                    })}
-                </select>
-            </div>
-        );
-    }
-
-    render() {
-        return (
-            <div>
-                {this.state.componentMounted ? this.renderSelect() : this.renderOptions()}
-            </div>
-        );
-    }
-
 }
 
 export default TypeAhead;
