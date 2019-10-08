@@ -1,6 +1,5 @@
 import React, { Reducer, useCallback } from 'react';
 import { RouteComponentProps } from 'react-router';
-import { History } from 'history';
 import { string, object } from 'yup';
 import Submit from '../../common/components/forms/submit';
 import { ApplicationConsumer } from '../../contexts/application';
@@ -19,6 +18,7 @@ import ErrorMessage from '../../models/errorMessage';
 import TypeAhead from '../../common/components/typeAhead';
 import Text from '../../common/components/forms/text';
 import { validate } from '../../validation';
+import { Link } from 'react-router-dom';
 
 interface AddChildTopicProps extends RouteComponentProps {
     csrfToken?: string;
@@ -36,28 +36,25 @@ const validationSchema = object({
     })
 });
 
-const onBackLinkClick = (history: History) => {
-    history.push('/');
-};
-
 const AddChildTopic: React.FC<AddChildTopicProps> = ({ csrfToken, contextDispatch, history }) => {
 
     const [pageError, addFormError, clearErrors, setErrorMessage] = useError('', VALIDATION_ERROR_TITLE);
 
     const [state, dispatch] = React.useReducer<Reducer<State, Action>>(reducer, initialState);
 
-    React.useEffect(() => {
+    const getParentTopicsForTypeahead = useCallback(() => new Promise<Item[]>((resolve) => {
         contextDispatch(updateApiStatus(status.REQUEST_PARENT_TOPICS));
         getParentTopics()
             .then((parentTopics: Item[]) => {
-                dispatch({ type: 'SetParentTopics', payload: parentTopics });
                 contextDispatch(updateApiStatus(status.REQUEST_PARENT_TOPICS_SUCCESS));
+                resolve(parentTopics);
             })
             .catch(() => {
                 contextDispatch(updateApiStatus(status.REQUEST_PARENT_TOPICS_FAILURE));
                 setErrorMessage(new ErrorMessage(LOAD_PARENT_TOPICS_ERROR_DESCRIPTION, GENERAL_ERROR_TITLE));
+                resolve([]);
             });
-    }, []);
+    }), []);
 
     const onSelectedParentTopicChange = useCallback((selectedParentTopic: Item) => {
         dispatch({ type: 'SetSelectedParentTopic', payload: selectedParentTopic });
@@ -85,7 +82,7 @@ const AddChildTopic: React.FC<AddChildTopicProps> = ({ csrfToken, contextDispatc
         <>
             <div className="govuk-grid-row">
                 <div className="govuk-grid-column-two-thirds-from-desktop">
-                    <a href="" onClick={() => onBackLinkClick(history)} className="govuk-back-link">Back</a>
+                    <Link to="/" className="govuk-back-link">Back</Link>
                     <ErrorSummary
                         pageError={pageError}
                     />
@@ -99,9 +96,9 @@ const AddChildTopic: React.FC<AddChildTopicProps> = ({ csrfToken, contextDispatc
                     <form method="POST" onSubmit={onSubmit}>
                         <input type="hidden" name="_csrf" value={csrfToken} />
                         <TypeAhead
-                            choices={state.parentTopics}
                             clearable={true}
                             disabled={false}
+                            getOptions={getParentTopicsForTypeahead}
                             label={'Select The Parent Topic'}
                             name={'parent-topics'}
                             onSelectedItemChange={onSelectedParentTopicChange}

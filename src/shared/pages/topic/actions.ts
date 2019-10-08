@@ -5,11 +5,6 @@ export type SetDisplayName = {
     type: 'SetDisplayName';
 };
 
-export type SetParentTopics = {
-    payload: Item[];
-    type: 'SetParentTopics';
-};
-
 export type SetSelectedParentTopic = {
     payload: Item;
     type: 'SetSelectedParentTopic';
@@ -17,5 +12,4 @@ export type SetSelectedParentTopic = {
 
 export type Action =
     SetDisplayName |
-    SetParentTopics |
     SetSelectedParentTopic;

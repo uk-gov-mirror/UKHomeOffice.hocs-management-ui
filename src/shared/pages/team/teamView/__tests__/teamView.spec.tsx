@@ -1,5 +1,5 @@
 import React from 'react';
-import { match } from 'react-router';
+import { match, MemoryRouter } from 'react-router-dom';
 import { createBrowserHistory, History, Location } from 'history';
 import { act, wait, fireEvent, getByText, render, RenderResult } from '@testing-library/react';
 import TeamView from '../teamView';
@@ -54,6 +54,12 @@ const deleteUserFromTeamSpy = jest.spyOn(UsersService, 'deleteUserFromTeam');
 const useReducerSpy = jest.spyOn(React, 'useReducer');
 const useErrorSpy = jest.spyOn(useError, 'default');
 
+const renderComponent = () => render(
+    <MemoryRouter>
+        <TeamView history={history} location={location} match={match}></TeamView>
+    </MemoryRouter>
+);
+
 beforeEach(() => {
     history = createBrowserHistory();
     match = {
@@ -90,7 +96,7 @@ describe('when the teamView component is mounted', () => {
         expect.assertions(3);
         let wrapper: RenderResult;
         act(() => {
-            wrapper = render(<TeamView history={history} location={location} match={match}></TeamView>);
+            wrapper = renderComponent();
         });
 
         await wait(() => {
@@ -101,29 +107,12 @@ describe('when the teamView component is mounted', () => {
     });
 });
 
-describe('when the back button is clicked', () => {
-    it('should push a new page into the history', async () => {
-        history.push = jest.fn();
-        let wrapper: RenderResult;
-        act(() => {
-            wrapper = render(<TeamView history={history} location={location} match={match}></TeamView>);
-        });
-
-        await wait(async () => {
-            const backButton = getByText(wrapper.container, 'Back');
-            fireEvent.click(backButton);
-        });
-
-        expect(history.push).toHaveBeenCalledWith('/team-search');
-    });
-});
-
 describe('when the Add team members button is clicked', () => {
     it('should push a new page into the history', async () => {
         history.push = jest.fn();
         let wrapper: RenderResult;
         act(() => {
-            wrapper = render(<TeamView history={history} location={location} match={match}></TeamView>);
+            wrapper = renderComponent();
         });
 
         await wait(async () => {
@@ -139,7 +128,7 @@ describe('when the remove user button is clicked', () => {
     it('should remove the row from the users table', async () => {
         let wrapper: RenderResult;
         act(() => {
-            wrapper = render(<TeamView history={history} location={location} match={match}></TeamView>);
+            wrapper = renderComponent();
         });
 
         await wait(async () => {

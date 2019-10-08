@@ -32,22 +32,6 @@ describe('when an action is dispatched', () => {
             expect(otherState).toStrictEqual(initialOtherState);
         });
     });
-    describe('and it is a PopulateUsers action', () => {
-        it('will add the users to the state', () => {
-
-            const { users: initialUsers, ...otherInitialState } = initialState;
-            const state = reducer(initialState, {
-                type: 'PopulateUsers', payload: [
-                    { label: '__user1__', value: '__userId1__' },
-                    { label: '__user2__', value: '__userId2__' }
-                ]
-            });
-            const { users, ...otherState } = state;
-
-            expect(users).toStrictEqual([{ label: '__user1__', value: '__userId1__' }, { label: '__user2__', value: '__userId2__' }]);
-            expect(otherState).toStrictEqual(otherInitialState);
-        });
-    });
     describe('and it is an RemoveFromSelection action', () => {
         it('will remove the user from the selected users collection', () => {
 

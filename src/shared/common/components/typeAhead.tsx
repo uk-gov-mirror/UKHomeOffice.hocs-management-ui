@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import Select, { components } from 'react-select';
+import AsyncSelect from 'react-select/async';
+import { components } from 'react-select';
 import { ActionMeta } from 'react-select/src/types';
 import Item from '../../models/item';
 
@@ -8,6 +9,7 @@ interface TypeAheadProps {
     clearable?: boolean;
     disabled?: boolean;
     error?: string;
+    getOptions?: () => Promise<Item[]>;
     hint?: string;
     label?: string;
     name: string;
@@ -17,6 +19,7 @@ interface TypeAheadProps {
 
 interface TypeAheadState {
     componentMounted: boolean;
+    cachedOptions?: Item[];
 }
 
 class TypeAhead extends Component<TypeAheadProps, TypeAheadState> {
@@ -52,6 +55,25 @@ class TypeAhead extends Component<TypeAheadProps, TypeAheadState> {
         return callback(options);
     }
 
+    filterItems = (inputValue: string, items: Item[]) => items
+        .filter(item => item
+            .label
+            .toLocaleLowerCase()
+            .indexOf(inputValue.toLocaleLowerCase().trim()) !== -1)
+
+    promiseOptions = (inputValue: string) =>
+        new Promise<Item[]>((resolve) => {
+            if (this.state.cachedOptions) {
+                resolve(this.filterItems(inputValue, this.state.cachedOptions));
+            } else {
+                // todo: remove !
+                this.props.getOptions!().then((choices: Item[]) => {
+                    this.setState(prevState => ({ ...prevState, cachedOptions: choices }));
+                    resolve(this.filterItems(inputValue, choices));
+                });
+            }
+        })
+
     renderSelect() {
         const {
             choices = [],
@@ -68,7 +90,28 @@ class TypeAhead extends Component<TypeAheadProps, TypeAheadState> {
                 <label htmlFor={`${name}-input`} id={`${name}-label`} className="govuk-label govuk-label--s">{label}</label>
                 {hint && <span className="govuk-hint">{hint}</span>}
                 {error && <span id={`${name}-error`} className="govuk-error-message">{error}</span>}
-                <Select<Item | string>
+                <AsyncSelect<Item | string>
+                    cacheOptions
+                    classNamePrefix="govuk-typeahead"
+                    components={{
+                        Control: props => (
+                            <components.Control
+                                className={error ? ' govuk-typeahead__control--error' : undefined}
+                                {...props}
+                            />
+                        )
+                    }}
+                    defaultOptions
+                    error={error}
+                    id={name}
+                    inputId={`${name}-input`}
+                    isDisabled={disabled}
+                    isClearable={clearable}
+                    loadOptions={this.promiseOptions}
+                    noOptionsMessage={() => 'No matches'}
+                    onChange={this.handleChange.bind(this)}
+                    options={choices}
+                    placeholder="Search"
                     styles={{
                         control: () => ({}),
                         indicatorSeparator: () => ({}),
@@ -80,25 +123,6 @@ class TypeAhead extends Component<TypeAheadProps, TypeAheadState> {
                         valueContainer: () => ({}),
                         placeholder: () => ({})
                     }}
-                    components={{
-                        Control: props => (
-                            <components.Control
-                                className={error ? ' govuk-typeahead__control--error' : undefined}
-                                {...props}
-                            />
-                        )
-                    }}
-                    id={name}
-                    inputId={`${name}-input`}
-                    placeholder="Search"
-                    options={choices}
-                    classNamePrefix="govuk-typeahead"
-                    isDisabled={disabled}
-                    isClearable={clearable}
-                    error={error}
-                    onChange={this.handleChange.bind(this)}
-                    loadOptions={this.getOptions.bind(this)}
-                    noOptionsMessage={() => 'Loading...'}
                     value={value}
                 />
             </div >

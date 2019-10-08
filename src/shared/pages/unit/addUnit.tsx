@@ -1,6 +1,5 @@
 import React, { Reducer } from 'react';
 import { RouteComponentProps } from 'react-router';
-import { History } from 'history';
 import { object, string } from 'yup';
 import Submit from '../../common/components/forms/submit';
 import Text, { InputEventData } from '../../common/components/forms/text';
@@ -13,6 +12,7 @@ import useError from '../../hooks/useError';
 import ErrorMessage from '../../models/errorMessage';
 import Unit from '../../models/unit';
 import { validate } from '../../validation';
+import { Link } from 'react-router-dom';
 
 interface AddUnitProps extends RouteComponentProps {
     csrfToken?: string;
@@ -28,10 +28,6 @@ const validationSchema = object({
         .label('Short Code')
         .matches(/^[a-zA-Z0-9_,.!? ()&]*$/)
 });
-
-const onBackLinkClick = (history: History) => {
-    history.push('/');
-};
 
 const AddUnit: React.FC<AddUnitProps> = ({ csrfToken, history }) => {
 
@@ -61,7 +57,7 @@ const AddUnit: React.FC<AddUnitProps> = ({ csrfToken, history }) => {
         <>
             <div className="govuk-grid-row">
                 <div className="govuk-grid-column-two-thirds-from-desktop">
-                    <a href="" onClick={() => onBackLinkClick(history)} className="govuk-back-link">Back</a>
+                    <Link to="/" className="govuk-back-link">Back</Link>
                     <ErrorSummary
                         pageError={pageError}
                     />
