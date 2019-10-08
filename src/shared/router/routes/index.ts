@@ -80,7 +80,7 @@ const routes = [
             },
             message: '',
             stack: '',
-            status: 401,
+            status: 404,
             title: ''
         }
     }

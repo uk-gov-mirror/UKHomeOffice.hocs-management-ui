@@ -1,6 +1,6 @@
 import React, { Reducer } from 'react';
 import { RouteComponentProps } from 'react-router';
-import { History } from 'history';
+import { object, string } from 'yup';
 import Submit from '../../common/components/forms/submit';
 import Text, { InputEventData } from '../../common/components/forms/text';
 import { ApplicationConsumer } from '../../contexts/application';
@@ -10,30 +10,24 @@ import ErrorSummary from '../../common/components/errorSummary';
 import { GENERAL_ERROR_TITLE, ADD_UNIT_ERROR_DESCRIPTION, VALIDATION_ERROR_TITLE, DUPLICATE_UNIT_DESCRIPTION } from '../../models/constants';
 import useError from '../../hooks/useError';
 import ErrorMessage from '../../models/errorMessage';
-import { FormError } from '../../models/formError';
 import Unit from '../../models/unit';
+import { validate } from '../../validation';
+import { Link } from 'react-router-dom';
 
 interface AddUnitProps extends RouteComponentProps {
     csrfToken?: string;
 }
 
-const validate = (unit: Unit, addFormError: (value: FormError) => void) => {
-    let valid = true;
-
-    if (unit.displayName === '') {
-        addFormError({ key: 'displayName', value: 'Display Name is required' });
-        valid = false;
-    }
-    if (unit.shortCode === '') {
-        addFormError({ key: 'shortCode', value: 'Short Code is required' });
-        valid = false;
-    }
-    return valid;
-};
-
-const onBackLinkClick = (history: History) => {
-    history.push('/');
-};
+const validationSchema = object({
+    displayName: string()
+        .required()
+        .label('Display Name')
+        .matches(/^[a-zA-Z0-9_,.!? ()&]*$/),
+    shortCode: string()
+        .required()
+        .label('Short Code')
+        .matches(/^[a-zA-Z0-9_,.!? ()&]*$/)
+});
 
 const AddUnit: React.FC<AddUnitProps> = ({ csrfToken, history }) => {
 
@@ -46,7 +40,7 @@ const AddUnit: React.FC<AddUnitProps> = ({ csrfToken, history }) => {
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
         clearErrors();
-        if (validate(unit, addFormError)) {
+        if (validate(validationSchema, unit, addFormError)) {
             createUnit(unit).then(() => {
                 history.push('/');
             }).catch((error) => {
@@ -63,7 +57,7 @@ const AddUnit: React.FC<AddUnitProps> = ({ csrfToken, history }) => {
         <>
             <div className="govuk-grid-row">
                 <div className="govuk-grid-column-two-thirds-from-desktop">
-                    <a href="" onClick={() => onBackLinkClick(history)} className="govuk-back-link">Back</a>
+                    <Link to="/" className="govuk-back-link">Back</Link>
                     <ErrorSummary
                         pageError={pageError}
                     />

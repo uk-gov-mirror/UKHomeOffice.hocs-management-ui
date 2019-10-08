@@ -7,7 +7,7 @@ exports[`when the teamView component is mounted should render with default props
   >
     <a
       class="govuk-back-link"
-      href=""
+      href="/team-search"
     >
       Back
     </a>

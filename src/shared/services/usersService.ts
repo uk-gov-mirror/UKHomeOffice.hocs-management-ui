@@ -11,7 +11,11 @@ export class AddUserError extends Error {
 
 export const getUsers = () => new Promise((resolve, reject) => axios
     .get('/api/users')
-    .then(response => resolve(response.data))
+    .then((response) => {
+        setTimeout(() => {
+            return resolve(response.data);
+        }, 2000);
+    })
     .catch(reason => reject(reason))
 );
 

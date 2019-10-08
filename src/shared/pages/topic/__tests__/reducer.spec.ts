@@ -13,22 +13,6 @@ describe('when an action is dispatched', () => {
             expect(otherState).toStrictEqual(initialOtherState);
         });
     });
-    describe('and it is a SetParentTopics action', () => {
-        it('will add the parentTopics to the state', () => {
-
-            const { parentTopics: initialParentTopics, ...otherInitialState } = initialState;
-            const state = reducer(initialState, {
-                type: 'SetParentTopics', payload: [
-                    { label: '__parentTopic1__', value: '__parentTopicId1__' },
-                    { label: '__parentTopic2__', value: '__parentTopicId2__' }
-                ]
-            });
-            const { parentTopics, ...otherState } = state;
-
-            expect(parentTopics).toStrictEqual([{ label: '__parentTopic1__', value: '__parentTopicId1__' }, { label: '__parentTopic2__', value: '__parentTopicId2__' }]);
-            expect(otherState).toStrictEqual(otherInitialState);
-        });
-    });
     describe('and it is a SetParentTopic action', () => {
         it('will clear any previous errors', () => {
 

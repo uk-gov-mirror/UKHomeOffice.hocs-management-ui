@@ -1,5 +1,5 @@
 import React from 'react';
-import { match } from 'react-router';
+import { match, MemoryRouter } from 'react-router-dom';
 import { createBrowserHistory, History, Location } from 'history';
 import { act, render, RenderResult, wait, fireEvent, waitForElement } from '@testing-library/react';
 import AddUnit from '../addUnit';
@@ -20,6 +20,12 @@ const useErrorSpy = jest.spyOn(useError, 'default');
 const addFormErrorSpy = jest.fn();
 const clearErrorsSpy = jest.fn();
 const setMessageSpy = jest.fn();
+
+const renderComponent = () => render(
+    <MemoryRouter>
+        <AddUnit history={history} location={location} match={match}></AddUnit>
+    </MemoryRouter>
+);
 
 jest.spyOn(UnitsService, 'createUnit').mockImplementation(() => Promise.resolve());
 
@@ -51,7 +57,7 @@ beforeEach(() => {
     clearErrorsSpy.mockReset();
     setMessageSpy.mockReset();
     act(() => {
-        wrapper = render(<AddUnit history={history} location={location} match={match}></AddUnit>);
+        wrapper = renderComponent();
     });
 });
 
@@ -163,24 +169,8 @@ describe('when the submit button is clicked', () => {
         });
 
         it('should set the error state', () => {
-            expect(addFormErrorSpy).toHaveBeenNthCalledWith(1, { key: 'displayName', value: 'Display Name is required' });
-            expect(addFormErrorSpy).toHaveBeenNthCalledWith(2, { key: 'shortCode', value: 'Short Code is required' });
-        });
-    });
-});
-
-describe('when the back link is clicked', () => {
-    it('will navigate to the homepage', async () => {
-        expect.assertions(1);
-
-        const backButton = await waitForElement(async () => {
-            return await wrapper.findByText('Back');
-        });
-
-        fireEvent.click(backButton);
-
-        await wait(() => {
-            expect(history.push).toHaveBeenCalledWith('/');
+            expect(addFormErrorSpy).toHaveBeenNthCalledWith(1, { key: 'displayName', value: 'A Display Name is required' });
+            expect(addFormErrorSpy).toHaveBeenNthCalledWith(2, { key: 'shortCode', value: 'A Short Code is required' });
         });
     });
 });

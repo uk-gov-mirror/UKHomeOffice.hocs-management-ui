@@ -7,8 +7,6 @@ export const reducer = (state: State, action: Action): State => {
             return { ...state, selectedUsers: [...[], ...state.selectedUsers, action.payload] };
         case 'ClearSelectedUser':
             return { ...state, selectedUser: '' };
-        case 'PopulateUsers':
-            return { ...state, users: action.payload };
         case 'RemoveFromSelection':
             return { ...state, selectedUsers: [...state.selectedUsers.filter(user => user.value !== action.payload.value)] };
         case 'SetTeamName':
