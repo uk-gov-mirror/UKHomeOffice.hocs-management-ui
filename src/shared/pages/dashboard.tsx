@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import { Link } from 'react-router-dom';
 
 const Dashboard: React.FC = () => (
     <Fragment>
@@ -12,7 +13,7 @@ const Dashboard: React.FC = () => (
                         </h3>
                         <ul className="govuk-list govuk-list--bullet">
                             <li>
-                                <a className="govuk-link" href="/team-search">Add/Remove Users</a>
+                                <Link className="govuk-link" to="/team-search">Add/Remove Users</Link>
                             </li>
                         </ul>
                     </li>
@@ -22,7 +23,7 @@ const Dashboard: React.FC = () => (
                         </h3>
                         <ul className="govuk-list govuk-list--bullet">
                             <li>
-                                <a className="govuk-link" href="/add-child-topic">Add Child Topic</a>
+                                <Link className="govuk-link" to="/add-child-topic">Add Child Topic</Link>
                             </li>
                         </ul>
                     </li>
@@ -32,7 +33,7 @@ const Dashboard: React.FC = () => (
                         </h3>
                         <ul className="govuk-list govuk-list--bullet">
                             <li>
-                                <a className="govuk-link" href="/add-unit">Add a Unit</a>
+                                <Link className="govuk-link" to="/add-unit">Add a Unit</Link>
                             </li>
                         </ul>
                     </li>

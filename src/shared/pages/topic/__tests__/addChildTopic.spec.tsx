@@ -1,5 +1,5 @@
 import React from 'react';
-import { match } from 'react-router';
+import { match, MemoryRouter } from 'react-router-dom';
 import { createBrowserHistory, History, Location } from 'history';
 import { act, render, RenderResult, wait, fireEvent, waitForElement } from '@testing-library/react';
 import AddChildTopic from '../addChildTopic';
@@ -20,6 +20,12 @@ const useErrorSpy = jest.spyOn(useError, 'default');
 const addFormErrorSpy = jest.fn();
 const clearErrorsSpy = jest.fn();
 const setMessageSpy = jest.fn();
+
+const renderComponent = () => render(
+    <MemoryRouter>
+        <AddChildTopic history={history} location={location} match={match}></AddChildTopic>
+    </MemoryRouter>
+);
 
 jest.mock('../../../services/topicsService', () => ({
     __esModule: true,
@@ -62,7 +68,7 @@ beforeEach(() => {
     clearErrorsSpy.mockReset();
     setMessageSpy.mockReset();
     act(() => {
-        wrapper = render(<AddChildTopic history={history} location={location} match={match}></AddChildTopic>);
+        wrapper = renderComponent();
     });
 });
 
@@ -81,7 +87,7 @@ describe('when the addUnit component is mounted', () => {
         getParentTopicsSpy.mockImplementation(() => Promise.reject('error'));
 
         act(() => {
-            wrapper = render(<AddChildTopic history={history} location={location} match={match}></AddChildTopic>);
+            wrapper = renderComponent();
         });
 
         await wait(() => {
@@ -175,22 +181,6 @@ describe('when the submit button is clicked', () => {
         it('should set the error state', () => {
             expect(addFormErrorSpy).toHaveBeenNthCalledWith(1, { key: 'displayName', value: 'A Display Name is required' });
             expect(addFormErrorSpy).toHaveBeenNthCalledWith(2, { key: 'selectedParentTopic.label', value: 'A Parent Topic is required' });
-        });
-    });
-});
-
-describe('when the back link is clicked', () => {
-    it('will navigate to the homepage', async () => {
-        expect.assertions(1);
-
-        const backButton = await waitForElement(async () => {
-            return await wrapper.findByText('Back');
-        });
-
-        fireEvent.click(backButton);
-
-        await wait(() => {
-            expect(history.push).toHaveBeenCalledWith('/');
         });
     });
 });

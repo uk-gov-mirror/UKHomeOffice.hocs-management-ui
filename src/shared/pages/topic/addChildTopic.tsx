@@ -1,6 +1,5 @@
 import React, { Reducer, useCallback } from 'react';
 import { RouteComponentProps } from 'react-router';
-import { History } from 'history';
 import { string, object } from 'yup';
 import Submit from '../../common/components/forms/submit';
 import { ApplicationConsumer } from '../../contexts/application';
@@ -19,6 +18,7 @@ import ErrorMessage from '../../models/errorMessage';
 import TypeAhead from '../../common/components/typeAhead';
 import Text from '../../common/components/forms/text';
 import { validate } from '../../validation';
+import { Link } from 'react-router-dom';
 
 interface AddChildTopicProps extends RouteComponentProps {
     csrfToken?: string;
@@ -35,10 +35,6 @@ const validationSchema = object({
             .label('Parent Topic')
     })
 });
-
-const onBackLinkClick = (history: History) => {
-    history.push('/');
-};
 
 const AddChildTopic: React.FC<AddChildTopicProps> = ({ csrfToken, contextDispatch, history }) => {
 
@@ -86,7 +82,7 @@ const AddChildTopic: React.FC<AddChildTopicProps> = ({ csrfToken, contextDispatc
         <>
             <div className="govuk-grid-row">
                 <div className="govuk-grid-column-two-thirds-from-desktop">
-                    <a href="" onClick={() => onBackLinkClick(history)} className="govuk-back-link">Back</a>
+                    <Link to="/" className="govuk-back-link">Back</Link>
                     <ErrorSummary
                         pageError={pageError}
                     />

@@ -5,6 +5,7 @@ import TeamSearch from '../teamSearch';
 import * as TeamsService from '../../../../services/teamsService';
 import { State } from '../state';
 import * as useError from '../../../../hooks/useError';
+import { MemoryRouter } from 'react-router-dom';
 
 let history: History<any>;
 let mockState: State;
@@ -24,6 +25,12 @@ const getTeamsSpy = jest.spyOn(TeamsService, 'getTeams');
 const useReducerSpy = jest.spyOn(React, 'useReducer');
 const useErrorSpy = jest.spyOn(useError, 'default');
 
+const renderComponent = () => render(
+    <MemoryRouter>
+        <TeamSearch history={history}></TeamSearch>
+    </MemoryRouter>
+);
+
 beforeEach(() => {
     history = createBrowserHistory();
     mockState = {
@@ -38,7 +45,7 @@ describe('when the teamView component is mounted', () => {
         expect.assertions(2);
         let wrapper: RenderResult;
         act(() => {
-            wrapper = render(<TeamSearch history={history}></TeamSearch>);
+            wrapper = renderComponent();
         });
 
         await wait(() => {
@@ -48,46 +55,12 @@ describe('when the teamView component is mounted', () => {
     });
 });
 
-describe('when the back button is clicked', () => {
-    it('should push a new page into the history', async () => {
-        history.push = jest.fn();
-        let wrapper: RenderResult;
-        act(() => {
-            wrapper = render(<TeamSearch history={history}></TeamSearch>);
-        });
-
-        await wait(async () => {
-            const backButton = getByText(wrapper.container, 'Back');
-            fireEvent.click(backButton);
-        });
-
-        expect(history.push).toHaveBeenCalledWith('/');
-    });
-});
-
-describe('when the team drop down selection is changed', () => {
-    it('should add the TeamUUID of the selection', async () => {
-        history.push = jest.fn();
-        let wrapper: RenderResult;
-        act(() => {
-            wrapper = render(<TeamSearch history={history}></TeamSearch>);
-        });
-
-        await wait(async () => {
-            const teamDropDown = getByText(wrapper.container, 'Back');
-            fireEvent.click(teamDropDown);
-        });
-
-        expect(history.push).toHaveBeenCalledWith('/');
-    });
-});
-
 describe('when the view team button is clicked', () => {
     it('should push a new page into the history', async () => {
         history.push = jest.fn();
         let wrapper: RenderResult;
         act(() => {
-            wrapper = render(<TeamSearch history={history}></TeamSearch>);
+            wrapper = renderComponent();
         });
 
         await wait(async () => {
