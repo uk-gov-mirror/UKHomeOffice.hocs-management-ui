@@ -8,7 +8,7 @@ import { Action } from './actions';
 import { reducer } from './reducer';
 import { initialState } from './initialState';
 import { User } from '../../../models/user';
-import { GENERAL_ERROR_TITLE, LOAD_TEAM_ERROR_DESCRIPTION, LOAD_TEAM_MEMBERS_ERROR_DESCRIPTION } from '../../../models/constants';
+import { GENERAL_ERROR_TITLE, LOAD_TEAM_ERROR_DESCRIPTION, LOAD_TEAM_MEMBERS_ERROR_DESCRIPTION, REMOVE_FROM_TEAM_ERROR_DESCRIPTION, VALIDATION_ERROR_TITLE, REMOVE_FROM_TEAM_ALLOCATED_ERROR_DESCRIPTION } from '../../../models/constants';
 import ErrorSummary from '../../../common/components/errorSummary';
 import ErrorMessage from '../../../models/errorMessage';
 import useError from '../../../hooks/useError';
@@ -52,6 +52,13 @@ const TeamView: React.FC<TeamMembersProps> = ({ history, match }) => {
                     .catch(() => {
                         setErrorMessage(new ErrorMessage(LOAD_TEAM_MEMBERS_ERROR_DESCRIPTION, GENERAL_ERROR_TITLE));
                     });
+            })
+            .catch((error) => {
+                if (error && error.response && error.response.status === 409) {
+                    setErrorMessage(new ErrorMessage(REMOVE_FROM_TEAM_ALLOCATED_ERROR_DESCRIPTION, VALIDATION_ERROR_TITLE));
+                } else {
+                    setErrorMessage(new ErrorMessage(REMOVE_FROM_TEAM_ERROR_DESCRIPTION, GENERAL_ERROR_TITLE));
+                }
             });
     };
 
