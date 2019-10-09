@@ -11,6 +11,7 @@ export const EMPTY_SUBMIT_TEAM_ERROR_TITLE = 'No team selected';
 export const GENERAL_ERROR_TITLE = 'Something went wrong';
 export const LOAD_PARENT_TOPICS_ERROR_DESCRIPTION = 'There was an error retrieving the parent topics.  Please try refreshing the page.';
 export const LOAD_TOPICS_ERROR_DESCRIPTION = 'There was an error retrieving the parent topics.  Please try refreshing the page.';
+export const LOAD_TOPIC_ERROR_DESCRIPTION = 'There was an error retrieving the parent topics.  Please try refreshing the page.';
 export const VALIDATION_ERROR_TITLE = "There's a problem";
 export const LOAD_TEAMS_ERROR_DESCRIPTION = 'There was an error retrieving the teams.  Please try refreshing the page.';
 export const LOAD_USERS_ERROR_DESCRIPTION = 'There was an error retrieving the list of users.  Please try refreshing the page.';

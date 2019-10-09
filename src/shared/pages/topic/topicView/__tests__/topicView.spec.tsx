@@ -36,9 +36,18 @@ const renderComponent = () => render(
 beforeEach(() => {
     history = createBrowserHistory();
     mockState = {
-        topicName: '__topicName__',
-        privateMinisterTeam: '__privateMinisterTeam__',
-        draftQATeam:'__draftQATeam__'
+        topic: {
+            label: '__label__',
+            value: '__value__'
+        },
+        privateMinisterTeam: {
+            label: '__label__',
+            value: '__value__'
+        },
+        draftQATeam: {
+            label: '__label__',
+            value: '__value__'
+        }
     };
     useReducerSpy.mockImplementationOnce(() => [mockState, jest.fn()]);
     useErrorSpy.mockImplementation(() => [{}, jest.fn(), jest.fn(), jest.fn()]);

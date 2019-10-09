@@ -9,17 +9,21 @@ import useError from '../../../hooks/useError';
 import ErrorSummary from '../../../common/components/errorSummary';
 import {
     EMPTY_SUBMIT_TOPIC_ERROR_DESCRIPTION,
-    EMPTY_SUBMIT_TOPIC_ERROR_TITLE,
+    EMPTY_SUBMIT_TOPIC_ERROR_TITLE, GENERAL_ERROR_TITLE, LOAD_TEAM_ERROR_DESCRIPTION, LOAD_TOPIC_ERROR_DESCRIPTION,
 } from '../../../models/constants';
 import ErrorMessage from "../../../models/errorMessage";
 import {ContextAction} from "../../../contexts/actions";
 import {Link} from "react-router-dom";
 import Submit from "../../../common/components/forms/submit";
+import {getTopic} from "../../../services/topicsService";
+import Item from "../../../models/item";
+import {getTeam} from "../../../services/teamsService";
+import Team from "../../../models/team";
 
 interface MatchParams {
-    privateMinister: string;
-    draftQa: string;
-    topicName: string;
+    privateMinisterValue: string;
+    draftQaValue: string;
+    topicValue: string;
 }
 
 interface addTeamToTopicProps extends RouteComponentProps<MatchParams> {
@@ -33,19 +37,31 @@ const addTeamToTopicView: React.FC<addTeamToTopicProps> = ({csrfToken, history, 
     const [pageError, , , setErrorMessage] = useError();
     const [state, dispatch] = React.useReducer<Reducer<State, Action>>(reducer, initialState);
 
-    const { params: { topicName, privateMinister, draftQa } } = match;
+    const { params: { topicValue, privateMinisterValue, draftQaValue } } = match;
 
     useEffect(() => {
-        dispatch({ type: 'SetPrivateMinisterTeam', payload: privateMinister });
-        dispatch({ type: 'SetDraftQATeam', payload: draftQa });
-        dispatch({ type: 'SetTopicName', payload: topicName });
+        getTopic(topicValue)
+            .then((topic: Item) => { dispatch({ type: 'SetTopic', payload: topic}); })
+            .catch(() => {
+                setErrorMessage(new ErrorMessage(LOAD_TOPIC_ERROR_DESCRIPTION, GENERAL_ERROR_TITLE));
+            });
+        getTeam(privateMinisterValue)
+            .then((team: Team) => dispatch({ type: 'SetPrivateMinisterTeam', payload: team }))
+            .catch(() => {
+                setErrorMessage(new ErrorMessage(LOAD_TEAM_ERROR_DESCRIPTION, GENERAL_ERROR_TITLE));
+            });
+        getTeam(draftQaValue)
+            .then((team: Team) => dispatch({ type: 'SetDraftQATeam', payload: team }))
+            .catch(() => {
+                setErrorMessage(new ErrorMessage(LOAD_TEAM_ERROR_DESCRIPTION, GENERAL_ERROR_TITLE));
+            });
     }, []);
 
     const handleOnSubmit = () => {
-        if (state.topicName === '') {
+        if (state.topic.value === '') {
             setErrorMessage(new ErrorMessage(EMPTY_SUBMIT_TOPIC_ERROR_DESCRIPTION, EMPTY_SUBMIT_TOPIC_ERROR_TITLE));
         } else {
-            history.push(`/topic/${state.topicName}/privateMinister/${state.privateMinisterTeam}/draftQA/${state.draftQaTeam}`);
+            history.push(`/topic/${state.topic.value}/privateMinister/${state.privateMinisterTeam.type}/draftQA/${state.draftQaTeam.type}/dcu`);
         }
     };
 
@@ -61,7 +77,7 @@ const addTeamToTopicView: React.FC<addTeamToTopicProps> = ({csrfToken, history, 
                         Summary
                     </h1>
                     <h2 className="govuk-heading-l">
-                        {`Topic: ${state.topicName}`}
+                        {`Topic: ${state.topic.label}`}
                     </h2>
                 </div>
             </div>
@@ -83,7 +99,7 @@ const addTeamToTopicView: React.FC<addTeamToTopicProps> = ({csrfToken, history, 
                                         Draft/QA
                                     </th>
                                     <td className="govuk-table__cell">
-                                        {state.draftQaTeam}
+                                        {state.draftQaTeam.displayName}
                                     </td>
                                 </tr>
                                 <tr className="govuk-table__row">
@@ -91,7 +107,7 @@ const addTeamToTopicView: React.FC<addTeamToTopicProps> = ({csrfToken, history, 
                                         Private Office/Minister
                                     </th>
                                     <td className="govuk-table__cell">
-                                        {state.privateMinisterTeam}
+                                        {state.privateMinisterTeam.displayName}
                                     </td>
                                 </tr>
                                 </tbody>

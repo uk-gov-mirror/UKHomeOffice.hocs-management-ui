@@ -11,14 +11,14 @@ import ErrorSummary from '../../../common/components/errorSummary';
 import {
     EMPTY_SUBMIT_TOPIC_ERROR_DESCRIPTION,
     EMPTY_SUBMIT_TOPIC_ERROR_TITLE,
-    GENERAL_ERROR_TITLE, LOAD_TEAMS_ERROR_DESCRIPTION,
-    LOAD_TOPICS_ERROR_DESCRIPTION
+    GENERAL_ERROR_TITLE, LOAD_TEAMS_ERROR_DESCRIPTION, LOAD_TOPIC_ERROR_DESCRIPTION,
 } from '../../../models/constants';
-import {getTopic, getTopics} from '../../../services/topicsService';
+import { getTopic } from '../../../services/topicsService';
 import ErrorMessage from "../../../models/errorMessage";
 import Item from "../../../models/item";
 import {Link} from "react-router-dom";
 import Submit from "../../../common/components/forms/submit";
+import {getTeams} from "../../../services/teamsService";
 
 interface MatchParams {
     topicId: string;
@@ -38,15 +38,14 @@ const TopicView: React.FC<TeamViewProps> = ({ csrfToken, history, match }) => {
 
     useEffect(() => {
         getTopic(topicId)
-            .then((topic) => { dispatch({ type: 'SetTopicName', payload: topic.label}); })
+            .then((topic: Item) => { dispatch({ type: 'SetTopic', payload: topic}); })
             .catch(() => {
-                dispatch({ type: 'SetGeneralError', payload: { description: LOAD_TOPICS_ERROR_DESCRIPTION, title: GENERAL_ERROR_TITLE }
-                });
+                setErrorMessage(new ErrorMessage(LOAD_TOPIC_ERROR_DESCRIPTION, GENERAL_ERROR_TITLE));
             });
     }, []);
 
     const getTeamsForTypeahead = useCallback(() => new Promise<Item[]>((resolve) => {
-        getTopics()
+        getTeams()
             .then((teams: Item[]) => {
                 resolve(teams);
             })
@@ -58,18 +57,19 @@ const TopicView: React.FC<TeamViewProps> = ({ csrfToken, history, match }) => {
 
 
     const onSelectedPrivateMinisterChange = (selectedTeamAssignment: any) => {
-        dispatch({ type: 'SetPrivateMinisterTeam', payload: selectedTeamAssignment.label });
+        dispatch({ type: 'SetPrivateMinisterTeam', payload: selectedTeamAssignment });
     };
 
     const onSelectedDraftQAChange = (selectedTeamAssignment: any) => {
-        dispatch({ type: 'SetDraftQATeam', payload: selectedTeamAssignment.label });
+        dispatch({ type: 'SetDraftQATeam', payload: selectedTeamAssignment });
     };
 
-    const handleOnSubmit = () => {
-        if (state.privateMinisterTeam === '' || state.draftQATeam === '') {
+    const handleOnSubmit = (event: React.FormEvent) => {
+        event.preventDefault();
+        if (state.privateMinisterTeam.value === '' || state.draftQATeam.value === '') {
             setErrorMessage(new ErrorMessage(EMPTY_SUBMIT_TOPIC_ERROR_DESCRIPTION, EMPTY_SUBMIT_TOPIC_ERROR_TITLE));
         } else {
-            history.push(`/topic/${state.topicName}/private-minister/${state.privateMinisterTeam}/draft-qa/${state.draftQATeam}`);
+            history.push(`/topic/${state.topic.value}/private-minister/${state.privateMinisterTeam.value}/draft-qa/${state.draftQATeam.value}`);
         }
     };
 
@@ -85,7 +85,7 @@ const TopicView: React.FC<TeamViewProps> = ({ csrfToken, history, match }) => {
                         Topic View
                     </h1>
                     <h2 className="govuk-heading-l">
-                        {`Topic: ${state.topicName}`}
+                        {`Topic: ${state.topic.label}`}
                     </h2>
                 </div>
             </div>

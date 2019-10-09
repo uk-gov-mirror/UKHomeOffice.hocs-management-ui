@@ -1,7 +1,8 @@
+import Item from "../../../models/item";
+import Team from "../../../models/team";
+
 export interface State {
-    errorDescription: string;
-    errorTitle: string;
-    topicName: string;
-    privateMinisterTeam: string;
-    draftQaTeam: string;
+    topic: Item;
+    privateMinisterTeam: Team;
+    draftQaTeam: Team;
 }

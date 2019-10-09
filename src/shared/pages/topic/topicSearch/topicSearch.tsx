@@ -42,14 +42,15 @@ const TopicSearch: React.FC<TopicSearchProps> = ({ csrfToken, history }) => {
     }), []);
 
     const onSelectedTopicChange = useCallback((selectedTopic: Item) => {
-        dispatch({ type: 'SetTopicValue', payload: selectedTopic.value });
+        dispatch({ type: 'SetSelectedTopic', payload: selectedTopic });
     }, []);
 
-    const handleOnSubmit = () => {
-        if (state.topicValue === '') {
+    const handleOnSubmit = (event: React.FormEvent) => {
+        event.preventDefault();
+        if (state.selectedTopic.value === '') {
             setErrorMessage(new ErrorMessage(EMPTY_SUBMIT_TOPIC_ERROR_DESCRIPTION, EMPTY_SUBMIT_TOPIC_ERROR_TITLE));
         } else {
-            history.push(`/topic/${state.topicValue}`);
+            history.push(`/topic/${state.selectedTopic.value}`);
         }
     };
 

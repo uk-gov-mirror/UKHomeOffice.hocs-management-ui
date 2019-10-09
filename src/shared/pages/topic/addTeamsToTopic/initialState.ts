@@ -1,9 +1,22 @@
 import { State } from './state';
 
 export const initialState: State = {
-    errorDescription: '',
-    errorTitle: '',
-    topicName: '',
-    privateMinisterTeam: '',
-    draftQaTeam: ''
+    topic: {
+        label: '',
+        value: ''
+    },
+    privateMinisterTeam:   {
+        displayName: '',
+        permissions: [],
+        letterName: '',
+        type: '',
+        active: true
+    },
+    draftQaTeam: {
+        displayName: '',
+        permissions: [],
+        letterName: '',
+        type: '',
+        active: true
+    },
 };

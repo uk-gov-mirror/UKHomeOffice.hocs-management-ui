@@ -1,7 +1,16 @@
 import { State } from './state';
 
 export const initialState: State = {
-    topicName: '',
-    privateMinisterTeam: '',
-    draftQATeam: ''
+    topic: {
+        label: '',
+        value: ''
+    },
+    privateMinisterTeam: {
+        label: '',
+        value: ''
+    },
+    draftQATeam: {
+        label: '',
+        value: ''
+    }
 };

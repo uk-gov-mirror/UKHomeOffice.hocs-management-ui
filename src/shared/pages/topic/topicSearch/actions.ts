@@ -1,14 +1,14 @@
 import ErrorMessage from '../../../models/errorMessage';
-import Topic from '../../../models/topic';
+import Item from "../../../models/item";
 
 export type SetTopics = {
     type: 'SetTopics';
-    payload: Topic[];
+    payload: Item[];
 };
 
-export type SetTopicValue = {
-    type: 'SetTopicValue';
-    payload: string;
+export type SetSelectedTopic = {
+    type: 'SetSelectedTopic';
+    payload: Item;
 };
 
 export type SetGeneralError = {
@@ -18,5 +18,5 @@ export type SetGeneralError = {
 
 export type Action =
     SetTopics |
-    SetTopicValue |
+    SetSelectedTopic |
     SetGeneralError;

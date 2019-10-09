@@ -1,3 +1,5 @@
+import Item from "../../../models/item";
+
 export interface State {
-    topicValue: string;
+    selectedTopic: Item;
 }

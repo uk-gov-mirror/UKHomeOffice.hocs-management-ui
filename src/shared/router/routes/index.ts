@@ -61,7 +61,7 @@ const routes = [
         title: 'TopicView'
     },
     {
-        path: '/topic/:topicName/private-minister/:privateMinister/draft-qa/:draftQa',
+        path: '/topic/:topicValue/private-minister/:privateMinisterValue/draft-qa/:draftQaValue',
         exact: true,
         component: AddTeamsToTopic,
         title: 'AddTeamsToTopic'

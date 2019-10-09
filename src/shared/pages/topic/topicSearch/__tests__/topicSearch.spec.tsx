@@ -36,7 +36,10 @@ const renderComponent = () => render(
 beforeEach(() => {
     history = createBrowserHistory();
     mockState = {
-        topicValue: '__topicValue__'
+        selectedTopic: {
+            label: '__topicLabel__',
+            value: '__topicValue__'
+        }
     };
     useReducerSpy.mockImplementationOnce(() => [mockState, jest.fn()]);
     useErrorSpy.mockImplementation(() => [{}, jest.fn(), jest.fn(), jest.fn()]);

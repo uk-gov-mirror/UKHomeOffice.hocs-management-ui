@@ -11,6 +11,7 @@ router.post('*', bodyParser.json(), bodyParser.urlencoded());
 router.delete('*', bodyParser.json(), bodyParser.urlencoded());
 router.use('/teams', apiTeamRouter);
 router.use('/topics', apiTopicsRouter);
+router.use('/topic', apiTopicsRouter);
 router.use('/units', apiUnitRouter);
 router.use('/users', apiUserRouter);
 router.use('*', apiErrorMiddleware);

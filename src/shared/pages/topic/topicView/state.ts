@@ -1,5 +1,7 @@
+import Item from "../../../models/item";
+
 export interface State {
-    topicName: string;
-    privateMinisterTeam: string,
-    draftQATeam: string
+    topic: Item;
+    privateMinisterTeam: Item,
+    draftQATeam: Item
 }

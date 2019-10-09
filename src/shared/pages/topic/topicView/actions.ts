@@ -1,10 +1,9 @@
 import ErrorMessage from '../../../models/errorMessage';
-import Topic from '../../../models/topic';
 import Item from "../../../models/item";
 
 export type SetTopic = {
     type: 'SetTopic';
-    payload: Topic[];
+    payload: Item;
 };
 
 export type SetGeneralError = {
@@ -17,25 +16,19 @@ export type SetTeams = {
     payload: Item[];
 };
 
-export type SetTopicName = {
-    type: 'SetTopicName';
-    payload: string;
-};
-
 export type SetPrivateMinisterTeam = {
     type: 'SetPrivateMinisterTeam';
-    payload: string
+    payload: Item
 }
 
 export type SetDraftQATeam = {
     type: 'SetDraftQATeam';
-    payload: string
+    payload: Item
 }
 
 export type Action =
     SetTopic |
     SetGeneralError |
-    SetTopicName |
     SetTeams |
     SetDraftQATeam |
     SetPrivateMinisterTeam;

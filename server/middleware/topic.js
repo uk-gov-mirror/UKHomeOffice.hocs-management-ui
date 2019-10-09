@@ -3,7 +3,6 @@ const getLogger = require('../libs/logger');
 const User = require('../models/user');
 
 async function getTopic(req, res, next) {
-
     const logger = getLogger(req.request);
     const {topicId} = req.params;
 
@@ -44,6 +43,20 @@ async function addTopic(req, res, next) {
     }
 }
 
+async function addDCUTeamsToTopic(req) {
+
+    const logger = getLogger(req.request);
+    logger.debug('******* Calling the info service for DCU *******')
+    // const { topicValue, teamUUID } = req.params;
+    // try {
+    //     await infoService.post(`/topic/${topicValue}/team/${teamUUID}`, req.body, { headers: User.createHeaders(req.user) });
+    //     res.sendStatus(200);
+    // } catch (error) {
+    //     logger.error(error);
+    //     next(error);
+    // }
+}
+
 async function getParentTopics(req, res, next) {
 
     const logger = getLogger(req.request);
@@ -80,6 +93,7 @@ module.exports = {
     returnTopicsJson,
     addTopic,
     getParentTopics,
-    returnParentTopicsJson
+    returnParentTopicsJson,
+    addDCUTeamsToTopic
 };
 

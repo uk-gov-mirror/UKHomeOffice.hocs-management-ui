@@ -7,8 +7,8 @@ export const reducer = (state: State, action: Action): State => {
             return { ...state, privateMinisterTeam: action.payload };
         case 'SetDraftQATeam':
             return { ...state, draftQaTeam: action.payload };
-        case 'SetTopicName':
-            return { ...state, topicName: action.payload };
+        case 'SetTopic':
+            return { ...state, topic: action.payload };
     }
     return state;
 };

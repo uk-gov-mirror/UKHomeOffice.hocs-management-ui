@@ -12,8 +12,10 @@ export const getTopics = () => new Promise<Topic[]>((resolve, reject) =>
 );
 
 export const getTopic = (topicId: string) => new Promise<Topic>((resolve, reject) =>
-    axios.get(`/api/topics/${topicId}`)
-        .then(response => resolve(response.data))
+    axios.get(`/api/topic/${topicId}`)
+        .then(response => {
+            resolve(response.data)
+        })
         .catch(error => reject(error))
 );
 
