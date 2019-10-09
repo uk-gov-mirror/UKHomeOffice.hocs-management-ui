@@ -1,4 +1,4 @@
-import React, { useEffect, Reducer } from 'react';
+import React, {useEffect, Reducer, useCallback} from 'react';
 import { RouteComponentProps } from 'react-router';
 import TypeAhead from '../../../common/components/typeAhead';
 import { History } from 'history';
@@ -14,24 +14,32 @@ import {
     GENERAL_ERROR_TITLE, LOAD_TEAMS_ERROR_DESCRIPTION,
     LOAD_TOPICS_ERROR_DESCRIPTION
 } from '../../../models/constants';
-import { getTopic } from '../../../services/topicsService';
+import {getTopic, getTopics} from '../../../services/topicsService';
 import { getTeams } from "../../../services/teamsService";
 import Topic from '../../../models/topic';
 import ErrorMessage from "../../../models/errorMessage";
+import { ContextAction, updateApiStatus} from "../../../contexts/actions";
+import Item from "../../../models/item";
+import status from "../../../helpers/api-status";
+import {Link} from "react-router-dom";
+import Submit from "../../../common/components/forms/submit";
 
 interface MatchParams {
     topicId: string;
 }
 
-interface TeamViewProps extends RouteComponentProps<MatchParams> { }
+interface TeamViewProps extends RouteComponentProps<MatchParams> {
+    csrfToken?: string;
+    contextDispatch: (action: ContextAction<any>) => Promise<any>;
+    history: History;
+}
 
-const TopicView: React.FC<TeamViewProps> = ({ history, match }) => {
+const TopicView: React.FC<TeamViewProps> = ({ csrfToken, contextDispatch, history, match }) => {
 
     const [pageError, , , setErrorMessage] = useError();
     const [state, dispatch] = React.useReducer<Reducer<State, Action>>(reducer, initialState);
 
     const { params: { topicId } } = match;
-
 
     useEffect(() => {
         getTopic(topicId)
@@ -44,6 +52,21 @@ const TopicView: React.FC<TeamViewProps> = ({ history, match }) => {
             .then((teams: Topic[]) => { dispatch({ type: 'SetTeams', payload: teams }); })
             .catch(() => setErrorMessage(new ErrorMessage(LOAD_TEAMS_ERROR_DESCRIPTION, GENERAL_ERROR_TITLE)));
     }, []);
+
+    const getTeamsForTypeahead = useCallback(() => new Promise<Item[]>((resolve) => {
+        contextDispatch(updateApiStatus(status.REQUEST_TEAMS));
+        getTopics()
+            .then((teams: Item[]) => {
+                contextDispatch(updateApiStatus(status.REQUEST_TEAMS_SUCCESS));
+                resolve(teams);
+            })
+            .catch(() => {
+                contextDispatch(updateApiStatus(status.REQUEST_TEAMS_FAILURE));
+                setErrorMessage(new ErrorMessage(LOAD_TEAMS_ERROR_DESCRIPTION, GENERAL_ERROR_TITLE));
+                resolve([]);
+            });
+    }), []);
+
 
     const onSelectedPrivateMinisterChange = (selectedTeamAssignment: any) => {
         dispatch({ type: 'SetPrivateMinisterTeam', payload: selectedTeamAssignment.label });
@@ -61,57 +84,49 @@ const TopicView: React.FC<TeamViewProps> = ({ history, match }) => {
         }
     };
 
-    const onBackLinkClick = (history: History) => {
-        history.push('/topic-to-team');
-    };
-
     return (
-        <div className="govuk-form-group">
-            <a href="" onClick={() => onBackLinkClick(history)} className="govuk-back-link">Back</a>
-            <ErrorSummary
-                pageError={pageError}
-            />
-            <h1 className="govuk-heading-xl">
-                Topic View
-            </h1>
-            <h2 className="govuk-heading-l">
-                {`Topic: ${state.topicName}`}
-            </h2>
-            {
-                state.teamsLoaded ?
-                    <div>
-                        <TypeAhead
-                            choices={state.teams}
-                            clearable={true}
-                            disabled={false}
-                            label={'Select team assignment for Initial Draft and QA response stages'}
-                            name={'Draft-QA'}
-                            onSelectedItemChange={onSelectedDraftQAChange}
-                        ></TypeAhead>
-                    </div> :
-                    <div>
-                        ...loading
+        <>
+            <div className="govuk-grid-row">
+                <div className="govuk-grid-column-two-thirds-from-desktop">
+                    <Link to="/topic-to-team" className="govuk-back-link">Back</Link>
+                    <ErrorSummary
+                        pageError={pageError}
+                    />
+                    <h1 className="govuk-heading-xl">
+                        Topic View
+                    </h1>
+                    <h2 className="govuk-heading-l">
+                        {`Topic: ${state.topicName}`}
+                    </h2>
+                </div>
+            </div>
+            <div className="govuk-form-group">
+                <div className="govuk-grid-row">
+                    <div className="govuk-grid-column-one-half-from-desktop">
+                        <form method="POST" onSubmit={handleOnSubmit}>
+                            <input type="hidden" name="_csrf" value={csrfToken} />
+                            <TypeAhead
+                                clearable={true}
+                                disabled={false}
+                                getOptions={getTeamsForTypeahead}
+                                label={'Select team assignment for Initial Draft and QA response stages'}
+                                name={'draft-qa'}
+                                onSelectedItemChange={onSelectedDraftQAChange}
+                            />
+                            <TypeAhead
+                                clearable={true}
+                                disabled={false}
+                                getOptions={getTeamsForTypeahead}
+                                label={'Select team assignment for Private Office/Minister sign off stages'}
+                                name={'private-minister'}
+                                onSelectedItemChange={onSelectedPrivateMinisterChange}
+                            />
+                            <Submit />
+                        </form>
                     </div>
-            }
-            {
-                state.teamsLoaded ?
-                    <div>
-                        <TypeAhead
-                            choices={state.teams}
-                            clearable={true}
-                            disabled={false}
-                            label={'Select team assignment for Private Office/Minister sign off stages'}
-                            name={'Private-Minister'}
-                            onSelectedItemChange={onSelectedPrivateMinisterChange}
-                        ></TypeAhead>
-                    </div> :
-                    <div>
-                        ...loading
-                    </div>
-            }
-
-            <button type="submit" className="govuk-button view-team-button" onClick={() => { handleOnSubmit(); }}>Continue</button>
-        </div>
+                </div>
+            </div>
+        </>
     );
 };
 
