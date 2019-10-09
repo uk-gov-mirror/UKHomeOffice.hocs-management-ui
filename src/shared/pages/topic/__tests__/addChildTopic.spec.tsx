@@ -155,9 +155,9 @@ describe('when the submit button is clicked', () => {
                 expect(clearErrorsSpy).toHaveBeenCalled();
             });
         });
-        describe('and the service call fails with a 409', () => {
+        describe('and the service call fails with a 400', () => {
             beforeAll(() => {
-                jest.spyOn(TopicsService, 'addChildTopic').mockImplementationOnce(() => Promise.reject({ response: { status: 409 } }));
+                jest.spyOn(TopicsService, 'addChildTopic').mockImplementationOnce(() => Promise.reject({ response: { status: 400 } }));
             });
 
             it('should set the error state', () => {

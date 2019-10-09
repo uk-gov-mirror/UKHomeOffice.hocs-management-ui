@@ -7,16 +7,19 @@ const choices = [
     { label: 'Child 2', value: 'PARENT_1_CHILD_2' }
 ];
 
+const getOptions = () => Promise.resolve(choices);
+
 describe('Form type ahead component (dropdown)', () => {
     it('should render with default props', () => {
         expect(
-            render(<TypeAhead name="type-ahead" onSelectedItemChange={() => null} />)
+            render(<TypeAhead getOptions={getOptions} name="type-ahead" onSelectedItemChange={() => null} />)
         ).toMatchSnapshot();
     });
 
     it('should render with label when passed', () => {
         expect(
             render(<TypeAhead
+                getOptions={getOptions}
                 name="type-ahead"
                 onSelectedItemChange={() => null}
                 label="Type-ahead"
@@ -27,6 +30,7 @@ describe('Form type ahead component (dropdown)', () => {
     it('should render with hint when passed', () => {
         expect(
             render(<TypeAhead
+                getOptions={getOptions}
                 name="type-ahead"
                 onSelectedItemChange={() => null}
                 hint="Select an option"
@@ -37,6 +41,7 @@ describe('Form type ahead component (dropdown)', () => {
     it('should render with error when passed', () => {
         expect(
             render(<TypeAhead
+                getOptions={getOptions}
                 name="type-ahead"
                 onSelectedItemChange={() => null}
                 error="Some error message"
@@ -47,6 +52,7 @@ describe('Form type ahead component (dropdown)', () => {
     it('should render disabled when passed', () => {
         expect(
             render(<TypeAhead
+                getOptions={getOptions}
                 name="type-ahead"
                 onSelectedItemChange={() => null}
                 disabled={true}
@@ -59,12 +65,13 @@ describe('Form type ahead component (dropdown)', () => {
 describe('Form type ahead component (select)', () => {
     it('should render with default props', () => {
         expect(
-            mount(<TypeAhead name="type-ahead" onSelectedItemChange={() => null} />)
+            mount(<TypeAhead getOptions={getOptions} name="type-ahead" onSelectedItemChange={() => null} />)
         ).toMatchSnapshot();
     });
 
     it('should set componentMounted state when mounted', () => {
         const wrapper = mount(<TypeAhead
+            getOptions={getOptions}
             name="type-ahead"
             onSelectedItemChange={() => null}
         />);
@@ -76,6 +83,7 @@ describe('Form type ahead component (select)', () => {
     it('should render with label when passed', () => {
         expect(
             mount(<TypeAhead
+                getOptions={getOptions}
                 name="type-ahead"
                 onSelectedItemChange={() => null}
                 label="Type-ahead"
@@ -86,6 +94,7 @@ describe('Form type ahead component (select)', () => {
     it('should render with hint when passed', () => {
         expect(
             mount(<TypeAhead
+                getOptions={getOptions}
                 name="type-ahead"
                 onSelectedItemChange={() => null}
                 hint="Select an option"
@@ -96,6 +105,7 @@ describe('Form type ahead component (select)', () => {
     it('should render with error when passed', () => {
         expect(
             mount(<TypeAhead
+                getOptions={getOptions}
                 name="type-ahead"
                 onSelectedItemChange={() => null}
                 error="Some error message"
@@ -106,6 +116,7 @@ describe('Form type ahead component (select)', () => {
     it('should render disabled when passed', () => {
         expect(
             mount(<TypeAhead
+                getOptions={getOptions}
                 name="type-ahead"
                 onSelectedItemChange={() => null}
                 disabled={true}
@@ -117,7 +128,7 @@ describe('Form type ahead component (select)', () => {
         const mockCallback = jest.fn();
         const value = choices[0].value;
         const wrapper = mount(
-            <TypeAhead name="type-ahead" choices={choices} onSelectedItemChange={mockCallback} />
+            <TypeAhead name="type-ahead" getOptions={getOptions} onSelectedItemChange={mockCallback} />
         );
 
         mockCallback.mockReset();
@@ -132,7 +143,7 @@ describe('Form type ahead component (select)', () => {
     it('should execute callback on change and support null value', () => {
         const mockCallback = jest.fn();
         const wrapper = mount(
-            <TypeAhead name="type-ahead" choices={choices} onSelectedItemChange={mockCallback} />
+            <TypeAhead name="type-ahead" getOptions={getOptions} onSelectedItemChange={mockCallback} />
         );
 
         mockCallback.mockReset();
@@ -146,32 +157,41 @@ describe('Form type ahead component (select)', () => {
     it('should filter search results based on input', () => {
         const mockCallback = jest.fn();
         const wrapper = shallow<TypeAhead>(
-            <TypeAhead name="type-ahead" choices={choices} onSelectedItemChange={mockCallback} />
+            <TypeAhead name="type-ahead" getOptions={getOptions} onSelectedItemChange={mockCallback} />
         );
         const instance = wrapper.instance();
 
-        instance.getOptions('Child 1', (options) => {
-            expect(options).toBeDefined();
-            expect(options.length).toEqual(1);
-        });
+        let filteredOptions = instance.filterItems('Child 1', choices);
+        expect(filteredOptions).toBeDefined();
+        expect(filteredOptions.length).toEqual(1);
 
-        instance.getOptions('Child', (options) => {
-            expect(options).toBeDefined();
-            expect(options.length).toEqual(2);
-        });
+        filteredOptions = instance.filterItems('Child', choices);
+        expect(filteredOptions).toBeDefined();
+        expect(filteredOptions.length).toEqual(2);
     });
 
-    it('should no search results based on empty', () => {
+    it('should return an empty array when no match', () => {
         const mockCallback = jest.fn();
         const wrapper = shallow<TypeAhead>(
-            <TypeAhead name="type-ahead" choices={choices} onSelectedItemChange={mockCallback} />
+            <TypeAhead name="type-ahead" getOptions={getOptions} onSelectedItemChange={mockCallback} />
         );
         const instance = wrapper.instance();
 
-        instance.getOptions('', (optionGroups) => {
-            expect(optionGroups).toBeDefined();
-            expect(optionGroups.length).toEqual(0);
-        });
+        const filteredOptions = instance.filterItems('__missing__', choices);
+        expect(filteredOptions).toBeDefined();
+        expect(filteredOptions.length).toEqual(0);
+    });
+
+    it('should return all items for an empty search criteria', () => {
+        const mockCallback = jest.fn();
+        const wrapper = shallow<TypeAhead>(
+            <TypeAhead name="type-ahead" getOptions={getOptions} onSelectedItemChange={mockCallback} />
+        );
+        const instance = wrapper.instance();
+
+        const filteredOptions = instance.filterItems('', choices);
+        expect(filteredOptions).toBeDefined();
+        expect(filteredOptions.length).toEqual(2);
     });
 
 });

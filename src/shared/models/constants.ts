@@ -18,3 +18,5 @@ export const LOAD_TEAM_MEMBERS_ERROR_DESCRIPTION = 'There was an error retrievin
 export const EMPTY_SUBMIT_TOPIC_ERROR_DESCRIPTION = 'Please select a topic before submitting.';
 export const EMPTY_SUBMIT_TOPIC_ERROR_TITLE = 'No topic selected';
 export const LOAD_TEAM_ERROR_DESCRIPTION = 'There was an error retrieving the team.  Please try refreshing the page.';
+export const REMOVE_FROM_TEAM_ALLOCATED_ERROR_DESCRIPTION = 'The user cannot be removed from the team as they have cases assigned';
+export const REMOVE_FROM_TEAM_ERROR_DESCRIPTION = 'There was an error removing the user from the team';
