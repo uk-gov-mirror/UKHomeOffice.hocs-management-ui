@@ -25,13 +25,6 @@ const Dashboard: React.FC = () => (
                             <li>
                                 <Link className="govuk-link" to="/add-child-topic">Add Child Topic</Link>
                             </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <h3 className="govuk-heading-m">
-                            Topic Management
-                        </h3>
-                        <ul className="govuk-list govuk-list--bullet">
                             <li>
                                 <a className="govuk-link" href="/topic-to-team">Link topic to team</a>
                             </li>
