@@ -69,7 +69,7 @@ const AddChildTopic: React.FC<AddChildTopicProps> = ({ csrfToken, contextDispatc
             addChildTopic(state.selectedParentTopic!.value, state.displayName)
                 .then(() => history.push('/'))
                 .catch((error) => {
-                    if (error && error.response && error.response.status === 409) {
+                    if (error && error.response && error.response.status === 400) {
                         setErrorMessage(new ErrorMessage(DUPLICATE_CHILD_TOPIC_DESCRIPTION, VALIDATION_ERROR_TITLE));
                     } else {
                         setErrorMessage(new ErrorMessage(ADD_CHILD_TOPIC_ERROR_DESCRIPTION, GENERAL_ERROR_TITLE));

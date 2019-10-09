@@ -7,6 +7,7 @@ import * as TeamsService from '../../../../services/teamsService';
 import * as UsersService from '../../../../services/usersService';
 import { State } from '../state';
 import * as useError from '../../../../hooks/useError';
+import { REMOVE_FROM_TEAM_ERROR_DESCRIPTION, GENERAL_ERROR_TITLE, REMOVE_FROM_TEAM_ALLOCATED_ERROR_DESCRIPTION, VALIDATION_ERROR_TITLE } from '../../../../models/constants';
 
 let match: match<any>;
 let history: History<any>;
@@ -53,6 +54,8 @@ const getTeamMembersSpy = jest.spyOn(TeamsService, 'getTeamMembers');
 const deleteUserFromTeamSpy = jest.spyOn(UsersService, 'deleteUserFromTeam');
 const useReducerSpy = jest.spyOn(React, 'useReducer');
 const useErrorSpy = jest.spyOn(useError, 'default');
+const setMessageSpy = jest.fn();
+const clearErrorsSpy = jest.fn();
 
 const renderComponent = () => render(
     <MemoryRouter>
@@ -88,7 +91,9 @@ beforeEach(() => {
         teamName: '__teamName__'
     };
     useReducerSpy.mockImplementationOnce(() => [mockState, jest.fn()]);
-    useErrorSpy.mockImplementation(() => [{}, jest.fn(), jest.fn(), jest.fn()]);
+    useErrorSpy.mockImplementation(() => [{}, jest.fn(), clearErrorsSpy, setMessageSpy]);
+    clearErrorsSpy.mockReset();
+    setMessageSpy.mockReset();
 });
 
 describe('when the teamView component is mounted', () => {
@@ -141,5 +146,48 @@ describe('when the remove user button is clicked', () => {
         expect(deleteUserFromTeamSpy).nthCalledWith(1, '__userId1__', '__teamId__');
         expect(getTeamMembersSpy).nthCalledWith(1, '__teamId__');
 
+    });
+
+    describe('and the service call fails', () => {
+        beforeEach(() => {
+            let wrapper: RenderResult;
+            act(() => {
+                wrapper = renderComponent();
+            });
+
+            wait(async () => {
+                const selectedUser = getByText(wrapper.container, '__user1__');
+                const row = (selectedUser.closest('tr'));
+                const removeButton = getByText(row as HTMLElement, 'Remove');
+                fireEvent.click(removeButton);
+            });
+        });
+
+        describe('and its a 500 error', () => {
+            beforeAll(() => {
+                jest.spyOn(UsersService, 'deleteUserFromTeam').mockImplementation(() => Promise.reject({ response: { status: 500 } }));
+            });
+            it('should set the error state', () => {
+                wait(async () => {
+                    expect(setMessageSpy).toHaveBeenCalledWith({ description: REMOVE_FROM_TEAM_ERROR_DESCRIPTION, title: GENERAL_ERROR_TITLE });
+                });
+            });
+            it('should call the clear errors method', () => {
+                wait(async () => {
+                    expect(clearErrorsSpy).toHaveBeenCalled();
+                });
+            });
+        });
+        describe('and its a 409', () => {
+            beforeAll(() => {
+                jest.spyOn(UsersService, 'deleteUserFromTeam').mockImplementation(() => Promise.reject({ response: { status: 409 } }));
+            });
+
+            it('should set the error state', () => {
+                wait(async () => {
+                    expect(setMessageSpy).toHaveBeenCalledWith({ description: REMOVE_FROM_TEAM_ALLOCATED_ERROR_DESCRIPTION, title: VALIDATION_ERROR_TITLE });
+                });
+            });
+        });
     });
 });
