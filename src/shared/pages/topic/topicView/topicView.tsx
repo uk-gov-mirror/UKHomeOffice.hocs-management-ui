@@ -15,12 +15,10 @@ import {
     LOAD_TOPICS_ERROR_DESCRIPTION
 } from '../../../models/constants';
 import {getTopic, getTopics} from '../../../services/topicsService';
-import { getTeams } from "../../../services/teamsService";
-import Topic from '../../../models/topic';
 import ErrorMessage from "../../../models/errorMessage";
-import { ContextAction, updateApiStatus} from "../../../contexts/actions";
+import { ContextAction } from "../../../contexts/actions";
 import Item from "../../../models/item";
-import status from "../../../helpers/api-status";
+// import status from "../../../helpers/api-status";
 import {Link} from "react-router-dom";
 import Submit from "../../../common/components/forms/submit";
 
@@ -48,20 +46,17 @@ const TopicView: React.FC<TeamViewProps> = ({ csrfToken, contextDispatch, histor
                 dispatch({ type: 'SetGeneralError', payload: { description: LOAD_TOPICS_ERROR_DESCRIPTION, title: GENERAL_ERROR_TITLE }
                 });
             });
-        getTeams()
-            .then((teams: Topic[]) => { dispatch({ type: 'SetTeams', payload: teams }); })
-            .catch(() => setErrorMessage(new ErrorMessage(LOAD_TEAMS_ERROR_DESCRIPTION, GENERAL_ERROR_TITLE)));
     }, []);
 
     const getTeamsForTypeahead = useCallback(() => new Promise<Item[]>((resolve) => {
-        contextDispatch(updateApiStatus(status.REQUEST_TEAMS));
+        // contextDispatch(updateApiStatus(status.REQUEST_TEAMS));
         getTopics()
             .then((teams: Item[]) => {
-                contextDispatch(updateApiStatus(status.REQUEST_TEAMS_SUCCESS));
+                // contextDispatch(updateApiStatus(status.REQUEST_TEAMS_SUCCESS));
                 resolve(teams);
             })
             .catch(() => {
-                contextDispatch(updateApiStatus(status.REQUEST_TEAMS_FAILURE));
+                // contextDispatch(updateApiStatus(status.REQUEST_TEAMS_FAILURE));
                 setErrorMessage(new ErrorMessage(LOAD_TEAMS_ERROR_DESCRIPTION, GENERAL_ERROR_TITLE));
                 resolve([]);
             });

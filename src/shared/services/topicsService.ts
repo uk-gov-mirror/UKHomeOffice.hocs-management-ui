@@ -2,6 +2,7 @@ import axios from 'axios';
 import Topic from '../models/topic';
 import Item from '../models/item';
 
+
 export const getTopics = () => new Promise<Topic[]>((resolve, reject) =>
     axios.get('/api/topics')
         .then(response => {

@@ -18,30 +18,24 @@ import {
 import ErrorMessage from "../../../models/errorMessage";
 import {Link} from "react-router-dom";
 import Submit from "../../../common/components/forms/submit";
-import {ContextAction, updateApiStatus} from "../../../contexts/actions";
 import Item from "../../../models/item";
-import status from "../../../helpers/api-status";
 
 interface TopicSearchProps extends RouteComponentProps {
     csrfToken?: string;
-    contextDispatch: (action: ContextAction<any>) => Promise<any>;
     history: History;
 }
 
-const TopicSearch: React.FC<TopicSearchProps> = ({ csrfToken, contextDispatch, history }) => {
+const TopicSearch: React.FC<TopicSearchProps> = ({ csrfToken, history }) => {
 
     const [pageError, , , setErrorMessage] = useError();
     const [state, dispatch] = React.useReducer<Reducer<State, Action>>(reducer, initialState);
 
     const getTopicsForTypeahead = useCallback(() => new Promise<Item[]>((resolve) => {
-        contextDispatch(updateApiStatus(status.REQUEST_TOPICS));
         getTopics()
-            .then((parentTopics: Item[]) => {
-                contextDispatch(updateApiStatus(status.REQUEST_TOPICS_SUCCESS));
-                resolve(parentTopics);
+            .then((topics: Item[]) => {
+                resolve(topics);
             })
             .catch(() => {
-                contextDispatch(updateApiStatus(status.REQUEST_TOPICS_FAILURE));
                 setErrorMessage(new ErrorMessage(LOAD_TOPICS_ERROR_DESCRIPTION, GENERAL_ERROR_TITLE));
                 resolve([]);
             });

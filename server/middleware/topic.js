@@ -18,10 +18,11 @@ async function getTopic(req, res, next) {
 }
 
 async function getTopics(req, res, next) {
+
     const logger = getLogger(req.request);
 
     try {
-        const response = await req.listService.fetch('TOPICS', req.params);
+        const response = await infoService.get(`/topics`, { headers: User.createHeaders(req.user) });
         res.locals.topics = response.data;
         next();
     } catch (error) {
