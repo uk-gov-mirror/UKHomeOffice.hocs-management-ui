@@ -43,18 +43,34 @@ async function addTopic(req, res, next) {
     }
 }
 
-async function addDCUTeamsToTopic(req) {
+function addDCUTeamsToTopic(req, res, next) {
 
     const logger = getLogger(req.request);
-    logger.debug('******* Calling the info service for DCU *******')
-    // const { topicValue, teamUUID } = req.params;
-    // try {
-    //     await infoService.post(`/topic/${topicValue}/team/${teamUUID}`, req.body, { headers: User.createHeaders(req.user) });
-    //     res.sendStatus(200);
-    // } catch (error) {
-    //     logger.error(error);
-    //     next(error);
-    // }
+    const { topicValue, privateMinisterTeam, draftQaTeam } = req.body;
+
+    const TeamstoStageTypes = [
+        {'caseType': 'MIN', 'stageType':'DCU_MIN_INITIAL_DRAFT', 'team': draftQaTeam},
+        {'caseType': 'MIN', 'stageType':'DCU_MIN_QA_RESPONSE', 'team': draftQaTeam},
+        {'caseType': 'MIN', 'stageType':'DCU_MIN_PRIVATE_OFFICE', 'team': privateMinisterTeam},
+        {'caseType': 'MIN', 'stageType':'DCU_MIN_MINISTER_SIGN_OFF', 'team': privateMinisterTeam},
+        {'caseType': 'TRO', 'stageType':'DCU_TRO_INITIAL_DRAFT', 'team': draftQaTeam},
+        {'caseType': 'TRO', 'stageType':'DCU_TRO_QA_RESPONSE', 'team': draftQaTeam},
+        {'caseType': 'DTEN', 'stageType':'DCU_DTEN_INITIAL_DRAFT', 'team': draftQaTeam},
+        {'caseType': 'DTEN', 'stageType':'DCU_DTEN_QA_RESPONSE', 'team': draftQaTeam},
+        {'caseType': 'DTEN', 'stageType':'DCU_DTEN_PRIVATE_OFFICE', 'team': privateMinisterTeam},
+    ];
+
+    Promise.all(TeamstoStageTypes.map(team => {
+        infoService.post(`/topic/${topicValue}/team/${team.team}`, { "case_type": team.caseType, "stage_type": team.stageType }, { headers: User.createHeaders(req.user) })
+            .then(() => {})
+            .catch(error => {
+                logger.error(error.message);
+            })}
+    )).then(() => {})
+        .catch(error => {
+            logger.error(error.message);
+            next(error);
+    });
 }
 
 async function getParentTopics(req, res, next) {

@@ -15,9 +15,9 @@ import ErrorMessage from "../../../models/errorMessage";
 import {ContextAction} from "../../../contexts/actions";
 import {Link} from "react-router-dom";
 import Submit from "../../../common/components/forms/submit";
-import {getTopic} from "../../../services/topicsService";
+import { getTopic, addTeamsToUnit} from "../../../services/topicsService";
 import Item from "../../../models/item";
-import {getTeam} from "../../../services/teamsService";
+import { getTeam } from "../../../services/teamsService";
 import Team from "../../../models/team";
 
 interface MatchParams {
@@ -57,11 +57,13 @@ const addTeamToTopicView: React.FC<addTeamToTopicProps> = ({csrfToken, history, 
             });
     }, []);
 
-    const handleOnSubmit = () => {
+    const handleOnSubmit = (event: React.FormEvent) => {
+        event.preventDefault();
         if (state.topic.value === '') {
             setErrorMessage(new ErrorMessage(EMPTY_SUBMIT_TOPIC_ERROR_DESCRIPTION, EMPTY_SUBMIT_TOPIC_ERROR_TITLE));
         } else {
-            history.push(`/topic/${state.topic.value}/privateMinister/${state.privateMinisterTeam.type}/draftQA/${state.draftQaTeam.type}/dcu`);
+            addTeamsToUnit(state.topic.value, state.privateMinisterTeam.type, state.draftQaTeam.type);
+            history.push(`/`);
         }
     };
 

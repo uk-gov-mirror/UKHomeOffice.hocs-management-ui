@@ -40,3 +40,9 @@ export const getParentTopics = () => new Promise((resolve, reject) => axios
     })))
     .catch(reason => reject(reason))
 );
+
+export const addTeamsToUnit = (topicValue: string, privateMinisterTeam: string, draftQaTeam: string) => new Promise((resolve, reject) => axios
+    .post('/api/topics/dcu', {topicValue, privateMinisterTeam, draftQaTeam})
+    .then(() => resolve())
+    .catch(reason => reject(reason))
+);
