@@ -1,5 +1,6 @@
 const React = require('react');
 const { renderToString } = require('react-dom/server');
+const { renderStylesToString } = require('emotion-server');
 const { StaticRouter } = require('react-router-dom');
 const { default: App } = require('../../build/server/app.server');
 const html = require('../layout/html');
@@ -23,10 +24,10 @@ function renderMiddleware(req, res, next) {
         status
     };
 
-    const markup = renderToString(
+    const markup = renderStylesToString(renderToString(
         React.createElement(StaticRouter, { location: req.originalUrl, context },
             React.createElement(App, { config })
-        )
+        ))
     );
 
     if (context.url) {
