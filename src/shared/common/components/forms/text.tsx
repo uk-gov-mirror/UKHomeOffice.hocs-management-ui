@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import classNames from 'classnames';
+import InputEventData from '../../../models/inputEventData';
 
 interface TextProps {
     disabled?: boolean;
@@ -10,11 +11,6 @@ interface TextProps {
     type?: string;
     updateState: (value: InputEventData) => void;
     value?: string;
-}
-
-export interface InputEventData {
-    name: string;
-    value: string;
 }
 
 const Text: React.FC<TextProps> = ({ disabled = false,

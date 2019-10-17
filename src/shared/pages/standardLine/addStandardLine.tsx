@@ -3,46 +3,47 @@ import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
 import { object, string } from 'yup';
 import Submit from '../../common/components/forms/submit';
-import Text from '../../common/components/forms/text';
 import { ApplicationConsumer } from '../../contexts/application';
-import { createUnit } from '../../services/unitsService';
+import { addStandardLine } from '../../services/standardLinesService';
 import { reducer } from './reducer';
 import ErrorSummary from '../../common/components/errorSummary';
-import { GENERAL_ERROR_TITLE, ADD_UNIT_ERROR_DESCRIPTION, VALIDATION_ERROR_TITLE, DUPLICATE_UNIT_DESCRIPTION } from '../../models/constants';
 import useError from '../../hooks/useError';
+import { GENERAL_ERROR_TITLE, ADD_UNIT_ERROR_DESCRIPTION, VALIDATION_ERROR_TITLE, DUPLICATE_UNIT_DESCRIPTION } from '../../models/constants';
 import ErrorMessage from '../../models/errorMessage';
-import Unit from '../../models/unit';
-import { validate } from '../../validation';
 import InputEventData from '../../models/inputEventData';
+import { validate } from '../../validation';
+import StandardLine from '../../models/standardLine';
+import DateInput from '../../common/components/forms/date';
 
-interface AddUnitProps extends RouteComponentProps {
+interface AddStandardLineProps extends RouteComponentProps {
     csrfToken?: string;
 }
 
 const validationSchema = object({
-    displayName: string()
+    expiryDate: string()
         .required()
-        .label('Display Name')
+        .label('Expiry Date')
         .matches(/^[a-zA-Z0-9_,.!? ()&]*$/),
-    shortCode: string()
+    topic: string()
         .required()
-        .label('Short Code')
+        .label('Topic')
         .matches(/^[a-zA-Z0-9_,.!? ()&]*$/)
 });
 
-const AddUnit: React.FC<AddUnitProps> = ({ csrfToken, history }) => {
+const AddStandardLine: React.FC<AddStandardLineProps> = ({ csrfToken, history }) => {
 
     const [pageError, addFormError, clearErrors, setErrorMessage] = useError('', VALIDATION_ERROR_TITLE);
-    const [unit, dispatch] = React.useReducer<Reducer<Unit, InputEventData>>(reducer, {
-        displayName: '',
-        shortCode: ''
+    const [standardLine] = React.useReducer<Reducer<StandardLine, InputEventData>>(reducer, {
+        expiryDate: '',
+        file: '',
+        topic: ''
     });
 
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
         clearErrors();
-        if (validate(validationSchema, unit, addFormError)) {
-            createUnit(unit).then(() => {
+        if (validate(validationSchema, standardLine, addFormError)) {
+            addStandardLine(standardLine).then(() => {
                 history.push('/');
             }).catch((error) => {
                 if (error && error.response && error.response.status === 409) {
@@ -59,31 +60,20 @@ const AddUnit: React.FC<AddUnitProps> = ({ csrfToken, history }) => {
             <div className="govuk-grid-row">
                 <div className="govuk-grid-column-two-thirds-from-desktop">
                     <Link to="/" className="govuk-back-link">Back</Link>
-                    <ErrorSummary
-                        pageError={pageError}
-                    />
+                    <ErrorSummary pageError={pageError} />
                     <h1 className="govuk-heading-xl">
-                        Add Unit
+                        Add a Standard Line
                     </h1>
                 </div>
             </div>
             <div className="govuk-grid-row">
                 <div className="govuk-grid-column-one-half-from-desktop">
-                    <form action="/api/units" method="POST" onSubmit={handleSubmit}>
+                    <form action="/api/standardLines" method="POST" onSubmit={handleSubmit}>
                         <input type="hidden" name="_csrf" value={csrfToken} />
-                        <Text
-                            label="Display Name"
-                            name="displayName"
-                            type="text"
-                            updateState={({ name, value }) => dispatch({ name, value })}
-                            value={unit.displayName}
-                        />
-                        <Text
-                            label="Short Code"
-                            name="shortCode"
-                            type="text"
-                            updateState={({ name, value }) => dispatch({ name, value })}
-                            value={unit.shortCode}
+                        <DateInput
+                            name="expiry-date"
+                            label="Expiry Date"
+                            updateState={() => { }}
                         />
                         <Submit />
                     </form>
@@ -93,12 +83,12 @@ const AddUnit: React.FC<AddUnitProps> = ({ csrfToken, history }) => {
     );
 };
 
-const WrappedAddUnit = ({ history, location, match }: RouteComponentProps) => (
+const WrappedAddStandardLine = ({ history, location, match }: RouteComponentProps) => (
     <ApplicationConsumer>
         {({ csrf }) => (
-            <AddUnit csrfToken={csrf} history={history} location={location} match={match} />
+            <AddStandardLine csrfToken={csrf} history={history} location={location} match={match} />
         )}
     </ApplicationConsumer>
 );
 
-export default WrappedAddUnit;
+export default WrappedAddStandardLine;

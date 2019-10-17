@@ -5,6 +5,7 @@ import TeamView from '../../pages/team/teamView/teamView';
 import AddUsersToTeam from '../../pages/team/addToTeam/addToTeam';
 import AddUnit from '../../pages/unit/addUnit';
 import AddChildTopic from '../../pages/topic/addChildTopic';
+import AddStandardLine from '../../pages/standardLine/addStandardLine';
 export interface Route {
     component: React.FunctionComponent | Error;
     error?: ErrorContent;
@@ -47,7 +48,13 @@ const routes = [
         path: '/add-child-topic',
         exact: true,
         component: AddChildTopic,
-        title: 'Add Unit'
+        title: 'Add Child Topic'
+    },
+    {
+        path: '/add-standard-line',
+        exact: true,
+        component: AddStandardLine,
+        title: 'Add Standard Line'
     },
     {
         component: Error,
