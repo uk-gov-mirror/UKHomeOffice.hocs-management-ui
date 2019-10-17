@@ -1,4 +1,4 @@
-import React, {useEffect, Reducer, useCallback} from 'react';
+import React, { useEffect, Reducer, useCallback } from 'react';
 import { RouteComponentProps } from 'react-router';
 import TypeAhead from '../../../common/components/typeAhead';
 import { History } from 'history';
@@ -11,14 +11,14 @@ import ErrorSummary from '../../../common/components/errorSummary';
 import {
     EMPTY_SUBMIT_TOPIC_ERROR_DESCRIPTION,
     EMPTY_SUBMIT_TOPIC_ERROR_TITLE,
-    GENERAL_ERROR_TITLE, LOAD_TEAMS_ERROR_DESCRIPTION, LOAD_TOPIC_ERROR_DESCRIPTION,
+    GENERAL_ERROR_TITLE, LOAD_TEAMS_ERROR_DESCRIPTION, LOAD_TOPIC_ERROR_DESCRIPTION
 } from '../../../models/constants';
 import { getTopic } from '../../../services/topicsService';
-import ErrorMessage from "../../../models/errorMessage";
-import Item from "../../../models/item";
-import {Link} from "react-router-dom";
-import Submit from "../../../common/components/forms/submit";
-import {getTeams} from "../../../services/teamsService";
+import ErrorMessage from '../../../models/errorMessage';
+import Item from '../../../models/item';
+import { Link } from 'react-router-dom';
+import Submit from '../../../common/components/forms/submit';
+import { getTeams } from '../../../services/teamsService';
 
 interface MatchParams {
     topicId: string;
@@ -38,7 +38,7 @@ const TopicView: React.FC<TeamViewProps> = ({ csrfToken, history, match }) => {
 
     useEffect(() => {
         getTopic(topicId)
-            .then((topic: Item) => { dispatch({ type: 'SetTopic', payload: topic}); })
+            .then((topic: Item) => { dispatch({ type: 'SetTopic', payload: topic }); })
             .catch(() => {
                 setErrorMessage(new ErrorMessage(LOAD_TOPIC_ERROR_DESCRIPTION, GENERAL_ERROR_TITLE));
             });
@@ -54,7 +54,6 @@ const TopicView: React.FC<TeamViewProps> = ({ csrfToken, history, match }) => {
                 resolve([]);
             });
     }), []);
-
 
     const onSelectedPrivateMinisterChange = (selectedTeamAssignment: any) => {
         dispatch({ type: 'SetPrivateMinisterTeam', payload: selectedTeamAssignment });

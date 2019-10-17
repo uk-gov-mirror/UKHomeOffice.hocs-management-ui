@@ -9,15 +9,15 @@ import useError from '../../../hooks/useError';
 import ErrorSummary from '../../../common/components/errorSummary';
 import {
     EMPTY_SUBMIT_TOPIC_ERROR_DESCRIPTION,
-    EMPTY_SUBMIT_TOPIC_ERROR_TITLE, GENERAL_ERROR_TITLE, LOAD_TEAM_ERROR_DESCRIPTION, LOAD_TOPIC_ERROR_DESCRIPTION,
+    EMPTY_SUBMIT_TOPIC_ERROR_TITLE, GENERAL_ERROR_TITLE, LOAD_TEAM_ERROR_DESCRIPTION, LOAD_TOPIC_ERROR_DESCRIPTION
 } from '../../../models/constants';
-import ErrorMessage from "../../../models/errorMessage";
-import {Link} from "react-router-dom";
-import Submit from "../../../common/components/forms/submit";
-import { getTopic, addTeamsToUnit} from "../../../services/topicsService";
-import Item from "../../../models/item";
-import { getTeam } from "../../../services/teamsService";
-import Team from "../../../models/team";
+import ErrorMessage from '../../../models/errorMessage';
+import { Link } from 'react-router-dom';
+import Submit from '../../../common/components/forms/submit';
+import { getTopic, addTeamsToUnit } from '../../../services/topicsService';
+import Item from '../../../models/item';
+import { getTeam } from '../../../services/teamsService';
+import Team from '../../../models/team';
 
 interface MatchParams {
     privateMinisterValue: string;
@@ -25,12 +25,12 @@ interface MatchParams {
     topicValue: string;
 }
 
-interface addTeamToTopicProps extends RouteComponentProps<MatchParams> {
+interface AddTeamToTopicProps extends RouteComponentProps<MatchParams> {
     csrfToken?: string;
     history: History;
 }
 
-const addTeamToTopicView: React.FC<addTeamToTopicProps> = ({csrfToken, history, match }) => {
+const addTeamToTopicView: React.FC<AddTeamToTopicProps> = ({ csrfToken, history, match }) => {
 
     const [pageError, , , setErrorMessage] = useError();
     const [state, dispatch] = React.useReducer<Reducer<State, Action>>(reducer, initialState);
@@ -39,7 +39,7 @@ const addTeamToTopicView: React.FC<addTeamToTopicProps> = ({csrfToken, history, 
 
     useEffect(() => {
         getTopic(topicValue)
-            .then((topic: Item) => { dispatch({ type: 'SetTopic', payload: topic}); })
+            .then((topic: Item) => { dispatch({ type: 'SetTopic', payload: topic }); })
             .catch(() => {
                 setErrorMessage(new ErrorMessage(LOAD_TOPIC_ERROR_DESCRIPTION, GENERAL_ERROR_TITLE));
             });
@@ -88,28 +88,28 @@ const addTeamToTopicView: React.FC<addTeamToTopicProps> = ({csrfToken, history, 
                             <input type="hidden" name="_csrf" value={csrfToken} />
                             <table className="govuk-table">
                                 <thead className="govuk-table__head">
-                                <tr className="govuk-table__row">
-                                    <th scope="col" className="govuk-table__header">Stages</th>
-                                    <th scope="col" className="govuk-table__header">Team assignment</th>
-                                </tr>
+                                    <tr className="govuk-table__row">
+                                        <th scope="col" className="govuk-table__header">Stages</th>
+                                        <th scope="col" className="govuk-table__header">Team assignment</th>
+                                    </tr>
                                 </thead>
                                 <tbody className="govuk-table__body">
-                                <tr className="govuk-table__row">
-                                    <th scope="row" className="govuk-table__header">
-                                        Draft/QA
+                                    <tr className="govuk-table__row">
+                                        <th scope="row" className="govuk-table__header">
+                                            Draft/QA
                                     </th>
-                                    <td className="govuk-table__cell">
-                                        {state.draftQaTeam.displayName}
-                                    </td>
-                                </tr>
-                                <tr className="govuk-table__row">
-                                    <th scope="row" className="govuk-table__header">
-                                        Private Office/Minister
+                                        <td className="govuk-table__cell">
+                                            {state.draftQaTeam.displayName}
+                                        </td>
+                                    </tr>
+                                    <tr className="govuk-table__row">
+                                        <th scope="row" className="govuk-table__header">
+                                            Private Office/Minister
                                     </th>
-                                    <td className="govuk-table__cell">
-                                        {state.privateMinisterTeam.displayName}
-                                    </td>
-                                </tr>
+                                        <td className="govuk-table__cell">
+                                            {state.privateMinisterTeam.displayName}
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                             <Submit />

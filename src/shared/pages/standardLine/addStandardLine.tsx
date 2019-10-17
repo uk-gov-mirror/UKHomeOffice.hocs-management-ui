@@ -1,4 +1,4 @@
-import React, { Reducer } from 'react';
+import React, { Reducer, useCallback } from 'react';
 import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
 import { object, string } from 'yup';
@@ -8,13 +8,16 @@ import { addStandardLine } from '../../services/standardLinesService';
 import { reducer } from './reducer';
 import ErrorSummary from '../../common/components/errorSummary';
 import useError from '../../hooks/useError';
-import { GENERAL_ERROR_TITLE, ADD_UNIT_ERROR_DESCRIPTION, VALIDATION_ERROR_TITLE, DUPLICATE_UNIT_DESCRIPTION } from '../../models/constants';
+import * as constants from '../../models/constants';
 import ErrorMessage from '../../models/errorMessage';
 import InputEventData from '../../models/inputEventData';
 import { validate } from '../../validation';
 import StandardLine from '../../models/standardLine';
 import DateInput from '../../common/components/forms/date';
 import DocumentAdd from '../../common/components/forms/documentAdd';
+import TypeAhead from '../../common/components/typeAhead';
+import Item from '../../models/item';
+import { getTopics } from '../../services/topicsService';
 
 interface AddStandardLineProps extends RouteComponentProps {
     csrfToken?: string;
@@ -33,12 +36,27 @@ const validationSchema = object({
 
 const AddStandardLine: React.FC<AddStandardLineProps> = ({ csrfToken, history }) => {
 
-    const [pageError, addFormError, clearErrors, setErrorMessage] = useError('', VALIDATION_ERROR_TITLE);
+    const [pageError, addFormError, clearErrors, setErrorMessage] = useError('', constants.VALIDATION_ERROR_TITLE);
 
     const [standardLine, dispatch] = React.useReducer<Reducer<StandardLine, InputEventData>>(reducer, {
         expiryDate: '',
         topic: ''
     });
+
+    const getTopicsForTypeahead = useCallback(() => new Promise<Item[]>((resolve) => {
+        getTopics()
+            .then((topics: Item[]) => {
+                resolve(topics);
+            })
+            .catch(() => {
+                setErrorMessage(new ErrorMessage(constants.LOAD_TOPICS_ERROR_DESCRIPTION, constants.GENERAL_ERROR_TITLE));
+                resolve([]);
+            });
+    }), []);
+
+    const onSelectedTopicChange = useCallback((selectedTopic: Item) => {
+        dispatch({ name: 'topic', value: selectedTopic.value });
+    }, []);
 
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
@@ -48,9 +66,9 @@ const AddStandardLine: React.FC<AddStandardLineProps> = ({ csrfToken, history })
                 history.push('/');
             }).catch((error) => {
                 if (error && error.response && error.response.status === 409) {
-                    setErrorMessage(new ErrorMessage(DUPLICATE_UNIT_DESCRIPTION, VALIDATION_ERROR_TITLE));
+                    setErrorMessage(new ErrorMessage(constants.DUPLICATE_UNIT_DESCRIPTION, constants.VALIDATION_ERROR_TITLE));
                 } else {
-                    setErrorMessage(new ErrorMessage(ADD_UNIT_ERROR_DESCRIPTION, GENERAL_ERROR_TITLE));
+                    setErrorMessage(new ErrorMessage(constants.ADD_UNIT_ERROR_DESCRIPTION, constants.GENERAL_ERROR_TITLE));
                 }
             });
         }
@@ -71,6 +89,14 @@ const AddStandardLine: React.FC<AddStandardLineProps> = ({ csrfToken, history })
                 <div className="govuk-grid-column-one-half-from-desktop">
                     <form action="/api/standardLines" method="POST" onSubmit={handleSubmit}>
                         <input type="hidden" name="_csrf" value={csrfToken} />
+                        <TypeAhead
+                            clearable={true}
+                            disabled={false}
+                            getOptions={getTopicsForTypeahead}
+                            label={'Topics'}
+                            name={'topics'}
+                            onSelectedItemChange={onSelectedTopicChange}
+                        />
                         <DocumentAdd
                             name="files"
                             updateState={dispatch}
