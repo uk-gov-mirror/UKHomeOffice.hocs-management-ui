@@ -8,7 +8,7 @@ const mockLogger = {
 };
 
 describe('Topic Adapter', () => {
-    it.skip('should transform and sort topic data', async () => {
+    it('should transform and sort topic data', async () => {
         const mockData = {
             parentTopics: [
                 {

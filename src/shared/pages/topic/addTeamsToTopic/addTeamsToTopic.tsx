@@ -12,7 +12,6 @@ import {
     EMPTY_SUBMIT_TOPIC_ERROR_TITLE, GENERAL_ERROR_TITLE, LOAD_TEAM_ERROR_DESCRIPTION, LOAD_TOPIC_ERROR_DESCRIPTION,
 } from '../../../models/constants';
 import ErrorMessage from "../../../models/errorMessage";
-import {ContextAction} from "../../../contexts/actions";
 import {Link} from "react-router-dom";
 import Submit from "../../../common/components/forms/submit";
 import { getTopic, addTeamsToUnit} from "../../../services/topicsService";
@@ -28,7 +27,6 @@ interface MatchParams {
 
 interface addTeamToTopicProps extends RouteComponentProps<MatchParams> {
     csrfToken?: string;
-    contextDispatch: (action: ContextAction<any>) => Promise<any>;
     history: History;
 }
 
@@ -63,7 +61,7 @@ const addTeamToTopicView: React.FC<addTeamToTopicProps> = ({csrfToken, history, 
             setErrorMessage(new ErrorMessage(EMPTY_SUBMIT_TOPIC_ERROR_DESCRIPTION, EMPTY_SUBMIT_TOPIC_ERROR_TITLE));
         } else {
             addTeamsToUnit(state.topic.value, state.privateMinisterTeam.type, state.draftQaTeam.type);
-            history.push(`/`);
+            history.push('/');
         }
     };
 

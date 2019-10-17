@@ -7,7 +7,7 @@ async function getTopic(req, res, next) {
     const {topicId} = req.params;
 
     try {
-        const response = await infoService.get(`/topic/${topicId}`, {}, {headers: User.createHeaders(req.user)});
+        const response = await infoService.get(`/topic/${topicId}`, {headers: User.createHeaders(req.user)});
         res.locals.topic = response.data;
         next();
     } catch (error) {
