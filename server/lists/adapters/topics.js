@@ -1,6 +1,12 @@
 const byLabel = (a, b) => a.label.localeCompare(b.label);
 
 module.exports = async (data, { logger }) => {
-    logger.debug('REQUEST_TOPICS', { topics: data.length });
-    return data.sort(byLabel);
+    logger.debug('REQUEST_TOPICS', { topics: data.parentTopics.length });
+    return data.parentTopics
+        .map(parent => {
+            parent.options = parent.options.sort(byLabel);
+            return parent;
+        })
+        .sort(byLabel);
 };
+
