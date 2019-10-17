@@ -14,6 +14,7 @@ import InputEventData from '../../models/inputEventData';
 import { validate } from '../../validation';
 import StandardLine from '../../models/standardLine';
 import DateInput from '../../common/components/forms/date';
+import DocumentAdd from '../../common/components/forms/documentAdd';
 
 interface AddStandardLineProps extends RouteComponentProps {
     csrfToken?: string;
@@ -33,9 +34,9 @@ const validationSchema = object({
 const AddStandardLine: React.FC<AddStandardLineProps> = ({ csrfToken, history }) => {
 
     const [pageError, addFormError, clearErrors, setErrorMessage] = useError('', VALIDATION_ERROR_TITLE);
-    const [standardLine] = React.useReducer<Reducer<StandardLine, InputEventData>>(reducer, {
+
+    const [standardLine, dispatch] = React.useReducer<Reducer<StandardLine, InputEventData>>(reducer, {
         expiryDate: '',
-        file: '',
         topic: ''
     });
 
@@ -70,10 +71,14 @@ const AddStandardLine: React.FC<AddStandardLineProps> = ({ csrfToken, history })
                 <div className="govuk-grid-column-one-half-from-desktop">
                     <form action="/api/standardLines" method="POST" onSubmit={handleSubmit}>
                         <input type="hidden" name="_csrf" value={csrfToken} />
+                        <DocumentAdd
+                            name="files"
+                            updateState={dispatch}
+                        />
                         <DateInput
-                            name="expiry-date"
+                            name="expiryDate"
                             label="Expiry Date"
-                            updateState={() => { }}
+                            updateState={dispatch}
                         />
                         <Submit />
                     </form>

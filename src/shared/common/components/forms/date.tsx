@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import InputEventData from 'shared/models/inputEventData';
 
 interface DateInputProps {
     disabled?: boolean;
@@ -6,7 +7,7 @@ interface DateInputProps {
     hint?: string;
     label?: string;
     name: string;
-    updateState: (state: any) => void;
+    updateState: (datePart: InputEventData) => void;
     value?: string;
     maxYear?: number;
     minYear?: number;
@@ -19,13 +20,10 @@ class DateInput extends Component<DateInputProps> {
         this.state = this.parseValue(props.value || '');
     }
 
-    componentDidMount() {
-        this.props.updateState(this.state);
-    }
-
     onChange(field: string, value: string) {
-        this.setState({ [field]: value });
-        this.props.updateState({ [field]: value });
+        this.setState({ [field]: value }, () => {
+            this.props.updateState({ name: this.props.name, value: `${this.state[this.datePart('day')]}-${this.state[this.datePart('month')]}-${this.state[this.datePart('year')]}` });
+        });
     }
 
     datePart(field: string) { return `${this.props.name}-${field}`; }

@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import InputEventData from '../../../models/inputEventData';
 
 interface DocumentAddProps {
     allowMultiple?: boolean;
@@ -7,14 +8,14 @@ interface DocumentAddProps {
     hint?: string;
     label?: string;
     name: string;
-    updateState: (state: any) => void;
+    updateState: (files: InputEventData) => void;
 }
 
 const DocumentAdd: React.FC<DocumentAddProps> = ({ allowMultiple, disabled, error, hint, label = 'Add document', name, updateState }) => {
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         e.preventDefault();
-        updateState({ [name]: Array.from(e.target.files || []) });
+        updateState({ name, value: Array.from(e.target.files || []) });
     };
 
     return (

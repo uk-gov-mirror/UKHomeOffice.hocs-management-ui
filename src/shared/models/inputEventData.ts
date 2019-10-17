@@ -1,4 +1,4 @@
 export default interface InputEventData {
     name: string;
-    value: string;
+    value: string | File[];
 }
