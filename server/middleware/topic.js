@@ -65,6 +65,7 @@ function addDCUTeamsToTopic(req, res, next) {
             .then(() => {})
             .catch(error => {
                 logger.error(error.message);
+                next(error);
             })}
     )).then(() => {})
         .catch(error => {

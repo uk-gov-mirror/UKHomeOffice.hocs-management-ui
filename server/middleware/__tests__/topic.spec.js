@@ -241,7 +241,7 @@ describe('when the json handler is called', () => {
 describe('Topic middleware addTopic', () => {
 
     const headers = '__headers__';
-    const topicToCreate = { displayName: '__displayName__' }
+    const topicToCreate = { displayName: '__displayName__' };
     const req = { params: { parentTopicId: '__parentTopicId__' }, body: topicToCreate, user: '__user__' };
     const sendStatus = jest.fn();
     const res = { sendStatus };
@@ -286,8 +286,11 @@ describe('Topic middleware addTopic', () => {
 describe.skip('Topic middleware addDCUTeamsToTopic', () => {
 
     const headers = '__headers__';
-    const teamsToStageType = {'caseType': '__caseType__', 'stageType':'__stageType__'};
-    const req = { params: { topicValue: '__topicValue__', team: '__teamValue__' }, body: teamsToStageType, user: '__user__' };
+    const req = {
+        body: { topicValue: '__topicValue__', privateMinisterTeam: '__privateMinisterTeam__', draftQaTeam: '__draftQaTeam__' },
+        user: '__user__'
+    };
+    const caseAndStageType = { 'case_type': '__case_type__', 'stage_type': '__stage_type__' };
     const sendStatus = jest.fn();
     const res = { sendStatus };
     const next = jest.fn();
@@ -300,7 +303,7 @@ describe.skip('Topic middleware addDCUTeamsToTopic', () => {
     it('should call the post method on the info service', async () => {
         createHeaders.mockImplementation(() => headers);
         await addDCUTeamsToTopic(req, res, next);
-        expect(infoService.post).toHaveBeenCalledWith(`/topic/${req.params.topicValue}/team/${req.params.team}`, teamsToStageType, { headers: headers });
+        expect(infoService.post).toHaveBeenCalledWith('/topic/__topicValue__/team/__teamValue__', caseAndStageType, { headers: headers });
     });
 
     it('should call the user create headers method', async () => {
