@@ -4,8 +4,13 @@ import TeamSearch from '../../pages/team/teamSearch/teamSearch';
 import TeamView from '../../pages/team/teamView/teamView';
 import AddUsersToTeam from '../../pages/team/addToTeam/addToTeam';
 import AddUnit from '../../pages/unit/addUnit';
+import TopicView from '../../pages/topic/topicView/topicView';
+import TopicSearch from '../../pages/topic/topicSearch/topicSearch';
 import AddChildTopic from '../../pages/topic/addChildTopic';
+import AddTeamsToTopic from '../../pages/topic/addTeamsToTopic/addTeamsToTopic';
 import AddStandardLine from '../../pages/standardLine/addStandardLine';
+
+
 export interface Route {
     component: React.FunctionComponent | Error;
     error?: ErrorContent;
@@ -43,6 +48,24 @@ const routes = [
         exact: true,
         component: AddUnit,
         title: 'Add Unit'
+    },
+    {
+        path: '/topic-to-team',
+        exact: true,
+        component: TopicSearch,
+        title: 'TopicSearch'
+    },
+    {
+        path: '/topic/:topicId',
+        exact: true,
+        component: TopicView,
+        title: 'TopicView'
+    },
+    {
+        path: '/topic/:topicValue/private-minister/:privateMinisterValue/draft-qa/:draftQaValue',
+        exact: true,
+        component: AddTeamsToTopic,
+        title: 'AddTeamsToTopic'
     },
     {
         path: '/add-child-topic',
