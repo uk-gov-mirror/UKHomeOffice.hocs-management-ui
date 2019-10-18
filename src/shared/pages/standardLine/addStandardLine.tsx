@@ -1,7 +1,7 @@
 import React, { Reducer, useCallback } from 'react';
 import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
-import { object, string } from 'yup';
+import { object, string, date, array } from 'yup';
 import Submit from '../../common/components/forms/submit';
 import { ApplicationConsumer } from '../../contexts/application';
 import { addStandardLine } from '../../services/standardLinesService';
@@ -24,7 +24,12 @@ interface AddStandardLineProps extends RouteComponentProps {
 }
 
 const validationSchema = object({
-    expiryDate: string()
+    files: array()
+        .max(1)
+        .min(1)
+        .required()
+        .label('Standard Line'),
+    expiryDate: date()
         .required()
         .label('Expiry Date'),
     topic: string()

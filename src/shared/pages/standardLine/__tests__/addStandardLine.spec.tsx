@@ -63,7 +63,7 @@ beforeEach(() => {
     mockStandardLine = {
         expiryDate: '',
         topic: '',
-        files: []
+        files: undefined
     };
     useReducerSpy.mockImplementation(() => [mockStandardLine, reducerDispatch]);
     useErrorSpy.mockImplementation(() => [{}, addFormErrorSpy, clearErrorsSpy, setMessageSpy]);
@@ -105,7 +105,7 @@ describe('when the submit button is clicked', () => {
     describe('and the data is filled in', () => {
 
         beforeEach(async () => {
-            mockStandardLine.expiryDate = '__expiryDate__';
+            mockStandardLine.expiryDate = '2001-01-01';
             mockStandardLine.files = [createMockFile()];
             mockStandardLine.topic = '__topic__';
             const submitButton = await waitForElement(async () => {
@@ -160,8 +160,9 @@ describe('when the submit button is clicked', () => {
         });
 
         it('should set the error state', () => {
-            expect(addFormErrorSpy).toHaveBeenNthCalledWith(1, { key: 'expiryDate', value: 'A Expiry Date is required' });
-            expect(addFormErrorSpy).toHaveBeenNthCalledWith(2, { key: 'topic', value: 'A Topic is required' });
+            expect(addFormErrorSpy).toHaveBeenNthCalledWith(1, { key: 'files', value: 'The Standard Line is required' });
+            expect(addFormErrorSpy).toHaveBeenNthCalledWith(2, { key: 'expiryDate', value: 'The Expiry Date is invalid' });
+            expect(addFormErrorSpy).toHaveBeenNthCalledWith(3, { key: 'topic', value: 'The Topic is required' });
         });
     });
 });
