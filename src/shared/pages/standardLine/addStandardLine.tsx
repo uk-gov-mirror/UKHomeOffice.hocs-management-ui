@@ -61,10 +61,10 @@ const AddStandardLine: React.FC<AddStandardLineProps> = ({ csrfToken, history })
         clearErrors();
         if (validate(validationSchema, standardLine, addFormError)) {
             const data = new FormData();
-            data.append('file', standardLine.file![0]);
+            data.append('file', standardLine.files![0]);
             data.append('topic', standardLine.topic);
             data.append('expiryDate', standardLine.expiryDate);
-            // @ts-ignore
+
             addStandardLine(data).then(() => {
                 history.push('/');
             }).catch((error: any) => {
@@ -101,7 +101,7 @@ const AddStandardLine: React.FC<AddStandardLineProps> = ({ csrfToken, history })
                             onSelectedItemChange={onSelectedTopicChange}
                         />
                         <DocumentAdd
-                            name="file"
+                            name="files"
                             updateState={dispatch}
                         />
                         <DateInput

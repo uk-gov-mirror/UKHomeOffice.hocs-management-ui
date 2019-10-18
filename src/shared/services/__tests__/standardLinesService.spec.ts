@@ -16,6 +16,11 @@ const createMockFile = (name: string = 'mock.txt', size: number = 1024, mimeType
 
     return file;
 };
+const mockFile = createMockFile();
+const standardLine = new FormData();
+standardLine.append('expiryDate', '2019-10-15T16:17:00.1Z');
+standardLine.append('file', mockFile);
+standardLine.append('topic', '__topicId__');
 
 jest.mock('axios');
 
@@ -28,10 +33,9 @@ describe('when the createStandardLine method is called', () => {
     describe('and the request is sucessful', () => {
         it('should make an api call and return a resolved promise', async () => {
             expect.assertions(2);
-            const mockFile = createMockFile();
-            await addStandardLine({ expiryDate: '2019-10-15T16:17:00.1Z', file: [mockFile], topic: '__topicId__' }).then(() => {
+            await addStandardLine(standardLine).then(() => {
                 expect(axios.post).toHaveBeenCalledTimes(1);
-                expect(axios.post).toHaveBeenCalledWith('/api/standard-lines', { expiryDate: '2019-10-15T16:17:00.1Z', file: mockFile, topic: '__topicId__' });
+                expect(axios.post).toHaveBeenCalledWith('/api/standard-lines', standardLine);
             });
         });
     });
@@ -40,9 +44,8 @@ describe('when the createStandardLine method is called', () => {
         it('should return a resolved promise with the team object', async () => {
             jest.spyOn(axios, 'post').mockReturnValue(Promise.reject(new Error('__error__')));
             expect.assertions(2);
-            const mockFile = createMockFile();
 
-            await addStandardLine({ expiryDate: '2019-10-15T16:17:00.1Z', file: [mockFile], topic: '__topicId__' }).catch((error: Error) => {
+            await addStandardLine(standardLine).catch((error: Error) => {
                 expect(axios.post).toHaveBeenCalledTimes(1);
                 expect(error.message).toEqual('__error__');
             });
