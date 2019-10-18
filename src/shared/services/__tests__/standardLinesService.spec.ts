@@ -29,7 +29,7 @@ describe('when the createStandardLine method is called', () => {
         it('should make an api call and return a resolved promise', async () => {
             expect.assertions(2);
             const mockFile = createMockFile();
-            await addStandardLine({ expiryDate: '2019-10-15T16:17:00.1Z', file: mockFile, topic: '__topicId__' }).then(() => {
+            await addStandardLine({ expiryDate: '2019-10-15T16:17:00.1Z', file: [mockFile], topic: '__topicId__' }).then(() => {
                 expect(axios.post).toHaveBeenCalledTimes(1);
                 expect(axios.post).toHaveBeenCalledWith('/api/standard-lines', { expiryDate: '2019-10-15T16:17:00.1Z', file: mockFile, topic: '__topicId__' });
             });
@@ -42,7 +42,7 @@ describe('when the createStandardLine method is called', () => {
             expect.assertions(2);
             const mockFile = createMockFile();
 
-            await addStandardLine({ expiryDate: '2019-10-15T16:17:00.1Z', file: mockFile, topic: '__topicId__' }).catch((error: Error) => {
+            await addStandardLine({ expiryDate: '2019-10-15T16:17:00.1Z', file: [mockFile], topic: '__topicId__' }).catch((error: Error) => {
                 expect(axios.post).toHaveBeenCalledTimes(1);
                 expect(error.message).toEqual('__error__');
             });

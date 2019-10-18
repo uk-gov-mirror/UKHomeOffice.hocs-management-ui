@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const bodyParser = require('body-parser');
-const apiStandardLineRouter = require('./standardLine');
+const apiStandardLineRouter = require('./standardLines');
 const apiTeamRouter = require('./teams');
 const apiTopicsRouter = require('./topics');
 const apiUnitRouter = require('./units');
@@ -10,7 +10,7 @@ const { apiErrorMiddleware } = require('../../middleware/request');
 
 router.post('*', bodyParser.json(), bodyParser.urlencoded());
 router.delete('*', bodyParser.json(), bodyParser.urlencoded());
-router.use('/standard-line', apiStandardLineRouter);
+router.use('/standard-lines', apiStandardLineRouter);
 router.use('/teams', apiTeamRouter);
 router.use('/topics', apiTopicsRouter);
 router.use('/units', apiUnitRouter);

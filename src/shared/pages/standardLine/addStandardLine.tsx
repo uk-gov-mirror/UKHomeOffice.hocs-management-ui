@@ -26,12 +26,10 @@ interface AddStandardLineProps extends RouteComponentProps {
 const validationSchema = object({
     expiryDate: string()
         .required()
-        .label('Expiry Date')
-        .matches(/^[a-zA-Z0-9_,.!? ()&]*$/),
+        .label('Expiry Date'),
     topic: string()
         .required()
         .label('Topic')
-        .matches(/^[a-zA-Z0-9_,.!? ()&]*$/)
 });
 
 const AddStandardLine: React.FC<AddStandardLineProps> = ({ csrfToken, history }) => {
@@ -62,13 +60,18 @@ const AddStandardLine: React.FC<AddStandardLineProps> = ({ csrfToken, history })
         event.preventDefault();
         clearErrors();
         if (validate(validationSchema, standardLine, addFormError)) {
-            addStandardLine(standardLine).then(() => {
+            const data = new FormData();
+            data.append('file', standardLine.file![0]);
+            data.append('topic', standardLine.topic);
+            data.append('expiryDate', standardLine.expiryDate);
+            // @ts-ignore
+            addStandardLine(data).then(() => {
                 history.push('/');
-            }).catch((error) => {
+            }).catch((error: any) => {
                 if (error && error.response && error.response.status === 409) {
-                    setErrorMessage(new ErrorMessage(constants.DUPLICATE_UNIT_DESCRIPTION, constants.VALIDATION_ERROR_TITLE));
+                    setErrorMessage(new ErrorMessage('todo: error', constants.VALIDATION_ERROR_TITLE));
                 } else {
-                    setErrorMessage(new ErrorMessage(constants.ADD_UNIT_ERROR_DESCRIPTION, constants.GENERAL_ERROR_TITLE));
+                    setErrorMessage(new ErrorMessage('todo: error', constants.GENERAL_ERROR_TITLE));
                 }
             });
         }
@@ -98,12 +101,12 @@ const AddStandardLine: React.FC<AddStandardLineProps> = ({ csrfToken, history })
                             onSelectedItemChange={onSelectedTopicChange}
                         />
                         <DocumentAdd
-                            name="files"
+                            name="file"
                             updateState={dispatch}
                         />
                         <DateInput
-                            name="expiryDate"
                             label="Expiry Date"
+                            name="expiryDate"
                             updateState={dispatch}
                         />
                         <Submit />

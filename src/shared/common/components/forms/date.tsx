@@ -22,7 +22,7 @@ class DateInput extends Component<DateInputProps> {
 
     onChange(field: string, value: string) {
         this.setState({ [field]: value }, () => {
-            this.props.updateState({ name: this.props.name, value: `${this.state[this.datePart('day')]}-${this.state[this.datePart('month')]}-${this.state[this.datePart('year')]}` });
+            this.props.updateState({ name: this.props.name, value: `${this.state[this.datePart('year')]}-${this.state[this.datePart('month')]}-${this.state[this.datePart('day')]}` });
         });
     }
 

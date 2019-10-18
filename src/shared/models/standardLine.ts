@@ -1,5 +1,5 @@
 export default interface StandardLine {
     expiryDate: string;
-    file?: File;
+    file?: File[];
     topic: string;
 }
