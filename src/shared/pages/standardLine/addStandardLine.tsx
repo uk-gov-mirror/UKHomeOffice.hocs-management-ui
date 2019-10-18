@@ -68,11 +68,7 @@ const AddStandardLine: React.FC<AddStandardLineProps> = ({ csrfToken, history })
             addStandardLine(data).then(() => {
                 history.push('/');
             }).catch((error: any) => {
-                if (error && error.response && error.response.status === 409) {
-                    setErrorMessage(new ErrorMessage('todo: error', constants.VALIDATION_ERROR_TITLE));
-                } else {
-                    setErrorMessage(new ErrorMessage('todo: error', constants.GENERAL_ERROR_TITLE));
-                }
+                setErrorMessage(new ErrorMessage(constants.ADD_STANDARD_LINE_ERROR_DESCRIPTION, constants.GENERAL_ERROR_TITLE));
             });
         }
     };

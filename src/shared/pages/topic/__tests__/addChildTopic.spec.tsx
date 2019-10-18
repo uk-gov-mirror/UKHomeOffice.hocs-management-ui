@@ -72,7 +72,7 @@ beforeEach(() => {
     });
 });
 
-describe('when the addUnit component is mounted', () => {
+describe('when the addChildTopic component is mounted', () => {
     it('should render with default props', async () => {
         expect.assertions(2);
 
@@ -82,7 +82,7 @@ describe('when the addUnit component is mounted', () => {
         });
     });
 
-    it('should display an error if the call to retrieve the users fails', async () => {
+    it('should display an error if the call to retrieve the parent topics fails', async () => {
         expect.assertions(1);
         getParentTopicsSpy.mockImplementation(() => Promise.reject('error'));
 

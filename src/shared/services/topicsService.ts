@@ -2,7 +2,6 @@ import axios from 'axios';
 import Topic from '../models/topic';
 import Item from '../models/item';
 
-
 const sortByLabel: ((a: Item, b: Item) => number) = (a, b) => {
     const labelA = a.label.toLocaleLowerCase();
     const labelB = b.label.toLocaleLowerCase();
