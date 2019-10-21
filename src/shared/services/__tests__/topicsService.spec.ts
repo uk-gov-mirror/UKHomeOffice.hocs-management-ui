@@ -3,7 +3,6 @@ import { addChildTopic, getParentTopics, getTopics } from '../topicsService';
 import Item from '../../models/item';
 import Topic from '../../models/topic';
 
-
 jest.mock('axios');
 
 const axiosGetSpy: jest.SpyInstance = jest.spyOn(axios, 'get');
@@ -12,6 +11,7 @@ const axiosPostSpy: jest.SpyInstance = jest.spyOn(axios, 'post');
 beforeEach(() => {
     jest.resetAllMocks();
 });
+
 describe('when the getParentTopics method is called', () => {
 
     beforeEach(() => {
@@ -73,27 +73,27 @@ describe('when the addChildTopic method is called', () => {
             });
         });
     });
+});
 
-    describe('when the getTopics method is called', () => {
-        describe('and the request is successful', () => {
-            it('should return a resolved promise with the topics object', async () => {
-                jest.spyOn(axios, 'get').mockReturnValue(Promise.resolve({ data: { displayName: '__displayName__' } }));
-                expect.assertions(1);
+describe('when the getTopics method is called', () => {
+    describe('and the request is successful', () => {
+        it('should return a resolved promise with the topics object', async () => {
+            jest.spyOn(axios, 'get').mockReturnValue(Promise.resolve({ data: [{ displayName: '__displayName__' }] }));
+            expect.assertions(1);
 
-                await getTopics().then((payload: Topic[]) => {
-                    expect(payload).toStrictEqual({ displayName: '__displayName__' });
-                });
+            await getTopics().then((payload: Topic[]) => {
+                expect(payload).toStrictEqual([{ displayName: '__displayName__' }]);
             });
         });
+    });
 
-        describe('and the request fails', () => {
-            it('should return a rejected promise with the topic object', async () => {
-                jest.spyOn(axios, 'get').mockReturnValue(Promise.reject(new Error('__error__')));
-                expect.assertions(1);
+    describe('and the request fails', () => {
+        it('should return a rejected promise with the topic object', async () => {
+            jest.spyOn(axios, 'get').mockReturnValue(Promise.reject(new Error('__error__')));
+            expect.assertions(1);
 
-                await getTopics().catch((error: Error) => {
-                    expect(error.message).toEqual('__error__');
-                });
+            await getTopics().catch((error: Error) => {
+                expect(error.message).toEqual('__error__');
             });
         });
     });
