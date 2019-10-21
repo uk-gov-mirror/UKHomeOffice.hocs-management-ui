@@ -9,6 +9,16 @@ const Dashboard: React.FC = () => (
                 <ul className="govuk-list">
                     <li>
                         <h3 className="govuk-heading-m">
+                            Standard Lines
+                        </h3>
+                        <ul className="govuk-list govuk-list--bullet">
+                            <li>
+                                <Link className="govuk-link" to="/add-standard-line">Add a Standard Line</Link>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <h3 className="govuk-heading-m">
                             Team Management
                         </h3>
                         <ul className="govuk-list govuk-list--bullet">
@@ -24,6 +34,9 @@ const Dashboard: React.FC = () => (
                         <ul className="govuk-list govuk-list--bullet">
                             <li>
                                 <Link className="govuk-link" to="/add-child-topic">Add Child Topic</Link>
+                            </li>
+                            <li>
+                                <Link className="govuk-link" to="/topic-to-team">Link topic to team</Link>
                             </li>
                         </ul>
                     </li>

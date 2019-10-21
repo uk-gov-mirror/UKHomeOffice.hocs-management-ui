@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when the addUnit component is mounted should render with default props 1`] = `
+exports[`when the addChildTopic component is mounted should render with default props 1`] = `
 <div>
   <div
     class="govuk-grid-row"

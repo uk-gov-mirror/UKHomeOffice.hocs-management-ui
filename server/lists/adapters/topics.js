@@ -9,3 +9,4 @@ module.exports = async (data, { logger }) => {
         })
         .sort(byLabel);
 };
+

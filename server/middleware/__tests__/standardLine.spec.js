@@ -10,7 +10,7 @@ describe('when the standardLine middleware is called', () => {
 
     const headers = '__headers__';
     const file = { key: '__key__', originalname: '__originalname__' };
-    const body = { topic: '__topic__', expiry_date: '__expiry_date__' };
+    const body = { topic: '__topic__', expiryDate: '__expiry_date__' };
     const req = { body: body, files: [file], user: '__user__' };
     const sendStatus = jest.fn();
     const res = { sendStatus };

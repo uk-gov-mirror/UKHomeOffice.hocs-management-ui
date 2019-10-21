@@ -11,20 +11,19 @@ async function addStandardLine(req, res, next) {
             s3UntrustedUrl: document.key,
             displayName: document.originalname,
             topicUUID: req.body.topic,
-            expires: req.body.expiry_date
+            expires: req.body.expiryDate
         };
 
         const options = {
             headers: User.createHeaders(req.user)
         };
         await infoService.post('/standardLine', request, options);
+        res.sendStatus(200);
     }
     catch (error) {
         logger.error(error);
-
         next(error);
     }
-    res.sendStatus(200);
 }
 
 module.exports = addStandardLine;

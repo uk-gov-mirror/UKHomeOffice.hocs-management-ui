@@ -21,7 +21,7 @@ beforeEach(() => {
 });
 
 describe('when the getUsers method is called', () => {
-    describe('and the request is sucessful', () => {
+    describe('and the request is successful', () => {
         it('should return a resolved promise with the users collection', async () => {
             expect.assertions(2);
 

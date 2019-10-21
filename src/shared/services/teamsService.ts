@@ -1,6 +1,6 @@
 import axios from 'axios';
-import Team from '../models/team';
 import Item from '../models/item';
+import Team from '../models/team';
 
 export const getTeam = (teamId: string) => new Promise<Team>((resolve, reject) =>
     axios.get(`/api/teams/${teamId}`)
