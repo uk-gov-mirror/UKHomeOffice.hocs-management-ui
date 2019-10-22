@@ -8,6 +8,7 @@ import TopicView from '../../pages/topic/topicView/topicView';
 import TopicSearch from '../../pages/topic/topicSearch/topicSearch';
 import AddChildTopic from '../../pages/topic/addChildTopic';
 import AddTeamsToTopic from '../../pages/topic/addTeamsToTopic/addTeamsToTopic';
+import UnitSearch from '../../pages/unit/unitSearch/unitSearch';
 import AddStandardLine from '../../pages/standardLine/addStandardLine';
 
 
@@ -78,6 +79,12 @@ const routes = [
         exact: true,
         component: AddStandardLine,
         title: 'Add Standard Line'
+    },
+    {
+        path: '/unit-search',
+        exact: true,
+        component: UnitSearch,
+        title: 'UnitSearch'
     },
     {
         component: Error,

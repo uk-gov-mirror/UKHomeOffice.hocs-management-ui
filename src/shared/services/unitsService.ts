@@ -6,3 +6,9 @@ export const createUnit = (unit: Unit) => new Promise((resolve, reject) => axios
     .then(() => resolve())
     .catch(reason => reject(reason))
 );
+
+export const getUnits = () => new Promise<[Unit]>((resolve, reject) => axios
+    .get('/api/units')
+    .then(response => resolve(response.data))
+    .catch(error => reject(error))
+);

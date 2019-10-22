@@ -1,3 +1,4 @@
+
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -47,6 +48,9 @@ const Dashboard: React.FC = () => (
                         <ul className="govuk-list govuk-list--bullet">
                             <li>
                                 <Link className="govuk-link" to="/add-unit">Add a Unit</Link>
+                            </li>
+                            <li>
+                                <Link className="govuk-link" to="/unit-search">View Units and their teams</Link>
                             </li>
                         </ul>
                     </li>

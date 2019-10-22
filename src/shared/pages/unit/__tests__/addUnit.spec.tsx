@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { match, MemoryRouter } from 'react-router-dom';
 import { createBrowserHistory, History, Location } from 'history';
@@ -47,7 +48,8 @@ beforeEach(() => {
     };
     mockUnit = {
         displayName: '',
-        shortCode: ''
+        shortCode: '',
+        value: ''
     };
     useReducerSpy.mockImplementation(() => [mockUnit, reducerDispatch]);
     useErrorSpy.mockImplementation(() => [{}, addFormErrorSpy, clearErrorsSpy, setMessageSpy]);

@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`when the unitSearch component is mounted component should render 1`] = `
+<div>
+  <div
+    class="govuk-form-group"
+  >
+    <a
+      class="govuk-back-link"
+      href="/"
+    >
+      Back
+    </a>
+    <h1
+      class="govuk-heading-xl"
+    >
+      Unit List
+    </h1>
+    <table
+      class="govuk-table"
+    >
+      <caption
+        class="govuk-table__caption"
+      >
+        Units
+      </caption>
+      <tbody
+        class="govuk-table__body"
+      >
+        <tr
+          class="govuk-table__row"
+        >
+          <th
+            class="govuk-table__header"
+            scope="row"
+          >
+            Home Office General Property
+          </th>
+        </tr>
+        <tr
+          class="govuk-table__row"
+        >
+          <th
+            class="govuk-table__header"
+            scope="row"
+          >
+            Home Office General Property
+          </th>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+`;
