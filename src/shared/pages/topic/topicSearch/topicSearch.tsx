@@ -15,10 +15,10 @@ import {
     GENERAL_ERROR_TITLE,
     LOAD_TOPICS_ERROR_DESCRIPTION
 } from '../../../models/constants';
-import ErrorMessage from "../../../models/errorMessage";
-import {Link} from "react-router-dom";
-import Submit from "../../../common/components/forms/submit";
-import Item from "../../../models/item";
+import ErrorMessage from '../../../models/errorMessage';
+import { Link } from 'react-router-dom';
+import Submit from '../../../common/components/forms/submit';
+import Item from '../../../models/item';
 
 interface TopicSearchProps extends RouteComponentProps {
     csrfToken?: string;

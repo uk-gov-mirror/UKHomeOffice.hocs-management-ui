@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when the addChildTopic component is mounted should render with default props 1`] = `
+exports[`when the addStandardLine component is mounted should render with default props 1`] = `
 <div>
   <div
     class="govuk-grid-row"
@@ -17,7 +17,7 @@ exports[`when the addChildTopic component is mounted should render with default 
       <h1
         class="govuk-heading-xl"
       >
-        Add Child Topic
+        Add a Standard Line
       </h1>
     </div>
   </div>
@@ -28,6 +28,7 @@ exports[`when the addChildTopic component is mounted should render with default 
       class="govuk-grid-column-one-half-from-desktop"
     >
       <form
+        action="/api/standardLines"
         method="POST"
       >
         <input
@@ -40,14 +41,14 @@ exports[`when the addChildTopic component is mounted should render with default 
         >
           <label
             class="govuk-label govuk-label--s"
-            for="parent-topics-input"
-            id="parent-topics-label"
+            for="topics-input"
+            id="topics-label"
           >
-            Select The Parent Topic
+            Topics
           </label>
           <div
             class=" css-2b097c-container"
-            id="parent-topics"
+            id="topics"
           >
             <div
               class="govuk-typeahead__control css-ia584n-Control"
@@ -72,7 +73,7 @@ exports[`when the addChildTopic component is mounted should render with default 
                       autocapitalize="none"
                       autocomplete="off"
                       autocorrect="off"
-                      id="parent-topics-input"
+                      id="topics-input"
                       spellcheck="false"
                       style="box-sizing: content-box; width: 2px; border: 0px; font-size: inherit; opacity: 1; outline: 0; padding: 0px;"
                       tabindex="0"
@@ -116,19 +117,115 @@ exports[`when the addChildTopic component is mounted should render with default 
           class="govuk-form-group"
         >
           <label
-            class="govuk-label govuk-label--s"
-            for="displayName"
-            id="displayName-label"
+            class="govuk-label"
+            for="files"
+            id="files-label"
           >
-            Display Name
+            <label
+              class="govuk-label govuk-label--s"
+              for="files"
+              id="files-label"
+            >
+              Add document
+            </label>
           </label>
           <input
-            class="govuk-input"
-            id="displayName"
-            name="displayName"
-            type="text"
-            value=""
+            class="govuk-file-upload"
+            id="files"
+            name="files"
+            type="file"
           />
+        </div>
+        <div
+          class="govuk-form-group"
+        >
+          <fieldset
+            class="govuk-fieldset"
+            id="expiryDate"
+            role="group"
+          >
+            <legend
+              class="govuk-fieldset__legend govuk-label--s"
+            >
+              Expiry Date
+            </legend>
+            <div
+              class="govuk-date-input"
+            >
+              <div
+                class="govuk-date-input__item"
+              >
+                <div
+                  class="govuk-form-group"
+                >
+                  <label
+                    class="govuk-label govuk-date-input__label"
+                    for="expiryDate-day"
+                  >
+                    Day
+                  </label>
+                  <input
+                    class="govuk-input govuk-date-input__input govuk-input--width-2 "
+                    id="expiryDate-day"
+                    max="31"
+                    min="1"
+                    name="expiryDate-day"
+                    pattern="[0-9]*"
+                    type="number"
+                    value=""
+                  />
+                </div>
+              </div>
+              <div
+                class="govuk-date-input__item"
+              >
+                <div
+                  class="govuk-form-group"
+                >
+                  <label
+                    class="govuk-label govuk-date-input__label"
+                    for="expiryDate-month"
+                  >
+                    Month
+                  </label>
+                  <input
+                    class="govuk-input govuk-date-input__input govuk-input--width-2 "
+                    id="expiryDate-month"
+                    max="12"
+                    min="1"
+                    name="expiryDate-month"
+                    pattern="[0-9]*"
+                    type="number"
+                    value=""
+                  />
+                </div>
+              </div>
+              <div
+                class="govuk-date-input__item"
+              >
+                <div
+                  class="govuk-form-group"
+                >
+                  <label
+                    class="govuk-label govuk-date-input__label"
+                    for="expiryDate-year"
+                  >
+                    Year
+                  </label>
+                  <input
+                    class="govuk-input govuk-date-input__input govuk-input--width-4  "
+                    id="expiryDate-year"
+                    max="2119"
+                    min="1900"
+                    name="expiryDate-year"
+                    pattern="[0-9]*"
+                    type="number"
+                    value=""
+                  />
+                </div>
+              </div>
+            </div>
+          </fieldset>
         </div>
         <input
           class="govuk-button"

@@ -1,18 +1,32 @@
-
 import React from 'react';
 import { match, MemoryRouter } from 'react-router-dom';
 import { createBrowserHistory, History, Location } from 'history';
 import { act, render, RenderResult, wait, fireEvent, waitForElement } from '@testing-library/react';
-import AddUnit from '../addUnit';
-import * as UnitsService from '../../../services/unitsService';
-import { ADD_UNIT_ERROR_DESCRIPTION, GENERAL_ERROR_TITLE, DUPLICATE_UNIT_DESCRIPTION, VALIDATION_ERROR_TITLE } from '../../../models/constants';
-import Unit from '../../../models/unit';
+import AddStandardLine from '../addStandardLine';
+import * as StandardLinesService from '../../../services/standardLinesService';
+import { GENERAL_ERROR_TITLE, ADD_STANDARD_LINE_ERROR_DESCRIPTION, LOAD_TOPICS_ERROR_DESCRIPTION } from '../../../models/constants';
+import StandardLine from '../../../models/standardLine';
 import * as useError from '../../../hooks/useError';
+import * as TopicsService from '../../../services/topicsService';
+import { createMockFile } from '../../../../../test/createMockFile';
+
+jest.mock('../../../services/topicsService', () => ({
+    __esModule: true,
+    getTopics: () => Promise.resolve([{
+        label: '__topic1__',
+        value: '__topicId1__'
+    }, {
+        label: '__topic2__',
+        value: '__topicId2__'
+    }])
+}));
+
+const getTopicsSpy = jest.spyOn(TopicsService, 'getTopics');
 
 let match: match<any>;
 let history: History<any>;
 let location: Location;
-let mockUnit: Unit;
+let mockStandardLine: StandardLine;
 let wrapper: RenderResult;
 
 const useReducerSpy = jest.spyOn(React, 'useReducer');
@@ -24,11 +38,11 @@ const setMessageSpy = jest.fn();
 
 const renderComponent = () => render(
     <MemoryRouter>
-        <AddUnit history={history} location={location} match={match}></AddUnit>
+        <AddStandardLine history={history} location={location} match={match}></AddStandardLine>
     </MemoryRouter>
 );
 
-jest.spyOn(UnitsService, 'createUnit').mockImplementation(() => Promise.resolve());
+jest.spyOn(StandardLinesService, 'addStandardLine').mockImplementation(() => Promise.resolve());
 
 beforeEach(() => {
     history = createBrowserHistory();
@@ -46,12 +60,12 @@ beforeEach(() => {
         search: '',
         state: {}
     };
-    mockUnit = {
-        displayName: '',
-        shortCode: '',
-        value: ''
+    mockStandardLine = {
+        expiryDate: '',
+        topic: '',
+        files: undefined
     };
-    useReducerSpy.mockImplementation(() => [mockUnit, reducerDispatch]);
+    useReducerSpy.mockImplementation(() => [mockStandardLine, reducerDispatch]);
     useErrorSpy.mockImplementation(() => [{}, addFormErrorSpy, clearErrorsSpy, setMessageSpy]);
     history.push = jest.fn();
     reducerDispatch.mockReset();
@@ -63,7 +77,7 @@ beforeEach(() => {
     });
 });
 
-describe('when the addUnit component is mounted', () => {
+describe('when the addStandardLine component is mounted', () => {
     it('should render with default props', async () => {
         expect.assertions(1);
 
@@ -71,37 +85,19 @@ describe('when the addUnit component is mounted', () => {
             expect(wrapper.container).toMatchSnapshot();
         });
     });
-});
 
-describe('when the display name is entered', () => {
-    it('should be persisted in the page state', async () => {
+    it('should display an error if the call to retrieve the parent topics fails', async () => {
         expect.assertions(1);
+        getTopicsSpy.mockImplementation(() => Promise.reject('error'));
 
-        const displayNameElement = await waitForElement(async () => {
-            return await wrapper.findByLabelText('Display Name');
+        act(() => {
+            wrapper = renderComponent();
         });
-
-        fireEvent.blur(displayNameElement, { target: { name: 'displayName', value: '__displayName__' } });
 
         await wait(() => {
-            expect(reducerDispatch).toHaveBeenCalledWith({ name: 'displayName', value: '__displayName__' });
-        });
-    });
-});
-
-describe('when the short code is entered', () => {
-    it('should be persisted in the page state', async () => {
-        expect.assertions(1);
-
-        const shortCodeElement = await waitForElement(async () => {
-            return await wrapper.findByLabelText('Short Code');
+            expect(setMessageSpy).toBeCalledWith({ title: GENERAL_ERROR_TITLE, description: LOAD_TOPICS_ERROR_DESCRIPTION });
         });
 
-        fireEvent.blur(shortCodeElement, { target: { name: 'shortCode', value: '__shortCode__' } });
-
-        await wait(() => {
-            expect(reducerDispatch).toHaveBeenCalledWith({ name: 'shortCode', value: '__shortCode__' });
-        });
     });
 });
 
@@ -109,8 +105,9 @@ describe('when the submit button is clicked', () => {
     describe('and the data is filled in', () => {
 
         beforeEach(async () => {
-            mockUnit.displayName = '__displayName__';
-            mockUnit.shortCode = '__shortCode__';
+            mockStandardLine.expiryDate = '2001-01-01';
+            mockStandardLine.files = [createMockFile()];
+            mockStandardLine.topic = '__topic__';
             const submitButton = await waitForElement(async () => {
                 return await wrapper.findByText('Submit');
             });
@@ -126,7 +123,7 @@ describe('when the submit button is clicked', () => {
                     expect(history.push).toHaveBeenCalledWith('/');
                 });
             });
-            it('should call the begin submit action', async () => {
+            it('should clear any previous errors', async () => {
                 expect.assertions(1);
 
                 await wait(() => {
@@ -137,23 +134,15 @@ describe('when the submit button is clicked', () => {
 
         describe('and the service call fails', () => {
             beforeAll(() => {
-                jest.spyOn(UnitsService, 'createUnit').mockImplementationOnce(() => Promise.reject({ response: { status: 500 } }));
+                jest.spyOn(StandardLinesService, 'addStandardLine').mockImplementationOnce(() => Promise.reject({ response: { status: 500 } }));
             });
 
             it('should set the error state', () => {
-                expect(setMessageSpy).toHaveBeenCalledWith({ description: ADD_UNIT_ERROR_DESCRIPTION, title: GENERAL_ERROR_TITLE });
+                expect(setMessageSpy).toHaveBeenCalledWith({ description: ADD_STANDARD_LINE_ERROR_DESCRIPTION, title: GENERAL_ERROR_TITLE });
             });
-            it('should call the begin submit action', () => {
+
+            it('should clear any previous errors', () => {
                 expect(clearErrorsSpy).toHaveBeenCalled();
-            });
-        });
-        describe('and the service call fails with a 409', () => {
-            beforeAll(() => {
-                jest.spyOn(UnitsService, 'createUnit').mockImplementationOnce(() => Promise.reject({ response: { status: 409 } }));
-            });
-
-            it('should set the error state', () => {
-                expect(setMessageSpy).toHaveBeenCalledWith({ description: DUPLICATE_UNIT_DESCRIPTION, title: VALIDATION_ERROR_TITLE });
             });
         });
     });
@@ -171,8 +160,9 @@ describe('when the submit button is clicked', () => {
         });
 
         it('should set the error state', () => {
-            expect(addFormErrorSpy).toHaveBeenNthCalledWith(1, { key: 'displayName', value: 'The Display Name is required' });
-            expect(addFormErrorSpy).toHaveBeenNthCalledWith(2, { key: 'shortCode', value: 'The Short Code is required' });
+            expect(addFormErrorSpy).toHaveBeenNthCalledWith(1, { key: 'files', value: 'The Standard Line is required' });
+            expect(addFormErrorSpy).toHaveBeenNthCalledWith(2, { key: 'expiryDate', value: 'The Expiry Date is invalid' });
+            expect(addFormErrorSpy).toHaveBeenNthCalledWith(3, { key: 'topic', value: 'The Topic is required' });
         });
     });
 });

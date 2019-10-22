@@ -1,8 +1,9 @@
 import React, { Reducer } from 'react';
 import { RouteComponentProps } from 'react-router';
+import { Link } from 'react-router-dom';
 import { object, string } from 'yup';
 import Submit from '../../common/components/forms/submit';
-import Text, { InputEventData } from '../../common/components/forms/text';
+import Text from '../../common/components/forms/text';
 import { ApplicationConsumer } from '../../contexts/application';
 import { createUnit } from '../../services/unitsService';
 import { reducer } from './reducer';
@@ -12,7 +13,7 @@ import useError from '../../hooks/useError';
 import ErrorMessage from '../../models/errorMessage';
 import Unit from '../../models/unit';
 import { validate } from '../../validation';
-import { Link } from 'react-router-dom';
+import InputEventData from '../../models/inputEventData';
 
 interface AddUnitProps extends RouteComponentProps {
     csrfToken?: string;

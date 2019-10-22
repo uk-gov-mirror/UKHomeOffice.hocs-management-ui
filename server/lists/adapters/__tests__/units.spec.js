@@ -9,7 +9,7 @@ const mockLogger = {
 
 describe('Units Adapter', () => {
 
-    it('should transform and sort user data', async () => {
+    it('should transform unit data', async () => {
         const mockData = [
             { displayName: 'displayName1', shortCode: '1', type: 'type1' },
             { displayName: 'displayName2', shortCode: '2', type: 'type2' },
