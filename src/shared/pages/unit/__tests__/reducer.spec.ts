@@ -1,5 +1,5 @@
 import { reducer } from '../reducer';
-import { InputEventData } from '../../../common/components/forms/text';
+import InputEventData from '../../../models/inputEventData';
 
 describe('when an action is dispatched', () => {
     it('will add the value to the state', () => {
