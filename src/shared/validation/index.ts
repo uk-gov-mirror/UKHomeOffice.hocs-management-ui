@@ -2,8 +2,12 @@ import { ObjectSchema, ValidationError, setLocale } from 'yup';
 import { FormError } from '../models/formError';
 
 setLocale({
+    date: {
+        min: 'The ${label} is not a valid date'
+    },
     mixed: {
-        required: 'A ${label} is required'
+        required: 'The ${label} is required',
+        notType: 'The ${label} is invalid'
     },
     string: {
         matches: 'The ${label} contains invalid characters'
