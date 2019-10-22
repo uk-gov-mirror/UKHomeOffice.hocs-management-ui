@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Units Adapter should transform and sort user data 1`] = `
+exports[`Units Adapter should transform unit data 1`] = `
 Array [
   Object {
     "displayName": "displayName1",
