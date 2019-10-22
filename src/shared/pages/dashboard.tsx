@@ -40,7 +40,7 @@ const Dashboard: React.FC = () => (
                                 <Link className="govuk-link" to="/add-unit">Add a Unit</Link>
                             </li>
                             <li>
-                                <a className="govuk-link" href="/unit-search">View Units and their teams</a>
+                                <Link className="govuk-link" to="/unit-search">View Units and their teams</Link>
                             </li>
                         </ul>
                     </li>
