@@ -9,6 +9,8 @@ import TopicSearch from '../../pages/topic/topicSearch/topicSearch';
 import AddChildTopic from '../../pages/topic/addChildTopic';
 import AddTeamsToTopic from '../../pages/topic/addTeamsToTopic/addTeamsToTopic';
 import AddStandardLine from '../../pages/standardLine/addStandardLine';
+import AddTemplate from '../../pages/template/addTemplate';
+
 
 
 export interface Route {
@@ -78,6 +80,12 @@ const routes = [
         exact: true,
         component: AddStandardLine,
         title: 'Add Standard Line'
+    },
+    {
+        path: '/add-template',
+        exact: true,
+        component: AddTemplate,
+        title: 'Add Template'
     },
     {
         component: Error,
