@@ -9,9 +9,12 @@ import { initialState } from './initialState';
 import useError from '../../../hooks/useError';
 import ErrorSummary from '../../../common/components/errorSummary';
 import {
-    EMPTY_SUBMIT_TOPIC_ERROR_DESCRIPTION,
-    EMPTY_SUBMIT_TOPIC_ERROR_TITLE,
-    GENERAL_ERROR_TITLE, LOAD_TEAMS_ERROR_DESCRIPTION, LOAD_TOPIC_ERROR_DESCRIPTION
+    EMPTY_SUBMIT_DRAFT_QA_TEAM_ERROR_DESCRIPTION,
+    EMPTY_SUBMIT_PRIVATE_MINISTER_TEAM_ERROR_DESCRIPTION,
+    EMPTY_SUBMIT_TEAM_ERROR_TITLE,
+    GENERAL_ERROR_TITLE,
+    LOAD_TEAMS_ERROR_DESCRIPTION,
+    LOAD_TOPIC_ERROR_DESCRIPTION
 } from '../../../models/constants';
 import { getTopic } from '../../../services/topicsService';
 import ErrorMessage from '../../../models/errorMessage';
@@ -65,8 +68,10 @@ const TopicView: React.FC<TeamViewProps> = ({ csrfToken, history, match }) => {
 
     const handleOnSubmit = (event: React.FormEvent) => {
         event.preventDefault();
-        if (state.privateMinisterTeam.value === '' || state.draftQATeam.value === '') {
-            setErrorMessage(new ErrorMessage(EMPTY_SUBMIT_TOPIC_ERROR_DESCRIPTION, EMPTY_SUBMIT_TOPIC_ERROR_TITLE));
+        if (state.draftQATeam.value === '') {
+            setErrorMessage(new ErrorMessage(EMPTY_SUBMIT_DRAFT_QA_TEAM_ERROR_DESCRIPTION, EMPTY_SUBMIT_TEAM_ERROR_TITLE));
+        } else if (state.privateMinisterTeam.value === '') {
+            setErrorMessage(new ErrorMessage(EMPTY_SUBMIT_PRIVATE_MINISTER_TEAM_ERROR_DESCRIPTION, EMPTY_SUBMIT_TEAM_ERROR_TITLE));
         } else {
             history.push(`/topic/${state.topic.value}/private-minister/${state.privateMinisterTeam.value}/draft-qa/${state.draftQATeam.value}`);
         }
@@ -105,7 +110,7 @@ const TopicView: React.FC<TeamViewProps> = ({ csrfToken, history, match }) => {
                                 clearable={true}
                                 disabled={false}
                                 getOptions={getTeamsForTypeahead}
-                                label={'Select team assignment for Private Office/Minister sign off stages'}
+                                label={'Select team assignment for Private Office and Minister sign off stages'}
                                 name={'private-minister'}
                                 onSelectedItemChange={onSelectedPrivateMinisterChange}
                             />

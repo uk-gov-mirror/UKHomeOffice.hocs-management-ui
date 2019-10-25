@@ -128,7 +128,7 @@ exports[`when the topicView component is mounted should render with default prop
               for="private-minister-input"
               id="private-minister-label"
             >
-              Select team assignment for Private Office/Minister sign off stages
+              Select team assignment for Private Office and Minister sign off stages
             </label>
             <div
               class=" css-2b097c-container"
