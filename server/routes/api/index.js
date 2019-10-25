@@ -5,6 +5,10 @@ const apiTeamRouter = require('./teams');
 const apiTopicsRouter = require('./topics');
 const apiUnitRouter = require('./units');
 const apiUserRouter = require('./users');
+const apiTemplateRouter = require('./templates');
+const apiCaseTypeRouter = require('./caseTypes');
+
+
 
 const { apiErrorMiddleware } = require('../../middleware/request');
 
@@ -15,6 +19,10 @@ router.use('/teams', apiTeamRouter);
 router.use('/topics', apiTopicsRouter);
 router.use('/units', apiUnitRouter);
 router.use('/users', apiUserRouter);
+router.use('/templates', apiTemplateRouter);
+router.use('/case-types', apiCaseTypeRouter);
+
+
 router.use('*', apiErrorMiddleware);
 
 module.exports = router;
