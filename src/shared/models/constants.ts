@@ -1,5 +1,6 @@
 export const ADD_CHILD_TOPIC_ERROR_DESCRIPTION = 'Something went wrong while adding the child topic. Please try again.';
 export const ADD_STANDARD_LINE_ERROR_DESCRIPTION = 'Something went wrong while adding the standard line. Please try again.';
+export const ADD_TEMPLATE_ERROR_DESCRIPTION = 'Something went wrong while adding the template. Please try again.';
 export const ADD_UNIT_ERROR_DESCRIPTION = 'Something went wrong while adding the unit. Please try again.';
 export const ADD_USER_ERROR_DESCRIPTION = 'Something went wrong while adding the following users. Please try again.';
 export const ADD_USER_ERROR_TITLE = 'There was an error adding the users';
@@ -15,6 +16,7 @@ export const GENERAL_ERROR_TITLE = 'Something went wrong';
 export const LOAD_PARENT_TOPICS_ERROR_DESCRIPTION = 'There was an error retrieving the parent topics.  Please try refreshing the page.';
 export const LOAD_TOPICS_ERROR_DESCRIPTION = 'There was an error retrieving the parent topics.  Please try refreshing the page.';
 export const LOAD_TOPIC_ERROR_DESCRIPTION = 'There was an error retrieving the parent topics.  Please try refreshing the page.';
+export const LOAD_CASE_TYPES_DESCRIPTION = 'There was an error retrieving the case types.  Please try refreshing the page.';
 export const LOAD_TEAM_ERROR_DESCRIPTION = 'There was an error retrieving the team.  Please try refreshing the page.';
 export const LOAD_TEAM_MEMBERS_ERROR_DESCRIPTION = 'There was an error retrieving the teams members.  Please try refreshing the page.';
 export const LOAD_TEAMS_ERROR_DESCRIPTION = 'There was an error retrieving the teams.  Please try refreshing the page.';
