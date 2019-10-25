@@ -1,11 +1,7 @@
-import React, { Reducer, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import TypeAhead from '../../../common/components/typeAhead';
 import { getTeams } from '../../../services/teamsService';
 import { History } from 'history';
-import { State } from './state';
-import { Action } from './actions';
-import { reducer } from './reducer';
-import { initialState } from './initialState';
 import Item from '../../../models/item';
 import ErrorSummary from '../../../common/components/errorSummary';
 import { GENERAL_ERROR_TITLE, LOAD_TEAMS_ERROR_DESCRIPTION, EMPTY_SUBMIT_TEAM_ERROR_DESCRIPTION, EMPTY_SUBMIT_TEAM_ERROR_TITLE } from '../../../models/constants';
@@ -20,23 +16,17 @@ interface TeamSearchProps {
 const TeamSearch: React.FC<TeamSearchProps> = ({ history }) => {
 
     const [pageError, , clearErrors, setErrorMessage] = useError();
-    const [state, dispatch] = React.useReducer<Reducer<State, Action>>(reducer, initialState);
-
-    const onSelectedTeamChange = (selectedTeam: any) => {
-        dispatch({ type: 'AddTeamUUID', payload: selectedTeam.value });
-
-    };
+    const [selectedTeam, setSelectedTeam] = React.useState<Item>();
 
     const handleOnSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
         clearErrors();
-        if (state.teamUUID.length === 0) {
-            setErrorMessage(new ErrorMessage(EMPTY_SUBMIT_TEAM_ERROR_DESCRIPTION, EMPTY_SUBMIT_TEAM_ERROR_TITLE));
+        if (selectedTeam) {
+            history.push(`/team-view/${selectedTeam!.value}`);
             return;
         }
-
-        history.push(`/team-view/${state.teamUUID}`);
+        setErrorMessage(new ErrorMessage(EMPTY_SUBMIT_TEAM_ERROR_DESCRIPTION, EMPTY_SUBMIT_TEAM_ERROR_TITLE));
     };
 
     const getTeamsForTypeahead = useCallback(() => new Promise<Item[]>(resolve => getTeams()
@@ -59,7 +49,7 @@ const TeamSearch: React.FC<TeamSearchProps> = ({ history }) => {
                 getOptions={getTeamsForTypeahead}
                 label={'Teams'}
                 name={'Teams'}
-                onSelectedItemChange={onSelectedTeamChange}
+                onSelectedItemChange={setSelectedTeam}
             />
             <button type="submit" className="govuk-button view-team-button" onClick={handleOnSubmit}>View team</button>
         </div>

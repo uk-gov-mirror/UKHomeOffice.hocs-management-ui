@@ -55,20 +55,20 @@ const TopicView: React.FC<TeamViewProps> = ({ csrfToken, history, match }) => {
             });
     }), []);
 
-    const onSelectedPrivateMinisterChange = (selectedTeamAssignment: any) => {
+    const onSelectedPrivateMinisterChange = (selectedTeamAssignment: Item) => {
         dispatch({ type: 'SetPrivateMinisterTeam', payload: selectedTeamAssignment });
     };
 
-    const onSelectedDraftQAChange = (selectedTeamAssignment: any) => {
+    const onSelectedDraftQAChange = (selectedTeamAssignment: Item) => {
         dispatch({ type: 'SetDraftQATeam', payload: selectedTeamAssignment });
     };
 
     const handleOnSubmit = (event: React.FormEvent) => {
         event.preventDefault();
-        if (state.privateMinisterTeam.value === '' || state.draftQATeam.value === '') {
-            setErrorMessage(new ErrorMessage(EMPTY_SUBMIT_TOPIC_ERROR_DESCRIPTION, EMPTY_SUBMIT_TOPIC_ERROR_TITLE));
-        } else {
+        if (state.privateMinisterTeam && state.draftQATeam) {
             history.push(`/topic/${state.topic.value}/private-minister/${state.privateMinisterTeam.value}/draft-qa/${state.draftQATeam.value}`);
+        } else {
+            setErrorMessage(new ErrorMessage(EMPTY_SUBMIT_TOPIC_ERROR_DESCRIPTION, EMPTY_SUBMIT_TOPIC_ERROR_TITLE));
         }
     };
 

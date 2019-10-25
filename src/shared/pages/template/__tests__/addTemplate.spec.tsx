@@ -61,7 +61,7 @@ beforeEach(() => {
         state: {}
     };
     mockTemplate = {
-        caseType: '',
+        caseType: undefined,
         files: undefined
     };
     useReducerSpy.mockImplementation(() => [mockTemplate, reducerDispatch]);
@@ -105,7 +105,10 @@ describe('when the submit button is clicked', () => {
 
         beforeEach(async () => {
             mockTemplate.files = [createMockFile()];
-            mockTemplate.caseType = '__caseType__';
+            mockTemplate.caseType = {
+                label: '__caseTypeLabel__',
+                value: '__caseTypeValue__'
+            };
             const submitButton = await waitForElement(async () => {
                 return await wrapper.findByText('Submit');
             });

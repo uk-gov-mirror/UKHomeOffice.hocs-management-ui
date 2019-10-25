@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import AsyncSelect from 'react-select/async';
 import { components } from 'react-select';
-import { ActionMeta } from 'react-select/src/types';
 import Item from '../../models/item';
 
 interface TypeAheadProps {
@@ -34,10 +33,8 @@ class TypeAhead extends Component<TypeAheadProps, TypeAheadState> {
         this.setState({ componentMounted: true });
     }
 
-    handleChange(selectedItem: Item, action: ActionMeta) {
-        if (action.action === 'select-option') {
-            this.props.onSelectedItemChange(selectedItem);
-        }
+    handleChange(selectedItem: Item) {
+        this.props.onSelectedItemChange(selectedItem);
     }
 
     filterItems = (inputValue: string, items: Item[]) => items

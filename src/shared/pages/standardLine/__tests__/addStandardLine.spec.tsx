@@ -62,7 +62,7 @@ beforeEach(() => {
     };
     mockStandardLine = {
         expiryDate: '',
-        topic: '',
+        topic: undefined,
         files: undefined
     };
     useReducerSpy.mockImplementation(() => [mockStandardLine, reducerDispatch]);
@@ -107,7 +107,7 @@ describe('when the submit button is clicked', () => {
         beforeEach(async () => {
             mockStandardLine.expiryDate = '2001-01-01';
             mockStandardLine.files = [createMockFile()];
-            mockStandardLine.topic = '__topic__';
+            mockStandardLine.topic = { label: '__topic__', value: '__value__' };
             const submitButton = await waitForElement(async () => {
                 return await wrapper.findByText('Submit');
             });

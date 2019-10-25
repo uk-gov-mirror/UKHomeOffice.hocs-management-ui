@@ -19,12 +19,12 @@ export type SetTeams = {
 export type SetPrivateMinisterTeam = {
     type: 'SetPrivateMinisterTeam';
     payload: Item
-}
+};
 
 export type SetDraftQATeam = {
     type: 'SetDraftQATeam';
     payload: Item
-}
+};
 
 export type Action =
     SetTopic |

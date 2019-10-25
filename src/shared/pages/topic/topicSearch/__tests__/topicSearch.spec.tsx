@@ -1,16 +1,16 @@
 import React from 'react';
-import {createBrowserHistory, History, Location} from 'history';
+import { match, MemoryRouter } from 'react-router-dom';
+import { createBrowserHistory, History, Location } from 'history';
 import { act, wait, fireEvent, getByText, render, RenderResult } from '@testing-library/react';
 import TopicSearch from '../topicSearch';
 import * as TopicsService from '../../../../services/topicsService';
-import { State } from '../state';
 import * as useError from '../../../../hooks/useError';
-import { match, MemoryRouter } from 'react-router-dom';
+import Item from '../../../../models/item';
 
 let match: match<any>;
 let history: History<any>;
 let location: Location;
-let mockState: State;
+let mockState: Item;
 
 jest.mock('../../../../services/topicsService', () => ({
     __esModule: true,
@@ -24,7 +24,7 @@ jest.mock('../../../../services/topicsService', () => ({
 }));
 
 const getTopicsSpy = jest.spyOn(TopicsService, 'getTopics');
-const useReducerSpy = jest.spyOn(React, 'useReducer');
+const useStateSpy = jest.spyOn(React, 'useState');
 const useErrorSpy = jest.spyOn(useError, 'default');
 
 const renderComponent = () => render(
@@ -36,12 +36,10 @@ const renderComponent = () => render(
 beforeEach(() => {
     history = createBrowserHistory();
     mockState = {
-        selectedTopic: {
-            label: '__topicLabel__',
-            value: '__topicValue__'
-        }
+        label: '__topicLabel__',
+        value: '__topicValue__'
     };
-    useReducerSpy.mockImplementationOnce(() => [mockState, jest.fn()]);
+    useStateSpy.mockImplementationOnce(() => [mockState, jest.fn()]);
     useErrorSpy.mockImplementation(() => [{}, jest.fn(), jest.fn(), jest.fn()]);
 });
 
