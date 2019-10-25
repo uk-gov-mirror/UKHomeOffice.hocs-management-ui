@@ -1,4 +1,4 @@
-import {createHeaders} from "../../models/user";
+import { createHeaders } from '../../models/user';
 
 jest.mock('../../clients/index');
 jest.mock('../../libs/logger');

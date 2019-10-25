@@ -20,6 +20,16 @@ const Dashboard: React.FC = () => (
                     </li>
                     <li>
                         <h3 className="govuk-heading-m">
+                            Templates
+                        </h3>
+                        <ul className="govuk-list govuk-list--bullet">
+                            <li>
+                                <Link className="govuk-link" to="/add-template">Add a Template</Link>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <h3 className="govuk-heading-m">
                             Team Management
                         </h3>
                         <ul className="govuk-list govuk-list--bullet">
