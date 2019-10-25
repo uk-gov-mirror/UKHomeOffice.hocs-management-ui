@@ -1,14 +1,14 @@
 import React from 'react';
+import { MemoryRouter } from 'react-router-dom';
 import { createBrowserHistory, History } from 'history';
 import { act, wait, fireEvent, getByText, render, RenderResult } from '@testing-library/react';
 import TeamSearch from '../teamSearch';
 import * as TeamsService from '../../../../services/teamsService';
-import { State } from '../state';
 import * as useError from '../../../../hooks/useError';
-import { MemoryRouter } from 'react-router-dom';
+import Item from '../../../../models/item';
 
 let history: History<any>;
-let mockState: State;
+let mockState: Item;
 
 jest.mock('../../../../services/teamsService', () => ({
     __esModule: true,
@@ -22,7 +22,7 @@ jest.mock('../../../../services/teamsService', () => ({
 }));
 
 const getTeamsSpy = jest.spyOn(TeamsService, 'getTeams');
-const useReducerSpy = jest.spyOn(React, 'useReducer');
+const useStateSpy = jest.spyOn(React, 'useState');
 const useErrorSpy = jest.spyOn(useError, 'default');
 
 const renderComponent = () => render(
@@ -34,9 +34,10 @@ const renderComponent = () => render(
 beforeEach(() => {
     history = createBrowserHistory();
     mockState = {
-        teamUUID: '__teamName__'
+        label: '__teamName__',
+        value: '__teamValue__'
     };
-    useReducerSpy.mockImplementationOnce(() => [mockState, jest.fn()]);
+    useStateSpy.mockImplementationOnce(() => [mockState, jest.fn()]);
     useErrorSpy.mockImplementation(() => [{}, jest.fn(), jest.fn(), jest.fn()]);
 });
 
@@ -68,6 +69,6 @@ describe('when the view team button is clicked', () => {
             fireEvent.click(addTeamMembersButton);
         });
 
-        expect(history.push).toHaveBeenCalledWith('/team-view/__teamName__');
+        expect(history.push).toHaveBeenCalledWith('/team-view/__teamValue__');
     });
 });

@@ -57,11 +57,11 @@ const addTeamToTopicView: React.FC<AddTeamToTopicProps> = ({ csrfToken, history,
 
     const handleOnSubmit = (event: React.FormEvent) => {
         event.preventDefault();
-        if (state.topic.value === '') {
-            setErrorMessage(new ErrorMessage(EMPTY_SUBMIT_TOPIC_ERROR_DESCRIPTION, EMPTY_SUBMIT_TOPIC_ERROR_TITLE));
-        } else {
+        if (state.topic) {
             addTeamsToUnit(state.topic.value, state.privateMinisterTeam.type, state.draftQaTeam.type);
             history.push('/');
+        } else {
+            setErrorMessage(new ErrorMessage(EMPTY_SUBMIT_TOPIC_ERROR_DESCRIPTION, EMPTY_SUBMIT_TOPIC_ERROR_TITLE));
         }
     };
 

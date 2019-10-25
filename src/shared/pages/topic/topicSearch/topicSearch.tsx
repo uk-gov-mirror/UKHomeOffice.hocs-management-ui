@@ -1,12 +1,8 @@
-import React, { Reducer, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { RouteComponentProps } from 'react-router';
 import TypeAhead from '../../../common/components/typeAhead';
 import { getTopics } from '../../../services/topicsService';
 import { History } from 'history';
-import { State } from './state';
-import { Action } from './actions';
-import { reducer } from './reducer';
-import { initialState } from './initialState';
 import useError from '../../../hooks/useError';
 import ErrorSummary from '../../../common/components/errorSummary';
 import {
@@ -28,7 +24,7 @@ interface TopicSearchProps extends RouteComponentProps {
 const TopicSearch: React.FC<TopicSearchProps> = ({ csrfToken, history }) => {
 
     const [pageError, , , setErrorMessage] = useError();
-    const [state, dispatch] = React.useReducer<Reducer<State, Action>>(reducer, initialState);
+    const [selectedTopic, setSelectedTopic] = React.useState<Item>();
 
     const getTopicsForTypeahead = useCallback(() => new Promise<Item[]>((resolve) => {
         getTopics()
@@ -41,16 +37,12 @@ const TopicSearch: React.FC<TopicSearchProps> = ({ csrfToken, history }) => {
             });
     }), []);
 
-    const onSelectedTopicChange = useCallback((selectedTopic: Item) => {
-        dispatch({ type: 'SetSelectedTopic', payload: selectedTopic });
-    }, []);
-
     const handleOnSubmit = (event: React.FormEvent) => {
         event.preventDefault();
-        if (state.selectedTopic.value === '') {
-            setErrorMessage(new ErrorMessage(EMPTY_SUBMIT_TOPIC_ERROR_DESCRIPTION, EMPTY_SUBMIT_TOPIC_ERROR_TITLE));
+        if (selectedTopic) {
+            history.push(`/topic/${selectedTopic.value}`);
         } else {
-            history.push(`/topic/${state.selectedTopic.value}`);
+            setErrorMessage(new ErrorMessage(EMPTY_SUBMIT_TOPIC_ERROR_DESCRIPTION, EMPTY_SUBMIT_TOPIC_ERROR_TITLE));
         }
     };
 
@@ -77,7 +69,7 @@ const TopicSearch: React.FC<TopicSearchProps> = ({ csrfToken, history }) => {
                             getOptions={getTopicsForTypeahead}
                             label={'Topics'}
                             name={'topics'}
-                            onSelectedItemChange={onSelectedTopicChange}
+                            onSelectedItemChange={setSelectedTopic}
                         />
                         <Submit />
                     </form>
