@@ -37,9 +37,7 @@ const AddTemplate: React.FC<AddTemplateProps> = ({ csrfToken, history }) => {
 
     const [pageError, addFormError, clearErrors, setErrorMessage] = useError('', constants.VALIDATION_ERROR_TITLE);
 
-    const [template, dispatch] = React.useReducer<Reducer<Template, InputEventData>>(reducer, {
-        caseType: ''
-    });
+    const [template, dispatch] = React.useReducer<Reducer<Template, InputEventData>>(reducer, {});
 
     const getCaseTypesForTypeahead = useCallback(() => new Promise<Item[]>((resolve) => {
         getCaseTypes()
@@ -53,7 +51,7 @@ const AddTemplate: React.FC<AddTemplateProps> = ({ csrfToken, history }) => {
     }), []);
 
     const onSelectedCaseTypeChange = useCallback((selectedCaseType: Item) => {
-        dispatch({ name: 'caseType', value: selectedCaseType.value });
+        dispatch({ name: 'caseType', value: selectedCaseType });
     }, []);
 
     const handleSubmit = (event: React.FormEvent) => {
@@ -63,7 +61,7 @@ const AddTemplate: React.FC<AddTemplateProps> = ({ csrfToken, history }) => {
 
             const data = new FormData();
             data.append('file', template.files![0]);
-            data.append('caseType', template.caseType);
+            data.append('caseType', template.caseType!.value);
 
             addTemplate(data).then(() => {
                 history.push('/');
@@ -95,6 +93,7 @@ const AddTemplate: React.FC<AddTemplateProps> = ({ csrfToken, history }) => {
                             label={'Case Types'}
                             name={'case-types'}
                             onSelectedItemChange={onSelectedCaseTypeChange}
+                            value={template.caseType}
                         />
                         <DocumentAdd
                             name="files"
