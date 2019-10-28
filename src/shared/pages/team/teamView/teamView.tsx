@@ -44,7 +44,8 @@ const TeamView: React.FC<TeamMembersProps> = ({ history, match }) => {
             });
     }, []);
 
-    const removeTeamMember = (userUUID: string, teamId: string) => {
+    const removeTeamMember = (userUUID: string, teamId: string, event: React.FormEvent) => {
+        event.preventDefault();
         deleteUserFromTeam(userUUID, teamId)
             .then(() => {
                 getTeamMembers(teamId)
@@ -78,7 +79,9 @@ const TeamView: React.FC<TeamMembersProps> = ({ history, match }) => {
                                 return (
                                     <tr className="govuk-table__row" key={teamMember.value}>
                                         <td className="govuk-table__cell">{teamMember.label}</td>
-                                        <td className="govuk-table__cell"><a href="#" onClick={() => removeTeamMember(teamMember.value, teamId as string)}>Remove</a></td>
+                                        <td className="govuk-table__cell">
+                                            <a href="#" onClick={event => removeTeamMember(teamMember.value, teamId as string, event)}>Remove</a>
+                                        </td>
                                     </tr>
                                 );
                             })
