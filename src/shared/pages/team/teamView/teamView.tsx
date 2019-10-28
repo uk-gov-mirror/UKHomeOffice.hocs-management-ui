@@ -26,7 +26,7 @@ const onAddTeamMembersAddClick = (history: History, teamId: string) => {
 
 const TeamView: React.FC<TeamMembersProps> = ({ history, match }) => {
 
-    const [pageError, , , setErrorMessage] = useError();
+    const [pageError, , clearErrors, setErrorMessage] = useError();
     const [state, dispatch] = React.useReducer<Reducer<State, Action>>(reducer, initialState);
 
     const { params: { teamId } } = match;
@@ -46,6 +46,7 @@ const TeamView: React.FC<TeamMembersProps> = ({ history, match }) => {
 
     const removeTeamMember = (userUUID: string, teamId: string, event: React.FormEvent) => {
         event.preventDefault();
+        clearErrors();
         deleteUserFromTeam(userUUID, teamId)
             .then(() => {
                 getTeamMembers(teamId)
