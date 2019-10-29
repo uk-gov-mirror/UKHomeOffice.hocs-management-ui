@@ -1,7 +1,7 @@
-import Item from "../../../models/item";
+import Item from '../../../models/item';
 
 export interface State {
     topic: Item;
-    privateMinisterTeam: Item,
-    draftQATeam: Item
+    privateMinisterTeam?: Item;
+    draftQATeam?: Item;
 }

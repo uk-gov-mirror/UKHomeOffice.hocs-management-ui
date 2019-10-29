@@ -31,9 +31,10 @@ const validationSchema = object({
         .label('Display Name')
         .matches(/^[a-zA-Z0-9_,.!? ()&]*$/),
     selectedParentTopic: object({
-        label: string().required()
+        label: string()
+            .required()
             .label('Parent Topic')
-    })
+    }).label('Parent Topic')
 });
 
 const AddChildTopic: React.FC<AddChildTopicProps> = ({ csrfToken, contextDispatch, history }) => {

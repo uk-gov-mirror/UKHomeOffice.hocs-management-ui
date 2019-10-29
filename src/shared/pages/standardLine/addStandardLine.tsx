@@ -1,7 +1,7 @@
 import React, { Reducer, useCallback } from 'react';
 import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
-import { object, string, date, array } from 'yup';
+import { object, date, array } from 'yup';
 import Submit from '../../common/components/forms/submit';
 import { ApplicationConsumer } from '../../contexts/application';
 import { addStandardLine } from '../../services/standardLinesService';
@@ -32,7 +32,7 @@ const validationSchema = object({
     expiryDate: date()
         .required()
         .label('Expiry Date'),
-    topic: string()
+    topic: object()
         .required()
         .label('Topic')
 });
@@ -43,7 +43,7 @@ const AddStandardLine: React.FC<AddStandardLineProps> = ({ csrfToken, history })
 
     const [standardLine, dispatch] = React.useReducer<Reducer<StandardLine, InputEventData>>(reducer, {
         expiryDate: '',
-        topic: ''
+        topic: undefined
     });
 
     const getTopicsForTypeahead = useCallback(() => new Promise<Item[]>((resolve) => {
@@ -58,7 +58,7 @@ const AddStandardLine: React.FC<AddStandardLineProps> = ({ csrfToken, history })
     }), []);
 
     const onSelectedTopicChange = useCallback((selectedTopic: Item) => {
-        dispatch({ name: 'topic', value: selectedTopic.value });
+        dispatch({ name: 'topic', value: selectedTopic });
     }, []);
 
     const handleSubmit = (event: React.FormEvent) => {
@@ -67,7 +67,7 @@ const AddStandardLine: React.FC<AddStandardLineProps> = ({ csrfToken, history })
         if (validate(validationSchema, standardLine, addFormError)) {
             const data = new FormData();
             data.append('file', standardLine.files![0]);
-            data.append('topic', standardLine.topic);
+            data.append('topic', standardLine.topic!.value);
             data.append('expiryDate', standardLine.expiryDate);
 
             addStandardLine(data).then(() => {
@@ -100,6 +100,7 @@ const AddStandardLine: React.FC<AddStandardLineProps> = ({ csrfToken, history })
                             label={'Topics'}
                             name={'topics'}
                             onSelectedItemChange={onSelectedTopicChange}
+                            value={standardLine.topic}
                         />
                         <DocumentAdd
                             name="files"

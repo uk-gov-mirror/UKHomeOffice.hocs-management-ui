@@ -58,23 +58,23 @@ const TopicView: React.FC<TeamViewProps> = ({ csrfToken, history, match }) => {
             });
     }), []);
 
-    const onSelectedPrivateMinisterChange = (selectedTeamAssignment: any) => {
+    const onSelectedPrivateMinisterChange = (selectedTeamAssignment: Item) => {
         dispatch({ type: 'SetPrivateMinisterTeam', payload: selectedTeamAssignment });
     };
 
-    const onSelectedDraftQAChange = (selectedTeamAssignment: any) => {
+    const onSelectedDraftQAChange = (selectedTeamAssignment: Item) => {
         dispatch({ type: 'SetDraftQATeam', payload: selectedTeamAssignment });
     };
 
     const handleOnSubmit = (event: React.FormEvent) => {
-        event.preventDefault();
-        if (state.draftQATeam.value === '') {
-            setErrorMessage(new ErrorMessage(EMPTY_SUBMIT_DRAFT_QA_TEAM_ERROR_DESCRIPTION, EMPTY_SUBMIT_TEAM_ERROR_TITLE));
-        } else if (state.privateMinisterTeam.value === '') {
-            setErrorMessage(new ErrorMessage(EMPTY_SUBMIT_PRIVATE_MINISTER_TEAM_ERROR_DESCRIPTION, EMPTY_SUBMIT_TEAM_ERROR_TITLE));
-        } else {
-            history.push(`/topic/${state.topic.value}/private-minister/${state.privateMinisterTeam.value}/draft-qa/${state.draftQATeam.value}`);
-        }
+            event.preventDefault();
+            if (state.privateMinisterTeam && state.draftQATeam) {
+                history.push(`/topic/${state.topic.value}/private-minister/${state.privateMinisterTeam.value}/draft-qa/${state.draftQATeam.value}`);
+            } else if (!state.privateMinisterTeam) {
+                setErrorMessage(new ErrorMessage(EMPTY_SUBMIT_PRIVATE_MINISTER_TEAM_ERROR_DESCRIPTION, EMPTY_SUBMIT_TEAM_ERROR_TITLE));
+            } else if (!state.draftQATeam) {
+                setErrorMessage(new ErrorMessage(EMPTY_SUBMIT_DRAFT_QA_TEAM_ERROR_DESCRIPTION, EMPTY_SUBMIT_TEAM_ERROR_TITLE));
+            }
     };
 
     return (
