@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PageError from '../../models/pageError';
 
 interface ErrorSummaryProps {
@@ -6,12 +6,17 @@ interface ErrorSummaryProps {
 }
 
 const ErrorSummary: React.FC<ErrorSummaryProps> = ({ pageError: { error } }) => {
+    const componentRef = React.createRef<HTMLDivElement>();
+
+    useEffect(() => {
+        componentRef && componentRef.current && componentRef.current.scrollIntoView();
+    }, [error]);
 
     if (error) {
         const { formErrors: errors, description, title: heading } = error;
 
         return (
-            <div className="govuk-error-summary" role="alert" aria-labelledby="error-summary-heading-example-1" tabIndex={-1}>
+            <div className="govuk-error-summary" role="alert" aria-labelledby="error-summary-heading-example-1" tabIndex={-1} ref={componentRef}>
                 <h2 className="govuk-error-summary__title" id="error-summary-heading-example-1">
                     {heading}
                 </h2>
