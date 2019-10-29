@@ -105,7 +105,7 @@ describe('when the submit button is clicked', () => {
     describe('and the data is filled in', () => {
 
         beforeEach(async () => {
-            mockStandardLine.expiryDate = '2001-01-01';
+            mockStandardLine.expiryDate = '2101-01-01';
             mockStandardLine.files = [createMockFile()];
             mockStandardLine.topic = { label: '__topic__', value: '__value__' };
             const submitButton = await waitForElement(async () => {

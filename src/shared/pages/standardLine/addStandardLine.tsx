@@ -31,6 +31,7 @@ const validationSchema = object({
         .label('Standard Line'),
     expiryDate: date()
         .required()
+        .min(new Date(), 'The Expiry Date must be in the future')
         .label('Expiry Date'),
     topic: object()
         .required()
