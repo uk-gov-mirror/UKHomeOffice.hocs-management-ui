@@ -14,7 +14,7 @@ const Router : React.FC = () => (
                       path={path}
                       exact={exact}
                       render={props => (
-                        <PageWrapper match={props.match}>
+                        <PageWrapper match={props.match} location={props.location}>
                           <Page {...props} {...rest} />
                         </PageWrapper>
                       )}

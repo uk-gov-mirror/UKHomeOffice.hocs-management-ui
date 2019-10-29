@@ -1,7 +1,9 @@
 export const ADD_CHILD_TOPIC_ERROR_DESCRIPTION = 'Something went wrong while adding the child topic. Please try again.';
+export const ADD_CHILD_TOPIC_SUCCESS = 'The child topic was created successfully';
 export const ADD_STANDARD_LINE_ERROR_DESCRIPTION = 'Something went wrong while adding the standard line. Please try again.';
 export const ADD_TEMPLATE_ERROR_DESCRIPTION = 'Something went wrong while adding the template. Please try again.';
 export const ADD_UNIT_ERROR_DESCRIPTION = 'Something went wrong while adding the unit. Please try again.';
+export const ADD_UNIT_SUCCESS = 'Unit added successfully';
 export const ADD_USER_ERROR_DESCRIPTION = 'Something went wrong while adding the following users. Please try again.';
 export const ADD_USER_ERROR_TITLE = 'There was an error adding the users';
 export const DUPLICATE_CHILD_TOPIC_DESCRIPTION = 'A child topic with that name already exists';

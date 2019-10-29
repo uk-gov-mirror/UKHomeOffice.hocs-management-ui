@@ -1,4 +1,4 @@
-import Item from '../../models/item';
+import Item from '../../../models/item';
 
 export type SetDisplayName = {
     payload: string;
