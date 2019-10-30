@@ -27,7 +27,7 @@ const renderComponent = () => render(
     </MemoryRouter>
 );
 
-jest.mock('../../../services/topicsService', () => ({
+jest.mock('../../../../services/topicsService', () => ({
     __esModule: true,
     addChildTopic: () => Promise.resolve(),
     getParentTopics: () => Promise.resolve([{
@@ -35,7 +35,7 @@ jest.mock('../../../services/topicsService', () => ({
         value: '__parentTopicId1__'
     }, {
         label: '__parentTopic2__',
-        value: '__parentTopicId2__'
+        value: '__parentTopicI2__'
     }])
 }));
 

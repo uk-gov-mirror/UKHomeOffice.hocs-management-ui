@@ -123,7 +123,7 @@ describe('when the submit button is clicked', () => {
                 expect.assertions(1);
 
                 await wait(() => {
-                    expect(history.push).toHaveBeenCalledWith('/');
+                    expect(history.push).toHaveBeenCalledWith('/', { successMessage: 'Unit added successfully' });
                 });
             });
             it('should call the begin submit action', async () => {

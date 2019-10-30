@@ -16,7 +16,10 @@ describe('Error component', () => {
 
     const DEFAULT_PROPS = {
         dispatch: MOCK_DISPATCH,
-        match: MOCK_MATCH
+        match: MOCK_MATCH,
+        location: {
+            state: {}
+        }
     };
 
     beforeEach(() => {
@@ -25,12 +28,12 @@ describe('Error component', () => {
     });
 
     it('should render with default props', () => {
-        const OUTER = shallow(<WrappedPage />);
+        const OUTER = shallow(<WrappedPage location={DEFAULT_PROPS.location} />);
         const Page = OUTER.props().children;
         const WRAPPER = render(
-          <Page {...DEFAULT_PROPS}>
-            <div>TEST</div>
-          </Page>
+            <Page {...DEFAULT_PROPS}>
+                <div>TEST</div>
+            </Page>
         );
         expect(WRAPPER).toMatchSnapshot();
     });
@@ -43,9 +46,9 @@ describe('Error component', () => {
         const OUTER = shallow(<WrappedPage />);
         const Page = OUTER.props().children;
         const WRAPPER = render(
-          <Page {...PROPS}>
-            <div>TEST</div>
-          </Page>
+            <Page {...PROPS}>
+                <div>TEST</div>
+            </Page>
         );
 
         expect(WRAPPER).toMatchSnapshot();
@@ -55,9 +58,9 @@ describe('Error component', () => {
         const OUTER = shallow(<WrappedPage />);
         const Page = OUTER.props().children;
         const WRAPPER = shallow(
-          <Page {...DEFAULT_PROPS}>
-            <div>TEST</div>
-          </Page>
+            <Page {...DEFAULT_PROPS}>
+                <div>TEST</div>
+            </Page>
         );
 
         WRAPPER.unmount();
@@ -73,9 +76,9 @@ describe('Error component', () => {
         const OUTER = shallow(<WrappedPage match={{ url: '/' }} />);
         const Page = OUTER.props().children;
         const WRAPPER = mount(
-          <Page {...PROPS}>
-            <div>TEST</div>
-          </Page>
+            <Page {...PROPS}>
+                <div>TEST</div>
+            </Page>
         );
 
         WRAPPER.unmount();

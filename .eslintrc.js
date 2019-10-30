@@ -20,7 +20,8 @@ module.exports = {
             true,
             4,
             { 'SwitchCase': 1 }
-        ]
+        ],
+        'react/jsx-indent': 4
     },
     'overrides': [
         {
