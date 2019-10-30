@@ -76,7 +76,7 @@ pipeline:
       - cd kube-hocs-management-ui
       - ./deploy.sh
     when:
-      branch: [master, dev]
+      branch: [feature/WCS, dev]
       event: [push, tag]
 
   deployment:
