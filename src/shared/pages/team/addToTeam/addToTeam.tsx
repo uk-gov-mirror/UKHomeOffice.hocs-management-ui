@@ -9,7 +9,7 @@ import { reducer } from './reducer';
 import { Action } from './actions';
 import { State } from './state';
 import { initialState } from './initialState';
-import { EMPTY_SUBMIT_ERROR_DESCRIPTION, EMPTY_SUBMIT_ERROR_TITLE, GENERAL_ERROR_TITLE, LOAD_TEAM_ERROR_DESCRIPTION, LOAD_USERS_ERROR_DESCRIPTION, ADD_USER_ERROR_TITLE, ADD_USER_ERROR_DESCRIPTION } from '../../../models/constants';
+import { EMPTY_SUBMIT_ERROR_DESCRIPTION, EMPTY_SUBMIT_ERROR_TITLE, GENERAL_ERROR_TITLE, LOAD_TEAM_ERROR_DESCRIPTION, LOAD_USERS_ERROR_DESCRIPTION, ADD_USER_ERROR_TITLE, ADD_USER_ERROR_DESCRIPTION, ADD_USER_SUCCESS } from '../../../models/constants';
 import useError from '../../../hooks/useError';
 import ErrorMessage from '../../../models/errorMessage';
 import { Link } from 'react-router-dom';
@@ -43,7 +43,7 @@ const AddToTeam: React.FC<AddToTeamProps> = ({ history, match }) => {
                     throw error;
                 })
         )).then(() => {
-            history.push(`/team-view/${teamId}`);
+            history.push(`/team-view/${teamId}`, { successMessage: ADD_USER_SUCCESS });
         }).catch(() => { });
     };
 

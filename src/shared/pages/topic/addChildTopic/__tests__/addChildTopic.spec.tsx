@@ -3,9 +3,9 @@ import { match, MemoryRouter } from 'react-router-dom';
 import { createBrowserHistory, History, Location } from 'history';
 import { act, render, RenderResult, wait, fireEvent, waitForElement } from '@testing-library/react';
 import AddChildTopic from '../addChildTopic';
-import * as TopicsService from '../../../services/topicsService';
-import { GENERAL_ERROR_TITLE, VALIDATION_ERROR_TITLE, DUPLICATE_CHILD_TOPIC_DESCRIPTION, ADD_CHILD_TOPIC_ERROR_DESCRIPTION, LOAD_PARENT_TOPICS_ERROR_DESCRIPTION } from '../../../models/constants';
-import * as useError from '../../../hooks/useError';
+import * as TopicsService from '../../../../services/topicsService';
+import { GENERAL_ERROR_TITLE, VALIDATION_ERROR_TITLE, DUPLICATE_CHILD_TOPIC_DESCRIPTION, ADD_CHILD_TOPIC_ERROR_DESCRIPTION, LOAD_PARENT_TOPICS_ERROR_DESCRIPTION } from '../../../../models/constants';
+import * as useError from '../../../../hooks/useError';
 import { State } from '../state';
 
 let match: match<any>;
@@ -27,7 +27,7 @@ const renderComponent = () => render(
     </MemoryRouter>
 );
 
-jest.mock('../../../services/topicsService', () => ({
+jest.mock('../../../../services/topicsService', () => ({
     __esModule: true,
     addChildTopic: () => Promise.resolve(),
     getParentTopics: () => Promise.resolve([{
@@ -35,7 +35,7 @@ jest.mock('../../../services/topicsService', () => ({
         value: '__parentTopicId1__'
     }, {
         label: '__parentTopic2__',
-        value: '__parentTopicId2__'
+        value: '__parentTopicI2__'
     }])
 }));
 
@@ -131,7 +131,7 @@ describe('when the submit button is clicked', () => {
                 expect.assertions(1);
 
                 await wait(() => {
-                    expect(history.push).toHaveBeenCalledWith('/');
+                    expect(history.push).toHaveBeenCalledWith('/', { successMessage: 'The child topic was created successfully' });
                 });
             });
             it('should call the begin submit action', async () => {

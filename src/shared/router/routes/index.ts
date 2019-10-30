@@ -6,7 +6,7 @@ import AddUsersToTeam from '../../pages/team/addToTeam/addToTeam';
 import AddUnit from '../../pages/unit/addUnit';
 import TopicView from '../../pages/topic/topicView/topicView';
 import TopicSearch from '../../pages/topic/topicSearch/topicSearch';
-import AddChildTopic from '../../pages/topic/addChildTopic';
+import AddChildTopic from '../../pages/topic/addChildTopic/addChildTopic';
 import AddTeamsToTopic from '../../pages/topic/addTeamsToTopic/addTeamsToTopic';
 import UnitSearch from '../../pages/unit/unitSearch/unitSearch';
 import AddStandardLine from '../../pages/standardLine/addStandardLine';

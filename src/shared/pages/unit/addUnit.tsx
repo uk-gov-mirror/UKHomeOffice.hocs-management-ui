@@ -8,7 +8,7 @@ import { ApplicationConsumer } from '../../contexts/application';
 import { createUnit } from '../../services/unitsService';
 import { reducer } from './reducer';
 import ErrorSummary from '../../common/components/errorSummary';
-import { GENERAL_ERROR_TITLE, ADD_UNIT_ERROR_DESCRIPTION, VALIDATION_ERROR_TITLE, DUPLICATE_UNIT_DESCRIPTION } from '../../models/constants';
+import { GENERAL_ERROR_TITLE, ADD_UNIT_ERROR_DESCRIPTION, ADD_UNIT_SUCCESS, VALIDATION_ERROR_TITLE, DUPLICATE_UNIT_DESCRIPTION } from '../../models/constants';
 import useError from '../../hooks/useError';
 import ErrorMessage from '../../models/errorMessage';
 import Unit from '../../models/unit';
@@ -44,7 +44,7 @@ const AddUnit: React.FC<AddUnitProps> = ({ csrfToken, history }) => {
         clearErrors();
         if (validate(validationSchema, unit, addFormError)) {
             createUnit(unit).then(() => {
-                history.push('/');
+                history.push('/', { successMessage: ADD_UNIT_SUCCESS });
             }).catch((error) => {
                 if (error && error.response && error.response.status === 409) {
                     setErrorMessage(new ErrorMessage(DUPLICATE_UNIT_DESCRIPTION, VALIDATION_ERROR_TITLE));

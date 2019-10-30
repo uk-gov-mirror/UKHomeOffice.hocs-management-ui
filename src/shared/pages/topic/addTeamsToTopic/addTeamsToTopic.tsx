@@ -9,7 +9,7 @@ import useError from '../../../hooks/useError';
 import ErrorSummary from '../../../common/components/errorSummary';
 import {
     EMPTY_SUBMIT_TOPIC_ERROR_DESCRIPTION,
-    EMPTY_SUBMIT_TOPIC_ERROR_TITLE, GENERAL_ERROR_TITLE, LOAD_TEAM_ERROR_DESCRIPTION, LOAD_TOPIC_ERROR_DESCRIPTION
+    EMPTY_SUBMIT_TOPIC_ERROR_TITLE, GENERAL_ERROR_TITLE, LOAD_TEAM_ERROR_DESCRIPTION, LOAD_TOPIC_ERROR_DESCRIPTION, ADD_TEAMS_TO_TOPIC_SUCCESS
 } from '../../../models/constants';
 import ErrorMessage from '../../../models/errorMessage';
 import { Link } from 'react-router-dom';
@@ -58,8 +58,9 @@ const addTeamToTopicView: React.FC<AddTeamToTopicProps> = ({ csrfToken, history,
     const handleOnSubmit = (event: React.FormEvent) => {
         event.preventDefault();
         if (state.topic) {
-            addTeamsToUnit(state.topic.value, state.privateMinisterTeam.type, state.draftQaTeam.type);
-            history.push('/');
+            addTeamsToUnit(state.topic.value, state.privateMinisterTeam.type, state.draftQaTeam.type).then(() => {
+                history.push('/', { successMessage: ADD_TEAMS_TO_TOPIC_SUCCESS });
+            });
         } else {
             setErrorMessage(new ErrorMessage(EMPTY_SUBMIT_TOPIC_ERROR_DESCRIPTION, EMPTY_SUBMIT_TOPIC_ERROR_TITLE));
         }
