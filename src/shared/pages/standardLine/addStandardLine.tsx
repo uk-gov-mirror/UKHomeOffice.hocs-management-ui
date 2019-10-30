@@ -71,7 +71,7 @@ const AddStandardLine: React.FC<AddStandardLineProps> = ({ csrfToken, history })
             data.append('expiryDate', standardLine.expiryDate);
 
             addStandardLine(data).then(() => {
-                history.push('/');
+                history.push('/', { successMessage: constants.ADD_STANDARD_LINE_SUCCESS });
             }).catch((error: any) => {
                 setErrorMessage(new ErrorMessage(constants.ADD_STANDARD_LINE_ERROR_DESCRIPTION, constants.GENERAL_ERROR_TITLE));
             });

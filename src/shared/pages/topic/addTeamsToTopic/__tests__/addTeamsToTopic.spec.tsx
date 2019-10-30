@@ -1,6 +1,6 @@
 import React from 'react';
-import {createBrowserHistory, History, Location} from 'history';
-import {act, wait, render, RenderResult, fireEvent, getByText} from '@testing-library/react';
+import { createBrowserHistory, History, Location } from 'history';
+import { act, wait, render, RenderResult, fireEvent, getByText } from '@testing-library/react';
 import * as TeamsService from '../../../../services/teamsService';
 import * as TopicsService from '../../../../services/topicsService';
 import { State } from '../state';

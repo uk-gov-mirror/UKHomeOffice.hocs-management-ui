@@ -121,7 +121,7 @@ describe('when the submit button is clicked', () => {
                 expect.assertions(1);
 
                 await wait(() => {
-                    expect(history.push).toHaveBeenCalledWith('/');
+                    expect(history.push).toHaveBeenCalledWith('/', { successMessage: 'The template was created successfully' });
                 });
             });
             it('should clear any previous errors', async () => {

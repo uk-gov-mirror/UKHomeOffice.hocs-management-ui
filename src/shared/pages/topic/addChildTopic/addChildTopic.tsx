@@ -12,7 +12,7 @@ import { ContextAction, updateApiStatus } from '../../../contexts/actions';
 import status from '../../../helpers/api-status.js';
 import Item from '../../../models/item';
 import useError from '../../../hooks/useError';
-import { GENERAL_ERROR_TITLE, LOAD_PARENT_TOPICS_ERROR_DESCRIPTION, VALIDATION_ERROR_TITLE, DUPLICATE_CHILD_TOPIC_DESCRIPTION, ADD_CHILD_TOPIC_ERROR_DESCRIPTION } from '../../../models/constants';
+import { GENERAL_ERROR_TITLE, LOAD_PARENT_TOPICS_ERROR_DESCRIPTION, VALIDATION_ERROR_TITLE, DUPLICATE_CHILD_TOPIC_DESCRIPTION, ADD_CHILD_TOPIC_ERROR_DESCRIPTION, ADD_CHILD_TOPIC_SUCCESS } from '../../../models/constants';
 import ErrorSummary from '../../../common/components/errorSummary';
 import ErrorMessage from '../../../models/errorMessage';
 import TypeAhead from '../../../common/components/typeAhead';
@@ -68,7 +68,7 @@ const AddChildTopic: React.FC<AddChildTopicProps> = ({ csrfToken, contextDispatc
         clearErrors();
         if (validate(validationSchema, state, addFormError)) {
             addChildTopic(state.selectedParentTopic!.value, state.displayName)
-                .then(() => history.push('/'))
+                .then(() => history.push('/', { successMessage: ADD_CHILD_TOPIC_SUCCESS }))
                 .catch((error) => {
                     if (error && error.response && error.response.status === 400) {
                         setErrorMessage(new ErrorMessage(DUPLICATE_CHILD_TOPIC_DESCRIPTION, VALIDATION_ERROR_TITLE));
