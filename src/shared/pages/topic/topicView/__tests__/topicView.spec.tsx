@@ -1,12 +1,12 @@
 import React from 'react';
-import {createBrowserHistory, History, Location} from 'history';
+import { createBrowserHistory, History, Location } from 'history';
 import { act, wait, fireEvent, getByText, render, RenderResult } from '@testing-library/react';
 import * as TeamsService from '../../../../services/teamsService';
 import * as TopicsService from '../../../../services/topicsService';
 import { State } from '../state';
 import * as useError from '../../../../hooks/useError';
 import { match, MemoryRouter } from 'react-router-dom';
-import TopicView from "../topicView";
+import TopicView from '../topicView';
 
 let match: match<any>;
 let history: History<any>;
@@ -31,7 +31,6 @@ jest.mock('../../../../services/topicsService', () => ({
         value: '__value__'
     }))
 }));
-
 
 const getTeamsSpy = jest.spyOn(TeamsService, 'getTeams');
 const getTopicSpy = jest.spyOn(TopicsService, 'getTopic');

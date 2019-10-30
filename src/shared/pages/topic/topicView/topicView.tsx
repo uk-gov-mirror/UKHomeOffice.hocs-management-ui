@@ -20,8 +20,8 @@ import Item from '../../../models/item';
 import { Link } from 'react-router-dom';
 import Submit from '../../../common/components/forms/submit';
 import { getTeams } from '../../../services/teamsService';
-import { validate } from "../../../validation";
-import { object } from "yup";
+import { validate } from '../../../validation';
+import { object } from 'yup';
 
 interface MatchParams {
     topicId: string;
@@ -74,7 +74,6 @@ const TopicView: React.FC<TeamViewProps> = ({ csrfToken, history, match }) => {
     const onSelectedDraftQAChange = (selectedTeamAssignment: Item) => {
         dispatch({ type: 'SetDraftQATeam', payload: selectedTeamAssignment });
     };
-
 
     const handleOnSubmit = (event: React.FormEvent) => {
         event.preventDefault();

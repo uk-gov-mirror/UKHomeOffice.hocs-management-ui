@@ -18,5 +18,5 @@ export const initialState: State = {
         letterName: '',
         type: '',
         active: true
-    },
+    }
 };

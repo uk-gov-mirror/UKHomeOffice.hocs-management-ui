@@ -38,7 +38,7 @@ describe('when an action is dispatched', () => {
 
             expect(state.topic).toStrictEqual({ label: '__label__', value: '__value__' });
 
-            const newState = reducer(state, { type: 'SetTopic', payload: {label: '__label__', value: '__value__' } });
+            const newState = reducer(state, { type: 'SetTopic', payload: { label: '__label__', value: '__value__' } });
             const { topic, ...otherState } = newState;
 
             expect(otherState).toStrictEqual(initialOtherState);

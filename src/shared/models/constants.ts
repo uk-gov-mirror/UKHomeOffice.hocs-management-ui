@@ -25,4 +25,4 @@ export const LOAD_TEAMS_ERROR_DESCRIPTION = 'There was an error retrieving the t
 export const LOAD_USERS_ERROR_DESCRIPTION = 'There was an error retrieving the list of users.  Please try refreshing the page.';
 export const REMOVE_FROM_TEAM_ALLOCATED_ERROR_DESCRIPTION = 'The user cannot be removed from the team as they have cases assigned';
 export const REMOVE_FROM_TEAM_ERROR_DESCRIPTION = 'There was an error removing the user from the team';
-export const VALIDATION_ERROR_TITLE = "There’s a problem";
+export const VALIDATION_ERROR_TITLE = 'There’s a problem';

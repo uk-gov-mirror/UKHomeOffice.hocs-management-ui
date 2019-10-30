@@ -1,5 +1,5 @@
 import ErrorMessage from '../../../models/errorMessage';
-import Item from "../../../models/item";
+import Item from '../../../models/item';
 
 export type SetTopic = {
     type: 'SetTopic';
