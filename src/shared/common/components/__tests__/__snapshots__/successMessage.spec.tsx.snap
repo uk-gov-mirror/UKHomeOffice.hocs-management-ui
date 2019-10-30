@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`when the SuccessMessage is rendered should not display when there is not a message 1`] = `null`;
+
+exports[`when the SuccessMessage is rendered should show the success message 1`] = `
+<div
+  class="panel panel-border-wide alert-success"
+>
+  <h2
+    class="govuk-heading-s"
+  >
+    Success
+  </h2>
+  <p
+    class="govuk-body"
+  >
+    __successMessage__
+  </p>
+</div>
+`;
