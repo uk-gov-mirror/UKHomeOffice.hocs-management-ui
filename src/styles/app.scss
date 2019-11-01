@@ -585,6 +585,10 @@ $border-colour: govuk-colour("grey-2");
     border-color: #bfc1c3;
     padding: 0.2em 0.7em;
     margin-bottom: 0.78947em;
+
+    h2 {
+        margin-top: 0.6em;
+    }
   }
   
   .panel-border-wide {
