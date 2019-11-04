@@ -4,10 +4,10 @@ const User = require('../models/user');
 
 async function getTopic(req, res, next) {
     const logger = getLogger(req.request);
-    const {topicId} = req.params;
+    const { topicId } = req.params;
 
     try {
-        const response = await infoService.get(`/topic/${topicId}`, {headers: User.createHeaders(req.user)});
+        const response = await infoService.get(`/topic/${topicId}`, { headers: User.createHeaders(req.user) });
         res.locals.topic = response.data;
         next();
     } catch (error) {
@@ -49,29 +49,30 @@ function addDCUTeamsToTopic(req, res, next) {
     const { topicValue, privateMinisterTeam, draftQaTeam } = req.body;
 
     const TeamstoStageTypes = [
-        {'caseType': 'MIN', 'stageType':'DCU_MIN_INITIAL_DRAFT', 'team': draftQaTeam},
-        {'caseType': 'MIN', 'stageType':'DCU_MIN_QA_RESPONSE', 'team': draftQaTeam},
-        {'caseType': 'MIN', 'stageType':'DCU_MIN_PRIVATE_OFFICE', 'team': privateMinisterTeam},
-        {'caseType': 'MIN', 'stageType':'DCU_MIN_MINISTER_SIGN_OFF', 'team': privateMinisterTeam},
-        {'caseType': 'TRO', 'stageType':'DCU_TRO_INITIAL_DRAFT', 'team': draftQaTeam},
-        {'caseType': 'TRO', 'stageType':'DCU_TRO_QA_RESPONSE', 'team': draftQaTeam},
-        {'caseType': 'DTEN', 'stageType':'DCU_DTEN_INITIAL_DRAFT', 'team': draftQaTeam},
-        {'caseType': 'DTEN', 'stageType':'DCU_DTEN_QA_RESPONSE', 'team': draftQaTeam},
-        {'caseType': 'DTEN', 'stageType':'DCU_DTEN_PRIVATE_OFFICE', 'team': privateMinisterTeam},
+        { 'caseType': 'MIN', 'stageType': 'DCU_MIN_INITIAL_DRAFT', 'team': draftQaTeam },
+        { 'caseType': 'MIN', 'stageType': 'DCU_MIN_QA_RESPONSE', 'team': draftQaTeam },
+        { 'caseType': 'MIN', 'stageType': 'DCU_MIN_PRIVATE_OFFICE', 'team': privateMinisterTeam },
+        { 'caseType': 'MIN', 'stageType': 'DCU_MIN_MINISTER_SIGN_OFF', 'team': privateMinisterTeam },
+        { 'caseType': 'TRO', 'stageType': 'DCU_TRO_INITIAL_DRAFT', 'team': draftQaTeam },
+        { 'caseType': 'TRO', 'stageType': 'DCU_TRO_QA_RESPONSE', 'team': draftQaTeam },
+        { 'caseType': 'DTEN', 'stageType': 'DCU_DTEN_INITIAL_DRAFT', 'team': draftQaTeam },
+        { 'caseType': 'DTEN', 'stageType': 'DCU_DTEN_QA_RESPONSE', 'team': draftQaTeam },
+        { 'caseType': 'DTEN', 'stageType': 'DCU_DTEN_PRIVATE_OFFICE', 'team': privateMinisterTeam },
     ];
 
     Promise.all(TeamstoStageTypes.map(team => {
         infoService.post(`/topic/${topicValue}/team/${team.team}`, { "case_type": team.caseType, "stage_type": team.stageType }, { headers: User.createHeaders(req.user) })
-            .then(() => {})
+            .then(() => { })
             .catch(error => {
                 logger.error(error.message);
                 next(error);
-            })}
-    )).then(() => {})
+            })
+    }))
+        .then(res.sendStatus(200))
         .catch(error => {
             logger.error(error.message);
             next(error);
-    });
+        });
 }
 
 async function getParentTopics(req, res, next) {
