@@ -89,10 +89,18 @@ exports[`when the teamView component is mounted should render with default props
         </table>
       </div>
       <button
-        class="govuk-button add-team-members-button"
+        class="govuk-button govuk-!-margin-right-1 add-team-members-button"
+        data-module="govuk-button"
         type="submit"
       >
         Add team members
+      </button>
+      <button
+        class="govuk-button govuk-button--secondary  add-nominated-contact-button"
+        data-module="govuk-button"
+        type="submit"
+      >
+        Add nominated contact
       </button>
     </div>
   </div>

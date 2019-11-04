@@ -113,7 +113,8 @@ const TeamView: React.FC<TeamMembersProps> = ({ history, match }) => {
                             <p className="govuk-body">Loading...</p>
                         </div>
                 }
-                <button type="submit" className="govuk-button add-team-members-button" onClick={() => onAddTeamMembersAddClick(history, teamId as string)}>Add team members</button>
+                <button type="submit" className="govuk-button govuk-!-margin-right-1 add-team-members-button" data-module="govuk-button" onClick={() => onAddTeamMembersAddClick(history, teamId as string)}>Add team members</button>
+                <button type="submit" className="govuk-button govuk-button--secondary  add-nominated-contact-button" data-module="govuk-button">Add nominated contact</button>
             </div>
         </div>
     );
