@@ -58,6 +58,14 @@
                 "composite": false,
                 "clientRole": false,
                 "containerId": "hocs"
+            },
+            {
+                "id": "c7519a25-ae3c-49df-8458-c1e9c0c9980d",
+                "name": "MANAGEMENT_UI",
+                "description": "${role_management_ui}",
+                "composite": false,
+                "clientRole": false,
+                "containerId": "hocs"
             }
         ],
         "client": {
@@ -480,6 +488,43 @@
                 "/EREREREREREREREREREREQ",
                 "/MzMzMzMzMzMzMzMzMzMzMw"
             ]
+        },
+        {
+            "id": "3dbe80cd-4aab-4207-b77a-24fc38caa2ef",
+            "createdTimestamp": 1544174663425,
+            "username": "management",
+            "enabled": true,
+            "totp": false,
+            "emailVerified": false,
+            "credentials": [
+                {
+                    "type": "password",
+                    "hashedSaltedValue": "K4oQart6CT7BdeQyZgkgcDc0d+jEIHVqpxVqjq7H1UkAM1kcXQkJtM/kiBw3J6LyT3MkX/IbO86rUL7mSlDJqw==",
+                    "salt": "rhZ0BnXWH2ZqEE/2gASL6Q==",
+                    "hashIterations": 27500,
+                    "counter": 0,
+                    "algorithm": "pbkdf2-sha256",
+                    "digits": 0,
+                    "period": 0,
+                    "createdDate": 1541624862203,
+                    "config": {}
+                }
+            ],
+            "disableableCredentialTypes": [],
+            "requiredActions": [],
+            "realmRoles": [
+                "offline_access",
+                "uma_authorization",
+                "MANAGEMENT_UI"
+            ],
+            "clientRoles": {
+                "account": [
+                    "view-profile",
+                    "manage-account"
+                ]
+            },
+            "notBefore": 0,
+            "groups": []
         },
         {
             "id": "fc72ee08-7972-40df-a801-501d3a271fa3",
