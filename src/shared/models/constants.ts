@@ -1,5 +1,7 @@
 export const ADD_CHILD_TOPIC_ERROR_DESCRIPTION = 'Something went wrong while adding the child topic. Please try again.';
 export const ADD_CHILD_TOPIC_SUCCESS = 'The child topic was created successfully';
+export const ADD_NOMINATED_CONTACT_ERROR_DESCRIPTION = 'Something went wrong while adding the nominated contact. Please try again.';
+export const ADD_NOMINATED_CONTACT_SUCCESS = 'The nominated contact was added successfully';
 export const ADD_STANDARD_LINE_SUCCESS = 'The standard line was created successfully';
 export const ADD_STANDARD_LINE_ERROR_DESCRIPTION = 'Something went wrong while adding the standard line. Please try again.';
 export const ADD_TEAMS_TO_TOPIC_SUCCESS = 'The teams were linked to the topic successfully';
