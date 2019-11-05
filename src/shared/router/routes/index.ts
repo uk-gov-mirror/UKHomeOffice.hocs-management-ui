@@ -11,6 +11,8 @@ import AddTeamsToTopic from '../../pages/topic/addTeamsToTopic/addTeamsToTopic';
 import UnitSearch from '../../pages/unit/unitSearch/unitSearch';
 import AddStandardLine from '../../pages/standardLine/addStandardLine';
 import AddTemplate from '../../pages/template/addTemplate';
+import AddNominatedContact from '../../pages/team/addNominatedContact/addNominatedContact';
+
 
 
 
@@ -93,6 +95,12 @@ const routes = [
         exact: true,
         component: AddTemplate,
         title: 'Add Template'
+    },
+    {
+        path: '/team/:teamId/add-nominated-contact',
+        exact: true,
+        component: AddNominatedContact,
+        title: 'Add Nominated Contact'
     },
     {
         component: Error,

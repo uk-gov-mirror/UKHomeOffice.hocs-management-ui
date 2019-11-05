@@ -43,7 +43,8 @@ const AddNominatedContact: React.FC<AddNominatedContactProps> = ({ csrfToken, hi
     const [pageError, addFormError, clearErrors, setErrorMessage] = useError('', VALIDATION_ERROR_TITLE);
     const [nominatedContact, dispatch] = React.useReducer<Reducer<NominatedContact, InputEventData>>(reducer, {
         emailAddress: '',
-        teamName: ''
+        teamName: '',
+        teamUUID: ''
     });
 
     const { params: { teamId } } = match;
@@ -52,7 +53,8 @@ const AddNominatedContact: React.FC<AddNominatedContactProps> = ({ csrfToken, hi
     useEffect(() => {
         getTeam(teamId)
             .then(team => {
-                nominatedContact.teamName = team.displayName
+                nominatedContact.teamName = team.displayName;
+                nominatedContact.teamUUID = team.type;
             })
             .catch(() => {
                 setErrorMessage(new ErrorMessage(LOAD_TEAM_ERROR_DESCRIPTION, GENERAL_ERROR_TITLE));
