@@ -12,15 +12,15 @@ import {
     ADD_NOMINATED_CONTACT_ERROR_DESCRIPTION,
     ADD_NOMINATED_CONTACT_SUCCESS,
     VALIDATION_ERROR_TITLE,
-    LOAD_TEAM_ERROR_DESCRIPTION,
+    LOAD_TEAM_ERROR_DESCRIPTION
 } from '../../../models/constants';
 import useError from '../../../hooks/useError';
 import ErrorMessage from '../../../models/errorMessage';
 import NominatedContact from '../../../models/nominatedContact';
 import { validate } from '../../../validation';
 import InputEventData from '../../../models/inputEventData';
-import { addNominatedContact } from "../../../services/nominatedContactsService";
-import { getTeam } from "../../../services/teamsService";
+import { addNominatedContact } from '../../../services/nominatedContactsService';
+import { getTeam } from '../../../services/teamsService';
 
 interface MatchParams {
     teamId: string;
@@ -35,7 +35,7 @@ const validationSchema = object({
     emailAddress: string()
         .required()
         .label('email address')
-        .matches(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/),
+        .matches(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
 });
 
 const AddNominatedContact: React.FC<AddNominatedContactProps> = ({ csrfToken, history, match }) => {
@@ -49,10 +49,9 @@ const AddNominatedContact: React.FC<AddNominatedContactProps> = ({ csrfToken, hi
 
     const { params: { teamId } } = match;
 
-
     useEffect(() => {
         getTeam(teamId)
-            .then(team => {
+            .then((team) => {
                 nominatedContact.teamName = team.displayName;
                 nominatedContact.teamUUID = team.type;
             })

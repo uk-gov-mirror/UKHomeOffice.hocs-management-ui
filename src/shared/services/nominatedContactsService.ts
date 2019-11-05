@@ -1,5 +1,5 @@
 import axios from 'axios';
-import NominatedContact from "../models/nominatedContact";
+import NominatedContact from '../models/nominatedContact';
 
 export const addNominatedContact = (nominatedContact: NominatedContact) => new Promise((resolve, reject) => axios
     .post('/api/nominated-contact', nominatedContact)
