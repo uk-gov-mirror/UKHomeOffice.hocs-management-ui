@@ -13,6 +13,7 @@ export const ADD_USER_ERROR_DESCRIPTION = 'Something went wrong while adding the
 export const ADD_USER_ERROR_TITLE = 'There was an error adding the users';
 export const ADD_USER_SUCCESS = 'User(s) added successfully';
 export const DUPLICATE_CHILD_TOPIC_DESCRIPTION = 'A child topic with that name already exists';
+export const DUPLICATE_NOMINATED_CONTACT_DESCRIPTION = 'A nominated contact with those email details already exists';
 export const DUPLICATE_UNIT_DESCRIPTION = 'A unit with those details already exists';
 export const EMPTY_SUBMIT_ERROR_DESCRIPTION = 'Please select some users before submitting.';
 export const EMPTY_SUBMIT_ERROR_TITLE = 'No users selected';

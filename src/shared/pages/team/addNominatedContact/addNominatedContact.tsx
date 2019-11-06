@@ -9,10 +9,11 @@ import { reducer } from './reducer';
 import ErrorSummary from '../../../common/components/errorSummary';
 import {
     GENERAL_ERROR_TITLE,
-    ADD_NOMINATED_CONTACT_ERROR_DESCRIPTION,
     ADD_NOMINATED_CONTACT_SUCCESS,
     VALIDATION_ERROR_TITLE,
-    LOAD_TEAM_ERROR_DESCRIPTION
+    LOAD_TEAM_ERROR_DESCRIPTION,
+    DUPLICATE_NOMINATED_CONTACT_DESCRIPTION,
+    ADD_NOMINATED_CONTACT_ERROR_DESCRIPTION
 } from '../../../models/constants';
 import useError from '../../../hooks/useError';
 import ErrorMessage from '../../../models/errorMessage';
@@ -66,8 +67,12 @@ const AddNominatedContact: React.FC<AddNominatedContactProps> = ({ csrfToken, hi
         if (validate(validationSchema, nominatedContact, addFormError)) {
             addNominatedContact(nominatedContact).then(() => {
                 history.push('/', { successMessage: ADD_NOMINATED_CONTACT_SUCCESS });
-            }).catch(() => {
-                setErrorMessage(new ErrorMessage(ADD_NOMINATED_CONTACT_ERROR_DESCRIPTION, GENERAL_ERROR_TITLE));
+            }).catch((error) => {
+                if (error && error.response && error.response.status === 409) {
+                    setErrorMessage(new ErrorMessage(DUPLICATE_NOMINATED_CONTACT_DESCRIPTION, VALIDATION_ERROR_TITLE));
+                } else {
+                    setErrorMessage(new ErrorMessage(ADD_NOMINATED_CONTACT_ERROR_DESCRIPTION, GENERAL_ERROR_TITLE));
+                }
             });
         }
     };
