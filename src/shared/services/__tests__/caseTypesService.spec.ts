@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { getCaseTypes } from '../caseTypesService';
-import CaseType from "../../models/caseType";
+import CaseType from '../../models/caseType';
 
 jest.mock('axios');
 
@@ -22,7 +22,7 @@ beforeEach(() => {
                 shortCode: '__shortCode2__',
                 type: '__type2__'
             }
-            ]
+        ]
     }));
 });
 

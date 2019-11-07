@@ -3,6 +3,6 @@ const types = {
     UNSET_ERROR: 'UNSET_ERROR',
     UPDATE_API_STATUS: 'UPDATE_API_STATUS',
     CLEAR_API_STATUS: 'CLEAR_API_STATUS'
-}
+};
 
 export default types;
