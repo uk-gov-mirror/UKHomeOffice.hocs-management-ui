@@ -24,10 +24,7 @@ const Dashboard: React.FC = () => (
                         </h2>
                         <ul className="govuk-list govuk-list--bullet">
                             <li>
-                                <Link className="govuk-link" to="/team-search">Add/remove users</Link>
-                            </li>
-                            <li>
-                                <Link className="govuk-link" to="/team-search">Add nominated contact</Link>
+                                <Link className="govuk-link" to="/team-search">Manage a team</Link>
                             </li>
                         </ul>
                     </li>

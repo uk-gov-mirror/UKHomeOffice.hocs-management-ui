@@ -81,7 +81,7 @@ const AddNominatedContact: React.FC<AddNominatedContactProps> = ({ csrfToken, hi
         <>
             <div className="govuk-grid-row">
                 <div className="govuk-grid-column-two-thirds-from-desktop">
-                    <Link to="/" className="govuk-back-link">Back</Link>
+                    <Link className="govuk-back-link" to={`/team-view/${teamId}`}>Back</Link>
                     <ErrorSummary
                         pageError={pageError}
                     />

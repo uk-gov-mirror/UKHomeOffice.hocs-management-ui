@@ -10,7 +10,7 @@ exports[`when the addNominatedContact component is mounted should render with de
     >
       <a
         class="govuk-back-link"
-        href="/"
+        href="/team-view/__teamId__"
       >
         Back
       </a>

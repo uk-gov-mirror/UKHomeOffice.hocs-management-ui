@@ -14,9 +14,10 @@ describe('when the addNominatedContact method is called', () => {
             expect.assertions(2);
 
             await addNominatedContact({
-                emailAddress: '__emailAddress__', teamName: '__teamName__', teamUUID: '__teamUUID__'}).then(() => {
-                expect(axios.post).toHaveBeenCalledTimes(1);
-                expect(axios.post).toHaveBeenCalledWith('/api/nominated-contact', { emailAddress: '__emailAddress__', teamName: '__teamName__', teamUUID: '__teamUUID__' });
+                emailAddress: '__emailAddress__', teamName: '__teamName__', teamUUID: '__teamUUID__'})
+                .then(() => {
+                    expect(axios.post).toHaveBeenCalledTimes(1);
+                    expect(axios.post).toHaveBeenCalledWith('/api/nominated-contact', { emailAddress: '__emailAddress__', teamName: '__teamName__', teamUUID: '__teamUUID__' });
             });
         });
     });
@@ -26,9 +27,10 @@ describe('when the addNominatedContact method is called', () => {
             jest.spyOn(axios, 'post').mockReturnValue(Promise.reject(new Error('__error__')));
             expect.assertions(2);
 
-            await addNominatedContact({ emailAddress: '__emailAddress__', teamName: '__teamName__', teamUUID: '__teamUUID__' }).catch((error: Error) => {
-                expect(axios.post).toHaveBeenCalledTimes(1);
-                expect(error.message).toEqual('__error__');
+            await addNominatedContact({ emailAddress: '__emailAddress__', teamName: '__teamName__', teamUUID: '__teamUUID__' })
+                .catch((error: Error) => {
+                    expect(axios.post).toHaveBeenCalledTimes(1);
+                    expect(error.message).toEqual('__error__');
             });
         });
     });
