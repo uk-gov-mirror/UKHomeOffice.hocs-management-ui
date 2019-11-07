@@ -35,5 +35,3 @@ describe('when the addNominatedContact method is called', () => {
         });
     });
 });
-
-
