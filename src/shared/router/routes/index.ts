@@ -12,9 +12,7 @@ import UnitSearch from '../../pages/unit/unitSearch/unitSearch';
 import AddStandardLine from '../../pages/standardLine/addStandardLine';
 import AddTemplate from '../../pages/template/addTemplate';
 import AddNominatedContact from '../../pages/team/addNominatedContact/addNominatedContact';
-
-
-
+import SelectCaseType from '../../pages/template/selectCaseType';
 
 export interface Route {
     component: React.FunctionComponent | Error;
@@ -101,6 +99,12 @@ const routes = [
         exact: true,
         component: AddNominatedContact,
         title: 'Add Nominated Contact'
+    },
+    {
+        path: '/select-a-case-type',
+        exact: true,
+        component: SelectCaseType,
+        title: 'Select a Case Type'
     },
     {
         component: Error,
