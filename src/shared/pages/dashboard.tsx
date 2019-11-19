@@ -34,7 +34,7 @@ const Dashboard: React.FC = () => (
                         </h2>
                         <ul className="govuk-list govuk-list--bullet">
                             <li>
-                                <Link className="govuk-link" to="/select-a-case-type">Add a template</Link>
+                                <Link className="govuk-link" to="/case-types">Add a template</Link>
                             </li>
                         </ul>
                     </li>

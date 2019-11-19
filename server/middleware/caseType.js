@@ -7,8 +7,8 @@ async function getCaseType(req, res, next) {
     const logger = getLogger(req.request);
 
     try {
-        const { caseType } = req.params;
-        const response = await infoService.get(`/caseType/type/${caseType}`, { headers: User.createHeaders(req.user) });
+        const { type } = req.params;
+        const response = await infoService.get(`/caseType/type/${type}`, { headers: User.createHeaders(req.user) });
         res.json(response.data);
     } catch (error) {
         logger.error(error);
