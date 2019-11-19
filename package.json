@@ -109,11 +109,11 @@
             "git add"
         ],
         "*.ts": [
-            "tslint -c tslint.json --ignore-path .gitignore",
+            "tslint -c tslint.json",
             "git add"
         ],
         "*.tsx": [
-            "tslint -c tslint.json --ignore-path .gitignore",
+            "tslint -c tslint.json",
             "git add"
         ]
     },
