@@ -37,8 +37,21 @@ async function getTemplatesForCaseType(req, res, next) {
     }
 }
 
+async function deleteTemplate(req, res, next) {
+    const logger = getLogger(req.request);
+    try {
+        const { uuid } = req.params;
+        await infoService.delete(`/template/${uuid}`, { headers: User.createHeaders(req.user) });
+        res.sendStatus(200);
+    } catch (error) {
+        logger.error(error);
+        next(error);
+    }
+}
+
 
 module.exports = {
     addTemplate,
+    deleteTemplate,
     getTemplatesForCaseType
 };

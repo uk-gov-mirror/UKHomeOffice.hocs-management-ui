@@ -57,7 +57,7 @@ const TeamView: React.FC<CasesProps> = ({ history, match }) => {
                             <table className="govuk-table">
                                 <thead className="govuk-table__head">
                                     <tr className="govuk-table__row">
-                                        <th className="govuk-table__header" scope="col">Team members</th>
+                                        <th className="govuk-table__header" scope="col">Templates</th>
                                         <th className="govuk-table__header" scope="col">Action</th>
                                     </tr>
                                 </thead>
