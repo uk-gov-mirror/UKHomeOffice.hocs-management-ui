@@ -55,7 +55,7 @@ const AddTemplate: React.FC<AddTemplateProps> = ({ csrfToken, history, match }) 
             data.append('caseType', caseType.value);
 
             addTemplate(data).then(() => {
-                history.push('/', { successMessage: constants.ADD_TEMPLATE_SUCCESS });
+                history.push(`/case-type/${type}`, { successMessage: constants.ADD_TEMPLATE_SUCCESS });
             }).catch((error: any) => {
                 setErrorMessage(new ErrorMessage(constants.ADD_TEMPLATE_ERROR_DESCRIPTION, constants.GENERAL_ERROR_TITLE));
             });
