@@ -48,7 +48,6 @@ const AddTemplate: React.FC<AddTemplateProps> = ({ csrfToken, history, match }) 
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
         clearErrors();
-        console.log(template);
         if (validate(validationSchema, template, addFormError) && caseType) {
 
             const data = new FormData();
