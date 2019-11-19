@@ -158,4 +158,4 @@ describe('when the getTemplatesForCaseType method is called', () => {
             });
         });
     });
-})
+});

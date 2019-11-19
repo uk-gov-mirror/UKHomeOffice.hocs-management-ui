@@ -107,6 +107,14 @@
         "*.jsx": [
             "eslint ./ --fix --ignore-path .gitignore",
             "git add"
+        ],
+        "*.ts": [
+            "tslint -c tslint.json --ignore-path .gitignore",
+            "git add"
+        ],
+        "*.tsx": [
+            "tslint -c tslint.json --ignore-path .gitignore",
+            "git add"
         ]
     },
     "husky": {
