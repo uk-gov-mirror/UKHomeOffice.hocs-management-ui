@@ -3,7 +3,7 @@ import { FormError } from '../models/formError';
 
 setLocale({
     date: {
-        min: 'The ${label} is not a valid date'
+        min: 'The ${label} must be in the future'
     },
     mixed: {
         required: 'The ${label} is required',
