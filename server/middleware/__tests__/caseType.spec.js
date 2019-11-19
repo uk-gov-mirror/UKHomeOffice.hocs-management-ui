@@ -8,7 +8,7 @@ const { getCaseType, getCaseTypes } = require('../caseType');
 const getLogger = require('../../libs/logger');
 
 const headers = '__headers__';
-const req = { params: { caseType: '__caseType__' }, user: '__user__' };
+const req = { params: { type: '__type__' }, user: '__user__' };
 const sendStatus = jest.fn();
 const json = jest.fn();
 const res = { json, locals: {}, sendStatus };
@@ -77,7 +77,7 @@ describe('When the CaseType middleware getCaseType method is called', () => {
         it('should call the get method on the info service', async () => {
             createHeaders.mockImplementation(() => headers);
             await getCaseType(req, res, next);
-            expect(infoService.get).toHaveBeenCalledWith('/caseType/type/__caseType__', { headers: headers });
+            expect(infoService.get).toHaveBeenCalledWith('/caseType/type/__type__', { headers: headers });
             expect(res.json).toHaveBeenCalledWith(caseTypes[0]);
         });
 
