@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { RouteComponentProps } from 'react-router';
 import { History } from 'history';
 import { getCaseType, getTemplatesForCaseType } from '../../services/caseTypesService';
+import { deleteTemplate } from '../../services/templatesService';
 import Item from '../../models/item';
 import * as constants from '../../models/constants';
 import ErrorSummary from '../../common/components/errorSummary';
@@ -20,9 +21,9 @@ const onAddTemplateClick = (history: History, type: string) => {
     history.push(`/case-type/${type}/add-template`);
 };
 
-const TeamView: React.FC<CasesProps> = ({ history, match }) => {
+const CaseTypeView: React.FC<CasesProps> = ({ history, match }) => {
 
-    const [pageError, , , setErrorMessage] = useError();
+    const [pageError, , clearErrors, setErrorMessage] = useError();
     const [caseType, setCaseType] = React.useState<CaseType>();
     const [templates, setTemplates] = React.useState<Item[]>();
     const { params: { type } } = match;
@@ -39,6 +40,22 @@ const TeamView: React.FC<CasesProps> = ({ history, match }) => {
                 setErrorMessage(new ErrorMessage(constants.LOAD_TEMPLATES_ERROR_DESCRIPTION, constants.GENERAL_ERROR_TITLE));
             });
     }, []);
+
+    const removeTemplate = (uuid: string, event: React.FormEvent) => {
+        event.preventDefault();
+        clearErrors();
+        deleteTemplate(uuid)
+            .then(() => {
+                getTemplatesForCaseType(type)
+                    .then(setTemplates)
+                    .catch(() => {
+                        setErrorMessage(new ErrorMessage(constants.LOAD_TEMPLATES_ERROR_DESCRIPTION, constants.GENERAL_ERROR_TITLE));
+                    });
+            })
+            .catch((error) => {
+                setErrorMessage(new ErrorMessage(constants.REMOVE_TEMPLATE_ERROR_DESCRIPTION, constants.GENERAL_ERROR_TITLE));
+            });
+    };
 
     return (
         <div className="govuk-form-group">
@@ -68,7 +85,7 @@ const TeamView: React.FC<CasesProps> = ({ history, match }) => {
                                                 <tr className="govuk-table__row" key={template.value}>
                                                     <td className="govuk-table__cell">{template.label}</td>
                                                     <td className="govuk-table__cell">
-
+                                                        <a href="#" onClick={event => removeTemplate(template.value, event)}>Remove</a>
                                                     </td>
                                                 </tr>
                                             );
@@ -94,4 +111,4 @@ const TeamView: React.FC<CasesProps> = ({ history, match }) => {
     );
 };
 
-export default TeamView;
+export default CaseTypeView;

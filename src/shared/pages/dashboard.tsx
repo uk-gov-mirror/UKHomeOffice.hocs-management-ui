@@ -30,11 +30,11 @@ const Dashboard: React.FC = () => (
                     </li>
                     <li>
                         <h2 className="govuk-heading-l">
-                            Templates
+                            Template management
                         </h2>
                         <ul className="govuk-list govuk-list--bullet">
                             <li>
-                                <Link className="govuk-link" to="/case-types">Add a template</Link>
+                                <Link className="govuk-link" to="/case-types">Manage templates</Link>
                             </li>
                         </ul>
                     </li>
