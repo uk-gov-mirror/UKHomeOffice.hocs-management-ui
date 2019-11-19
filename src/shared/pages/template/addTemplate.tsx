@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
-import { array } from 'yup';
+import { array, object } from 'yup';
 import Submit from '../../common/components/forms/submit';
 import { ApplicationConsumer } from '../../contexts/application';
 import ErrorSummary from '../../common/components/errorSummary';
@@ -13,6 +13,7 @@ import DocumentAdd from '../../common/components/forms/documentAdd';
 import { addTemplate } from '../../services/templatesService';
 import { getCaseType } from '../../services/caseTypesService';
 import CaseType from 'shared/models/caseType';
+import Template from 'shared/models/template';
 
 interface MatchParams {
     type: string;
@@ -21,18 +22,20 @@ interface AddTemplateProps extends RouteComponentProps<MatchParams> {
     csrfToken?: string;
 }
 
-const validationSchema = array()
-    .max(1)
-    .min(1)
-    .required()
-    .label('Template');
+const validationSchema = object({
+    files: array()
+        .max(1)
+        .min(1)
+        .required()
+        .label('Template')
+});
 
 const AddTemplate: React.FC<AddTemplateProps> = ({ csrfToken, history, match }) => {
     const { params: { type } } = match;
     const [pageError, addFormError, clearErrors, setErrorMessage] = useError('', constants.VALIDATION_ERROR_TITLE);
 
-    const [caseType, setCaseType] = React.useState<CaseType>();
-    const [files, setFiles] = React.useState<File[]>();
+    const [caseType, setCaseType] = useState<CaseType>();
+    const [template, setTemplate] = React.useState<Template>();
 
     useEffect(() => {
         getCaseType(type)
@@ -45,10 +48,11 @@ const AddTemplate: React.FC<AddTemplateProps> = ({ csrfToken, history, match }) 
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
         clearErrors();
-        if (validate(validationSchema, files, addFormError) && caseType) {
+        console.log(template);
+        if (validate(validationSchema, template, addFormError) && caseType) {
 
             const data = new FormData();
-            data.append('file', files![0]);
+            data.append('file', template!.files![0]);
             data.append('caseType', caseType.value);
 
             addTemplate(data).then(() => {
@@ -79,7 +83,7 @@ const AddTemplate: React.FC<AddTemplateProps> = ({ csrfToken, history, match }) 
                         <input type="hidden" name="_csrf" value={csrfToken} />
                         <DocumentAdd
                             name="files"
-                            updateState={documentAddState => setFiles(documentAddState.value as File[])}
+                            updateState={documentAddState => setTemplate({ files: documentAddState.value as File[] })}
                         />
                         <Submit />
                     </form>

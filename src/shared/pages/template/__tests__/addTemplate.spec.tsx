@@ -4,7 +4,7 @@ import { createBrowserHistory, History, Location } from 'history';
 import { act, render, RenderResult, wait, fireEvent, waitForElement } from '@testing-library/react';
 import AddTemplate from '../addTemplate';
 import * as TemplatesService from '../../../services/templatesService';
-import { GENERAL_ERROR_TITLE, ADD_TEMPLATE_ERROR_DESCRIPTION, LOAD_CASE_TYPES_DESCRIPTION } from '../../../models/constants';
+import { GENERAL_ERROR_TITLE, ADD_TEMPLATE_ERROR_DESCRIPTION, LOAD_CASE_TYPE_ERROR_DESCRIPTION } from '../../../models/constants';
 import Template from '../../../models/template';
 import * as useError from '../../../hooks/useError';
 import * as CaseTypesService from '../../../services/caseTypesService';
@@ -12,16 +12,18 @@ import { createMockFile } from '../../../../../test/createMockFile';
 
 jest.mock('../../../services/caseTypesService', () => ({
     __esModule: true,
-    getCaseTypes: () => Promise.resolve([{
-        label: '__caseType1__',
-        value: '__CaseTypeId1__'
-    }, {
-        label: '__topic2__',
-        value: '__topicId2__'
-    }])
+    getCaseType: jest.fn().mockReturnValue(Promise.resolve({
+        displayName: '__displayName__',
+        label: '__label__',
+        shortCode: '__shortCode__',
+        type: '__type__',
+        value: '__caseType1__'
+    }))
 }));
 
-const getTopicsSpy = jest.spyOn(CaseTypesService, 'getCaseTypes');
+const useStateSpy = jest.spyOn(React, 'useState');
+const mockSetState = jest.fn();
+const getCaseTypeSpy = jest.spyOn(CaseTypesService, 'getCaseType');
 
 let match: match<any>;
 let history: History<any>;
@@ -29,8 +31,6 @@ let location: Location;
 let mockTemplate: Template;
 let wrapper: RenderResult;
 
-const useReducerSpy = jest.spyOn(React, 'useReducer');
-const reducerDispatch = jest.fn();
 const useErrorSpy = jest.spyOn(useError, 'default');
 const addFormErrorSpy = jest.fn();
 const clearErrorsSpy = jest.fn();
@@ -48,7 +48,7 @@ beforeEach(() => {
     history = createBrowserHistory();
     match = {
         isExact: true,
-        params: { teamId: '__teamId__' },
+        params: { type: '__type__' },
         path: '',
         url: ''
     };
@@ -64,10 +64,12 @@ beforeEach(() => {
         caseType: undefined,
         files: undefined
     };
-    useReducerSpy.mockImplementation(() => [mockTemplate, reducerDispatch]);
+    mockTemplate = {
+        files: undefined
+    };
+    useStateSpy.mockImplementation(() => [mockTemplate, mockSetState]);
     useErrorSpy.mockImplementation(() => [{}, addFormErrorSpy, clearErrorsSpy, setMessageSpy]);
     history.push = jest.fn();
-    reducerDispatch.mockReset();
     addFormErrorSpy.mockReset();
     clearErrorsSpy.mockReset();
     setMessageSpy.mockReset();
@@ -85,30 +87,37 @@ describe('when the addTemplate component is mounted', () => {
         });
     });
 
-    it('should display an error if the call to retrieve the case types fail', async () => {
+    it('should display an error if the call to retrieve the case type fail', async () => {
         expect.assertions(1);
-        getTopicsSpy.mockImplementation(() => Promise.reject('error'));
+
+        getCaseTypeSpy.mockImplementation(() => Promise.reject('error'));
 
         act(() => {
             wrapper = renderComponent();
         });
 
         await wait(() => {
-            expect(setMessageSpy).toBeCalledWith({ title: GENERAL_ERROR_TITLE, description: LOAD_CASE_TYPES_DESCRIPTION });
+            expect(setMessageSpy).toBeCalledWith({ title: GENERAL_ERROR_TITLE, description: LOAD_CASE_TYPE_ERROR_DESCRIPTION });
         });
 
     });
 });
 
 describe('when the submit button is clicked', () => {
+    beforeAll(() => {
+        getCaseTypeSpy.mockReturnValue(Promise.resolve({
+            displayName: '__displayName__',
+            label: '__label__',
+            shortCode: '__shortCode__',
+            type: '__type__',
+            value: '__caseType1__'
+        }));
+    });
+
     describe('and the data is filled in', () => {
 
         beforeEach(async () => {
             mockTemplate.files = [createMockFile()];
-            mockTemplate.caseType = {
-                label: '__caseTypeLabel__',
-                value: '__caseTypeValue__'
-            };
             const submitButton = await waitForElement(async () => {
                 return await wrapper.findByText('Submit');
             });
@@ -161,8 +170,7 @@ describe('when the submit button is clicked', () => {
         });
 
         it('should set the error state', () => {
-            expect(addFormErrorSpy).toHaveBeenNthCalledWith(1, { key: 'files', value: 'The Template is required' });
-            expect(addFormErrorSpy).toHaveBeenNthCalledWith(2, { key: 'caseType', value: 'The Case Types is required' });
+            expect(addFormErrorSpy).toHaveBeenCalledWith({ key: 'files', value: 'The Template is required' });
         });
     });
 });
