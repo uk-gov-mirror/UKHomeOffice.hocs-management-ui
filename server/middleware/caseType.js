@@ -2,6 +2,20 @@ const { infoService } = require('../clients/index');
 const getLogger = require('../libs/logger');
 const User = require('../models/user');
 
+async function getCaseType(req, res, next) {
+
+    const logger = getLogger(req.request);
+
+    try {
+        const { caseType } = req.params;
+        const response = await infoService.get(`/caseType/type/${caseType}`, { headers: User.createHeaders(req.user) });
+        res.json(response.data);
+    } catch (error) {
+        logger.error(error);
+        next(error);
+    }
+}
+
 async function getCaseTypes(req, res, next) {
 
     const logger = getLogger(req.request);
@@ -22,6 +36,7 @@ async function returnCaseTypesJson(_, res) {
 }
 
 module.exports = {
+    getCaseType,
     getCaseTypes,
     returnCaseTypesJson,
 };

@@ -4,6 +4,8 @@ const { getTemplatesForCaseType } = require('../../middleware/template');
 
 router.get('', getCaseTypes, returnCaseTypesJson);
 
-router.get('/:caseTypeId/templates', getTemplatesForCaseType);
+router.get('/:caseTypeType')
+
+router.get('/:caseTypeType/templates', getTemplatesForCaseType);
 
 module.exports = router;
