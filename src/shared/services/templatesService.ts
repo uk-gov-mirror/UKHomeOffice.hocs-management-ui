@@ -5,3 +5,9 @@ export const addTemplate = (template: FormData) => new Promise((resolve, reject)
     .then(() => resolve())
     .catch(reason => reject(reason))
 );
+
+export const deleteTemplate = (uuid: string) => new Promise((resolve, reject) => axios
+    .delete(`/api/templates/${uuid}`)
+    .then(() => resolve())
+    .catch(reason => reject(reason))
+);

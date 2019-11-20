@@ -42,6 +42,13 @@ const renderComponent = () => render(
 
 beforeEach(() => {
     history = createBrowserHistory();
+    location = {
+        hash: '',
+        key: '',
+        pathname: '',
+        search: '',
+        state: {}
+    };
     match = {
         isExact: true,
         params: { topicId: '__topicId__', privateMinister: '__privateMinister__', draftQA: '__draftQA__' },

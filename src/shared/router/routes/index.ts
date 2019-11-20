@@ -12,9 +12,8 @@ import UnitSearch from '../../pages/unit/unitSearch/unitSearch';
 import AddStandardLine from '../../pages/standardLine/addStandardLine';
 import AddTemplate from '../../pages/template/addTemplate';
 import AddNominatedContact from '../../pages/team/addNominatedContact/addNominatedContact';
-
-
-
+import SelectCaseType from '../../pages/template/selectCaseType';
+import CaseTypeView from '../../pages/template/caseTypeView';
 
 export interface Route {
     component: React.FunctionComponent | Error;
@@ -91,16 +90,28 @@ const routes = [
         title: 'UnitSearch'
     },
     {
-        path: '/add-template',
-        exact: true,
-        component: AddTemplate,
-        title: 'Add Template'
-    },
-    {
         path: '/team/:teamId/add-nominated-contact',
         exact: true,
         component: AddNominatedContact,
         title: 'Add Nominated Contact'
+    },
+    {
+        path: '/case-types',
+        exact: true,
+        component: SelectCaseType,
+        title: 'Select a Case Type'
+    },
+    {
+        path: '/case-type/:type',
+        exact: true,
+        component: CaseTypeView,
+        title: 'View Case Type'
+    },
+    {
+        path: '/case-type/:type/add-template',
+        exact: true,
+        component: AddTemplate,
+        title: 'Add Template'
     },
     {
         component: Error,

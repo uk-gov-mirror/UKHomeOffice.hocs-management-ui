@@ -46,6 +46,13 @@ const renderComponent = () => render(
 
 beforeEach(() => {
     history = createBrowserHistory();
+    location = {
+        hash: '',
+        key: '',
+        pathname: '',
+        search: '',
+        state: {}
+    };
     match = {
         isExact: true,
         params: { teamId: '__topicId__' },

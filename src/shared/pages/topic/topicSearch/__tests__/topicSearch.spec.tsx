@@ -35,6 +35,19 @@ const renderComponent = () => render(
 
 beforeEach(() => {
     history = createBrowserHistory();
+    location = {
+        hash: '',
+        key: '',
+        pathname: '',
+        search: '',
+        state: {}
+    };
+    match = {
+        isExact: true,
+        params: {},
+        path: '',
+        url: ''
+    };
     mockState = {
         label: '__topicLabel__',
         value: '__topicValue__'

@@ -1,4 +1,4 @@
-import { ObjectSchema, ValidationError, setLocale } from 'yup';
+import { ObjectSchema, ValidationError, setLocale, ArraySchema } from 'yup';
 import { FormError } from '../models/formError';
 
 setLocale({
@@ -14,7 +14,7 @@ setLocale({
     }
 });
 
-export const validate = (schema: ObjectSchema<any>, state: any, addFormError: (value: FormError) => void) => {
+export const validate = (schema: ObjectSchema<any> | ArraySchema<any>, state: any, addFormError: (value: FormError) => void) => {
     try {
         schema.validateSync(state, { abortEarly: false });
         return true;
