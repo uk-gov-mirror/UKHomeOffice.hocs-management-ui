@@ -1,4 +1,4 @@
-export const createMockFile = (name: string = 'mock.txt', size: number = 1024, mimeType: string = 'plain/txt') => {
+export const createMockFile = (name: string = 'mock.docx', size: number = 1024, mimeType: string = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') => {
     function range(count: number) {
         let output = '';
         for (let i = 0; i < count; i += 1) {
@@ -7,6 +7,6 @@ export const createMockFile = (name: string = 'mock.txt', size: number = 1024, m
         return output;
     }
     const blob = new Blob([range(size)], { type: mimeType });
-    const file = new File([blob], name, { lastModified: new Date().getTime() });
+    const file = new File([blob], name, { type: mimeType, lastModified: new Date().getTime() });
     return file;
 };

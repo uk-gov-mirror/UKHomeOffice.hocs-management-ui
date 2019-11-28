@@ -25,3 +25,15 @@ export const validate = (schema: ObjectSchema<any> | ArraySchema<any>, state: an
         return false;
     }
 };
+
+export function checkIfFilesAreCorrectType(files?: [File]): boolean {
+    let valid = true;
+    if (files) {
+        files.map((file) => {
+            if (!['application/vnd.openxmlformats-officedocument.wordprocessingml.document'].includes(file.type)) {
+                valid = false;
+            }
+        });
+    }
+    return valid;
+}

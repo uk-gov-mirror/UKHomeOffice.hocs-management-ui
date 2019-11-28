@@ -156,6 +156,7 @@ describe('when the submit button is clicked', () => {
             });
         });
     });
+
     describe('and the data is not filled in', () => {
         beforeEach(async () => {
             const submitButton = await waitForElement(async () => {
@@ -171,6 +172,26 @@ describe('when the submit button is clicked', () => {
 
         it('should set the error state', () => {
             expect(addFormErrorSpy).toHaveBeenCalledWith({ key: 'files', value: 'The Template is required' });
+        });
+    });
+
+    describe('and the data is wrongly filled in', () => {
+        beforeEach(async () => {
+            mockTemplate.files = [createMockFile('mock.txt', 1024, 'text/plain')];
+
+            const submitButton = await waitForElement(async () => {
+                return await wrapper.findByText('Submit');
+            });
+
+            fireEvent.click(submitButton);
+        });
+
+        it('should call the begin submit action', () => {
+            expect(clearErrorsSpy).toHaveBeenCalled();
+        });
+
+        it('should set the error state', () => {
+            expect(addFormErrorSpy).toHaveBeenCalledWith({ key: 'files', value: 'Only docx templates supported' });
         });
     });
 });

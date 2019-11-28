@@ -8,7 +8,7 @@ import ErrorSummary from '../../common/components/errorSummary';
 import useError from '../../hooks/useError';
 import * as constants from '../../models/constants';
 import ErrorMessage from '../../models/errorMessage';
-import { validate } from '../../validation';
+import { validate, checkIfFilesAreCorrectType } from '../../validation';
 import DocumentAdd from '../../common/components/forms/documentAdd';
 import { addTemplate } from '../../services/templatesService';
 import { getCaseType } from '../../services/caseTypesService';
@@ -28,6 +28,11 @@ const validationSchema = object({
         .min(1)
         .required()
         .label('Template')
+        .test(
+            'Template',
+            'Only docx templates supported',
+            checkIfFilesAreCorrectType
+        )
 });
 
 const AddTemplate: React.FC<AddTemplateProps> = ({ csrfToken, history, match }) => {
