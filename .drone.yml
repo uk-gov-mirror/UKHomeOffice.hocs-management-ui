@@ -82,7 +82,7 @@ pipeline:
   deployment:
     image: quay.io/ukhomeofficedigital/kd:v1.12.2
     environment:
-      - KUBE_NAMESPACE=cs-${DRONE_DEPLOY_TO}
+      - KUBE_NAMESPACE=wcs-${DRONE_DEPLOY_TO}
       - ENVIRONMENT=${DRONE_DEPLOY_TO}
       - KUBE_SERVER=https://kube-api-notprod.notprod.acp.homeoffice.gov.uk
     secrets:
