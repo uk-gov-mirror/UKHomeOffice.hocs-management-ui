@@ -105,7 +105,7 @@ describe('when the submit button is clicked', () => {
     describe('and the data is filled in', () => {
 
         beforeEach(async () => {
-            mockStandardLine.expiryDate = '2001-01-01';
+            mockStandardLine.expiryDate = '2101-01-01';
             mockStandardLine.files = [createMockFile()];
             mockStandardLine.topic = { label: '__topic__', value: '__value__' };
             const submitButton = await waitForElement(async () => {
@@ -163,6 +163,21 @@ describe('when the submit button is clicked', () => {
             expect(addFormErrorSpy).toHaveBeenNthCalledWith(1, { key: 'files', value: 'The Standard Line is required' });
             expect(addFormErrorSpy).toHaveBeenNthCalledWith(2, { key: 'expiryDate', value: 'The Expiry Date is invalid' });
             expect(addFormErrorSpy).toHaveBeenNthCalledWith(3, { key: 'topic', value: 'The Topic is required' });
+        });
+    });
+    describe('and the expiry date is not in the future', () => {
+        beforeEach(async () => {
+            mockStandardLine.expiryDate = new Date().toDateString();
+            mockStandardLine.files = [createMockFile()];
+            mockStandardLine.topic = { label: '__topic__', value: '__value__' };
+            const submitButton = await waitForElement(async () => {
+                return await wrapper.findByText('Submit');
+            });
+            fireEvent.click(submitButton);
+        });
+
+        it('should show the validation message', () => {
+            expect(addFormErrorSpy).toHaveBeenNthCalledWith(1, { key: 'expiryDate', value: 'The Expiry Date must be in the future' });
         });
     });
 });

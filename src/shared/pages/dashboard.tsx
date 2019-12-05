@@ -20,21 +20,21 @@ const Dashboard: React.FC = () => (
                     </li>
                     <li>
                         <h2 className="govuk-heading-l">
-                            Templates
+                            Team management
                         </h2>
                         <ul className="govuk-list govuk-list--bullet">
                             <li>
-                                <Link className="govuk-link" to="/add-template">Add a template</Link>
+                                <Link className="govuk-link" to="/team-search">Manage a team</Link>
                             </li>
                         </ul>
                     </li>
                     <li>
                         <h2 className="govuk-heading-l">
-                            Team management
+                            Templates
                         </h2>
                         <ul className="govuk-list govuk-list--bullet">
                             <li>
-                                <Link className="govuk-link" to="/team-search">Add/remove users</Link>
+                                <Link className="govuk-link" to="/add-template">Add a template</Link>
                             </li>
                         </ul>
                     </li>

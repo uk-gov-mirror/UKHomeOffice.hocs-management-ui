@@ -24,6 +24,7 @@ router.use(cookieParser());
 router.use(csrfMiddleware);
 router.use('/health', healthRouter);
 router.use('*', authMiddleware, initRequest, createAnalyticsObject, setCacheControl);
+router.use(protect('MANAGEMENT_UI'));
 router.use('/api', apiRouter);
 router.use('/', dashboard);
 
