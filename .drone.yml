@@ -42,14 +42,60 @@ pipeline:
   clone-kube-project:
     image: plugins/git
     commands:
-      - git clone -b feature/WCS --single-branch https://github.com/UKHomeOffice/kube-hocs-management-ui.git
+      - git clone -b master --single-branch https://github.com/UKHomeOffice/kube-hocs-management-ui.git
     when:
       event: [push, deployment, tag]
+
+  deploy-to-cs-dev-from-build-number:
+    image: quay.io/ukhomeofficedigital/kd:v1.12.2
+    environment:
+      - KUBE_NAMESPACE=cs-dev
+      - ENVIRONMENT=dev
+      - VERSION=build-${DRONE_BUILD_NUMBER}
+      - KUBE_SERVER=https://kube-api-notprod.notprod.acp.homeoffice.gov.uk
+    secrets:
+      - hocs_management_ui_dev
+    commands:
+      - cd kube-hocs-management-ui
+      - ./deploy.sh
+    when:
+      branch: [master, dev]
+      event: [push, tag]
+
+  deploy-to-wcs-dev-from-build-number:
+    image: quay.io/ukhomeofficedigital/kd:v1.12.2
+    environment:
+      - KUBE_NAMESPACE=wcs-dev
+      - ENVIRONMENT=dev
+      - VERSION=build-${DRONE_BUILD_NUMBER}
+      - KUBE_SERVER=https://kube-api-notprod.notprod.acp.homeoffice.gov.uk
+    secrets:
+      - hocs_management_ui_dev
+    commands:
+      - cd kube-hocs-management-ui
+      - ./deploy.sh
+    when:
+      branch: [master, dev]
+      event: [push, tag]
+
+  deployment:
+    image: quay.io/ukhomeofficedigital/kd:v1.12.2
+    environment:
+      - ENVIRONMENT=${DRONE_DEPLOY_TO}
+      - KUBE_SERVER=https://kube-api-notprod.notprod.acp.homeoffice.gov.uk
+    secrets:
+      - hocs_management_ui_dev
+      - hocs_management_ui_demo
+    commands:
+      - cd kube-hocs-management-ui
+      - ./deploy.sh
+    when:
+      event: deployment
+      environment: [dev, demo]
 
   deploy-to-qa:
     image: quay.io/ukhomeofficedigital/kd:v1.12.2
     environment:
-      - KUBE_NAMESPACE=wcs-qa
       - ENVIRONMENT=qa
       - KUBE_SERVER=https://kube-api-notprod.notprod.acp.homeoffice.gov.uk
     secrets:
@@ -63,42 +109,9 @@ pipeline:
       event: deployment
       environment: qa
 
-  deploy-to-dev-from-build-number:
-    image: quay.io/ukhomeofficedigital/kd:v1.12.2
-    environment:
-      - KUBE_NAMESPACE=wcs-dev
-      - ENVIRONMENT=dev
-      - VERSION=build-${DRONE_BUILD_NUMBER}
-      - KUBE_SERVER=https://kube-api-notprod.notprod.acp.homeoffice.gov.uk
-    secrets:
-      - hocs_management_ui_dev
-    commands:
-      - cd kube-hocs-management-ui
-      - ./deploy.sh
-    when:
-      branch: [feature/WCS, dev]
-      event: [push, tag]
-
-  deployment:
-    image: quay.io/ukhomeofficedigital/kd:v1.12.2
-    environment:
-      - KUBE_NAMESPACE=wcs-${DRONE_DEPLOY_TO}
-      - ENVIRONMENT=${DRONE_DEPLOY_TO}
-      - KUBE_SERVER=https://kube-api-notprod.notprod.acp.homeoffice.gov.uk
-    secrets:
-      - hocs_management_ui_dev
-      - hocs_management_ui_demo
-    commands:
-      - cd kube-hocs-management-ui
-      - ./deploy.sh
-    when:
-      event: deployment
-      environment: [dev, demo]
-
   deploy-to-prod:
     image: quay.io/ukhomeofficedigital/kd:v1.12.2
     environment:
-      - KUBE_NAMESPACE=wcs-prod
       - ENVIRONMENT=prod
       - VERSION=${IMAGE_VERSION}
       - KUBE_SERVER=https://kube-api-prod.prod.acp.homeoffice.gov.uk
