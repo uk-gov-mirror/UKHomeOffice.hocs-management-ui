@@ -49,8 +49,9 @@ pipeline:
   deploy-to-cs-dev-from-build-number:
     image: quay.io/ukhomeofficedigital/kd:v1.12.2
     environment:
-      - KUBE_NAMESPACE=cs-dev
+      - DOMAIN=cs
       - ENVIRONMENT=dev
+      - KUBE_NAMESPACE=${DOMAIN}-${ENVIRONMENT}
       - VERSION=build-${DRONE_BUILD_NUMBER}
       - KUBE_SERVER=https://kube-api-notprod.notprod.acp.homeoffice.gov.uk
     secrets:
@@ -65,8 +66,9 @@ pipeline:
   deploy-to-wcs-dev-from-build-number:
     image: quay.io/ukhomeofficedigital/kd:v1.12.2
     environment:
-      - KUBE_NAMESPACE=wcs-dev
+      - DOMAIN=wcs
       - ENVIRONMENT=dev
+      - KUBE_NAMESPACE=${DOMAIN}-${ENVIRONMENT}
       - VERSION=build-${DRONE_BUILD_NUMBER}
       - KUBE_SERVER=https://kube-api-notprod.notprod.acp.homeoffice.gov.uk
     secrets:
