@@ -6,6 +6,10 @@ export KUBE_SERVER=${KUBE_SERVER}
 if [[ -z ${VERSION} ]] ; then
     export VERSION=${IMAGE_VERSION}
 fi
+if [[ -z ${DOMAIN} ]] ; then
+    export DOMAIN="cs"
+fi
+export DOMAIN=${DOMAIN}
 
 if [[ ${ENVIRONMENT} == "prod" ]] ; then
     echo "deploy ${VERSION} to PROD namespace, using HOCS_MANAGEMENT_UI_PROD drone secret"
@@ -36,10 +40,10 @@ if [[ -z ${KUBE_TOKEN} ]] ; then
 fi
 
 if [ "${ENVIRONMENT}" == "prod" ] ; then
-    export DNS_PREFIX=www.cs-management
+    export DNS_PREFIX=www.${DOMAIN}-management
     export KC_REALM=https://sso.digital.homeoffice.gov.uk/auth/realms/hocs-prod
 else
-    export DNS_PREFIX=${ENVIRONMENT}-management.cs-notprod
+    export DNS_PREFIX=${ENVIRONMENT}-management.${DOMAIN}-notprod
     export KC_REALM=https://sso-dev.notprod.homeoffice.gov.uk/auth/realms/hocs-notprod
 fi
 
