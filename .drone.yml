@@ -51,7 +51,7 @@ pipeline:
     environment:
       - DOMAIN=cs
       - ENVIRONMENT=dev
-      - KUBE_NAMESPACE=${DOMAIN}-${ENVIRONMENT}
+      - KUBE_NAMESPACE=cs-dev
       - VERSION=build-${DRONE_BUILD_NUMBER}
       - KUBE_SERVER=https://kube-api-notprod.notprod.acp.homeoffice.gov.uk
     secrets:
@@ -68,7 +68,7 @@ pipeline:
     environment:
       - DOMAIN=wcs
       - ENVIRONMENT=dev
-      - KUBE_NAMESPACE=${DOMAIN}-${ENVIRONMENT}
+      - KUBE_NAMESPACE=wcs-dev
       - VERSION=build-${DRONE_BUILD_NUMBER}
       - KUBE_SERVER=https://kube-api-notprod.notprod.acp.homeoffice.gov.uk
     secrets:
