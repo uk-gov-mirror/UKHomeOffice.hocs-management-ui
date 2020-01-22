@@ -59,6 +59,7 @@ echo
 cd kd
 
 kd --insecure-skip-tls-verify \
+   --timeout 10m \
     -f ingress.yaml \
     -f deployment.yaml \
     -f service.yaml
