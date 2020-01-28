@@ -2,7 +2,7 @@ jest.mock('../../clients/index');
 jest.mock('../../libs/logger');
 jest.mock('../../models/user');
 const { infoService } = require('../../clients/index');
-const { addToTeam, getAllUsers, removeFromTeam, returnUsersJson } = require('../user');
+const { addToTeam, getAllUsers, getUser, removeFromTeam, returnUsersJson, returnUserJson } = require('../user');
 const getLogger = require('../../libs/logger');
 const User = require('../../models/user');
 
@@ -118,6 +118,31 @@ describe('getAllUsers', () => {
     });
 });
 
+describe('getUser', () => {
+
+    let req = { params: 'userId' };
+    let res = {};
+    const next = jest.fn();
+    const user = {
+        label: 'user',
+        value: 'user'
+    };
+    const fetch = jest.fn(() => user);
+
+    beforeEach(() => {
+        next.mockReset();
+        req = { listService: { fetch: fetch } };
+        res = { locals: {} };
+    });
+
+    it('should put the users object in response locals', async () => {
+        await getUser(req, res, next);
+        expect(next).toHaveBeenCalled();
+        expect(res.locals.user).toBeDefined();
+        expect(res.locals.user).toEqual(user);
+    });
+});
+
 describe('returnUsersJson', () => {
     const req = {};
     let res = {};
@@ -137,6 +162,32 @@ describe('returnUsersJson', () => {
 
     it('should be the last handler', async () => {
         await returnUsersJson(req, res, next);
+        expect(next).not.toHaveBeenCalled();
+    });
+});
+
+describe('returnUserJson', () => {
+    const req = {};
+    let res = {};
+    const next = jest.fn();
+    const json = jest.fn();
+    const user = {
+        label: 'user',
+        value: 'user'
+    };
+
+    beforeEach(() => {
+        next.mockReset();
+        res = { json, locals: { user } };
+    });
+
+    it('should return the user as json', async () => {
+        await returnUserJson(req, res, next);
+        expect(json).toHaveBeenCalledWith(user);
+    });
+
+    it('should be the last handler', async () => {
+        await returnUserJson(req, res, next);
         expect(next).not.toHaveBeenCalled();
     });
 });

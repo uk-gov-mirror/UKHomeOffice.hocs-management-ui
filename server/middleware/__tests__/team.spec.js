@@ -22,6 +22,39 @@ describe('getTeams', () => {
     });
 });
 
+describe('getTeamsForUser', () => {
+
+    let req = {};
+    let res = {};
+    const next = jest.fn();
+    const teams = [
+        {
+            label: 'team1',
+            value: 'teamId1'
+        },{
+            label: 'team2',
+            value: 'teamId2'
+        },{
+            label: 'team3',
+            value: 'teamId3'
+        }
+    ];
+    const fetch = jest.fn(() => teams);
+
+    beforeEach(() => {
+        next.mockReset();
+        req = { listService: { fetch: fetch } };
+        res = { locals: {} };
+    });
+
+    it('should put the teams object in response locals', async () => {
+        await getTeamMembers(req, res, next);
+        expect(next).toHaveBeenCalled();
+        expect(res.locals.teamMembers).toBeDefined();
+        expect(res.locals.teamMembers).toEqual(teams);
+    });
+});
+
 describe('getTeamMembers', () => {
 
     let req = {};

@@ -37,6 +37,16 @@ async function getTeamMembers(req, res, next) {
     }
 }
 
+async function getTeamsForUser(req, res, next) {
+    try {
+        const response = await req.listService.fetch('TEAMS_FOR_USER', req.params);
+        res.locals.teams = response;
+        next();
+    } catch (error) {
+        next(error);
+    }
+}
+
 async function returnTeamJson(_, res) {
     const { locals: { team } } = res;
     await res.json(team);
@@ -55,6 +65,7 @@ module.exports = {
     getTeam,
     getTeams,
     getTeamMembers,
+    getTeamsForUser,
     returnTeamJson,
     returnTeamsJson,
     returnTeamMembersJson
