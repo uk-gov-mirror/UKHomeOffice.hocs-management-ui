@@ -26,6 +26,16 @@ async function getAllUsers(req, res, next) {
     }
 }
 
+async function getUser(req, res, next) {
+    try {
+        const response = await req.listService.fetch('USER', req.params);
+        res.locals.user = response;
+        next();
+    } catch (error) {
+        next(error);
+    }
+}
+
 async function removeFromTeam(req, _, next) {    
     const logger = getLogger(req.request);
     try {
@@ -44,9 +54,16 @@ async function returnUsersJson(_, res) {
     await res.json(users);
 }
 
+async function returnUserJson(_, res) {
+    const { locals: { user } } = res;
+    await res.json(user);
+}
+
 module.exports = {
     addToTeam,
     getAllUsers,
+    getUser,
     removeFromTeam,
-    returnUsersJson
+    returnUsersJson,
+    returnUserJson
 }

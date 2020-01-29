@@ -9,6 +9,12 @@ export class AddUserError extends Error {
     }
 }
 
+export const getUser = (userId: string) => new Promise<Item>((resolve, reject) => axios
+    .get(`/api/users/${userId}`)
+    .then(response => resolve(response.data))
+    .catch(reason => reject(reason))
+);
+
 export const getUsers = () => new Promise((resolve, reject) => axios
     .get('/api/users')
     .then((response) => {

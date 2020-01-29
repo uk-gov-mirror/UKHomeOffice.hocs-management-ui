@@ -6,12 +6,6 @@ jest.mock('axios');
 
 beforeEach(() => {
     jest.resetAllMocks();
-    jest.spyOn(axios, 'get').mockReturnValue(Promise.resolve({
-        data: [
-            { label: '__user1__', value: '__userId1__' },
-            { label: '__user2__', value: '__userId2__' }
-        ]
-    }));
     jest.spyOn(axios, 'post').mockReturnValue(Promise.resolve({
         data: { label: '__user1__', value: '__userId1__' }
     }));
@@ -21,6 +15,14 @@ beforeEach(() => {
 });
 
 describe('when the getUsers method is called', () => {
+    beforeEach(() => {
+        jest.spyOn(axios, 'get').mockReturnValue(Promise.resolve({
+            data: [
+                { label: '__user1__', value: '__userId1__' },
+                { label: '__user2__', value: '__userId2__' }
+            ]
+        }));
+    });
     describe('and the request is successful', () => {
         it('should return a resolved promise with the users collection', async () => {
             expect.assertions(2);
@@ -31,6 +33,38 @@ describe('when the getUsers method is called', () => {
                     { label: '__user1__', value: '__userId1__' },
                     { label: '__user2__', value: '__userId2__' }
                 ]);
+            });
+        });
+    });
+
+    describe('and the request fails', () => {
+        it('should return a resolved promise with the team object', async () => {
+            jest.spyOn(axios, 'get').mockReturnValue(Promise.reject(new Error('__error__')));
+            expect.assertions(2);
+
+            await getUsers().catch((error: Error) => {
+                expect(axios.get).toHaveBeenCalledTimes(1);
+                expect(error.message).toEqual('__error__');
+            });
+        });
+    });
+});
+
+describe('when the getUser method is called', () => {
+    beforeEach(() => {
+        jest.spyOn(axios, 'get').mockReturnValue(Promise.resolve({
+            data: { label: '__user1__', value: '__userId1__' }
+        }));
+    });
+    describe('and the request is successful', () => {
+        it('should return a resolved promise with a user', async () => {
+            expect.assertions(2);
+
+            await getUsers().then((payload: User[]) => {
+                expect(axios.get).toHaveBeenCalledTimes(1);
+                expect(payload).toStrictEqual(
+                    { label: '__user1__', value: '__userId1__' }
+                );
             });
         });
     });

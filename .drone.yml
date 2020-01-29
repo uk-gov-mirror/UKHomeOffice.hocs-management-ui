@@ -42,32 +42,33 @@ pipeline:
   clone-kube-project:
     image: plugins/git
     commands:
-      - git clone https://github.com/UKHomeOffice/kube-hocs-management-ui.git
+      - git clone -b master --single-branch https://github.com/UKHomeOffice/kube-hocs-management-ui.git
     when:
       event: [push, deployment, tag]
 
-  deploy-to-qa:
+  deploy-to-cs-dev-from-build-number:
     image: quay.io/ukhomeofficedigital/kd:v1.12.2
     environment:
-      - KUBE_NAMESPACE=cs-qa
-      - ENVIRONMENT=qa
+      - DOMAIN=cs
+      - ENVIRONMENT=dev
+      - KUBE_NAMESPACE=cs-dev
+      - VERSION=build-${DRONE_BUILD_NUMBER}
       - KUBE_SERVER=https://kube-api-notprod.notprod.acp.homeoffice.gov.uk
     secrets:
-      - hocs_management_ui_qa
+      - hocs_management_ui_dev
     commands:
-      - source version.txt
-      - echo $VERSION
       - cd kube-hocs-management-ui
       - ./deploy.sh
     when:
-      event: deployment
-      environment: qa
+      branch: [master, dev]
+      event: [push, tag]
 
-  deploy-to-dev-from-build-number:
+  deploy-to-wcs-dev-from-build-number:
     image: quay.io/ukhomeofficedigital/kd:v1.12.2
     environment:
-      - KUBE_NAMESPACE=cs-dev
+      - DOMAIN=wcs
       - ENVIRONMENT=dev
+      - KUBE_NAMESPACE=wcs-dev
       - VERSION=build-${DRONE_BUILD_NUMBER}
       - KUBE_SERVER=https://kube-api-notprod.notprod.acp.homeoffice.gov.uk
     secrets:
@@ -82,7 +83,6 @@ pipeline:
   deployment:
     image: quay.io/ukhomeofficedigital/kd:v1.12.2
     environment:
-      - KUBE_NAMESPACE=cs-${DRONE_DEPLOY_TO}
       - ENVIRONMENT=${DRONE_DEPLOY_TO}
       - KUBE_SERVER=https://kube-api-notprod.notprod.acp.homeoffice.gov.uk
     secrets:
@@ -95,10 +95,25 @@ pipeline:
       event: deployment
       environment: [dev, demo]
 
+  deploy-to-qa:
+    image: quay.io/ukhomeofficedigital/kd:v1.12.2
+    environment:
+      - ENVIRONMENT=qa
+      - KUBE_SERVER=https://kube-api-notprod.notprod.acp.homeoffice.gov.uk
+    secrets:
+      - hocs_management_ui_qa
+    commands:
+      - source version.txt
+      - echo $VERSION
+      - cd kube-hocs-management-ui
+      - ./deploy.sh
+    when:
+      event: deployment
+      environment: qa
+
   deploy-to-prod:
     image: quay.io/ukhomeofficedigital/kd:v1.12.2
     environment:
-      - KUBE_NAMESPACE=cs-prod
       - ENVIRONMENT=prod
       - VERSION=${IMAGE_VERSION}
       - KUBE_SERVER=https://kube-api-prod.prod.acp.homeoffice.gov.uk
