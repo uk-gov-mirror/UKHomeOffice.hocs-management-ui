@@ -14,6 +14,9 @@ import AddTemplate from '../../pages/template/addTemplate';
 import AddNominatedContact from '../../pages/team/addNominatedContact/addNominatedContact';
 import SelectCaseType from '../../pages/template/selectCaseType';
 import CaseTypeView from '../../pages/template/caseTypeView';
+import UserSearch from '../../pages/user/userSearch/userSearch';
+import UserView from '../../pages/user/userView/userView';
+import AddTeamToUser from '../../pages/user/addTeamToUser/addTeamToUser';
 
 export interface Route {
     component: React.FunctionComponent | Error;
@@ -28,6 +31,24 @@ const routes = [
         exact: true,
         component: Dashboard,
         title: 'Dashboard'
+    },
+    {
+        path: '/user-search',
+        exact: true,
+        component: UserSearch,
+        title: 'UserSearch'
+    },
+    {
+        path: '/user-view/:userId',
+        exact: true,
+        component: UserView,
+        title: 'UserView'
+    },
+    {
+        path: '/user/:userId/add-teams',
+        exact: true,
+        component: AddTeamToUser,
+        title: 'AddTeamToUser'
     },
     {
         path: '/team-search',
