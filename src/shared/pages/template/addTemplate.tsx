@@ -8,7 +8,7 @@ import ErrorSummary from '../../common/components/errorSummary';
 import useError from '../../hooks/useError';
 import * as constants from '../../models/constants';
 import ErrorMessage from '../../models/errorMessage';
-import { validate, checkIfFilesAreCorrectType } from '../../validation';
+import { validate, checkIfFilesAreDocx } from '../../validation';
 import DocumentAdd from '../../common/components/forms/documentAdd';
 import { addTemplate } from '../../services/templatesService';
 import { getCaseType } from '../../services/caseTypesService';
@@ -31,7 +31,7 @@ const validationSchema = object({
         .test(
             'Template',
             'Only docx templates supported',
-            checkIfFilesAreCorrectType
+            checkIfFilesAreDocx
         )
 });
 

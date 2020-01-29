@@ -26,7 +26,7 @@ export const validate = (schema: ObjectSchema<any> | ArraySchema<any>, state: an
     }
 };
 
-export function checkIfFilesAreCorrectType(files?: [File]): boolean {
+export function checkIfFilesAreDocx(files?: [File]): boolean {
     let valid = true;
     if (files) {
         files.map((file) => {

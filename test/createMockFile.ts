@@ -1,4 +1,4 @@
-export const createMockFile = (name: string = 'mock.docx', size: number = 1024, mimeType: string = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') => {
+export const createMockFile = (name: string = 'mock.txt', size: number = 1024, mimeType: string = 'plain/txt') => {
     function range(count: number) {
         let output = '';
         for (let i = 0; i < count; i += 1) {

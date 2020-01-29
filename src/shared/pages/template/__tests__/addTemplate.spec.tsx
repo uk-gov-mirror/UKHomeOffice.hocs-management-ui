@@ -117,7 +117,7 @@ describe('when the submit button is clicked', () => {
     describe('and the data is filled in', () => {
 
         beforeEach(async () => {
-            mockTemplate.files = [createMockFile()];
+            mockTemplate.files = [createMockFile('mock.docx', 1024, 'application/vnd.openxmlformats-officedocument.wordprocessingml.document')];
             const submitButton = await waitForElement(async () => {
                 return await wrapper.findByText('Submit');
             });
