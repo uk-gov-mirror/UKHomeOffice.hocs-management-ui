@@ -69,4 +69,3 @@ build/
 .DS_Store
 
 docker/keycloak/hsperfdata_jboss
-docker/scripts/keycloak/hsperfdata_jboss/116
