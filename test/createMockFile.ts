@@ -7,6 +7,6 @@ export const createMockFile = (name: string = 'mock.txt', size: number = 1024, m
         return output;
     }
     const blob = new Blob([range(size)], { type: mimeType });
-    const file = new File([blob], name, { lastModified: new Date().getTime() });
+    const file = new File([blob], name, { type: mimeType, lastModified: new Date().getTime() });
     return file;
 };
