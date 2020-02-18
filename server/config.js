@@ -1,5 +1,7 @@
 const isProduction = process.env.NODE_ENV === 'production';
 const workflowAuth = (process.env.WORKFLOW_BASIC_AUTH || 'UNSET:UNSET').split(':');
+const defaultTimeoutSeconds = Number(process.env.DEFAULT_TIMEOUT_SECONDS);
+const countDownForSeconds = Number(process.env.COUNTDOWN_FOR_SECONDS);
 
 const config = {
     applications: {
@@ -27,7 +29,9 @@ const config = {
             },
             footer: {
                 isVisible: false
-            }
+            },
+            defaultTimeoutSeconds: isNaN(defaultTimeoutSeconds) ? 1200 : defaultTimeoutSeconds,
+            countDownForSeconds: isNaN(countDownForSeconds) ? 60 : countDownForSeconds
         },
         server: {
             WORKFLOW_SERVICE: process.env.WORKFLOW_SERVICE || 'http://localhost:8091',
