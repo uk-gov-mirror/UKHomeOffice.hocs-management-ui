@@ -8,6 +8,7 @@ const apiUserRouter = require('./users');
 const apiTemplateRouter = require('./templates');
 const apiCaseTypeRouter = require('./caseTypes');
 const apiNominatedContactRouter = require('./nominatedContact');
+const apiKeepaliveRouter = require('./keepalive');
 
 const { apiErrorMiddleware } = require('../../middleware/request');
 
@@ -21,6 +22,7 @@ router.use('/users', apiUserRouter);
 router.use('/templates', apiTemplateRouter);
 router.use('/case-types', apiCaseTypeRouter);
 router.use('/nominated-contact', apiNominatedContactRouter);
+router.use('/keepalive', apiKeepaliveRouter);
 router.use('*', apiErrorMiddleware);
 
 module.exports = router;

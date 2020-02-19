@@ -3,6 +3,7 @@ import Axios from 'axios';
 import { ApplicationProvider } from './contexts/application';
 import Router from './router/index';
 import Config from './models/config';
+import SessionTimer from './layouts/components/sessionTimer';
 
 interface AppProps {
     config: Config;
@@ -18,7 +19,10 @@ const App: React.FC<AppProps> = ({ config }) => {
 
     return (
         <ApplicationProvider config={config}>
-            <Router />
+            <>
+                <SessionTimer></SessionTimer>
+                <Router />
+            </>
         </ApplicationProvider>
     );
 };

@@ -26,6 +26,8 @@ export interface PhaseBannerConfig {
 
 export interface LayoutConfig {
     body: BodyConfig;
+    countDownForSeconds: number;
+    defaultTimeoutSeconds: number;
     header: HeaderConfig;
     footer: FooterConfig;
 }
@@ -36,7 +38,7 @@ export interface AnalyticsConfig {
 }
 
 export default interface Config {
-    analytics: AnalyticsConfig;
+    analytics?: AnalyticsConfig;
     csrf: string;
     layout: LayoutConfig;
 }
