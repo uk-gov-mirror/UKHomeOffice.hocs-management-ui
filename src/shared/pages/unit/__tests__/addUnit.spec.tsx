@@ -81,7 +81,7 @@ describe('when the display name is entered', () => {
             return await wrapper.findByLabelText('Display Name');
         });
 
-        fireEvent.blur(displayNameElement, { target: { name: 'displayName', value: '__displayName__' } });
+        fireEvent.change(displayNameElement, { target: { name: 'displayName', value: '__displayName__' } });
 
         await wait(() => {
             expect(reducerDispatch).toHaveBeenCalledWith({ name: 'displayName', value: '__displayName__' });
@@ -97,7 +97,7 @@ describe('when the short code is entered', () => {
             return await wrapper.findByLabelText('Short Code');
         });
 
-        fireEvent.blur(shortCodeElement, { target: { name: 'shortCode', value: '__shortCode__' } });
+        fireEvent.change(shortCodeElement, { target: { name: 'shortCode', value: '__shortCode__' } });
 
         await wait(() => {
             expect(reducerDispatch).toHaveBeenCalledWith({ name: 'shortCode', value: '__shortCode__' });

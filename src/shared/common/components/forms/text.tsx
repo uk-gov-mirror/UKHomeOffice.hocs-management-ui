@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import classNames from 'classnames';
 import InputEventData from '../../../models/inputEventData';
 
@@ -20,10 +20,8 @@ const Text: React.FC<TextProps> = ({ disabled = false,
     label = name,
     type = 'text',
     updateState,
-    value: initialValue = ''
+    value = ''
 }) => {
-
-    const [value, setValue] = useState(initialValue);
 
     return (
         <div className={classNames('govuk-form-group', { 'govuk-form-group--error': error })}>
@@ -38,8 +36,7 @@ const Text: React.FC<TextProps> = ({ disabled = false,
                 name={name}
                 disabled={disabled}
                 value={value}
-                onChange={e => setValue(e.target.value)}
-                onBlur={({ target: { name, value } }) => updateState({ name, value })}
+                onChange={({ target: { name, value } }) => updateState({ name, value })}
             />
         </div>
     );

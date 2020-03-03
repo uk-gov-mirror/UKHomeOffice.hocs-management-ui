@@ -86,7 +86,7 @@ describe('when the display name is entered', () => {
             return await wrapper.findByLabelText('Email Address');
         });
 
-        fireEvent.blur(displayNameElement, { target: { name: 'emailAddress', value: '__emailAddress__' } });
+        fireEvent.change(displayNameElement, { target: { name: 'emailAddress', value: '__emailAddress__' } });
 
         await wait(() => {
             expect(reducerDispatch).toHaveBeenCalledWith({ name: 'emailAddress', value: '__emailAddress__' });

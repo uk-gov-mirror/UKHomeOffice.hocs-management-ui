@@ -77,7 +77,7 @@ describe('when the topic name is entered', () => {
             return await wrapper.findByLabelText('Topic Name');
         });
 
-        fireEvent.blur(displayNameElement, { target: { name: 'displayName', value: 'Topic' } });
+        fireEvent.change(displayNameElement, { target: { name: 'displayName', value: 'Topic' } });
 
         await wait(() => {
             expect(setDisplayNameSpy).toHaveBeenCalledWith('Topic');

@@ -105,7 +105,7 @@ describe('when the display name is entered', () => {
             return await wrapper.findByLabelText('Display Name');
         });
 
-        fireEvent.blur(displayNameElement, { target: { name: 'displayName', value: '__displayName__' } });
+        fireEvent.change(displayNameElement, { target: { name: 'displayName', value: '__displayName__' } });
 
         await wait(() => {
             expect(reducerDispatch).toHaveBeenCalledWith({ payload: '__displayName__', type: 'SetDisplayName' });
