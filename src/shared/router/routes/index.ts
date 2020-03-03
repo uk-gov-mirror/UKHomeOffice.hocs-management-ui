@@ -7,6 +7,7 @@ import AddUnit from '../../pages/unit/addUnit';
 import TopicView from '../../pages/topic/topicView/topicView';
 import TopicSearch from '../../pages/topic/topicSearch/topicSearch';
 import AddChildTopic from '../../pages/topic/addChildTopic/addChildTopic';
+import AddParentTopic from '../../pages/topic/addParentTopic/addParentTopic';
 import AddTeamsToTopic from '../../pages/topic/addTeamsToTopic/addTeamsToTopic';
 import UnitSearch from '../../pages/unit/unitSearch/unitSearch';
 import AddStandardLine from '../../pages/standardLine/addStandardLine';
@@ -97,6 +98,12 @@ const routes = [
         exact: true,
         component: AddChildTopic,
         title: 'Add Child Topic'
+    },
+    {
+        path: '/add-parent-topic',
+        exact: true,
+        component: AddParentTopic,
+        title: 'Add Parent Topic'
     },
     {
         path: '/add-standard-line',

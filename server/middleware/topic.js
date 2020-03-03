@@ -43,6 +43,19 @@ async function addTopic(req, res, next) {
     }
 }
 
+async function addParentTopic(req, res, next) {
+
+    const logger = getLogger(req.request);
+
+    try {
+        await infoService.post(`/topic/parent`, req.body, { headers: User.createHeaders(req.user) });
+        res.sendStatus(200);
+    } catch (error) {
+        logger.error(error);
+        next(error);
+    }
+}
+
 function addDCUTeamsToTopic(req, res, next) {
 
     const logger = getLogger(req.request);
@@ -110,6 +123,7 @@ module.exports = {
     returnTopicJson,
     returnTopicsJson,
     addTopic,
+    addParentTopic,
     getParentTopics,
     returnParentTopicsJson,
     addDCUTeamsToTopic

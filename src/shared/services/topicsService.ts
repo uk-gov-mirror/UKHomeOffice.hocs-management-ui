@@ -36,6 +36,12 @@ export const addChildTopic = (parentTopicId: string, displayName: string) => new
     .catch(reason => reject(reason))
 );
 
+export const addParentTopic = (displayName:string) => new Promise((resolve, reject) => axios
+    .post('/api/topics/parent', { displayName })
+    .then(() => resolve())
+    .catch(reason => reject(reason))
+);
+
 export const getParentTopics = () => new Promise((resolve, reject) => axios
     .get<Item[]>('/api/topics/parents')
     .then(response => resolve(response.data.sort(sortByLabel)))
