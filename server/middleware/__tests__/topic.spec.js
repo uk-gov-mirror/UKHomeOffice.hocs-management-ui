@@ -274,7 +274,7 @@ describe('Topic middleware addTopic', () => {
     });
 
     it('should log when the request fails', async () => {
-        infoService.post.mockImplementation(() => Promise.reject('__error__'));
+        infoService.post.mockImplementationOnce(() => Promise.reject('__error__'));
         const logError = jest.fn();
         getLogger.mockImplementation(() => ({ error: logError }));
         await addTopic(req, res, next);
@@ -283,7 +283,7 @@ describe('Topic middleware addTopic', () => {
     });
 });
 
-fdescribe('Topic middleware addParentTopic', () => {
+describe('Topic middleware addParentTopic', () => {
 
     const headers = '__headers__';
     const topicToCreate = { displayName: '__displayName__' };
@@ -319,7 +319,7 @@ fdescribe('Topic middleware addParentTopic', () => {
     });
 
     it('should log when the request fails', async () => {
-        infoService.post.mockImplementation(() => Promise.reject('__error__'));
+        infoService.post.mockImplementationOnce(() => Promise.reject('__error__'));
         const logError = jest.fn();
         getLogger.mockImplementation(() => ({ error: logError }));
         await addParentTopic(req, res, next);
@@ -367,7 +367,7 @@ describe.skip('Topic middleware addDCUTeamsToTopic', () => {
     });
 
     it('should log when the request fails', async () => {
-        infoService.post.mockImplementation(() => Promise.reject('__error__'));
+        infoService.post.mockImplementationOnce(() => Promise.reject('__error__'));
         const logError = jest.fn();
         getLogger.mockImplementation(() => ({ error: logError }));
         await addDCUTeamsToTopic(req, res, next);
