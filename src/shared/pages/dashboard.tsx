@@ -54,6 +54,9 @@ const Dashboard: React.FC = () => (
                         </h2>
                         <ul className="govuk-list govuk-list--bullet">
                             <li>
+                                <Link className="govuk-link" to="/add-parent-topic">Add parent topic</Link>
+                            </li>
+                            <li>
                                 <Link className="govuk-link" to="/add-child-topic">Add child topic</Link>
                             </li>
                             <li>
