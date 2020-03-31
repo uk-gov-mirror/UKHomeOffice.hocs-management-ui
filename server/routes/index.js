@@ -19,7 +19,7 @@ const { flushCachedLists } = require('../services/list');
 
 html.use(assets);
 
-router.use(bodyParser.urlencoded());
+router.use(bodyParser.urlencoded({ extended: true }));
 router.use(cookieParser());
 router.use(csrfMiddleware);
 router.use('/health', healthRouter);
