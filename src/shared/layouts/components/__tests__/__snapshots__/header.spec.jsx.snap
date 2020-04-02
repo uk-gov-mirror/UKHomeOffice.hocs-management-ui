@@ -20,7 +20,6 @@ exports[`Layout header component should render with default props 1`] = `
         >
           <Link
             className="govuk-header__link govuk-header__link--homepage govuk-header__logotype-text"
-            replace={false}
             to="/"
           >
             Correspondence Service
@@ -74,7 +73,6 @@ exports[`Layout header component should render without crest when service is not
         >
           <Link
             className="govuk-header__link govuk-header__link--homepage govuk-header__logotype-text"
-            replace={false}
             to="/"
           >
             Test Service

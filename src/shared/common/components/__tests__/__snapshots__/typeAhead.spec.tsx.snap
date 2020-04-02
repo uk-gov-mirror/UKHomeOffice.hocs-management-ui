@@ -14,18 +14,18 @@ exports[`Form type ahead component (dropdown) should render disabled when passed
     id="type-ahead"
   >
     <div
-      class="govuk-typeahead__control govuk-typeahead__control--is-disabled css-ia584n-Control"
+      class="govuk-typeahead__control govuk-typeahead__control--is-disabled css-1g8ily9-Control"
     >
       <div
-        class="govuk-typeahead__value-container css-0"
+        class="govuk-typeahead__value-container css-pilx6v-ValueContainer"
       >
         <div
-          class="govuk-typeahead__placeholder css-d8h0m4-Placeholder"
+          class="govuk-typeahead__placeholder css-ovmm9z-Placeholder"
         >
           Search
         </div>
         <div
-          class="css-w8afj7-Input"
+          class="css-b8ldur-Input"
         >
           <div
             class="govuk-typeahead__input"
@@ -51,32 +51,32 @@ exports[`Form type ahead component (dropdown) should render disabled when passed
         </div>
       </div>
       <div
-        class="govuk-typeahead__indicators css-1g48xl4-IndicatorsContainer"
+        class="govuk-typeahead__indicators css-1hb7zxy-IndicatorsContainer"
       >
         <div
           aria-hidden="true"
           class="govuk-typeahead__indicator govuk-typeahead__loading-indicator css-at12u2-loadingIndicator"
         >
           <span
-            class="css-1ojr9sz-LoadingDot"
+            class="css-1yvy2vo-LoadingDot"
           />
           <span
-            class="css-12a6fd1-LoadingDot"
+            class="css-zoievk-LoadingDot"
           />
           <span
-            class="css-19d8ryt-LoadingDot"
+            class="css-x748d8-LoadingDot"
           />
         </div>
         <span
-          class="govuk-typeahead__indicator-separator css-42s6pq-IndicatorSeparator"
+          class="govuk-typeahead__indicator-separator css-62wm9a-IndicatorSeparator"
         />
         <div
           aria-hidden="true"
-          class="govuk-typeahead__indicator govuk-typeahead__dropdown-indicator css-1p11lgw-DropdownIndicator"
+          class="govuk-typeahead__indicator govuk-typeahead__dropdown-indicator css-hbt8bd-DropdownIndicator"
         >
           <svg
             aria-hidden="true"
-            class="css-tj5bde-Svg"
+            class="css-6q0nyr-Svg"
             focusable="false"
             height="20"
             viewBox="0 0 20 20"
@@ -107,18 +107,18 @@ exports[`Form type ahead component (dropdown) should render with default props 1
     id="type-ahead"
   >
     <div
-      class="govuk-typeahead__control css-ia584n-Control"
+      class="govuk-typeahead__control css-1g8ily9-Control"
     >
       <div
-        class="govuk-typeahead__value-container css-0"
+        class="govuk-typeahead__value-container css-pilx6v-ValueContainer"
       >
         <div
-          class="govuk-typeahead__placeholder css-d8h0m4-Placeholder"
+          class="govuk-typeahead__placeholder css-ovmm9z-Placeholder"
         >
           Search
         </div>
         <div
-          class="css-w8afj7-Input"
+          class="css-b8ldur-Input"
         >
           <div
             class="govuk-typeahead__input"
@@ -143,32 +143,32 @@ exports[`Form type ahead component (dropdown) should render with default props 1
         </div>
       </div>
       <div
-        class="govuk-typeahead__indicators css-1g48xl4-IndicatorsContainer"
+        class="govuk-typeahead__indicators css-1hb7zxy-IndicatorsContainer"
       >
         <div
           aria-hidden="true"
           class="govuk-typeahead__indicator govuk-typeahead__loading-indicator css-at12u2-loadingIndicator"
         >
           <span
-            class="css-1ojr9sz-LoadingDot"
+            class="css-1yvy2vo-LoadingDot"
           />
           <span
-            class="css-12a6fd1-LoadingDot"
+            class="css-zoievk-LoadingDot"
           />
           <span
-            class="css-19d8ryt-LoadingDot"
+            class="css-x748d8-LoadingDot"
           />
         </div>
         <span
-          class="govuk-typeahead__indicator-separator css-42s6pq-IndicatorSeparator"
+          class="govuk-typeahead__indicator-separator css-62wm9a-IndicatorSeparator"
         />
         <div
           aria-hidden="true"
-          class="govuk-typeahead__indicator govuk-typeahead__dropdown-indicator css-1p11lgw-DropdownIndicator"
+          class="govuk-typeahead__indicator govuk-typeahead__dropdown-indicator css-hbt8bd-DropdownIndicator"
         >
           <svg
             aria-hidden="true"
-            class="css-tj5bde-Svg"
+            class="css-6q0nyr-Svg"
             focusable="false"
             height="20"
             viewBox="0 0 20 20"
@@ -205,18 +205,18 @@ exports[`Form type ahead component (dropdown) should render with error when pass
     id="type-ahead"
   >
     <div
-      class="govuk-typeahead__control--error govuk-typeahead__control css-ia584n-Control"
+      class="govuk-typeahead__control--error govuk-typeahead__control css-1g8ily9-Control"
     >
       <div
-        class="govuk-typeahead__value-container css-0"
+        class="govuk-typeahead__value-container css-pilx6v-ValueContainer"
       >
         <div
-          class="govuk-typeahead__placeholder css-d8h0m4-Placeholder"
+          class="govuk-typeahead__placeholder css-ovmm9z-Placeholder"
         >
           Search
         </div>
         <div
-          class="css-w8afj7-Input"
+          class="css-b8ldur-Input"
         >
           <div
             class="govuk-typeahead__input"
@@ -241,32 +241,32 @@ exports[`Form type ahead component (dropdown) should render with error when pass
         </div>
       </div>
       <div
-        class="govuk-typeahead__indicators css-1g48xl4-IndicatorsContainer"
+        class="govuk-typeahead__indicators css-1hb7zxy-IndicatorsContainer"
       >
         <div
           aria-hidden="true"
           class="govuk-typeahead__indicator govuk-typeahead__loading-indicator css-at12u2-loadingIndicator"
         >
           <span
-            class="css-1ojr9sz-LoadingDot"
+            class="css-1yvy2vo-LoadingDot"
           />
           <span
-            class="css-12a6fd1-LoadingDot"
+            class="css-zoievk-LoadingDot"
           />
           <span
-            class="css-19d8ryt-LoadingDot"
+            class="css-x748d8-LoadingDot"
           />
         </div>
         <span
-          class="govuk-typeahead__indicator-separator css-42s6pq-IndicatorSeparator"
+          class="govuk-typeahead__indicator-separator css-62wm9a-IndicatorSeparator"
         />
         <div
           aria-hidden="true"
-          class="govuk-typeahead__indicator govuk-typeahead__dropdown-indicator css-1p11lgw-DropdownIndicator"
+          class="govuk-typeahead__indicator govuk-typeahead__dropdown-indicator css-hbt8bd-DropdownIndicator"
         >
           <svg
             aria-hidden="true"
-            class="css-tj5bde-Svg"
+            class="css-6q0nyr-Svg"
             focusable="false"
             height="20"
             viewBox="0 0 20 20"
@@ -302,18 +302,18 @@ exports[`Form type ahead component (dropdown) should render with hint when passe
     id="type-ahead"
   >
     <div
-      class="govuk-typeahead__control css-ia584n-Control"
+      class="govuk-typeahead__control css-1g8ily9-Control"
     >
       <div
-        class="govuk-typeahead__value-container css-0"
+        class="govuk-typeahead__value-container css-pilx6v-ValueContainer"
       >
         <div
-          class="govuk-typeahead__placeholder css-d8h0m4-Placeholder"
+          class="govuk-typeahead__placeholder css-ovmm9z-Placeholder"
         >
           Search
         </div>
         <div
-          class="css-w8afj7-Input"
+          class="css-b8ldur-Input"
         >
           <div
             class="govuk-typeahead__input"
@@ -338,32 +338,32 @@ exports[`Form type ahead component (dropdown) should render with hint when passe
         </div>
       </div>
       <div
-        class="govuk-typeahead__indicators css-1g48xl4-IndicatorsContainer"
+        class="govuk-typeahead__indicators css-1hb7zxy-IndicatorsContainer"
       >
         <div
           aria-hidden="true"
           class="govuk-typeahead__indicator govuk-typeahead__loading-indicator css-at12u2-loadingIndicator"
         >
           <span
-            class="css-1ojr9sz-LoadingDot"
+            class="css-1yvy2vo-LoadingDot"
           />
           <span
-            class="css-12a6fd1-LoadingDot"
+            class="css-zoievk-LoadingDot"
           />
           <span
-            class="css-19d8ryt-LoadingDot"
+            class="css-x748d8-LoadingDot"
           />
         </div>
         <span
-          class="govuk-typeahead__indicator-separator css-42s6pq-IndicatorSeparator"
+          class="govuk-typeahead__indicator-separator css-62wm9a-IndicatorSeparator"
         />
         <div
           aria-hidden="true"
-          class="govuk-typeahead__indicator govuk-typeahead__dropdown-indicator css-1p11lgw-DropdownIndicator"
+          class="govuk-typeahead__indicator govuk-typeahead__dropdown-indicator css-hbt8bd-DropdownIndicator"
         >
           <svg
             aria-hidden="true"
-            class="css-tj5bde-Svg"
+            class="css-6q0nyr-Svg"
             focusable="false"
             height="20"
             viewBox="0 0 20 20"
@@ -396,18 +396,18 @@ exports[`Form type ahead component (dropdown) should render with label when pass
     id="type-ahead"
   >
     <div
-      class="govuk-typeahead__control css-ia584n-Control"
+      class="govuk-typeahead__control css-1g8ily9-Control"
     >
       <div
-        class="govuk-typeahead__value-container css-0"
+        class="govuk-typeahead__value-container css-pilx6v-ValueContainer"
       >
         <div
-          class="govuk-typeahead__placeholder css-d8h0m4-Placeholder"
+          class="govuk-typeahead__placeholder css-ovmm9z-Placeholder"
         >
           Search
         </div>
         <div
-          class="css-w8afj7-Input"
+          class="css-b8ldur-Input"
         >
           <div
             class="govuk-typeahead__input"
@@ -432,32 +432,32 @@ exports[`Form type ahead component (dropdown) should render with label when pass
         </div>
       </div>
       <div
-        class="govuk-typeahead__indicators css-1g48xl4-IndicatorsContainer"
+        class="govuk-typeahead__indicators css-1hb7zxy-IndicatorsContainer"
       >
         <div
           aria-hidden="true"
           class="govuk-typeahead__indicator govuk-typeahead__loading-indicator css-at12u2-loadingIndicator"
         >
           <span
-            class="css-1ojr9sz-LoadingDot"
+            class="css-1yvy2vo-LoadingDot"
           />
           <span
-            class="css-12a6fd1-LoadingDot"
+            class="css-zoievk-LoadingDot"
           />
           <span
-            class="css-19d8ryt-LoadingDot"
+            class="css-x748d8-LoadingDot"
           />
         </div>
         <span
-          class="govuk-typeahead__indicator-separator css-42s6pq-IndicatorSeparator"
+          class="govuk-typeahead__indicator-separator css-62wm9a-IndicatorSeparator"
         />
         <div
           aria-hidden="true"
-          class="govuk-typeahead__indicator govuk-typeahead__dropdown-indicator css-1p11lgw-DropdownIndicator"
+          class="govuk-typeahead__indicator govuk-typeahead__dropdown-indicator css-hbt8bd-DropdownIndicator"
         >
           <svg
             aria-hidden="true"
-            class="css-tj5bde-Svg"
+            class="css-6q0nyr-Svg"
             focusable="false"
             height="20"
             viewBox="0 0 20 20"
@@ -503,6 +503,7 @@ exports[`Form type ahead component (select) should render disabled when passed 1
       inputId="type-ahead-input"
       isClearable={true}
       isDisabled={true}
+      isLoading={false}
       loadOptions={[Function]}
       noOptionsMessage={[Function]}
       onChange={[Function]}
@@ -1001,7 +1002,7 @@ exports[`Form type ahead component (select) should render disabled when passed 1
                       onTouchEnd={[Function]}
                     >
                       <div
-                        className="govuk-typeahead__control govuk-typeahead__control--is-disabled css-ia584n-Control"
+                        className="govuk-typeahead__control govuk-typeahead__control--is-disabled css-1g8ily9-Control"
                         onMouseDown={[Function]}
                         onTouchEnd={[Function]}
                       >
@@ -1113,12 +1114,13 @@ exports[`Form type ahead component (select) should render disabled when passed 1
                           }
                         >
                           <EmotionCssPropInternal
+                            __EMOTION_LABEL_PLEASE_DO_NOT_USE__="ValueContainer"
                             __EMOTION_TYPE_PLEASE_DO_NOT_USE__="div"
                             className="govuk-typeahead__value-container"
                             css={Object {}}
                           >
                             <div
-                              className="govuk-typeahead__value-container css-0"
+                              className="govuk-typeahead__value-container css-pilx6v-ValueContainer"
                             >
                               <Placeholder
                                 clearValue={[Function]}
@@ -1236,7 +1238,7 @@ exports[`Form type ahead component (select) should render disabled when passed 1
                                   css={Object {}}
                                 >
                                   <div
-                                    className="govuk-typeahead__placeholder css-d8h0m4-Placeholder"
+                                    className="govuk-typeahead__placeholder css-ovmm9z-Placeholder"
                                   >
                                     Search
                                   </div>
@@ -1370,7 +1372,7 @@ exports[`Form type ahead component (select) should render disabled when passed 1
                                   }
                                 >
                                   <div
-                                    className="css-w8afj7-Input"
+                                    className="css-b8ldur-Input"
                                   >
                                     <AutosizeInput
                                       aria-autocomplete="list"
@@ -1583,7 +1585,7 @@ exports[`Form type ahead component (select) should render disabled when passed 1
                             }
                           >
                             <div
-                              className="govuk-typeahead__indicators css-1g48xl4-IndicatorsContainer"
+                              className="govuk-typeahead__indicators css-1hb7zxy-IndicatorsContainer"
                             >
                               <LoadingIndicator
                                 clearValue={[Function]}
@@ -1745,11 +1747,12 @@ exports[`Form type ahead component (select) should render disabled when passed 1
 }",
                                             },
                                             "styles": "animation:animation-stj4i2 1s ease-in-out 0ms infinite;;background-color:currentColor;border-radius:1em;display:inline-block;marginLeft{}height:1em;vertical-align:top;width:1em;",
+                                            "toString": [Function],
                                           }
                                         }
                                       >
                                         <span
-                                          className="css-1ojr9sz-LoadingDot"
+                                          className="css-1yvy2vo-LoadingDot"
                                         />
                                       </EmotionCssPropInternal>
                                     </LoadingDot>
@@ -1773,11 +1776,12 @@ exports[`Form type ahead component (select) should render disabled when passed 1
 }",
                                             },
                                             "styles": "animation:animation-stj4i2 1s ease-in-out 160ms infinite;;background-color:currentColor;border-radius:1em;display:inline-block;margin-left:1em;height:1em;vertical-align:top;width:1em;",
+                                            "toString": [Function],
                                           }
                                         }
                                       >
                                         <span
-                                          className="css-12a6fd1-LoadingDot"
+                                          className="css-zoievk-LoadingDot"
                                         />
                                       </EmotionCssPropInternal>
                                     </LoadingDot>
@@ -1801,11 +1805,12 @@ exports[`Form type ahead component (select) should render disabled when passed 1
 }",
                                             },
                                             "styles": "animation:animation-stj4i2 1s ease-in-out 320ms infinite;;background-color:currentColor;border-radius:1em;display:inline-block;margin-left:1em;height:1em;vertical-align:top;width:1em;",
+                                            "toString": [Function],
                                           }
                                         }
                                       >
                                         <span
-                                          className="css-19d8ryt-LoadingDot"
+                                          className="css-x748d8-LoadingDot"
                                         />
                                       </EmotionCssPropInternal>
                                     </LoadingDot>
@@ -1927,7 +1932,7 @@ exports[`Form type ahead component (select) should render disabled when passed 1
                                   css={Object {}}
                                 >
                                   <span
-                                    className="govuk-typeahead__indicator-separator css-42s6pq-IndicatorSeparator"
+                                    className="govuk-typeahead__indicator-separator css-62wm9a-IndicatorSeparator"
                                   />
                                 </EmotionCssPropInternal>
                               </IndicatorSeparator>
@@ -2057,7 +2062,7 @@ exports[`Form type ahead component (select) should render disabled when passed 1
                                 >
                                   <div
                                     aria-hidden="true"
-                                    className="govuk-typeahead__indicator govuk-typeahead__dropdown-indicator css-1p11lgw-DropdownIndicator"
+                                    className="govuk-typeahead__indicator govuk-typeahead__dropdown-indicator css-hbt8bd-DropdownIndicator"
                                     onMouseDown={[Function]}
                                     onTouchEnd={[Function]}
                                   >
@@ -2083,7 +2088,7 @@ exports[`Form type ahead component (select) should render disabled when passed 1
                                         >
                                           <svg
                                             aria-hidden="true"
-                                            className="css-tj5bde-Svg"
+                                            className="css-6q0nyr-Svg"
                                             focusable="false"
                                             height={20}
                                             viewBox="0 0 20 20"
@@ -2144,6 +2149,7 @@ exports[`Form type ahead component (select) should render with default props 1`]
       inputId="type-ahead-input"
       isClearable={true}
       isDisabled={false}
+      isLoading={false}
       loadOptions={[Function]}
       noOptionsMessage={[Function]}
       onChange={[Function]}
@@ -2642,7 +2648,7 @@ exports[`Form type ahead component (select) should render with default props 1`]
                       onTouchEnd={[Function]}
                     >
                       <div
-                        className="govuk-typeahead__control css-ia584n-Control"
+                        className="govuk-typeahead__control css-1g8ily9-Control"
                         onMouseDown={[Function]}
                         onTouchEnd={[Function]}
                       >
@@ -2754,12 +2760,13 @@ exports[`Form type ahead component (select) should render with default props 1`]
                           }
                         >
                           <EmotionCssPropInternal
+                            __EMOTION_LABEL_PLEASE_DO_NOT_USE__="ValueContainer"
                             __EMOTION_TYPE_PLEASE_DO_NOT_USE__="div"
                             className="govuk-typeahead__value-container"
                             css={Object {}}
                           >
                             <div
-                              className="govuk-typeahead__value-container css-0"
+                              className="govuk-typeahead__value-container css-pilx6v-ValueContainer"
                             >
                               <Placeholder
                                 clearValue={[Function]}
@@ -2877,7 +2884,7 @@ exports[`Form type ahead component (select) should render with default props 1`]
                                   css={Object {}}
                                 >
                                   <div
-                                    className="govuk-typeahead__placeholder css-d8h0m4-Placeholder"
+                                    className="govuk-typeahead__placeholder css-ovmm9z-Placeholder"
                                   >
                                     Search
                                   </div>
@@ -3011,7 +3018,7 @@ exports[`Form type ahead component (select) should render with default props 1`]
                                   }
                                 >
                                   <div
-                                    className="css-w8afj7-Input"
+                                    className="css-b8ldur-Input"
                                   >
                                     <AutosizeInput
                                       aria-autocomplete="list"
@@ -3224,7 +3231,7 @@ exports[`Form type ahead component (select) should render with default props 1`]
                             }
                           >
                             <div
-                              className="govuk-typeahead__indicators css-1g48xl4-IndicatorsContainer"
+                              className="govuk-typeahead__indicators css-1hb7zxy-IndicatorsContainer"
                             >
                               <LoadingIndicator
                                 clearValue={[Function]}
@@ -3386,11 +3393,12 @@ exports[`Form type ahead component (select) should render with default props 1`]
 }",
                                             },
                                             "styles": "animation:animation-stj4i2 1s ease-in-out 0ms infinite;;background-color:currentColor;border-radius:1em;display:inline-block;marginLeft{}height:1em;vertical-align:top;width:1em;",
+                                            "toString": [Function],
                                           }
                                         }
                                       >
                                         <span
-                                          className="css-1ojr9sz-LoadingDot"
+                                          className="css-1yvy2vo-LoadingDot"
                                         />
                                       </EmotionCssPropInternal>
                                     </LoadingDot>
@@ -3414,11 +3422,12 @@ exports[`Form type ahead component (select) should render with default props 1`]
 }",
                                             },
                                             "styles": "animation:animation-stj4i2 1s ease-in-out 160ms infinite;;background-color:currentColor;border-radius:1em;display:inline-block;margin-left:1em;height:1em;vertical-align:top;width:1em;",
+                                            "toString": [Function],
                                           }
                                         }
                                       >
                                         <span
-                                          className="css-12a6fd1-LoadingDot"
+                                          className="css-zoievk-LoadingDot"
                                         />
                                       </EmotionCssPropInternal>
                                     </LoadingDot>
@@ -3442,11 +3451,12 @@ exports[`Form type ahead component (select) should render with default props 1`]
 }",
                                             },
                                             "styles": "animation:animation-stj4i2 1s ease-in-out 320ms infinite;;background-color:currentColor;border-radius:1em;display:inline-block;margin-left:1em;height:1em;vertical-align:top;width:1em;",
+                                            "toString": [Function],
                                           }
                                         }
                                       >
                                         <span
-                                          className="css-19d8ryt-LoadingDot"
+                                          className="css-x748d8-LoadingDot"
                                         />
                                       </EmotionCssPropInternal>
                                     </LoadingDot>
@@ -3568,7 +3578,7 @@ exports[`Form type ahead component (select) should render with default props 1`]
                                   css={Object {}}
                                 >
                                   <span
-                                    className="govuk-typeahead__indicator-separator css-42s6pq-IndicatorSeparator"
+                                    className="govuk-typeahead__indicator-separator css-62wm9a-IndicatorSeparator"
                                   />
                                 </EmotionCssPropInternal>
                               </IndicatorSeparator>
@@ -3698,7 +3708,7 @@ exports[`Form type ahead component (select) should render with default props 1`]
                                 >
                                   <div
                                     aria-hidden="true"
-                                    className="govuk-typeahead__indicator govuk-typeahead__dropdown-indicator css-1p11lgw-DropdownIndicator"
+                                    className="govuk-typeahead__indicator govuk-typeahead__dropdown-indicator css-hbt8bd-DropdownIndicator"
                                     onMouseDown={[Function]}
                                     onTouchEnd={[Function]}
                                   >
@@ -3724,7 +3734,7 @@ exports[`Form type ahead component (select) should render with default props 1`]
                                         >
                                           <svg
                                             aria-hidden="true"
-                                            className="css-tj5bde-Svg"
+                                            className="css-6q0nyr-Svg"
                                             focusable="false"
                                             height={20}
                                             viewBox="0 0 20 20"
@@ -3793,6 +3803,7 @@ exports[`Form type ahead component (select) should render with error when passed
       inputId="type-ahead-input"
       isClearable={true}
       isDisabled={false}
+      isLoading={false}
       loadOptions={[Function]}
       noOptionsMessage={[Function]}
       onChange={[Function]}
@@ -4294,7 +4305,7 @@ exports[`Form type ahead component (select) should render with error when passed
                       onTouchEnd={[Function]}
                     >
                       <div
-                        className="govuk-typeahead__control--error govuk-typeahead__control css-ia584n-Control"
+                        className="govuk-typeahead__control--error govuk-typeahead__control css-1g8ily9-Control"
                         onMouseDown={[Function]}
                         onTouchEnd={[Function]}
                       >
@@ -4406,12 +4417,13 @@ exports[`Form type ahead component (select) should render with error when passed
                           }
                         >
                           <EmotionCssPropInternal
+                            __EMOTION_LABEL_PLEASE_DO_NOT_USE__="ValueContainer"
                             __EMOTION_TYPE_PLEASE_DO_NOT_USE__="div"
                             className="govuk-typeahead__value-container"
                             css={Object {}}
                           >
                             <div
-                              className="govuk-typeahead__value-container css-0"
+                              className="govuk-typeahead__value-container css-pilx6v-ValueContainer"
                             >
                               <Placeholder
                                 clearValue={[Function]}
@@ -4529,7 +4541,7 @@ exports[`Form type ahead component (select) should render with error when passed
                                   css={Object {}}
                                 >
                                   <div
-                                    className="govuk-typeahead__placeholder css-d8h0m4-Placeholder"
+                                    className="govuk-typeahead__placeholder css-ovmm9z-Placeholder"
                                   >
                                     Search
                                   </div>
@@ -4663,7 +4675,7 @@ exports[`Form type ahead component (select) should render with error when passed
                                   }
                                 >
                                   <div
-                                    className="css-w8afj7-Input"
+                                    className="css-b8ldur-Input"
                                   >
                                     <AutosizeInput
                                       aria-autocomplete="list"
@@ -4876,7 +4888,7 @@ exports[`Form type ahead component (select) should render with error when passed
                             }
                           >
                             <div
-                              className="govuk-typeahead__indicators css-1g48xl4-IndicatorsContainer"
+                              className="govuk-typeahead__indicators css-1hb7zxy-IndicatorsContainer"
                             >
                               <LoadingIndicator
                                 clearValue={[Function]}
@@ -5038,11 +5050,12 @@ exports[`Form type ahead component (select) should render with error when passed
 }",
                                             },
                                             "styles": "animation:animation-stj4i2 1s ease-in-out 0ms infinite;;background-color:currentColor;border-radius:1em;display:inline-block;marginLeft{}height:1em;vertical-align:top;width:1em;",
+                                            "toString": [Function],
                                           }
                                         }
                                       >
                                         <span
-                                          className="css-1ojr9sz-LoadingDot"
+                                          className="css-1yvy2vo-LoadingDot"
                                         />
                                       </EmotionCssPropInternal>
                                     </LoadingDot>
@@ -5066,11 +5079,12 @@ exports[`Form type ahead component (select) should render with error when passed
 }",
                                             },
                                             "styles": "animation:animation-stj4i2 1s ease-in-out 160ms infinite;;background-color:currentColor;border-radius:1em;display:inline-block;margin-left:1em;height:1em;vertical-align:top;width:1em;",
+                                            "toString": [Function],
                                           }
                                         }
                                       >
                                         <span
-                                          className="css-12a6fd1-LoadingDot"
+                                          className="css-zoievk-LoadingDot"
                                         />
                                       </EmotionCssPropInternal>
                                     </LoadingDot>
@@ -5094,11 +5108,12 @@ exports[`Form type ahead component (select) should render with error when passed
 }",
                                             },
                                             "styles": "animation:animation-stj4i2 1s ease-in-out 320ms infinite;;background-color:currentColor;border-radius:1em;display:inline-block;margin-left:1em;height:1em;vertical-align:top;width:1em;",
+                                            "toString": [Function],
                                           }
                                         }
                                       >
                                         <span
-                                          className="css-19d8ryt-LoadingDot"
+                                          className="css-x748d8-LoadingDot"
                                         />
                                       </EmotionCssPropInternal>
                                     </LoadingDot>
@@ -5220,7 +5235,7 @@ exports[`Form type ahead component (select) should render with error when passed
                                   css={Object {}}
                                 >
                                   <span
-                                    className="govuk-typeahead__indicator-separator css-42s6pq-IndicatorSeparator"
+                                    className="govuk-typeahead__indicator-separator css-62wm9a-IndicatorSeparator"
                                   />
                                 </EmotionCssPropInternal>
                               </IndicatorSeparator>
@@ -5350,7 +5365,7 @@ exports[`Form type ahead component (select) should render with error when passed
                                 >
                                   <div
                                     aria-hidden="true"
-                                    className="govuk-typeahead__indicator govuk-typeahead__dropdown-indicator css-1p11lgw-DropdownIndicator"
+                                    className="govuk-typeahead__indicator govuk-typeahead__dropdown-indicator css-hbt8bd-DropdownIndicator"
                                     onMouseDown={[Function]}
                                     onTouchEnd={[Function]}
                                   >
@@ -5376,7 +5391,7 @@ exports[`Form type ahead component (select) should render with error when passed
                                         >
                                           <svg
                                             aria-hidden="true"
-                                            className="css-tj5bde-Svg"
+                                            className="css-6q0nyr-Svg"
                                             focusable="false"
                                             height={20}
                                             viewBox="0 0 20 20"
@@ -5443,6 +5458,7 @@ exports[`Form type ahead component (select) should render with hint when passed 
       inputId="type-ahead-input"
       isClearable={true}
       isDisabled={false}
+      isLoading={false}
       loadOptions={[Function]}
       noOptionsMessage={[Function]}
       onChange={[Function]}
@@ -5941,7 +5957,7 @@ exports[`Form type ahead component (select) should render with hint when passed 
                       onTouchEnd={[Function]}
                     >
                       <div
-                        className="govuk-typeahead__control css-ia584n-Control"
+                        className="govuk-typeahead__control css-1g8ily9-Control"
                         onMouseDown={[Function]}
                         onTouchEnd={[Function]}
                       >
@@ -6053,12 +6069,13 @@ exports[`Form type ahead component (select) should render with hint when passed 
                           }
                         >
                           <EmotionCssPropInternal
+                            __EMOTION_LABEL_PLEASE_DO_NOT_USE__="ValueContainer"
                             __EMOTION_TYPE_PLEASE_DO_NOT_USE__="div"
                             className="govuk-typeahead__value-container"
                             css={Object {}}
                           >
                             <div
-                              className="govuk-typeahead__value-container css-0"
+                              className="govuk-typeahead__value-container css-pilx6v-ValueContainer"
                             >
                               <Placeholder
                                 clearValue={[Function]}
@@ -6176,7 +6193,7 @@ exports[`Form type ahead component (select) should render with hint when passed 
                                   css={Object {}}
                                 >
                                   <div
-                                    className="govuk-typeahead__placeholder css-d8h0m4-Placeholder"
+                                    className="govuk-typeahead__placeholder css-ovmm9z-Placeholder"
                                   >
                                     Search
                                   </div>
@@ -6310,7 +6327,7 @@ exports[`Form type ahead component (select) should render with hint when passed 
                                   }
                                 >
                                   <div
-                                    className="css-w8afj7-Input"
+                                    className="css-b8ldur-Input"
                                   >
                                     <AutosizeInput
                                       aria-autocomplete="list"
@@ -6523,7 +6540,7 @@ exports[`Form type ahead component (select) should render with hint when passed 
                             }
                           >
                             <div
-                              className="govuk-typeahead__indicators css-1g48xl4-IndicatorsContainer"
+                              className="govuk-typeahead__indicators css-1hb7zxy-IndicatorsContainer"
                             >
                               <LoadingIndicator
                                 clearValue={[Function]}
@@ -6685,11 +6702,12 @@ exports[`Form type ahead component (select) should render with hint when passed 
 }",
                                             },
                                             "styles": "animation:animation-stj4i2 1s ease-in-out 0ms infinite;;background-color:currentColor;border-radius:1em;display:inline-block;marginLeft{}height:1em;vertical-align:top;width:1em;",
+                                            "toString": [Function],
                                           }
                                         }
                                       >
                                         <span
-                                          className="css-1ojr9sz-LoadingDot"
+                                          className="css-1yvy2vo-LoadingDot"
                                         />
                                       </EmotionCssPropInternal>
                                     </LoadingDot>
@@ -6713,11 +6731,12 @@ exports[`Form type ahead component (select) should render with hint when passed 
 }",
                                             },
                                             "styles": "animation:animation-stj4i2 1s ease-in-out 160ms infinite;;background-color:currentColor;border-radius:1em;display:inline-block;margin-left:1em;height:1em;vertical-align:top;width:1em;",
+                                            "toString": [Function],
                                           }
                                         }
                                       >
                                         <span
-                                          className="css-12a6fd1-LoadingDot"
+                                          className="css-zoievk-LoadingDot"
                                         />
                                       </EmotionCssPropInternal>
                                     </LoadingDot>
@@ -6741,11 +6760,12 @@ exports[`Form type ahead component (select) should render with hint when passed 
 }",
                                             },
                                             "styles": "animation:animation-stj4i2 1s ease-in-out 320ms infinite;;background-color:currentColor;border-radius:1em;display:inline-block;margin-left:1em;height:1em;vertical-align:top;width:1em;",
+                                            "toString": [Function],
                                           }
                                         }
                                       >
                                         <span
-                                          className="css-19d8ryt-LoadingDot"
+                                          className="css-x748d8-LoadingDot"
                                         />
                                       </EmotionCssPropInternal>
                                     </LoadingDot>
@@ -6867,7 +6887,7 @@ exports[`Form type ahead component (select) should render with hint when passed 
                                   css={Object {}}
                                 >
                                   <span
-                                    className="govuk-typeahead__indicator-separator css-42s6pq-IndicatorSeparator"
+                                    className="govuk-typeahead__indicator-separator css-62wm9a-IndicatorSeparator"
                                   />
                                 </EmotionCssPropInternal>
                               </IndicatorSeparator>
@@ -6997,7 +7017,7 @@ exports[`Form type ahead component (select) should render with hint when passed 
                                 >
                                   <div
                                     aria-hidden="true"
-                                    className="govuk-typeahead__indicator govuk-typeahead__dropdown-indicator css-1p11lgw-DropdownIndicator"
+                                    className="govuk-typeahead__indicator govuk-typeahead__dropdown-indicator css-hbt8bd-DropdownIndicator"
                                     onMouseDown={[Function]}
                                     onTouchEnd={[Function]}
                                   >
@@ -7023,7 +7043,7 @@ exports[`Form type ahead component (select) should render with hint when passed 
                                         >
                                           <svg
                                             aria-hidden="true"
-                                            className="css-tj5bde-Svg"
+                                            className="css-6q0nyr-Svg"
                                             focusable="false"
                                             height={20}
                                             viewBox="0 0 20 20"
@@ -7087,6 +7107,7 @@ exports[`Form type ahead component (select) should render with label when passed
       inputId="type-ahead-input"
       isClearable={true}
       isDisabled={false}
+      isLoading={false}
       loadOptions={[Function]}
       noOptionsMessage={[Function]}
       onChange={[Function]}
@@ -7585,7 +7606,7 @@ exports[`Form type ahead component (select) should render with label when passed
                       onTouchEnd={[Function]}
                     >
                       <div
-                        className="govuk-typeahead__control css-ia584n-Control"
+                        className="govuk-typeahead__control css-1g8ily9-Control"
                         onMouseDown={[Function]}
                         onTouchEnd={[Function]}
                       >
@@ -7697,12 +7718,13 @@ exports[`Form type ahead component (select) should render with label when passed
                           }
                         >
                           <EmotionCssPropInternal
+                            __EMOTION_LABEL_PLEASE_DO_NOT_USE__="ValueContainer"
                             __EMOTION_TYPE_PLEASE_DO_NOT_USE__="div"
                             className="govuk-typeahead__value-container"
                             css={Object {}}
                           >
                             <div
-                              className="govuk-typeahead__value-container css-0"
+                              className="govuk-typeahead__value-container css-pilx6v-ValueContainer"
                             >
                               <Placeholder
                                 clearValue={[Function]}
@@ -7820,7 +7842,7 @@ exports[`Form type ahead component (select) should render with label when passed
                                   css={Object {}}
                                 >
                                   <div
-                                    className="govuk-typeahead__placeholder css-d8h0m4-Placeholder"
+                                    className="govuk-typeahead__placeholder css-ovmm9z-Placeholder"
                                   >
                                     Search
                                   </div>
@@ -7954,7 +7976,7 @@ exports[`Form type ahead component (select) should render with label when passed
                                   }
                                 >
                                   <div
-                                    className="css-w8afj7-Input"
+                                    className="css-b8ldur-Input"
                                   >
                                     <AutosizeInput
                                       aria-autocomplete="list"
@@ -8167,7 +8189,7 @@ exports[`Form type ahead component (select) should render with label when passed
                             }
                           >
                             <div
-                              className="govuk-typeahead__indicators css-1g48xl4-IndicatorsContainer"
+                              className="govuk-typeahead__indicators css-1hb7zxy-IndicatorsContainer"
                             >
                               <LoadingIndicator
                                 clearValue={[Function]}
@@ -8329,11 +8351,12 @@ exports[`Form type ahead component (select) should render with label when passed
 }",
                                             },
                                             "styles": "animation:animation-stj4i2 1s ease-in-out 0ms infinite;;background-color:currentColor;border-radius:1em;display:inline-block;marginLeft{}height:1em;vertical-align:top;width:1em;",
+                                            "toString": [Function],
                                           }
                                         }
                                       >
                                         <span
-                                          className="css-1ojr9sz-LoadingDot"
+                                          className="css-1yvy2vo-LoadingDot"
                                         />
                                       </EmotionCssPropInternal>
                                     </LoadingDot>
@@ -8357,11 +8380,12 @@ exports[`Form type ahead component (select) should render with label when passed
 }",
                                             },
                                             "styles": "animation:animation-stj4i2 1s ease-in-out 160ms infinite;;background-color:currentColor;border-radius:1em;display:inline-block;margin-left:1em;height:1em;vertical-align:top;width:1em;",
+                                            "toString": [Function],
                                           }
                                         }
                                       >
                                         <span
-                                          className="css-12a6fd1-LoadingDot"
+                                          className="css-zoievk-LoadingDot"
                                         />
                                       </EmotionCssPropInternal>
                                     </LoadingDot>
@@ -8385,11 +8409,12 @@ exports[`Form type ahead component (select) should render with label when passed
 }",
                                             },
                                             "styles": "animation:animation-stj4i2 1s ease-in-out 320ms infinite;;background-color:currentColor;border-radius:1em;display:inline-block;margin-left:1em;height:1em;vertical-align:top;width:1em;",
+                                            "toString": [Function],
                                           }
                                         }
                                       >
                                         <span
-                                          className="css-19d8ryt-LoadingDot"
+                                          className="css-x748d8-LoadingDot"
                                         />
                                       </EmotionCssPropInternal>
                                     </LoadingDot>
@@ -8511,7 +8536,7 @@ exports[`Form type ahead component (select) should render with label when passed
                                   css={Object {}}
                                 >
                                   <span
-                                    className="govuk-typeahead__indicator-separator css-42s6pq-IndicatorSeparator"
+                                    className="govuk-typeahead__indicator-separator css-62wm9a-IndicatorSeparator"
                                   />
                                 </EmotionCssPropInternal>
                               </IndicatorSeparator>
@@ -8641,7 +8666,7 @@ exports[`Form type ahead component (select) should render with label when passed
                                 >
                                   <div
                                     aria-hidden="true"
-                                    className="govuk-typeahead__indicator govuk-typeahead__dropdown-indicator css-1p11lgw-DropdownIndicator"
+                                    className="govuk-typeahead__indicator govuk-typeahead__dropdown-indicator css-hbt8bd-DropdownIndicator"
                                     onMouseDown={[Function]}
                                     onTouchEnd={[Function]}
                                   >
@@ -8667,7 +8692,7 @@ exports[`Form type ahead component (select) should render with label when passed
                                         >
                                           <svg
                                             aria-hidden="true"
-                                            className="css-tj5bde-Svg"
+                                            className="css-6q0nyr-Svg"
                                             focusable="false"
                                             height={20}
                                             viewBox="0 0 20 20"

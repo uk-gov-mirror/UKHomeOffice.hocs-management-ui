@@ -31,18 +31,18 @@ exports[`when the userView component is mounted should render with default props
         id="Users"
       >
         <div
-          class="govuk-typeahead__control css-ia584n-Control"
+          class="govuk-typeahead__control css-1g8ily9-Control"
         >
           <div
-            class="govuk-typeahead__value-container css-0"
+            class="govuk-typeahead__value-container css-pilx6v-ValueContainer"
           >
             <div
-              class="govuk-typeahead__placeholder css-d8h0m4-Placeholder"
+              class="govuk-typeahead__placeholder css-ovmm9z-Placeholder"
             >
               Search
             </div>
             <div
-              class="css-w8afj7-Input"
+              class="css-b8ldur-Input"
             >
               <div
                 class="govuk-typeahead__input"
@@ -67,18 +67,18 @@ exports[`when the userView component is mounted should render with default props
             </div>
           </div>
           <div
-            class="govuk-typeahead__indicators css-1g48xl4-IndicatorsContainer"
+            class="govuk-typeahead__indicators css-1hb7zxy-IndicatorsContainer"
           >
             <span
-              class="govuk-typeahead__indicator-separator css-42s6pq-IndicatorSeparator"
+              class="govuk-typeahead__indicator-separator css-62wm9a-IndicatorSeparator"
             />
             <div
               aria-hidden="true"
-              class="govuk-typeahead__indicator govuk-typeahead__dropdown-indicator css-1p11lgw-DropdownIndicator"
+              class="govuk-typeahead__indicator govuk-typeahead__dropdown-indicator css-hbt8bd-DropdownIndicator"
             >
               <svg
                 aria-hidden="true"
-                class="css-tj5bde-Svg"
+                class="css-6q0nyr-Svg"
                 focusable="false"
                 height="20"
                 viewBox="0 0 20 20"
