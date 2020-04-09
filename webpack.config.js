@@ -163,7 +163,8 @@ const serverConfig = {
             '.jsx',
             '.ts',
             '.tsx'
-        ]
+        ],
+        aliasFields: [],
     },
     externals: {
         'react': 'react',
