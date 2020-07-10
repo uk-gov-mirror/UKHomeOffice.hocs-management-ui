@@ -47,3 +47,7 @@ export const REMOVE_FROM_TEAM_ALLOCATED_ERROR_DESCRIPTION = 'The user cannot be 
 export const REMOVE_FROM_TEAM_ERROR_DESCRIPTION = 'There was an error removing the user from the team';
 export const REMOVE_TEMPLATE_ERROR_DESCRIPTION = 'There was an error removing the template. Please try again.';
 export const VALIDATION_ERROR_TITLE = 'There was a error validating the response';
+export const WITHDRAW_CASE_NOT_FOUND_ERROR_DESCRIPTION = 'Case not found, unable to withdraw. Please check case reference.';
+export const WITHDRAW_CASE_FORBIDDEN_ERROR_DESCRIPTION = 'Access is denied, unable to withdraw. Please check case is accessible to your team.';
+export const WITHDRAW_CASE_ERROR_DESCRIPTION = 'Something went wrong while withdrawing a case. Please try again.';
+export const WITHDRAW_CASE_SUCCESS = 'The case was withdrawn successfully';

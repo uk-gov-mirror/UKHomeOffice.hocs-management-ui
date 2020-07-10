@@ -18,6 +18,7 @@ import CaseTypeView from '../../pages/template/caseTypeView';
 import UserSearch from '../../pages/user/userSearch/userSearch';
 import UserView from '../../pages/user/userView/userView';
 import AddTeamToUser from '../../pages/user/addTeamToUser/addTeamToUser';
+import WithdrawCase from '../../pages/case/withdrawCase';
 
 export interface Route {
     component: React.FunctionComponent | Error;
@@ -140,6 +141,12 @@ const routes = [
         exact: true,
         component: AddTemplate,
         title: 'Add Template'
+    },
+    {
+        path: '/case-withdraw',
+        exact: true,
+        component: WithdrawCase,
+        title: 'Withdraw a case'
     },
     {
         component: Error,

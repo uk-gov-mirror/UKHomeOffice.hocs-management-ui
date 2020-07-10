@@ -77,6 +77,16 @@ const Dashboard: React.FC = () => (
                             </li>
                         </ul>
                     </li>
+                    <li>
+                        <h2 className="govuk-heading-l">
+                            Case management
+                        </h2>
+                        <ul className="govuk-list govuk-list--bullet">
+                            <li>
+                                <Link className="govuk-link" to="/case-withdraw">Withdraw a case</Link>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </div>
