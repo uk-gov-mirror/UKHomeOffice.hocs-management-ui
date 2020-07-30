@@ -196,7 +196,7 @@ describe('when the submit button is clicked', () => {
 
         await wait(async () => {
             expect(setMessageSpy).toBeCalledWith({
-                description: 'Please add at least one nominated contact before submitting.',
+                description: 'Add at least one nominated contact before submitting.',
                 title: 'No nominated contact specified'
             });
         });
