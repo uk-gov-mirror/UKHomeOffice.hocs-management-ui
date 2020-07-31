@@ -2,25 +2,40 @@
 import React from 'react';
 import { match, MemoryRouter } from 'react-router-dom';
 import { createBrowserHistory, History, Location } from 'history';
-import { act, render, RenderResult, wait, fireEvent, waitForElement } from '@testing-library/react';
+import { act, render, RenderResult, wait, fireEvent, getByText } from '@testing-library/react';
 import AddNominatedContact from '../addNominatedContact';
 import * as NominatedContactsService from '../../../../services/nominatedContactsService';
+import * as TeamsService from '../../../../services/teamsService';
 import {
-    ADD_NOMINATED_CONTACT_ERROR_DESCRIPTION,
-    DUPLICATE_NOMINATED_CONTACT_DESCRIPTION,
     GENERAL_ERROR_TITLE,
-    VALIDATION_ERROR_TITLE
+    LOAD_TEAM_ERROR_DESCRIPTION
 } from '../../../../models/constants';
-import NominatedContact from '../../../../models/nominatedContact';
+import { State } from '../state';
 import * as useError from '../../../../hooks/useError';
+
+jest.mock('../../../../services/teamsService', () => ({
+    __esModule: true,
+    getTeam: jest.fn().mockReturnValue(Promise.resolve({
+        active: true,
+        displayName: '__displayName__',
+        letterName: '__letterName__',
+        permissions: [],
+        type: '__type__'
+    }))
+}));
+
+jest.mock('../../../../services/nominatedContactsService', () => ({
+    __esModule: true,
+    addNominatedContact: jest.fn().mockReturnValue(Promise.resolve())
+}));
 
 let match: match<any>;
 let history: History<any>;
 let location: Location;
-let mockNominatedContact: NominatedContact;
-let wrapper: RenderResult;
+let mockState: State;
 
 const useReducerSpy = jest.spyOn(React, 'useReducer');
+const getTeamSpy = jest.spyOn(TeamsService, 'getTeam');
 const reducerDispatch = jest.fn();
 const useErrorSpy = jest.spyOn(useError, 'default');
 const addFormErrorSpy = jest.fn();
@@ -33,7 +48,7 @@ const renderComponent = () => render(
     </MemoryRouter>
 );
 
-jest.spyOn(NominatedContactsService, 'addNominatedContact').mockImplementation(() => Promise.resolve());
+const addNominatedContactSpy = jest.spyOn(NominatedContactsService, 'addNominatedContact');
 
 beforeEach(() => {
     history = createBrowserHistory();
@@ -51,117 +66,157 @@ beforeEach(() => {
         search: '',
         state: {}
     };
-    mockNominatedContact = {
-        emailAddress: '',
-        teamName: '',
-        teamUUID: ''
+    mockState = {
+        inputValue: '',
+        selectedContacts: [{
+            label: '__user1__',
+            value: '__user1__'
+        }, {
+            label: '__user2__',
+            value: '__user2__'
+        }],
+        teamName: '__teamName__',
+        teamUUID: '__teamUUID__'
     };
-    useReducerSpy.mockImplementation(() => [mockNominatedContact, reducerDispatch]);
+
+    useReducerSpy.mockImplementation(() => [mockState, reducerDispatch]);
     useErrorSpy.mockImplementation(() => [{}, addFormErrorSpy, clearErrorsSpy, setMessageSpy]);
     history.push = jest.fn();
     reducerDispatch.mockReset();
     addFormErrorSpy.mockReset();
     clearErrorsSpy.mockReset();
     setMessageSpy.mockReset();
-    act(() => {
-        wrapper = renderComponent();
-    });
 });
 
 describe('when the addNominatedContact component is mounted', () => {
     it('should render with default props', async () => {
+        let wrapper: RenderResult;
+        act(() => {
+            wrapper = renderComponent();
+        });
         expect.assertions(1);
 
         await wait(() => {
             expect(wrapper.container).toMatchSnapshot();
         });
     });
-});
 
-describe('when the display name is entered', () => {
-    it('should be persisted in the page state', async () => {
+    it('should initially render null before the team name is returned', async () => {
+        let wrapper: RenderResult;
+        getTeamSpy.mockReturnValueOnce(Promise.resolve({
+            active: true,
+            displayName: undefined,
+            letterName: '__letterName__',
+            permissions: [],
+            type: '__type__'
+        }));
+        mockState.teamName = undefined;
+        wrapper = renderComponent();
+        expect(wrapper.container.outerHTML).toMatchSnapshot();
+    });
+    it('should display an error if the call to retrieve the team fails', async () => {
         expect.assertions(1);
+        getTeamSpy.mockImplementation(() => Promise.reject('error'));
 
-        const displayNameElement = await waitForElement(async () => {
-            return await wrapper.findByLabelText('Email Address');
-        });
-
-        fireEvent.change(displayNameElement, { target: { name: 'emailAddress', value: '__emailAddress__' } });
+        renderComponent();
 
         await wait(() => {
-            expect(reducerDispatch).toHaveBeenCalledWith({ name: 'emailAddress', value: '__emailAddress__' });
+            expect(setMessageSpy).toBeCalledWith({ title: GENERAL_ERROR_TITLE, description: LOAD_TEAM_ERROR_DESCRIPTION });
         });
+
     });
 });
 
 describe('when the submit button is clicked', () => {
-    describe('and the data is filled in', () => {
+    let wrapper: RenderResult;
 
-        beforeEach(async () => {
-            mockNominatedContact.emailAddress = 'me@there.com';
-            mockNominatedContact.teamName = '__teamName__';
-            mockNominatedContact.teamUUID = '__teamUUID__';
-            const submitButton = await waitForElement(async () => {
-                return await wrapper.findByText('Submit');
-            });
+    beforeEach(() => {
+        act(() => {
+            wrapper = renderComponent();
+        });
+    });
 
+    it('should call the service and dispatch actions for the selected options', async () => {
+        await wait(async () => {
+            const submitButton = getByText(wrapper.container, 'Submit');
             fireEvent.click(submitButton);
         });
 
-        describe('and the service call is successful', () => {
-            it('should redirect to the home page', async () => {
-                expect.assertions(1);
+        await wait(async () => {
 
-                await wait(() => {
-                    expect(history.push).toHaveBeenCalledWith('/', { successMessage: 'The nominated contact was added successfully' });
-                });
+            expect(addNominatedContactSpy).nthCalledWith(1, {
+                emailAddress: '__user1__',
+                teamUUID: '__teamUUID__'
             });
-            it('should call the begin submit action', async () => {
-                expect.assertions(1);
+            expect(addNominatedContactSpy).nthCalledWith(2, {
+                emailAddress: '__user2__',
+                teamUUID: '__teamUUID__'
+            });
+            expect(clearErrorsSpy).toBeCalled();
 
-                await wait(() => {
-                    expect(clearErrorsSpy).toHaveBeenCalled();
-                });
+            expect(reducerDispatch).nthCalledWith(1, {
+                type: 'RemoveFromSelection', payload: {
+                    label: '__user1__',
+                    value: '__user1__'
+                }
             });
-        });
-
-        describe('and the service call fails', () => {
-            beforeAll(() => {
-                jest.spyOn(NominatedContactsService, 'addNominatedContact').mockImplementationOnce(() => Promise.reject({ response: { status: 500 } }));
-            });
-
-            it('should set the error state', () => {
-                expect(setMessageSpy).toHaveBeenCalledWith({ description: ADD_NOMINATED_CONTACT_ERROR_DESCRIPTION, title: GENERAL_ERROR_TITLE });
-            });
-            it('should call the begin submit action', () => {
-                expect(clearErrorsSpy).toHaveBeenCalled();
-            });
-        });
-        describe('and the service call fails with a 409', () => {
-            beforeAll(() => {
-                jest.spyOn(NominatedContactsService, 'addNominatedContact').mockImplementationOnce(() => Promise.reject({ response: { status: 409 } }));
-            });
-
-            it('should set the error state', () => {
-                expect(setMessageSpy).toHaveBeenCalledWith({ description: DUPLICATE_NOMINATED_CONTACT_DESCRIPTION, title: VALIDATION_ERROR_TITLE });
+            expect(reducerDispatch).nthCalledWith(2, {
+                type: 'RemoveFromSelection', payload: {
+                    label: '__user2__',
+                    value: '__user2__'
+                }
             });
         });
     });
-    describe('and the data is not filled in', () => {
-        beforeEach(async () => {
-            const submitButton = await waitForElement(async () => {
-                return await wrapper.findByText('Submit');
-            });
 
+    it('should display errors for each erroring team member add request', async () => {
+        expect.assertions(2);
+        addNominatedContactSpy.mockImplementation(() => Promise.reject({
+            response: {
+                status: 409
+            }
+        }));
+
+        await wait(() => {
+            const submitButton = getByText(wrapper.container, 'Submit');
             fireEvent.click(submitButton);
         });
 
-        it('should call the begin submit action', () => {
-            expect(clearErrorsSpy).toHaveBeenCalled();
+        expect(setMessageSpy).nthCalledWith(1, { description: 'There was an error retrieving the team.  Please try refreshing the page.', title: 'Something went wrong' });
+        expect(setMessageSpy).nthCalledWith(2, { description: 'A nominated contact with those email details already exists', title: 'There was a error validating the response' });
+
+    });
+
+    it('should set an error when no users are selected', async () => {
+        mockState.selectedContacts = [];
+        await wait(async () => {
+            const submitButton = getByText(wrapper.container, 'Submit');
+            fireEvent.click(submitButton);
         });
 
-        it('should set the error state', () => {
-            expect(addFormErrorSpy).toHaveBeenNthCalledWith(1, { key: 'emailAddress', value: 'The email address is required' });
+        await wait(async () => {
+            expect(setMessageSpy).toBeCalledWith({
+                description: 'Add at least one nominated contact before submitting.',
+                title: 'No nominated contact specified'
+            });
         });
+    });
+});
+
+describe('when the remove button is clicked', () => {
+    it('should remove the row from the selected contact collection', async () => {
+        let wrapper: RenderResult;
+        act(() => {
+            wrapper = renderComponent();
+        });
+
+        await wait(async () => {
+            const selectedContact = getByText(wrapper.container, '__user1__');
+            const row = (selectedContact.closest('tr'));
+            const removeButton = getByText(row as HTMLElement, 'Remove');
+            fireEvent.click(removeButton);
+        });
+
+        expect(reducerDispatch).nthCalledWith(1, { type: 'RemoveFromSelection', payload: { label: '__user1__', value: '__user1__' } });
     });
 });
