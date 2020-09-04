@@ -54,3 +54,7 @@ export const WITHDRAW_CASE_NOT_FOUND_ERROR_DESCRIPTION = 'Case not found, unable
 export const WITHDRAW_CASE_FORBIDDEN_ERROR_DESCRIPTION = 'Access is denied, unable to withdraw. Please check case is accessible to your team.';
 export const WITHDRAW_CASE_ERROR_DESCRIPTION = 'Something went wrong while withdrawing a case. Please try again.';
 export const WITHDRAW_CASE_SUCCESS = 'The case was withdrawn successfully';
+export const ADD_CAMPAIGN_ERROR_DESCRIPTION = 'Something went wrong while adding the campaign. Please try again.';
+export const ADD_CAMPAIGN_SUCCESS = 'The campaign was added successfully';
+export const DUPLICATE_CAMPAIGN_DESCRIPTION = 'A campaign with those details already exists';
+export const LOAD_CAMPAIGNS_ERROR_DESCRIPTION = 'There was an error retrieving campaigns.  Please try refreshing the page.';

@@ -19,6 +19,8 @@ import UserSearch from '../../pages/user/userSearch/userSearch';
 import UserView from '../../pages/user/userView/userView';
 import AddTeamToUser from '../../pages/user/addTeamToUser/addTeamToUser';
 import WithdrawCase from '../../pages/case/withdrawCase';
+import CampaignsView from '../../pages/list/mpamCampaign/campaignsView';
+import AddCampaign from '../../pages/list/mpamCampaign/addCampaign';
 
 export interface Route {
     component: React.FunctionComponent | Error;
@@ -147,6 +149,18 @@ const routes = [
         exact: true,
         component: WithdrawCase,
         title: 'Withdraw a case'
+    },
+    {
+        path: '/manage-mpam-campaigns',
+        exact: true,
+        component: CampaignsView,
+        title: 'Manage MPAM campaigns'
+    },
+    {
+        path: '/manage-mpam-campaigns/add',
+        exact: true,
+        component: AddCampaign,
+        title: 'Add Campaign'
     },
     {
         component: Error,
