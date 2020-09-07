@@ -35,8 +35,44 @@ async function addEntityListItem(req, res, next) {
     }
 }
 
+async function getEntity(req, res, next) {
+
+    const logger = getLogger(req.request);
+    const { itemUUID } = req.params;
+
+    try {
+        const response = await infoService.get(`/entity/${itemUUID}`, {}, { headers: User.createHeaders(req.user) });
+        res.locals.entity = { simpleName: response.data.simpleName, uuid: response.data.uuid, title: response.data.data.title }
+        next();
+    } catch (error) {
+        logger.error(error);
+        next(error);
+    }
+}
+
+async function returnEntityJson(_, res) {
+    const { locals: { entity } } = res;
+    await res.json(entity);
+}
+
+async function updateEntityListItem(req, res, next) {
+    const logger = getLogger(req.request);
+    const { listName } = req.params;
+
+    try {
+        await infoService.put(`/entity/list/${listName}`, { ...req.body, data: JSON.stringify({ title: req.body.title }) }, { headers: User.createHeaders(req.user) });
+        res.sendStatus(200);
+    } catch (error) {
+        logger.error(error);
+        next(error);
+    }
+}
+
 module.exports = {
     getEntityList,
     returnEntityListJson,
-    addEntityListItem
+    addEntityListItem,
+    getEntity,
+    returnEntityJson,
+    updateEntityListItem
 }

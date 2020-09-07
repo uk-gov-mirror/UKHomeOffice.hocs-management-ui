@@ -1,7 +1,9 @@
 const router = require('express').Router();
-const { getEntityList, returnEntityListJson, addEntityListItem } = require('../../middleware/entityList');
+const { getEntityList, returnEntityListJson, addEntityListItem, getEntity, returnEntityJson, updateEntityListItem } = require('../../middleware/entityList');
 
-router.get('/:listName', getEntityList, returnEntityListJson);
-router.post('/:listName', addEntityListItem);
+router.get('/list/:listName', getEntityList, returnEntityListJson);
+router.get('/:itemUUID', getEntity, returnEntityJson);
+router.post('/list/update/:listName', updateEntityListItem);
+router.post('/list/:listName', addEntityListItem);
 
 module.exports = router;

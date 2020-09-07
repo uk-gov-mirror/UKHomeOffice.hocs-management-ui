@@ -15,7 +15,7 @@ import EntityListItem from '../../../models/entityListItem';
 import { validate } from '../../../validation';
 import InputEventData from '../../../models/inputEventData';
 
-interface AddUnitProps extends RouteComponentProps {
+interface AddCampaignProps extends RouteComponentProps {
     csrfToken?: string;
 }
 
@@ -30,7 +30,7 @@ const validationSchema = object({
         .matches(/^[a-zA-Z0-9_,.!? ()&]*$/)
 });
 
-const AddCampaign: React.FC<AddUnitProps> = ({ csrfToken, history }) => {
+const AddCampaign: React.FC<AddCampaignProps> = ({ csrfToken, history }) => {
 
     const [pageError, addFormError, clearErrors, setErrorMessage] = useError('', VALIDATION_ERROR_TITLE);
     const [campaign, dispatch] = React.useReducer<Reducer<EntityListItem, InputEventData>>(reducer, {

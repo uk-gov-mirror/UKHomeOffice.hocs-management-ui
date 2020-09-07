@@ -69,7 +69,7 @@ exports[`when the campaignView component is mounted should render with default p
                 <a
                   href="#"
                 >
-                  Edit
+                  Amend
                 </a>
               </td>
             </tr>
@@ -92,7 +92,7 @@ exports[`when the campaignView component is mounted should render with default p
                 <a
                   href="#"
                 >
-                  Edit
+                  Amend
                 </a>
               </td>
             </tr>

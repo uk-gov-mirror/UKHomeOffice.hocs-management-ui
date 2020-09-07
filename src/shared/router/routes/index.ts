@@ -21,6 +21,7 @@ import AddTeamToUser from '../../pages/user/addTeamToUser/addTeamToUser';
 import WithdrawCase from '../../pages/case/withdrawCase';
 import CampaignsView from '../../pages/list/mpamCampaign/campaignsView';
 import AddCampaign from '../../pages/list/mpamCampaign/addCampaign';
+import AmendCampaign from '../../pages/list/mpamCampaign/amendCampaign';
 
 export interface Route {
     component: React.FunctionComponent | Error;
@@ -161,6 +162,12 @@ const routes = [
         exact: true,
         component: AddCampaign,
         title: 'Add Campaign'
+    },
+    {
+        path: '/manage-mpam-campaigns/:itemUUID/amend',
+        exact: true,
+        component: AmendCampaign,
+        title: 'Amend Campaign'
     },
     {
         component: Error,

@@ -57,4 +57,7 @@ export const WITHDRAW_CASE_SUCCESS = 'The case was withdrawn successfully';
 export const ADD_CAMPAIGN_ERROR_DESCRIPTION = 'Something went wrong while adding the campaign. Please try again.';
 export const ADD_CAMPAIGN_SUCCESS = 'The campaign was added successfully';
 export const DUPLICATE_CAMPAIGN_DESCRIPTION = 'A campaign with those details already exists';
+export const AMEND_CAMPAIGN_ERROR_DESCRIPTION = 'Something went wrong while amending the campaign. Please try again.';
+export const AMEND_CAMPAIGN_SUCCESS = 'The campaign was amended successfully';
+export const LOAD_CAMPAIGN_ERROR_DESCRIPTION = 'There was an error retrieving campaign.  Please try refreshing the page.';
 export const LOAD_CAMPAIGNS_ERROR_DESCRIPTION = 'There was an error retrieving campaigns.  Please try refreshing the page.';
