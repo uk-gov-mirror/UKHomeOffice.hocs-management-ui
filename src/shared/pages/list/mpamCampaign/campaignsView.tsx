@@ -36,9 +36,10 @@ const CampaignsView: React.FC<TeamMembersProps> = ({ history, match }) => {
             });
     }, []);
 
-    const editCampaign = (campaignUUID: string, campaignSimpleName: string, campaignTitle: string, event: React.FormEvent) => {
+    const amendCampaign = (campaignUUID: string, event: React.FormEvent) => {
         event.preventDefault();
         clearErrors();
+        history.push(`/manage-mpam-campaigns/${campaignUUID}/amend`);
 
     };
 
@@ -61,7 +62,7 @@ const CampaignsView: React.FC<TeamMembersProps> = ({ history, match }) => {
                                         <td className="govuk-table__cell">{campaign.title}</td>
                                         <td className="govuk-table__cell">{campaign.simpleName}</td>
                                         <td className="govuk-table__cell">
-                                            <a href="#" onClick={event => editCampaign(campaign.uuid, campaign.title, campaign.simpleName, event)}>Edit</a>
+                                            <a href="#" onClick={event => amendCampaign(campaign.uuid, event)}>Amend</a>
                                         </td>
                                     </tr>
                                 );
