@@ -120,7 +120,7 @@ describe('when the submit button is clicked', () => {
                 expect.assertions(1);
 
                 await wait(() => {
-                    expect(history.push).toHaveBeenCalledWith('/', { successMessage: 'The standard line was created successfully' });
+                    expect(history.push).toHaveBeenCalledWith('/manage-standard-lines', { successMessage: 'The standard line was created successfully' });
                 });
             });
             it('should clear any previous errors', async () => {

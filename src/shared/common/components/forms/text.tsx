@@ -11,6 +11,7 @@ interface TextProps {
     type?: string;
     updateState: (value: InputEventData) => void;
     value?: string;
+    autoFocus?: boolean;
 }
 
 const Text: React.FC<TextProps> = ({ disabled = false,
@@ -20,7 +21,8 @@ const Text: React.FC<TextProps> = ({ disabled = false,
     label = name,
     type = 'text',
     updateState,
-    value = ''
+    value = '',
+    autoFocus = false
 }) => {
 
     return (
@@ -36,6 +38,7 @@ const Text: React.FC<TextProps> = ({ disabled = false,
                 name={name}
                 disabled={disabled}
                 value={value}
+                autoFocus={autoFocus}
                 onChange={({ target: { name, value } }) => updateState({ name, value })}
             />
         </div>

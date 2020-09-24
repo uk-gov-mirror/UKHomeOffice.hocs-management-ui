@@ -14,6 +14,9 @@ const Dashboard: React.FC = () => (
                         </h2>
                         <ul className="govuk-list govuk-list--bullet">
                             <li>
+                                <Link className="govuk-link" to="/manage-standard-lines">Manage standard lines </Link>
+                            </li>
+                            <li>
                                 <Link className="govuk-link" to="/add-standard-line">Add a standard line</Link>
                             </li>
                         </ul>
