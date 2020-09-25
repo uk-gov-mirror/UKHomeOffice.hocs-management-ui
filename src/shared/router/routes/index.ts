@@ -10,7 +10,9 @@ import AddChildTopic from '../../pages/topic/addChildTopic/addChildTopic';
 import AddParentTopic from '../../pages/topic/addParentTopic/addParentTopic';
 import AddTeamsToTopic from '../../pages/topic/addTeamsToTopic/addTeamsToTopic';
 import UnitSearch from '../../pages/unit/unitSearch/unitSearch';
-import AddStandardLine from '../../pages/standardLine/addStandardLine';
+import AddStandardLine from '../../pages/standardLineAdd/addStandardLine';
+import AmendStandardLine from '../../pages/standardLineAmend/amendStandardLine';
+import StandardLinesView from '../../pages/standardLineManage/standardLinesView';
 import AddTemplate from '../../pages/template/addTemplate';
 import AddNominatedContact from '../../pages/team/addNominatedContact/addNominatedContact';
 import SelectCaseType from '../../pages/template/selectCaseType';
@@ -110,10 +112,22 @@ const routes = [
         title: 'Add Parent Topic'
     },
     {
+        path: '/manage-standard-lines',
+        exact: true,
+        component: StandardLinesView,
+        title: 'Manage Standard Lines'
+    },
+    {
         path: '/add-standard-line',
         exact: true,
         component: AddStandardLine,
         title: 'Add Standard Line'
+    },
+    {
+        path: '/manage-standard-lines/:standardLineUUID/amend',
+        exact: true,
+        component: AmendStandardLine,
+        title: 'Amend Standard Line'
     },
     {
         path: '/unit-search',
