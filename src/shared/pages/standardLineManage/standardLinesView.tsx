@@ -109,6 +109,7 @@ const StandardLinesView: React.FC<StandardLinesProps> = ({ history, match }) => 
                         <thead className="govuk-table__head">
                             <tr className="govuk-table__row">
                                 <th className="govuk-table__header" scope="col">Topic</th>
+                                <th className="govuk-table__header" scope="col">Team</th>
                                 <th className="govuk-table__header" scope="col">Filename</th>
                                 <th className="govuk-table__header" scope="col">Expiry date</th>
                                 <th className="govuk-table__header" scope="col">Action</th>
@@ -120,6 +121,7 @@ const StandardLinesView: React.FC<StandardLinesProps> = ({ history, match }) => 
                                     return (
                                         <tr className="govuk-table__row" key={standardLine.uuid}>
                                             <td className="govuk-table__cell">{standardLine.topic}</td>
+                                            <td className="govuk-table__cell">{standardLine.team}</td>
                                             <td className="govuk-table__cell">{standardLine.displayName}</td>
                                             {renderExpiryDateCell(standardLine)}
                                             <td className="govuk-table__cell govuk-!-width-one-quarter">

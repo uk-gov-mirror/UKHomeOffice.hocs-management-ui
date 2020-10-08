@@ -47,6 +47,11 @@ module.exports = {
             endpoint: '/topics',
             type: listService.types.DYNAMIC,
         },
+        DCU_POLICY_TEAM_FOR_TOPIC: {
+            client: 'INFO',
+            endpoint: '/team/topic/stage/DCU_DTEN_INITIAL_DRAFT',
+            type: listService.types.DYNAMIC,
+        },
         UNITS: {
             client: 'INFO',
             endpoint: '/unit',

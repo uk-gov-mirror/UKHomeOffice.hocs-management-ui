@@ -49,13 +49,17 @@ async function updateStandardLine(req, res, next) {
 
 async function getAllStandardLines(req, res, next) {
     const topicList = await req.listService.fetch('TOPICS', req.params);
+    const policyTeamForTopicList = await req.listService.fetch('DCU_POLICY_TEAM_FOR_TOPIC', req.params);
     const logger = getLogger(req.request);
 
     try {
         const response = await infoService.get('/standardLine/all', {}, { headers: User.createHeaders(req.user) });
         res.locals.standardLines = response.data.map(({ uuid, displayName, topicUUID, expires, documentUUID }) => {
             const expiry = formatDate(expires);
-            return ({ uuid: uuid, documentUUID: documentUUID, displayName: displayName, topic: getLabelForValue(topicList, topicUUID), expiryDate: expiry, isExpired: deriveIsExpired(expiry) });
+            return ({
+                uuid: uuid, documentUUID: documentUUID, displayName: displayName, topic: getLabelForValue(topicList, topicUUID),
+                expiryDate: expiry, isExpired: deriveIsExpired(expiry), team: getLabelForValue(policyTeamForTopicList, topicUUID)
+            });
         });
         next();
     } catch (error) {
