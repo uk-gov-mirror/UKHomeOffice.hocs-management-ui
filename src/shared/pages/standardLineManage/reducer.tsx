@@ -20,7 +20,8 @@ const filterLines = (standardLines: StandardLineModel[], filter: string, exclude
         filteredStandardLines = [];
         for (let i = 0; i < standardLines.length; i += 1) {
             const standardLine = standardLines[i];
-            if (doesFilterMatchValue(standardLine.topic, filter) || doesFilterMatchValue(standardLine.displayName, filter) || doesFilterMatchValue(standardLine.expiryDate, filter)) {
+            if (doesFilterMatchValue(standardLine.topic, filter) || doesFilterMatchValue(standardLine.displayName, filter)
+                || doesFilterMatchValue(standardLine.expiryDate, filter) || doesFilterMatchValue(standardLine.team, filter)) {
                 filteredStandardLines.push(standardLine);
             }
         }

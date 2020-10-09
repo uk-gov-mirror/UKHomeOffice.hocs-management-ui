@@ -3,6 +3,7 @@ export default interface StandardLineModel {
     documentUUID: string;
     displayName: string;
     topic: string;
+    team: string;
     expiryDate: string;
     isExpired: boolean;
 }
