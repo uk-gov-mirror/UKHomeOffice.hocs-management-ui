@@ -111,7 +111,7 @@ function getLabelForValue(list, value) {
 }
 
 const parseDate = (rawDate) => {
-    const [date] = rawDate.match(/[0-9]{4}-[0-1][0-9]-[0-3][0-9]/g) || [];
+    const [date] = rawDate.match(/\d{4}-(?:0[1-9]|1[012])-(?:0[1-9]|[12][0-9]|3[01])/g) || [];
     if (!date) {
         return null;
     }
