@@ -69,11 +69,8 @@ const StandardLinesView: React.FC<StandardLinesProps> = ({ history, match }) => 
             <div className="govuk-grid-row">
                 <div className="govuk-grid-column-one-third">
                     <div className="govuk-form-group filter-row">
-                        <legend id={'workstack-filter-legend'} className="govuk-fieldset__legend">
-                            <span className="govuk-fieldset__heading govuk-label--s">Filter</span>
-                        </legend>
                         <Text
-                            label=""
+                            label="Filter"
                             name="filter"
                             type="text"
                             updateState={(inputEventData: InputEventData) => dispatch({ type: 'FilterStandardLines', payload: inputEventData.value as string })}
