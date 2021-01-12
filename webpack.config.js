@@ -53,10 +53,12 @@ const browserConfig = env => {
                         {
                             loader: 'sass-loader',
                             options: {
-                                includePaths: [
-                                    path.resolve(__dirname, 'node_modules'),
-                                    path.resolve(__dirname, './src/styles'),
-                                ]
+                                sassOptions: {
+                                    includePaths: [
+                                        path.resolve(__dirname, './node_modules'),
+                                        path.resolve(__dirname, './src/styles'),
+                                    ]
+                                }
                             }
                         }
                     ]
