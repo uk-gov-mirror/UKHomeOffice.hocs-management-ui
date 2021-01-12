@@ -1,6 +1,7 @@
 const multer = require('multer');
 const multerS3 = require('multer-s3');
 const uuid = require('uuid/v4');
+const querystring = require('querystring');
 const { s3 } = require('../libs/aws');
 const isProduction = require('../config').isProduction;
 const { S3: { BUCKET_NAME, SSE_KEY } } = require('../config').forContext('AWS');
@@ -14,7 +15,7 @@ const storage = multerS3({
     s3,
     bucket: BUCKET_NAME,
     metadata: (req, file, callback) => {
-        callback(null, { originalName: file.originalname });
+        callback(null, { originalName: querystring.escape(file.originalname) });
     },
     key: (req, file, callback) => {
         callback(null, uuid());
