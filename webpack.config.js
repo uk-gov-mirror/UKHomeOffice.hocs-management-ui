@@ -55,8 +55,8 @@ const browserConfig = env => {
                             options: {
                                 sassOptions: {
                                     includePaths: [
-                                        path.resolve(__dirname, './node_modules'),
-                                        path.resolve(__dirname, './src/styles'),
+                                        path.resolve(__dirname, 'node_modules'),
+                                        path.resolve(__dirname, 'src', 'styles'),
                                     ]
                                 }
                             }
