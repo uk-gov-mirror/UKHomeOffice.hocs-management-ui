@@ -106,7 +106,7 @@ describe('When the Topic middleware getTopics method is called', () => {
         it('should call the get method on the info service', async () => {
             createHeaders.mockImplementation(() => headers);
             await getTopics(req, res, next);
-            expect(infoService.get).toHaveBeenCalledWith('/topics', { headers: headers });
+            expect(infoService.get).toHaveBeenCalledWith('/topics/active', { headers: headers });
             expect(res.locals.topics).toStrictEqual(mockTopics);
         });
 
