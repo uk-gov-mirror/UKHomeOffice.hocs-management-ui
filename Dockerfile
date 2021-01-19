@@ -1,7 +1,7 @@
-FROM quay.io/ukhomeofficedigital/nodejs-base:v8
+FROM node:14.15.4-buster
 
 ENV USER user_hocs_frontend
-ENV USER_ID 1000
+ENV USER_ID 1001
 ENV GROUP group_hocs_frontend
 
 RUN groupadd -r ${GROUP} && \
