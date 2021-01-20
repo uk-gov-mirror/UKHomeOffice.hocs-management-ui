@@ -337,6 +337,9 @@ spec:
           - mountPath: /certs
             name: certs
             readOnly: true
+          - mountPath: /etc/ssl/certs
+            name: bundle
+            readOnly: true
       volumes:
         - name: certs
           emptyDir:
