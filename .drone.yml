@@ -1,13 +1,19 @@
 pipeline:
 
+  lint:
+    image: node:14.15.4-alpine # same as Dockerfile
+    group: build
+    commands:
+      - npm install
+      - npm run lint
+
   build-docker-image:
+    group: build
     image: docker:17.09.1
     environment:
       - DOCKER_HOST=tcp://172.17.0.1:2375
     commands:
       - docker build -t hocs-management-ui .
-    when:
-      event: push
 
   install-docker-image:
     image: docker:17.09.1
