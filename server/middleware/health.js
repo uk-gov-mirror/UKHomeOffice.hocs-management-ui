@@ -21,7 +21,7 @@ function liveness(req, res) {
 async function readiness(req, res) {
     const setStatus = response => response.status === 200 ? status.READY : status.NOT_READY;
     const setResponseCode = (resources) => {
-        return resources.info === status.READY
+        return resources.info === status.READY;
     };
     const response = {};
     const resources = {};
@@ -31,12 +31,12 @@ async function readiness(req, res) {
     } catch (e) {
         resources.info = status.FAIL;
     }
-        response.code = setResponseCode(resources) ? 200 : 503;
-        response.status = setResponseCode(resources) ? status.READY : status.NOT_READY;
-        res.status(response.code).json({
-            status: response.status,
-            resources
-        });
+    response.code = setResponseCode(resources) ? 200 : 503;
+    response.status = setResponseCode(resources) ? status.READY : status.NOT_READY;
+    res.status(response.code).json({
+        status: response.status,
+        resources
+    });
 }
 
 module.exports = {

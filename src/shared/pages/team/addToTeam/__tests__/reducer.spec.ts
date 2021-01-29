@@ -58,13 +58,4 @@ describe('when an action is dispatched', () => {
             expect(otherState).toStrictEqual(initialOtherState);
         });
     });
-    describe('and it is not handled by the reducer', () => {
-        it('will return the original state', () => {
-
-            // @ts-ignore - this case shouldn't be possible unless typescript is ignored or an action is defined without being added to the reducer.
-            const state = reducer(initialState, { type: '__unknown__', payload: '__teamName__' });
-
-            expect(state).toStrictEqual(initialState);
-        });
-    });
 });

@@ -19,7 +19,7 @@ interface MatchParams {
     teamId: string;
 }
 
-interface StandardLinesProps extends RouteComponentProps<MatchParams> { }
+type StandardLinesProps = RouteComponentProps<MatchParams>;
 
 const onAddClick = (history: History) => {
     history.push('/add-standard-line');

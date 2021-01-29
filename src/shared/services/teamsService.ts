@@ -20,7 +20,7 @@ export const getTeamMembers = (teamId: string) => new Promise((resolve, reject) 
     .catch(reason => reject(reason))
 );
 
-export const getTeamsForUser = (userId: String) => new Promise<[Item]>((resolve, reject) => axios
+export const getTeamsForUser = (userId: string) => new Promise<[Item]>((resolve, reject) => axios
     .get(`/api/teams/${userId}/teams`)
     .then(response => resolve(response.data))
     .catch(reason => reject(reason))

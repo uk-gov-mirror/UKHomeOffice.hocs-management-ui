@@ -98,7 +98,7 @@ const addTeamToTopicView: React.FC<AddTeamToTopicProps> = ({ csrfToken, history,
                                     <tr className="govuk-table__row">
                                         <th scope="row" className="govuk-table__header">
                                             Draft/QA
-                                    </th>
+                                        </th>
                                         <td className="govuk-table__cell">
                                             {state.draftQaTeam.displayName}
                                         </td>
@@ -106,7 +106,7 @@ const addTeamToTopicView: React.FC<AddTeamToTopicProps> = ({ csrfToken, history,
                                     <tr className="govuk-table__row">
                                         <th scope="row" className="govuk-table__header">
                                             Private Office/Minister
-                                    </th>
+                                        </th>
                                         <td className="govuk-table__cell">
                                             {state.privateMinisterTeam.displayName}
                                         </td>

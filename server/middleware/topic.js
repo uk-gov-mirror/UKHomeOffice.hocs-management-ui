@@ -48,7 +48,7 @@ async function addParentTopic(req, res, next) {
     const logger = getLogger(req.request);
 
     try {
-        await infoService.post(`/topic/parent`, req.body, { headers: User.createHeaders(req.user) });
+        await infoService.post('/topic/parent', req.body, { headers: User.createHeaders(req.user) });
         res.sendStatus(200);
     } catch (error) {
         logger.error(error);
@@ -74,12 +74,12 @@ function addDCUTeamsToTopic(req, res, next) {
     ];
 
     Promise.all(TeamstoStageTypes.map(team => {
-        infoService.post(`/topic/${topicValue}/team/${team.team}`, { "case_type": team.caseType, "stage_type": team.stageType }, { headers: User.createHeaders(req.user) })
+        infoService.post(`/topic/${topicValue}/team/${team.team}`, { 'case_type': team.caseType, 'stage_type': team.stageType }, { headers: User.createHeaders(req.user) })
             .then(() => { })
             .catch(error => {
                 logger.error(error.message);
                 next(error);
-            })
+            });
     }))
         .then(res.sendStatus(200))
         .catch(error => {
@@ -93,7 +93,7 @@ async function getParentTopics(req, res, next) {
     const logger = getLogger(req.request);
 
     try {
-        const response = await infoService.get(`/topic/parents`, { headers: User.createHeaders(req.user) });
+        const response = await infoService.get('/topic/parents', { headers: User.createHeaders(req.user) });
         res.locals.parentTopics = response.data;
         next();
     } catch (error) {

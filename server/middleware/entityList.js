@@ -42,7 +42,7 @@ async function getEntity(req, res, next) {
 
     try {
         const response = await infoService.get(`/entity/${itemUUID}`, {}, { headers: User.createHeaders(req.user) });
-        res.locals.entity = { simpleName: response.data.simpleName, uuid: response.data.uuid, title: response.data.data.title }
+        res.locals.entity = { simpleName: response.data.simpleName, uuid: response.data.uuid, title: response.data.data.title };
         next();
     } catch (error) {
         logger.error(error);
@@ -75,4 +75,4 @@ module.exports = {
     getEntity,
     returnEntityJson,
     updateEntityListItem
-}
+};

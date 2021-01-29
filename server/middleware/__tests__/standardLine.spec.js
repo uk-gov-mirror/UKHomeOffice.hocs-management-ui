@@ -22,7 +22,7 @@ describe('when the standardLine middleware is called', () => {
     });
 
     it('should call the post method on the info service', async () => {
-        User.createHeaders.mockImplementation(() => headers)
+        User.createHeaders.mockImplementation(() => headers);
         await addStandardLine(req, res, next);
         expect(infoService.post).toHaveBeenCalledWith('/standardLine', {
             s3UntrustedUrl: '__key__',

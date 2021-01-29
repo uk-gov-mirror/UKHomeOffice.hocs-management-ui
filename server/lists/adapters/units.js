@@ -4,9 +4,9 @@ module.exports = async (data, { logger }) => {
     logger.debug('REQUEST_UNITS', { units: data.length });
     return data
         .map(({ displayName, shortCode, type }) => ({
-        displayName: displayName,
-        shortCode: shortCode,
-        type: type
-    }))
-    .sort(byDisplayName);
+            displayName: displayName,
+            shortCode: shortCode,
+            type: type
+        }))
+        .sort(byDisplayName);
 };

@@ -14,7 +14,7 @@ interface MatchParams {
     userId: string;
 }
 
-interface UserMembersProps extends RouteComponentProps<MatchParams> { }
+type UserMembersProps = RouteComponentProps<MatchParams>;
 
 const onAddUsersAddClick = (history: History, userId: string) => {
     history.push(`/user/${userId}/add-teams`);
@@ -24,7 +24,7 @@ const UserView: React.FC<UserMembersProps> = ({ history, match }) => {
 
     const [pageError, , clearErrors, setErrorMessage] = useError();
     const { params: { userId } } = match;
-    const [user, setUser] = React.useState();
+    const [user, setUser] = React.useState<Item>();
     const [teams, setTeams] = React.useState<Item[]>([]);
 
     useEffect(() => {
@@ -67,28 +67,28 @@ const UserView: React.FC<UserMembersProps> = ({ history, match }) => {
 
     const DisplayUserTable = () => (
         <Fragment>
-                <table className="govuk-table">
-                    <thead className="govuk-table__head">
-                        <tr className="govuk-table__row">
-                            <th className="govuk-table__header" scope="col">Teams</th>
-                            <th className="govuk-table__header" scope="col">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody className="govuk-table__body">
-                        {
-                            teams.map((team: Item) => {
-                                return (
-                                    <tr className="govuk-table__row" key={team.value}>
-                                        <td className="govuk-table__cell">{team.label}</td>
-                                        <td className="govuk-table__cell">
-                                            <a href="#" onClick={event => removeUser(userId, team.value as string, event)}>Remove</a>
-                                        </td>
-                                    </tr>
-                                );
-                            })
-                        }
-                    </tbody>
-                </table>
+            <table className="govuk-table">
+                <thead className="govuk-table__head">
+                    <tr className="govuk-table__row">
+                        <th className="govuk-table__header" scope="col">Teams</th>
+                        <th className="govuk-table__header" scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody className="govuk-table__body">
+                    {
+                        teams.map((team: Item) => {
+                            return (
+                                <tr className="govuk-table__row" key={team.value}>
+                                    <td className="govuk-table__cell">{team.label}</td>
+                                    <td className="govuk-table__cell">
+                                        <a href="#" onClick={event => removeUser(userId, team.value as string, event)}>Remove</a>
+                                    </td>
+                                </tr>
+                            );
+                        })
+                    }
+                </tbody>
+            </table>
         </Fragment>
     );
 

@@ -20,10 +20,10 @@ describe('when the createUnit method is called', () => {
             expect.assertions(2);
 
             await createUnit({
-                displayName: '__unit1__', shortCode: '__unitId1__', value: '__unitsValue1__'}).then(() => {
-                    expect(axios.post).toHaveBeenCalledTimes(1);
-                    expect(axios.post).toHaveBeenCalledWith('/api/units', { displayName: '__unit1__', shortCode: '__unitId1__', value: '__unitsValue1__' });
-                });
+                displayName: '__unit1__', shortCode: '__unitId1__', value: '__unitsValue1__' }).then(() => {
+                expect(axios.post).toHaveBeenCalledTimes(1);
+                expect(axios.post).toHaveBeenCalledWith('/api/units', { displayName: '__unit1__', shortCode: '__unitId1__', value: '__unitsValue1__' });
+            });
         });
     });
 

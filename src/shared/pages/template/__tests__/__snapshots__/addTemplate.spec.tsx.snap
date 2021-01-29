@@ -22,7 +22,7 @@ exports[`when the addTemplate component is mounted should render with default pr
       <h2
         class="govuk-heading-l"
       >
-        Case Type: __displayName__
+        Case Type: undefined
       </h2>
     </div>
   </div>

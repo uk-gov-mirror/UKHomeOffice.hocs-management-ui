@@ -8,6 +8,6 @@ router.delete('/:userId/team/:teamId', removeFromTeam, getTeams, returnTeamsJson
 
 router.get('', getAllUsers, returnUsersJson);
 
-router.get('/:userId', getUser, returnUserJson)
+router.get('/:userId', getUser, returnUserJson);
 
 module.exports = router;
