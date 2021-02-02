@@ -13,15 +13,15 @@ module.exports = {
         'plugin:@typescript-eslint/recommended'
     ],
     rules: {
-        '@typescript-eslint/explicit-module-boundary-types': 'off', // TODO: This needs reviewing
-        '@typescript-eslint/no-explicit-any': 'off', // TODO: This need reviewing
-        '@typescript-eslint/no-var-requires': 'off', // TODO: This need reviewing
-        '@typescript-eslint/no-empty-function': 'off', // TODO: This needs reviewing
-        '@typescript-eslint/no-unused-vars': 'off', // TODO: This needs reviewing
-        '@typescript-eslint/no-non-null-assertion': 'off', // TODO: This needs reviewing
-        '@typescript-eslint/ban-ts-comment': 'off', // TODO: This needs reviewing
-        'react/prop-types': 'off', // TODO: This needs reviewing
-        'react/no-children-prop': 'off', // TODO: This needs reviewing
+        '@typescript-eslint/explicit-module-boundary-types': 'off', // TODO: This needs reviewing HOCS-2431
+        '@typescript-eslint/no-explicit-any': 'off', // TODO: This need reviewing HOCS-2432
+        '@typescript-eslint/no-var-requires': 'off', // TODO: This need reviewing HOCS-2433
+        '@typescript-eslint/no-empty-function': 'off', // TODO: This needs reviewing HOCS-2434
+        '@typescript-eslint/no-unused-vars': 'off', // TODO: This needs reviewing HOCS-2435
+        '@typescript-eslint/no-non-null-assertion': 'off', // TODO: This needs reviewing HOCS-2436
+        '@typescript-eslint/ban-ts-comment': 'off', // TODO: This needs reviewing HOCS-2437
+        'react/prop-types': 'off', // TODO: This needs reviewing HOCS-2438
+        'react/no-children-prop': 'off', // TODO: This needs reviewing HOCS-2439
         'indent': [
             'error',
             4
@@ -31,7 +31,7 @@ module.exports = {
             'error',
             'unix'
         ],
-        // TODO: this needs looking at.
+        // TODO: this needs looking at HOCS-2435
         'no-unused-vars': 'off',
         /*'no-unused-vars': [
             'error',
