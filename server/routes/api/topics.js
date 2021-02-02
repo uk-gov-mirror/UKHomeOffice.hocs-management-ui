@@ -5,7 +5,7 @@ router.get('', getTopics, returnTopicsJson);
 router.get('/:topicId', getTopic, returnTopicJson);
 router.get('/parents', getParentTopics, returnParentTopicsJson);
 router.post('/parents/:parentTopicId', addTopic);
-router.post('/parent', addParentTopic)
+router.post('/parent', addParentTopic);
 router.post('/dcu', addDCUTeamsToTopic);
 
 module.exports = router;
