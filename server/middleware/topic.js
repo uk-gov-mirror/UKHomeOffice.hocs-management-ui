@@ -21,7 +21,7 @@ async function getTopics(req, res, next) {
     const logger = getLogger(req.request);
 
     try {
-        const response = await infoService.get(`/topics/active`, { headers: User.createHeaders(req.user) });
+        const response = await infoService.get('/topics/active', { headers: User.createHeaders(req.user) });
         res.locals.topics = response.data;
         next();
     } catch (error) {
