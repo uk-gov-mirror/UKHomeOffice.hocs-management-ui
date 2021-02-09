@@ -27,7 +27,7 @@ describe('When the Topic middleware getParentTopics method is called', () => {
         });
 
         it('should call the post method on the info service', async () => {
-            createHeaders.mockImplementation(() => headers)
+            createHeaders.mockImplementation(() => headers);
             await getParentTopics(req, res, next);
             expect(infoService.get).toHaveBeenCalledWith('/topic/parents', { headers: headers });
             expect(res.locals.parentTopics).toStrictEqual(mockParentTopics);

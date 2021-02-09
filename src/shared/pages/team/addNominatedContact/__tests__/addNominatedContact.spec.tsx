@@ -102,7 +102,6 @@ describe('when the addNominatedContact component is mounted', () => {
     });
 
     it('should initially render null before the team name is returned', async () => {
-        let wrapper: RenderResult;
         getTeamSpy.mockReturnValueOnce(Promise.resolve({
             active: true,
             displayName: undefined,
@@ -111,7 +110,7 @@ describe('when the addNominatedContact component is mounted', () => {
             type: '__type__'
         }));
         mockState.teamName = undefined;
-        wrapper = renderComponent();
+        const wrapper: RenderResult = renderComponent();
         expect(wrapper.container.outerHTML).toMatchSnapshot();
     });
     it('should display an error if the call to retrieve the team fails', async () => {

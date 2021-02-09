@@ -77,12 +77,11 @@ describe('when the amendCampaign component is mounted', () => {
     });
 
     it('should initially render blank before item title is returned', async () => {
-        let wrapper: RenderResult;
         getItemDetailsSpy.mockReturnValueOnce(Promise.resolve(
             { simpleName: 'testSimpleName', title: 'testTitle', uuid: 'testUUID' }
         ));
         mockState.originalTitle = '';
-        wrapper = renderComponent();
+        const wrapper: RenderResult = renderComponent();
         expect(wrapper.container.outerHTML).toMatchSnapshot();
     });
 

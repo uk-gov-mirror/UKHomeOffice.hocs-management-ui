@@ -17,7 +17,7 @@ interface MatchParams {
     teamId: string;
 }
 
-interface TeamMembersProps extends RouteComponentProps<MatchParams> { }
+type TeamMembersProps = RouteComponentProps<MatchParams>;
 
 const onAddClick = (history: History) => {
     history.push('/manage-mpam-campaigns/add');

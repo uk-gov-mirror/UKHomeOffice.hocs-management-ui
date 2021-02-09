@@ -12,9 +12,9 @@ interface NotificationWrapperProps extends NotificationProps {
 }
 
 const Notification: React.FC<NotificationProps> = ({ type, display }) => (
-  <div className={`notification${type === 'ERROR' ? ' notification--error' : ''}`}>
-    {display}
-  </div>
+    <div className={`notification${type === 'ERROR' ? ' notification--error' : ''}`}>
+        {display}
+    </div>
 );
 
 const Wrapper = (Notification: React.FC<NotificationProps>) => function NotificationWrapper({ timeoutPeriod = 1000, ...props }: NotificationWrapperProps) {

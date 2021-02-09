@@ -8,7 +8,7 @@ const User = require('../../models/user');
 
 describe('Unit middleware addUnit', () => {
     const headers = '__headers__';
-    const unitToCreate = { displayName: '__displayName__', shortCode: '__shortCode__' }
+    const unitToCreate = { displayName: '__displayName__', shortCode: '__shortCode__' };
     let req = {};
     const sendStatus = jest.fn();
     let res = {};
@@ -24,7 +24,7 @@ describe('Unit middleware addUnit', () => {
     });
 
     it('should call the post method on the info service', async () => {
-        User.createHeaders.mockImplementation(() => headers)
+        User.createHeaders.mockImplementation(() => headers);
 
         await addUnit(req, res, next);
         expect(infoService.post).toHaveBeenCalledWith('/unit', unitToCreate, { headers: headers });
@@ -49,7 +49,7 @@ describe('Unit middleware addUnit', () => {
 
     it('should call the sendstatus method with a success code', async () => {
         await addUnit(req, res, next);
-        
+
         expect(sendStatus).toHaveBeenCalledWith(200);
     });
 
@@ -65,7 +65,7 @@ describe('Unit middleware addUnit', () => {
 
         getLogger.mockImplementation(() => ({ error: logError }));
         await addUnit(req, res, next);
-        
+
         expect(logError).toHaveBeenCalled();
         expect(next).toHaveBeenCalledWith('__error__');
     });

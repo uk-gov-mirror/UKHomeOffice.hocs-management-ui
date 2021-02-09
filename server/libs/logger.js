@@ -18,7 +18,7 @@ const logstashFormat = statement => {
         logstashStatement['@timestamp'] = logstashStatement.timestamp;
         delete logstashStatement.timestamp;
     }
-    logstashStatement.appName = 'hocs-frontend';
+    logstashStatement.appName = 'hocs-management-ui';
     return JSON.stringify(logstashStatement);
 };
 

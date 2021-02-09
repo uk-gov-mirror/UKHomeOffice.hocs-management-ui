@@ -9,13 +9,9 @@
         "build-dev": "webpack --mode=development --env.NODE_ENV=development",
         "build-prod": "webpack --mode=production --env.NODE_ENV=production",
         "test": "jest --coverage",
-        "jest": "node_modules/jest/bin/jest.js  .",
-        "lint:js": "eslint ./ --ignore-path .gitignore",
-        "lint:jsx": "eslint ./ --ignore-path .gitignore",
-        "lint:ts": "tslint -c tslint.json 'src/**/*.ts'",
-        "lint:tsx": "tslint -c tslint.json 'src/**/*.tsx'",
+        "jest": "node_modules/jest/bin/jest.js .",
         "lint-staged": "node_modules/lint-staged/index.js",
-        "lint": "npm run lint:js & npm run lint:jsx & npm run lint:ts & npm run lint:tsx"
+        "lint": "eslint ./ --ext js,jsx,ts,tsx"
     },
     "repository": "github:UKHomeOffice/hocs-management-ui",
     "jest": {
@@ -60,6 +56,8 @@
         "@types/react-dom": "^16.8.4",
         "@types/react-router-dom": "^4.3.4",
         "@types/react-select": "^3.0.4",
+        "@typescript-eslint/eslint-plugin": "^4.14.1",
+        "@typescript-eslint/parser": "^4.14.1",
         "autoprefixer": "^8.3.0",
         "babel-core": "7.0.0-bridge.0",
         "babel-eslint": "^10.0.2",
@@ -70,7 +68,7 @@
         "enzyme": "^3.9.0",
         "enzyme-adapter-react-16": "^1.10.0",
         "enzyme-to-json": "^3.3.5",
-        "eslint": "^5.7.0",
+        "eslint": "^7.18.0",
         "eslint-config-airbnb": "^17.1.1",
         "eslint-plugin-import": "^2.18.2",
         "eslint-plugin-jsx-a11y": "^6.2.3",
@@ -88,9 +86,7 @@
         "terser-webpack-plugin": "^2.3.5",
         "ts-jest": "^25.3.0",
         "ts-loader": "^6.0.4",
-        "tslint": "^5.18.0",
-        "tslint-config-airbnb": "^5.11.1",
-        "typescript": "^3.5.3",
+        "typescript": "^3.9.7",
         "webpack": "^4.42.1",
         "webpack-assets-manifest": "^3.1.0",
         "webpack-cli": "^3.1.2",
@@ -102,20 +98,16 @@
     ],
     "lint-staged": {
         "*.js": [
-            "eslint ./ --fix --ignore-path .gitignore",
-            "git add"
+            "eslint ./ --ext js"
         ],
         "*.jsx": [
-            "eslint ./ --fix --ignore-path .gitignore",
-            "git add"
+            "eslint ./ --ext jsx"
         ],
         "*.ts": [
-            "tslint -c tslint.json",
-            "git add"
+            "eslint ./ --ext ts"
         ],
         "*.tsx": [
-            "tslint -c tslint.json",
-            "git add"
+            "eslint ./ --ext tsx"
         ]
     },
     "husky": {

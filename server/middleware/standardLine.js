@@ -78,7 +78,7 @@ async function getStandardLine(req, res, next) {
         res.locals.standardLine = {
             uuid: response.data.uuid, documentUUID: response.data.documentUUID, displayName: response.data.displayName,
             topic: getLabelForValue(topicList, response.data.topicUUID), expiryDate: expiry, isExpired: deriveIsExpired(expiry)
-        }
+        };
         next();
     } catch (error) {
         logger.error(error);

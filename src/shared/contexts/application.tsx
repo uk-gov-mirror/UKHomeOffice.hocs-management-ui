@@ -48,7 +48,7 @@ const reducer = (state: ApplicationState, action: ContextAction<any>): Applicati
 };
 
 export class ApplicationProvider extends Component<ApplicationProps, ApplicationState> {
-    useAnalytics: boolean = false;
+    useAnalytics = false;
 
     constructor(props: ApplicationProps) {
         super(props);

@@ -11,7 +11,7 @@ describe('User middleware addToTeam', () => {
     const userId = '__userId__';
     const teamId = '__teamId__';
     const headers = '__headers__';
-    const req = { params: { userId: userId, teamId: teamId }, user: '__user__'} ;
+    const req = { params: { userId: userId, teamId: teamId }, user: '__user__' } ;
     let res = {};
     const next = jest.fn();
 
@@ -21,7 +21,7 @@ describe('User middleware addToTeam', () => {
     });
 
     it('should call the post method on the info service', async () => {
-        User.createHeaders.mockImplementation(() => headers)
+        User.createHeaders.mockImplementation(() => headers);
         await addToTeam(req, res, next);
         expect(infoService.post).toHaveBeenCalledWith(`/users/${userId}/team/${teamId}`, {}, { headers: headers });
     });
@@ -44,7 +44,7 @@ describe('User middleware addToTeam', () => {
     it('should log when the request fails', async () => {
         infoService.post.mockImplementation(() => Promise.reject('__error__'));
         const logError = jest.fn();
-        getLogger.mockImplementation(() => ({ error: logError}) );
+        getLogger.mockImplementation(() => ({ error: logError }) );
         await addToTeam(req, res, next);
         expect(logError).toHaveBeenCalled();
         expect(next).toHaveBeenCalledWith('__error__');
@@ -56,7 +56,7 @@ describe('User middleware remove from team', () => {
     const userId = '__userId__';
     const teamId = '__teamId__';
     const headers = '__headers__';
-    const req = { params: { userId: userId, teamId: teamId }, user: '__user__'} ;
+    const req = { params: { userId: userId, teamId: teamId }, user: '__user__' } ;
     let res = {};
     const next = jest.fn();
 
@@ -66,7 +66,7 @@ describe('User middleware remove from team', () => {
     });
 
     it('should call the delete method on the info service', async () => {
-        User.createHeaders.mockImplementation(() => headers)
+        User.createHeaders.mockImplementation(() => headers);
         await removeFromTeam(req, res, next);
         expect(infoService.delete).toHaveBeenCalledWith(`/users/${userId}/team/${teamId}`, { headers: headers });
     });
@@ -89,7 +89,7 @@ describe('User middleware remove from team', () => {
     it('should log when the request fails', async () => {
         infoService.delete.mockImplementation(() => Promise.reject('__error__'));
         const logError = jest.fn();
-        getLogger.mockImplementation(() => ({ error: logError}) );
+        getLogger.mockImplementation(() => ({ error: logError }) );
         await removeFromTeam(req, res, next);
         expect(logError).toHaveBeenCalled();
         expect(next).toHaveBeenCalledWith('__error__');

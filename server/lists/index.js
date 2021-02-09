@@ -4,7 +4,7 @@ const usersAdapter = require('./adapters/users');
 const userAdapter = require('./adapters/user');
 const teamsAdapter = require('./adapters/teams');
 const membersAdapter = require('./adapters/members');
-const unitsAdapter = require('./adapters/units')
+const unitsAdapter = require('./adapters/units');
 
 module.exports = {
     lists: {

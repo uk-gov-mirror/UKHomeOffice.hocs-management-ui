@@ -18,7 +18,7 @@ interface MatchParams {
     teamId: string;
 }
 
-interface TeamMembersProps extends RouteComponentProps<MatchParams> { }
+type TeamMembersProps = RouteComponentProps<MatchParams>;
 
 const onAddTeamMembersAddClick = (history: History, teamId: string) => {
     history.push(`/team/${teamId}/add-users`);

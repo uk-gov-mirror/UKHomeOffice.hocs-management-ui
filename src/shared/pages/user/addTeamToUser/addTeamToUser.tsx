@@ -15,7 +15,7 @@ interface MatchParams {
     userId: string;
 }
 
-export interface AddToTeamProps extends RouteComponentProps<MatchParams> { }
+export type AddToTeamProps = RouteComponentProps<MatchParams>;
 
 const AddTeamToUser: React.FC<AddToTeamProps> = ({ history, match }) => {
 
@@ -92,7 +92,7 @@ const AddTeamToUser: React.FC<AddToTeamProps> = ({ history, match }) => {
                     value = {state.selectedTeam}
                 />
 
-            {state.selectedTeams.length > 0 &&
+                {state.selectedTeams.length > 0 &&
                 <div className="govuk-grid-row">
                     <div className="govuk-grid-column-two-thirds-from-desktop">
                         <table className="govuk-table">
@@ -114,14 +114,14 @@ const AddTeamToUser: React.FC<AddToTeamProps> = ({ history, match }) => {
                         </table>
                     </div>
                 </div>
-            }
-            <button
-                type="submit"
-                className="govuk-button view-team-button"
-                onClick={onSubmit}
-            >
+                }
+                <button
+                    type="submit"
+                    className="govuk-button view-team-button"
+                    onClick={onSubmit}
+                >
                 Add selected teams
-            </button>
+                </button>
             </div>
         </>
     );

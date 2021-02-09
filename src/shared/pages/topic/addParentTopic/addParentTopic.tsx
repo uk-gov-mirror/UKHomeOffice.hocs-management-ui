@@ -19,10 +19,10 @@ interface AddParentTopicProps extends RouteComponentProps {
 }
 
 const validationSchema = string()
-        .required()
-        .label('Display Name')
-        .matches(/^[a-zA-Z0-9_,.!?' ()&]*$/)
-        .label('Parent Topic')
+    .required()
+    .label('Display Name')
+    .matches(/^[a-zA-Z0-9_,.!? ()&]*$/)
+    .label('Parent Topic')
 ;
 
 const AddParentTopic: React.FC<AddParentTopicProps> = ({ csrfToken, contextDispatch, history }) => {
@@ -37,14 +37,14 @@ const AddParentTopic: React.FC<AddParentTopicProps> = ({ csrfToken, contextDispa
         if (validate(validationSchema, displayName, addFormError)) {
             if (displayName !== undefined) {
                 addParentTopic(displayName)
-                .then(() => history.push('/', { successMessage: ADD_PARENT_TOPIC_SUCCESS }))
-                .catch((error) => {
-                    if (error && error.response && error.response.status === 400) {
-                        setErrorMessage(new ErrorMessage(DUPLICATE_PARENT_TOPIC_DESCRIPTION, VALIDATION_ERROR_TITLE));
-                    } else {
-                        setErrorMessage(new ErrorMessage(ADD_PARENT_TOPIC_ERROR_DESCRIPTION, GENERAL_ERROR_TITLE));
-                    }
-                });
+                    .then(() => history.push('/', { successMessage: ADD_PARENT_TOPIC_SUCCESS }))
+                    .catch((error) => {
+                        if (error && error.response && error.response.status === 400) {
+                            setErrorMessage(new ErrorMessage(DUPLICATE_PARENT_TOPIC_DESCRIPTION, VALIDATION_ERROR_TITLE));
+                        } else {
+                            setErrorMessage(new ErrorMessage(ADD_PARENT_TOPIC_ERROR_DESCRIPTION, GENERAL_ERROR_TITLE));
+                        }
+                    });
             }
         }
     };
