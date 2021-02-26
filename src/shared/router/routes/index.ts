@@ -14,7 +14,7 @@ import AddStandardLine from '../../pages/standardLineAdd/addStandardLine';
 import AmendStandardLine from '../../pages/standardLineAmend/amendStandardLine';
 import StandardLinesView from '../../pages/standardLineManage/standardLinesView';
 import AddTemplate from '../../pages/template/addTemplate';
-import AddNominatedContact from '../../pages/team/addNominatedContact/addNominatedContact';
+import ManageNominatedContacts from '../../pages/team/manageNominatedContacts/manageNominatedContacts';
 import SelectCaseType from '../../pages/template/selectCaseType';
 import CaseTypeView from '../../pages/template/caseTypeView';
 import UserSearch from '../../pages/user/userSearch/userSearch';
@@ -136,10 +136,10 @@ const routes = [
         title: 'UnitSearch'
     },
     {
-        path: '/team/:teamId/add-nominated-contact',
+        path: '/team/:teamId/manage-nominated-contacts',
         exact: true,
-        component: AddNominatedContact,
-        title: 'Add Nominated Contact'
+        component: ManageNominatedContacts,
+        title: 'Manage Nominated Contacts'
     },
     {
         path: '/case-types',

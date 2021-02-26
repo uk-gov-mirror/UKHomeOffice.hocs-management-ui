@@ -96,11 +96,11 @@ exports[`when the teamView component is mounted should render with default props
         Add team members
       </button>
       <button
-        class="govuk-button govuk-button--secondary  add-nominated-contact-button"
+        class="govuk-button govuk-button--secondary  manage-nominated-contacts-button"
         data-module="govuk-button"
         type="submit"
       >
-        Add nominated contact
+        Manage nominated contacts
       </button>
     </div>
   </div>

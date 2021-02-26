@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`when the AddNominatedContact component is mounted should render with default props 1`] = `
+<div>
+  <div
+    class="govuk-grid-row"
+  >
+    <div
+      class="govuk-grid-column-one-half-from-desktop"
+    >
+      <form
+        method="POST"
+      >
+        <input
+          name="_csrf"
+          type="hidden"
+          value=""
+        />
+        <div
+          class="govuk-form-group"
+        >
+          <label
+            class="govuk-label govuk-label--s"
+            for="emailAddress"
+            id="emailAddress-label"
+          >
+            Email Address
+          </label>
+          <input
+            class="govuk-input"
+            id="emailAddress"
+            name="emailAddress"
+            type="text"
+            value=""
+          />
+        </div>
+        <input
+          class="govuk-button"
+          type="submit"
+          value="Add nominated contact"
+        />
+      </form>
+    </div>
+  </div>
+</div>
+`;

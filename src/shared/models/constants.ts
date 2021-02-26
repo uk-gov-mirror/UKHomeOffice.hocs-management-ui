@@ -69,3 +69,5 @@ export const AMEND_CAMPAIGN_ERROR_DESCRIPTION = 'Something went wrong while amen
 export const AMEND_CAMPAIGN_SUCCESS = 'The campaign was amended successfully';
 export const LOAD_CAMPAIGN_ERROR_DESCRIPTION = 'There was an error retrieving campaign.  Please try refreshing the page.';
 export const LOAD_CAMPAIGNS_ERROR_DESCRIPTION = 'There was an error retrieving campaigns.  Please try refreshing the page.';
+export const LOAD_NOMINATED_CONTACTS_ERROR_DESCRIPTION = 'There was an error retrieving the list of nominated contacts.  Please try refreshing the page.';
+export const DELETE_NOMINATED_CONTACTS_ERROR_DESCRIPTION = 'There was an error deleting the nominated contact. Please try refreshing the page.';
