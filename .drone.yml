@@ -28,6 +28,7 @@ pipeline:
       - docker push quay.io/ukhomeofficedigital/hocs-management-ui:build-$${DRONE_BUILD_NUMBER}
       - docker push quay.io/ukhomeofficedigital/hocs-management-ui:latest
     when:
+      branch: [master, epic/*, hotfix/*]
       event: push
 
   docker-semver-tag:
