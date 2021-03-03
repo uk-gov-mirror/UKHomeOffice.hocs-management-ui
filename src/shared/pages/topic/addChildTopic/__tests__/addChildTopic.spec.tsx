@@ -183,4 +183,56 @@ describe('when the submit button is clicked', () => {
             expect(addFormErrorSpy).toHaveBeenNthCalledWith(2, { key: 'selectedParentTopic.label', value: 'The Parent Topic is required' });
         });
     });
+
+    describe('with invalid characters', () => {
+        beforeEach(async () => {
+            mockState.displayName = 'Invalid@Topic';
+            mockState.selectedParentTopic = { label: '__label__', value: '__value__' };
+            const submitButton = await waitForElement(async () => {
+                return await wrapper.findByText('Submit');
+            });
+
+            fireEvent.click(submitButton);
+        });
+
+        it('should call the begin submit action', () => {
+            expect.assertions(1);
+
+            expect(clearErrorsSpy).toHaveBeenCalled();
+        });
+
+        it('should set the error state', async () => {
+            expect.assertions(1);
+
+            await wait(() => {
+                expect(addFormErrorSpy).toHaveBeenCalledWith({ key: 'displayName', value: 'The Display Name contains invalid characters' });
+            });
+        });
+    });
+
+    describe('with valid characters', () => {
+        beforeEach(async () => {
+            mockState.displayName = 'Valid-Topic';
+            mockState.selectedParentTopic = { label: '__label__', value: '__value__' };
+            const submitButton = await waitForElement(async () => {
+                return await wrapper.findByText('Submit');
+            });
+
+            fireEvent.click(submitButton);
+        });
+
+        it('should call the begin submit action', () => {
+            expect.assertions(1);
+
+            expect(clearErrorsSpy).toHaveBeenCalled();
+        });
+
+        it('should set the error state', async () => {
+            expect.assertions(1);
+
+            await wait(() => {
+                expect(addFormErrorSpy).toBeCalledTimes(0);
+            });
+        });
+    });
 });

@@ -29,7 +29,7 @@ const validationSchema = object({
     displayName: string()
         .required()
         .label('Display Name')
-        .matches(/^[a-zA-Z0-9_,.!?' ()&]*$/),
+        .matches(/^[a-zA-Z0-9_,.!?' ()&-]*$/),
     selectedParentTopic: object({
         label: string()
             .required()
