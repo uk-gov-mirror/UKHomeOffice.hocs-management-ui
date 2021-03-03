@@ -192,4 +192,56 @@ describe('when the submit button is clicked', () => {
             });
         });
     });
+
+    describe('with invalid characters', () => {
+        beforeEach(async () => {
+            useStateSpy.mockImplementationOnce(() => ['Invalid@Topic', setDisplayNameSpy]);
+
+            const submitButton = await waitForElement(async () => {
+                return await wrapper.findByText('Submit');
+            });
+
+            fireEvent.click(submitButton);
+        });
+
+        it('should call the begin submit action', () => {
+            expect.assertions(1);
+
+            expect(clearErrorsSpy).toHaveBeenCalled();
+        });
+
+        it('should set the error state', async () => {
+            expect.assertions(1);
+
+            await wait(() => {
+                expect(addFormErrorSpy).toHaveBeenCalledWith({ key: undefined, value: 'The Parent Topic contains invalid characters' });
+            });
+        });
+    });
+
+    describe('with valid characters', () => {
+        beforeEach(async () => {
+            useStateSpy.mockImplementationOnce(() => ['Invalid-Topic', setDisplayNameSpy]);
+
+            const submitButton = await waitForElement(async () => {
+                return await wrapper.findByText('Submit');
+            });
+
+            fireEvent.click(submitButton);
+        });
+
+        it('should call the begin submit action', () => {
+            expect.assertions(1);
+
+            expect(clearErrorsSpy).toHaveBeenCalled();
+        });
+
+        it('should set the error state', async () => {
+            expect.assertions(1);
+
+            await wait(() => {
+                expect(addFormErrorSpy).toBeCalledTimes(0);
+            });
+        });
+    });
 });
