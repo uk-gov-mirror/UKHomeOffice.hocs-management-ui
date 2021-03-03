@@ -25,7 +25,7 @@ const onAddTeamMembersAddClick = (history: History, teamId: string) => {
 };
 
 const onAddNominatedContactClick = (history: History, teamId: string) => {
-    history.push(`/team/${teamId}/add-nominated-contact`);
+    history.push(`/team/${teamId}/manage-nominated-contacts`);
 };
 
 const TeamView: React.FC<TeamMembersProps> = ({ history, match }) => {
@@ -118,7 +118,7 @@ const TeamView: React.FC<TeamMembersProps> = ({ history, match }) => {
                         </div>
                 }
                 <button type="submit" className="govuk-button govuk-!-margin-right-1 add-team-members-button" data-module="govuk-button" onClick={() => onAddTeamMembersAddClick(history, teamId as string)}>Add team members</button>
-                <button type="submit" className="govuk-button govuk-button--secondary  add-nominated-contact-button" data-module="govuk-button" onClick={() => onAddNominatedContactClick(history, teamId as string)}>Add nominated contact</button>
+                <button type="submit" className="govuk-button govuk-button--secondary  manage-nominated-contacts-button" data-module="govuk-button" onClick={() => onAddNominatedContactClick(history, teamId as string)}>Manage nominated contacts</button>
             </div>
         </div>
     );
