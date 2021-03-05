@@ -1,4 +1,5 @@
 import Item from '../../../models/item';
+import { User } from '../../../models/user';
 
 // state
 export const initialState: State = {
@@ -7,7 +8,7 @@ export const initialState: State = {
     selectedTeams: []
 };
 export interface State {
-    user?: Item;
+    user?: User;
     selectedTeam?: Item | '';
     selectedTeams: Item[];
 }
@@ -18,7 +19,7 @@ type AddToSelectedTeams = {
     type: 'AddToSelectedTeams';
 };
 type SetUser = {
-    payload?: Item;
+    payload?: User;
     type: 'SetUser';
 };
 type ClearSelectedTeam = {

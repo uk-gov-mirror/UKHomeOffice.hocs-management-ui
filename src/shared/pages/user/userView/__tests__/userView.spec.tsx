@@ -11,6 +11,8 @@ let match: match<any>;
 let history: History<any>;
 let location: Location;
 
+const userUUID = 'xx-xx-xx-xx';
+
 jest.mock('../../../../services/teamsService', () => ({
     __esModule: true,
     getTeamsForUser: jest.fn().mockReturnValue(Promise.resolve(
@@ -47,7 +49,7 @@ setMessageSpy.mockReset();
 
 const renderComponent = () => render(
     <MemoryRouter>
-        <UserView history={history} location={location} match={match}></UserView>
+        <UserView history={history} location={location} match={match}/>
     </MemoryRouter>
 );
 
@@ -55,7 +57,7 @@ beforeEach(() => {
     history = createBrowserHistory();
     match = {
         isExact: true,
-        params: { userId: '__user__' },
+        params: { userId: userUUID },
         path: '',
         url: ''
     };
@@ -102,7 +104,7 @@ describe('when the Add team members button is clicked', () => {
             fireEvent.click(addTeamMembersButton);
         });
 
-        expect(history.push).toHaveBeenCalledWith('/user/__user__/add-teams');
+        expect(history.push).toHaveBeenCalledWith('/user/' + userUUID + '/add-teams');
     });
 });
 
@@ -120,8 +122,8 @@ describe('when the remove user button is clicked', () => {
             fireEvent.click(removeButton);
         });
 
-        expect(deleteUserFromTeamSpy).nthCalledWith(1, '__user__', '__team1__');
-        expect(getTeamsForUserSpy).nthCalledWith(1, '__user__');
+        expect(deleteUserFromTeamSpy).nthCalledWith(1, userUUID, '__team1__');
+        expect(getTeamsForUserSpy).nthCalledWith(1, userUUID);
 
     });
 
@@ -166,5 +168,22 @@ describe('when the remove user button is clicked', () => {
                 });
             });
         });
+    });
+});
+
+describe('when the Amend Details button is clicked', () => {
+    it('should push a new page into the history', async () => {
+        history.push = jest.fn();
+        let wrapper: RenderResult;
+        act(() => {
+            wrapper = renderComponent();
+        });
+
+        await wait(async () => {
+            const addTeamMembersButton = getByText(wrapper.container, 'Amend Details');
+            fireEvent.click(addTeamMembersButton);
+        });
+
+        expect(history.push).toHaveBeenCalledWith('/user/' + userUUID + '/amend');
     });
 });

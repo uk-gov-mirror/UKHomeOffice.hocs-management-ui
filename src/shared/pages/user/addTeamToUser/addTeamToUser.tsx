@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
 import { RouteComponentProps } from 'react-router';
-import { AddUserError, addUserToTeam, getUser } from '../../../services/usersService';
+import { addUserToTeam, getUser } from '../../../services/usersService';
 import Item from '../../../models/item';
 import { ADD_USER_ERROR_DESCRIPTION, ADD_USER_ERROR_TITLE, ADD_USER_TO_TEAM_SUCCESS, EMPTY_TEAMS_SUBMIT_ERROR_DESCRIPTION, EMPTY_TEAMS_SUBMIT_ERROR_TITLE, GENERAL_ERROR_TITLE, LOAD_TEAMS_ERROR_DESCRIPTION, LOAD_USER_ERROR_DESCRIPTION } from '../../../models/constants';
 import useError from '../../../hooks/useError';
@@ -10,6 +10,7 @@ import TypeAhead from '../../../common/components/typeAhead';
 import { getTeams } from '../../../services/teamsService';
 import ErrorMessage from '../../../models/errorMessage';
 import { initialState, reducer } from './reducer';
+import { User } from '../../../models/user';
 
 interface MatchParams {
     userId: string;
@@ -25,9 +26,9 @@ const AddTeamToUser: React.FC<AddToTeamProps> = ({ history, match }) => {
     const { params: { userId } } = match;
 
     useEffect(() => {
-        clearErrors;
+        clearErrors();
         getUser(userId)
-            .then((user: Item) => dispatch({ type: 'SetUser', payload: user }))
+            .then((user: User) => dispatch({ type: 'SetUser', payload: user }))
             .catch(()  => {
                 setErrorMessage(new ErrorMessage(LOAD_USER_ERROR_DESCRIPTION, GENERAL_ERROR_TITLE));
             });
@@ -47,16 +48,16 @@ const AddTeamToUser: React.FC<AddToTeamProps> = ({ history, match }) => {
             return;
         }
         if (selectedTeams.length > 0) {
-            selectedTeams.map((team) => {
+            selectedTeams.forEach((team) => {
                 const user = state.user;
                 if (user !== undefined) {
-                    addUserToTeam(user, team.value)
+                    addUserToTeam({ label: user.username, value: user.id }, team.value)
                         .then(() => dispatch({ type: 'RemoveFromSelectedTeams', payload: team }))
-                        .catch((error: AddUserError) => {
+                        .catch(() => {
                             setErrorMessage(new ErrorMessage(ADD_USER_ERROR_TITLE, ADD_USER_ERROR_DESCRIPTION));
                         })
                         .then(() => {
-                            history.push(`/user-view/${user.value}`, { successMessage: ADD_USER_TO_TEAM_SUCCESS });
+                            history.push(`/user-view/${user.id}`, { successMessage: ADD_USER_TO_TEAM_SUCCESS });
                         });
                 }
             });
@@ -79,7 +80,7 @@ const AddTeamToUser: React.FC<AddToTeamProps> = ({ history, match }) => {
                 <h1 className="govuk-heading-xl">Add Teams</h1>
                 {
                     state.user ?
-                        <h2 className="govuk-heading-l">{`User: ${state.user.label}`}</h2> :
+                        <h2 className="govuk-heading-l">{`User: ${state.user.id}`}</h2> :
                         <h2>User: Loading...</h2>
                 }
                 <TypeAhead

@@ -19,6 +19,8 @@ import SelectCaseType from '../../pages/template/selectCaseType';
 import CaseTypeView from '../../pages/template/caseTypeView';
 import UserSearch from '../../pages/user/userSearch/userSearch';
 import UserView from '../../pages/user/userView/userView';
+import AddUser from '../../pages/user/userAdd/addUser';
+import AmendUser from '../../pages/user/userAmend/amendUser';
 import AddTeamToUser from '../../pages/user/addTeamToUser/addTeamToUser';
 import WithdrawCase from '../../pages/case/withdrawCase';
 import CampaignsView from '../../pages/list/mpamCampaign/campaignsView';
@@ -50,6 +52,18 @@ const routes = [
         exact: true,
         component: UserView,
         title: 'UserView'
+    },
+    {
+        path: '/add-user',
+        exact: true,
+        component: AddUser,
+        title: 'Add User'
+    },
+    {
+        path: '/user/:userUUID/amend',
+        exact: true,
+        component: AmendUser,
+        title: 'Amend User'
     },
     {
         path: '/user/:userId/add-teams',

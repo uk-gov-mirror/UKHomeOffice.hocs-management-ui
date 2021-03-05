@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { RouteComponentProps } from 'react-router';
 import { History } from 'history';
 import ErrorSummary from '../../../common/components/errorSummary';
@@ -9,6 +9,16 @@ import { getTeamsForUser } from '../../../services/teamsService';
 import Item from '../../../models/item';
 import { deleteUserFromTeam, getUser } from '../../../services/usersService';
 import { GENERAL_ERROR_TITLE, LOAD_TEAMS_ERROR_DESCRIPTION, LOAD_USER_ERROR_DESCRIPTION, REMOVE_FROM_TEAM_ALLOCATED_ERROR_DESCRIPTION, REMOVE_FROM_TEAM_ERROR_DESCRIPTION, VALIDATION_ERROR_TITLE } from '../../../models/constants';
+import { User } from '../../../models/user';
+import Text from '../../../common/components/forms/text';
+
+interface UserDetailsProps {
+    user?: User;
+}
+
+interface UserTeamsProps {
+    teams?: Item[];
+}
 
 interface MatchParams {
     userId: string;
@@ -24,33 +34,33 @@ const UserView: React.FC<UserMembersProps> = ({ history, match }) => {
 
     const [pageError, , clearErrors, setErrorMessage] = useError();
     const { params: { userId } } = match;
-    const [user, setUser] = React.useState<Item>();
-    const [teams, setTeams] = React.useState<Item[]>([]);
+    const [user, setUser] = React.useState<User>();
+    const [teams, setTeams] = React.useState<Item[] | undefined>(undefined);
 
     useEffect(() => {
         getTeamsForUser(userId)
-            .then((teams) => {
-                setTeams(teams);
+            .then((loadedTeams) => {
+                setTeams(loadedTeams);
             })
             .catch(() => {
                 setErrorMessage(new ErrorMessage(LOAD_TEAMS_ERROR_DESCRIPTION, GENERAL_ERROR_TITLE));
             });
 
         getUser(userId)
-            .then(user => setUser(user))
+            .then(loadedUser => setUser(loadedUser))
             .catch(() => {
                 setErrorMessage(new ErrorMessage(LOAD_USER_ERROR_DESCRIPTION, GENERAL_ERROR_TITLE));
             });
     }, []);
 
-    const removeUser = (userId: string, teamId: string, event: React.FormEvent) => {
+    const removeTeamFromUser = (teamId: string, event: React.FormEvent) => {
         event.preventDefault();
         clearErrors();
         deleteUserFromTeam(userId, teamId)
             .then(() => {
                 getTeamsForUser(userId)
-                    .then((teams) => {
-                        setTeams(teams);
+                    .then((newTeams) => {
+                        setTeams(newTeams);
                     })
                     .catch(() => {
                         setErrorMessage(new ErrorMessage(LOAD_TEAMS_ERROR_DESCRIPTION, GENERAL_ERROR_TITLE));
@@ -65,8 +75,55 @@ const UserView: React.FC<UserMembersProps> = ({ history, match }) => {
             });
     };
 
-    const DisplayUserTable = () => (
-        <Fragment>
+    const runAmendUser = (userUuid: string, event: React.FormEvent) => {
+        event.preventDefault();
+        clearErrors();
+        history.push(`/user/${userUuid}/amend`);
+    };
+
+    const UserDetails: React.FC<UserDetailsProps> = () => (
+        user ?
+            <form>
+                { !user.enabled && <p><strong className="govuk-tag govuk-tag--grey">Disabled</strong></p> }
+                <Text
+                    label="Username"
+                    name="username"
+                    disabled
+                    type="text"
+                    updateState={() => {}}
+                    value={user.username}
+                />
+                <Text
+                    label="Email Address"
+                    name="email"
+                    disabled
+                    type="text"
+                    updateState={() => {}}
+                    value={user.email}
+                />
+                <Text
+                    label="First Name"
+                    name="firstName"
+                    disabled
+                    type="text"
+                    updateState={() => {}}
+                    value={user.firstName}
+                />
+                <Text
+                    label="Last Name"
+                    name="lastName"
+                    disabled
+                    type="text"
+                    updateState={() => {}}
+                    value={user.lastName}
+                />
+            </form>
+            :
+            <p className="govuk-body">Details Loading...</p>
+    );
+
+    const UserTeams: React.FC<UserTeamsProps> = () => (
+        teams != undefined ?
             <table className="govuk-table">
                 <thead className="govuk-table__head">
                     <tr className="govuk-table__row">
@@ -81,7 +138,7 @@ const UserView: React.FC<UserMembersProps> = ({ history, match }) => {
                                 <tr className="govuk-table__row" key={team.value}>
                                     <td className="govuk-table__cell">{team.label}</td>
                                     <td className="govuk-table__cell">
-                                        <a href="#" onClick={event => removeUser(userId, team.value as string, event)}>Remove</a>
+                                        <a href="#" onClick={event => removeTeamFromUser(team.value, event)}>Remove</a>
                                     </td>
                                 </tr>
                             );
@@ -89,36 +146,22 @@ const UserView: React.FC<UserMembersProps> = ({ history, match }) => {
                     }
                 </tbody>
             </table>
-        </Fragment>
+            :
+            <p className="govuk-body">Teams Loading...</p>
     );
 
     return (
         <div className="govuk-form-group">
             <Link to="/user-search" className="govuk-back-link">Back</Link>
-            <ErrorSummary
-                pageError={pageError}
-            />
+            <ErrorSummary pageError={pageError}/>
             <div>
-                <h1 className="govuk-heading-xl">View and remove teams</h1>
-                {
-                    user ?
-                        <h2 className="govuk-heading-l">
-                            {`User: ${user.label}`}
-                        </h2> :
-                        <h2>
-                            User: Loading...
-                        </h2>
-                }
-                {
-                    teams.length > 0 ?
-                        <div>
-                            <DisplayUserTable />
-                        </div> :
-                        <div>
-                            <p className="govuk-body">Loading...</p>
-                        </div>
-                }
-                <button type="submit" className="govuk-button govuk-!-margin-right-1 add-user-members-button" data-module="govuk-button" onClick={() => onAddUsersAddClick(history, userId as string)}>Add teams</button>
+                <h1 className="govuk-heading-xl">Manage User</h1>
+                <UserDetails user={user} />
+                <div className="govuk-!-padding-top-5">
+                    <button type="submit" className="govuk-button govuk-!-margin-right-1" data-module="govuk-button" onClick={event => runAmendUser(userId, event)}>Amend Details</button>
+                </div>
+                <UserTeams teams={teams}/>
+                <button type="submit" className="govuk-button govuk-!-margin-right-1 add-user-members-button" data-module="govuk-button" onClick={() => onAddUsersAddClick(history, userId)}>Add teams</button>
             </div>
         </div>
     );
