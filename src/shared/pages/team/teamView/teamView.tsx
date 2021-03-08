@@ -7,7 +7,7 @@ import { State } from './state';
 import { Action } from './actions';
 import { reducer } from './reducer';
 import { initialState } from './initialState';
-import { User } from '../../../models/user';
+import { ListUser } from '../../../models/listUser';
 import { GENERAL_ERROR_TITLE, LOAD_TEAM_ERROR_DESCRIPTION, LOAD_TEAM_MEMBERS_ERROR_DESCRIPTION, REMOVE_FROM_TEAM_ERROR_DESCRIPTION, VALIDATION_ERROR_TITLE, REMOVE_FROM_TEAM_ALLOCATED_ERROR_DESCRIPTION } from '../../../models/constants';
 import ErrorSummary from '../../../common/components/errorSummary';
 import ErrorMessage from '../../../models/errorMessage';
@@ -42,7 +42,7 @@ const TeamView: React.FC<TeamMembersProps> = ({ history, match }) => {
                 setErrorMessage(new ErrorMessage(LOAD_TEAM_ERROR_DESCRIPTION, GENERAL_ERROR_TITLE));
             });
         getTeamMembers(teamId)
-            .then((users: User[]) => dispatch({ type: 'PopulateTeamMembers', payload: users }))
+            .then((users: ListUser[]) => dispatch({ type: 'PopulateTeamMembers', payload: users }))
             .catch(() => {
                 setErrorMessage(new ErrorMessage(LOAD_TEAM_MEMBERS_ERROR_DESCRIPTION, GENERAL_ERROR_TITLE));
             });
@@ -54,7 +54,7 @@ const TeamView: React.FC<TeamMembersProps> = ({ history, match }) => {
         deleteUserFromTeam(userUUID, teamId)
             .then(() => {
                 getTeamMembers(teamId)
-                    .then((users: User[]) => dispatch({ type: 'PopulateTeamMembers', payload: users }))
+                    .then((users: ListUser[]) => dispatch({ type: 'PopulateTeamMembers', payload: users }))
                     .catch(() => {
                         setErrorMessage(new ErrorMessage(LOAD_TEAM_MEMBERS_ERROR_DESCRIPTION, GENERAL_ERROR_TITLE));
                     });

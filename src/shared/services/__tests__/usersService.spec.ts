@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getUsers, addUserToTeam, AddUserError, deleteUserFromTeam } from '../usersService';
+import { getUsers, addUserToTeam, AddUserError, deleteUserFromTeam, addUser, updateUser } from '../usersService';
 import { User } from '../../models/user';
 
 jest.mock('axios');
@@ -132,3 +132,55 @@ describe('when the deleteUserFromTeam method is called', () => {
         });
     });
 });
+
+describe('when the addUser method is called', () => {
+    describe('and the request is successful', () => {
+        it('should return a resolved promise with userUUID', async () => {
+            const userId = 'xyz';
+            jest.spyOn(axios, 'post').mockReturnValue(Promise.resolve({ data: { userUUID: userId } } ));
+            const userFormData = new FormData();
+            await addUser(userFormData).then((userUUID: string) => {
+                expect(axios.post).toBeCalledWith('/api/users', userFormData);
+                expect(userUUID).toStrictEqual(userId);
+            });
+        });
+    });
+
+    describe('and the request fails', () => {
+        it('should return a rejected promise with the error from the failed post', async () => {
+            const errorMessage = '__error__';
+            jest.spyOn(axios, 'post').mockReturnValue(Promise.reject(new Error(errorMessage)));
+            const userFormData = new FormData();
+            await addUser(userFormData).catch((error: Error) => {
+                expect(error.message).toEqual(errorMessage);
+            });
+        });
+    });
+});
+
+describe('when the updateUser method is called', () => {
+    describe('and the request is successful', () => {
+        it('should return a resolved promise with userUUID', async () => {
+            const userId = 'x-x-x-x';
+            jest.spyOn(axios, 'put').mockReturnValue(Promise.resolve());
+            const updateRequest = { uuid: userId, firstName: 'a', lastName: 'b', enabled: true };
+            await updateUser(updateRequest).then((userUUID: string) => {
+                expect(axios.put).toBeCalledWith('/api/users/' + userId, updateRequest);
+            });
+        });
+    });
+
+    describe('and the request fails', () => {
+        it('should return a rejected promise with the error from the failed post', async () => {
+            const userId = 'x-x-x-x';
+            const errorMessage = '__error__';
+            jest.spyOn(axios, 'put').mockReturnValue(Promise.reject(new Error(errorMessage)));
+            const updateRequest = { uuid: userId, firstName: 'a', lastName: 'b', enabled: true };
+            await updateUser(updateRequest).catch((error: Error) => {
+                expect(error.message).toEqual(errorMessage);
+            });
+        });
+    });
+});
+
+

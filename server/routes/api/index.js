@@ -15,6 +15,7 @@ const apiKeepaliveRouter = require('./keepalive');
 const { apiErrorMiddleware } = require('../../middleware/request');
 
 router.post('*', bodyParser.json(), bodyParser.urlencoded({ extended: true }));
+router.put('*', bodyParser.json(), bodyParser.urlencoded({ extended: true }));
 router.delete('*', bodyParser.json(), bodyParser.urlencoded({ extended: true }));
 router.use('/standard-lines', apiStandardLineRouter);
 router.use('/teams', apiTeamRouter);
