@@ -44,6 +44,9 @@ elif [[ ${KUBE_NAMESPACE} == "cs-dev" ]] ; then
 elif [[ ${KUBE_NAMESPACE} == "wcs-dev" ]] ; then
     echo "deploy ${VERSION} to DEV namespace, HOCS_MANAGEMENT_UI_WCS_DEV drone secret"
     export KUBE_TOKEN=${HOCS_MANAGEMENT_UI_WCS_DEV}
+elif [[ ${KUBE_NAMESPACE} == "hocs-qax" ]] ; then
+    echo "deploy ${VERSION} to qax namespace, HOCS_MANAGEMENT_UI_QAX drone secret"
+    export KUBE_TOKEN=${HOCS_MANAGEMENT_UI_QAX}
 else
     echo "Unable to find environment: ${ENVIRONMENT}"
 fi
@@ -76,6 +79,9 @@ elif [[ "${KUBE_NAMESPACE}" == "cs-demo" ]] ; then
     export KC_REALM=https://sso-dev.notprod.homeoffice.gov.uk/auth/realms/hocs-notprod
 elif [[ "${KUBE_NAMESPACE}" == "wcs-demo" ]] ; then
     export DNS_PREFIX=demo-management.wcs-notprod
+    export KC_REALM=https://sso-dev.notprod.homeoffice.gov.uk/auth/realms/hocs-notprod
+elif [[ "${KUBE_NAMESPACE}" == "hocs-qax" ]] ; then
+    export DNS_PREFIX=qax-management.internal.cs-notprod
     export KC_REALM=https://sso-dev.notprod.homeoffice.gov.uk/auth/realms/hocs-notprod
 else
     export DNS_PREFIX=${DOMAIN}-management.${DOMAIN}-notprod
