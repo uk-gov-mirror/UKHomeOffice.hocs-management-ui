@@ -57,7 +57,7 @@ const setMessageSpy = jest.fn();
 
 const renderComponent = () => render(
     <MemoryRouter>
-        <AddTeamToUser history={history} location={location} match={match}></AddTeamToUser>
+        <AddTeamToUser history={history} location={location} match={match}/>
     </MemoryRouter>
 );
 
@@ -79,8 +79,12 @@ beforeEach(() => {
     };
     mockState = {
         user: {
-            label: '__user__',
-            value: '__userId__'
+            id: '__user__',
+            username: 'd',
+            email: 'd',
+            firstName: 'd',
+            lastName: 'd',
+            enabled: false
         },
         selectedTeam: {
             label: '__team1__',
@@ -119,8 +123,13 @@ describe('when the addTeamToUser component is mounted', () => {
     it('should initially render null before the user is returned', async () => {
         let wrapper: RenderResult;
         getUserSpy.mockReturnValueOnce(Promise.resolve({
-            label: '__user2__',
-            value: '__userId2__'
+            id: '__user__',
+            username: '__userId__',
+            firstName: 'd',
+            lastName: 'd',
+            email: 'd',
+            password: 'ewrwe',
+            enabled: false
         }));
 
         act(() => {
@@ -169,7 +178,7 @@ describe('when the submit button is clicked', () => {
         });
     });
 
-    it('should call the service and dispach actions for the selected options', async () => {
+    it('should call the service and dispatch actions for the selected options', async () => {
         expect.assertions(3);
 
         act(() => {
@@ -179,12 +188,12 @@ describe('when the submit button is clicked', () => {
 
         await wait(async () => {
             expect(addUserToTeamSpy).nthCalledWith(1, {
-                label: '__user__',
-                value: '__userId__'
+                label: 'd',
+                value: '__user__'
             }, '__teamId1__');
             expect(addUserToTeamSpy).nthCalledWith(2, {
-                label: '__user__',
-                value: '__userId__'
+                label: 'd',
+                value: '__user__'
             }, '__teamId2__');
             expect(clearErrorsSpy).toBeCalled();
         });

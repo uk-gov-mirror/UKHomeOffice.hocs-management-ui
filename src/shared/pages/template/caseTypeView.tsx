@@ -15,7 +15,7 @@ interface MatchParams {
     type: string;
 }
 
-interface CasesProps extends RouteComponentProps<MatchParams> { }
+type CasesProps = RouteComponentProps<MatchParams>;
 
 const onAddTemplateClick = (history: History, type: string) => {
     history.push(`/case-type/${type}/add-template`);

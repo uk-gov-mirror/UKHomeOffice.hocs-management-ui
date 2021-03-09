@@ -6,7 +6,7 @@ async function addUnit(req, res, next) {
     const logger = getLogger(req.request);
 
     try {
-        await infoService.post(`/unit`, req.body, { headers: User.createHeaders(req.user) });
+        await infoService.post('/unit', req.body, { headers: User.createHeaders(req.user) });
         res.sendStatus(200);
     } catch (error) {
         logger.error(error);
@@ -35,4 +35,4 @@ module.exports = {
     addUnit,
     getUnits,
     returnUnitsAsJson
-}
+};

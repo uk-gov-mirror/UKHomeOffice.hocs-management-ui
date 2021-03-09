@@ -26,11 +26,11 @@ class Footer extends Component<FooterConfig> {
                             <ul className="govuk-footer__inline-list">
                                 <li className="govuk-footer__inline-list-item">
                                     Built by the
-                      {' '}
+                                    {' '}
                                     <a className="govuk-footer__link" href="https://www.gov.uk/government/organisations/home-office">Home Office</a>
                                     {' '}
                                     in Sheffield
-                    </li>
+                                </li>
                             </ul>
 
                             <svg
@@ -49,16 +49,16 @@ class Footer extends Component<FooterConfig> {
                             </svg>
                             <span className="govuk-footer__licence-description">
                                 All content is available under the
-                    {' '}
+                                {' '}
                                 <a
                                     className="govuk-footer__link"
                                     href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
                                     rel="license"
                                 >
                                     Open Government Licence v3.0
-                    </a>
+                                </a>
                                 , except where otherwise stated
-                  </span>
+                            </span>
                         </div>
                         <div className="govuk-footer__meta-item">
                             <a
@@ -67,7 +67,7 @@ class Footer extends Component<FooterConfig> {
                             >
                                 ©
                                                     Crown copyright
-                  </a>
+                            </a>
                         </div>
                     </div>
                 </div>

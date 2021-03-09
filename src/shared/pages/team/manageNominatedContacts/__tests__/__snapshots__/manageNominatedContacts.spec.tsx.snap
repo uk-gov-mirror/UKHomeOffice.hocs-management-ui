@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`manage nominated contacts should render with default props 1`] = `
+<div>
+  <div
+    class="govuk-grid-row"
+  >
+    <div
+      class="govuk-grid-column-two-thirds-from-desktop"
+    >
+      <a
+        class="govuk-back-link"
+        href="/team-view/__teamId__"
+      >
+        Back
+      </a>
+      <h1
+        class="govuk-heading-xl"
+      >
+        Manage nominated contacts
+      </h1>
+      <h2
+        class="govuk-heading-l"
+      >
+        Team: __teamName__
+      </h2>
+    </div>
+  </div>
+  MOCK_ADD_NOMINATED_CONTACT_COMPONENT
+  MOCK_CONTACT_LIST_COMPONENT
+</div>
+`;

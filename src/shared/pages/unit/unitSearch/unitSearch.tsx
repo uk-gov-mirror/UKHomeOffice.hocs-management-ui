@@ -28,13 +28,13 @@ const UnitSearch: React.FC<UnitSearchProps> = ({ history }) => {
             <table className="govuk-table">
                 <caption className="govuk-table__caption">Units</caption>
                 <tbody className="govuk-table__body">
-                {units && units.map(unit => (
-                    <tr key={unit.shortCode} className="govuk-table__row">
-                        <th scope="row" className="govuk-table__header">
-                            {unit.displayName}
-                        </th>
-                    </tr>
-                ))}
+                    {units && units.map(unit => (
+                        <tr key={unit.shortCode} className="govuk-table__row">
+                            <th scope="row" className="govuk-table__header">
+                                {unit.displayName}
+                            </th>
+                        </tr>
+                    ))}
                 </tbody>
             </table>
         </div>

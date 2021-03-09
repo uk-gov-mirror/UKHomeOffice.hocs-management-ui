@@ -21,7 +21,7 @@ async function getCaseTypes(req, res, next) {
     const logger = getLogger(req.request);
 
     try {
-        const response = await infoService.get(`/caseType`, { headers: User.createHeaders(req.user) });
+        const response = await infoService.get('/caseType', { headers: User.createHeaders(req.user) });
         res.locals.caseTypes = response.data;
         next();
     } catch (error) {

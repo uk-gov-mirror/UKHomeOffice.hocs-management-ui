@@ -25,7 +25,7 @@ describe('when the add template middleware is called', () => {
     });
 
     it('should call the post method on the info service', async () => {
-        User.createHeaders.mockImplementation(() => headers)
+        User.createHeaders.mockImplementation(() => headers);
         await addTemplate(req, res, next);
         expect(infoService.post).toHaveBeenCalledWith('/template', {
             s3UntrustedUrl: '__key__',
@@ -64,12 +64,12 @@ describe('when the get templates middleware is called', () => {
         sendStatus.mockReset();
         req.params = {
             type: '__type__'
-        }
+        };
         getLogger.mockClear();
     });
 
     it('should call the get method on the info service', async () => {
-        User.createHeaders.mockImplementation(() => headers)
+        User.createHeaders.mockImplementation(() => headers);
         await getTemplatesForCaseType(req, res, next);
         expect(infoService.get).toHaveBeenCalledWith('/caseType/__type__/templates', { headers: headers });
     });
@@ -106,12 +106,12 @@ describe('when the delete template middleware is called', () => {
         sendStatus.mockReset();
         req.params = {
             uuid: '__uuid__'
-        }
+        };
         getLogger.mockClear();
     });
 
     it('should call the delete method on the info service', async () => {
-        User.createHeaders.mockImplementation(() => headers)
+        User.createHeaders.mockImplementation(() => headers);
         await deleteTemplate(req, res, next);
         expect(infoService.delete).toHaveBeenCalledWith('/template/__uuid__', { headers: headers });
     });

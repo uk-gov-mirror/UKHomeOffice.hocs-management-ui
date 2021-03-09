@@ -6,7 +6,7 @@ import { ErrorContent } from '../layouts/error';
 import Config, { AnalyticsConfig, LayoutConfig } from '../models/config';
 import ApiStatus from '../models/apiStatus';
 
-interface ApplicationState {
+export interface ApplicationState {
     analytics?: AnalyticsConfig;
     apiStatus?: ApiStatus;
     csrf?: string;
@@ -48,7 +48,7 @@ const reducer = (state: ApplicationState, action: ContextAction<any>): Applicati
 };
 
 export class ApplicationProvider extends Component<ApplicationProps, ApplicationState> {
-    useAnalytics: boolean = false;
+    useAnalytics = false;
 
     constructor(props: ApplicationProps) {
         super(props);

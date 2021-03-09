@@ -25,4 +25,4 @@ async function withdrawCase(req, res, next) {
 
 module.exports = {
     withdrawCase,
-}
+};

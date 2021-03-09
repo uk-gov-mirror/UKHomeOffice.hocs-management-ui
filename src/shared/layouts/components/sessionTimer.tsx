@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import axios from 'axios';
 import { Helmet } from 'react-helmet-async';
 import Modal from 'react-modal';
-import { Context } from '../../contexts/application';
+import { ApplicationState, Context } from '../../contexts/application';
+import { hasClientError } from '../../helpers/status-helpers';
 
 const getDefaultExpiryDate = (defaultTimeoutSeconds: number) => new Date().getTime() + defaultTimeoutSeconds * 1000;
 const getRemainingSeconds = (targetDate: number) => Math.floor((targetDate - new Date().getTime()) / 1000);
+
 const keepAlive = () => axios.get('/api/keepalive')
     // eslint-disable-next-line no-undef
     .catch(() => window.location.reload());
@@ -22,6 +24,8 @@ const SessionTimer = () => {
     const [targetDate, setTargetDate] = React.useState<number>(getDefaultExpiryDate(defaultTimeoutSeconds));
     const [remainingSeconds, setRemainingSeconds] = React.useState(defaultTimeoutSeconds);
 
+    const { error }: ApplicationState = useContext(Context);
+
     React.useEffect(() => {
         Modal.setAppElement('#app');
 
@@ -35,7 +39,9 @@ const SessionTimer = () => {
         }, error => Promise.reject(error));
 
         // make sure we start with an up-to date expiry value;
-        keepAlive();
+        if(!hasClientError(error)) {
+            keepAlive();
+        }
     }, []);
 
     React.useEffect(() => {

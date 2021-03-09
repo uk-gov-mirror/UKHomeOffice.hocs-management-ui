@@ -4,7 +4,8 @@ const usersAdapter = require('./adapters/users');
 const userAdapter = require('./adapters/user');
 const teamsAdapter = require('./adapters/teams');
 const membersAdapter = require('./adapters/members');
-const unitsAdapter = require('./adapters/units')
+const unitsAdapter = require('./adapters/units');
+const contactsAdapter = require('./adapters/contacts');
 
 module.exports = {
     lists: {
@@ -57,6 +58,12 @@ module.exports = {
             endpoint: '/unit',
             type: listService.types.DYNAMIC,
             adapter: unitsAdapter
+        },
+        CONTACTS_FOR_TEAM: {
+            client: 'INFO',
+            endpoint: '/team/${teamId}/contact',
+            type: listService.types.DYNAMIC,
+            adapter: contactsAdapter
         }
     },
     clients: {

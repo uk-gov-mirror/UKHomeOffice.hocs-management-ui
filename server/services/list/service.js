@@ -98,7 +98,7 @@ const getInstance = (requestId, user) => {
             logger.error('LIST_NOT_IMPLEMENTED', { list: listId });
             throw new Error('List not implemented');
         }
-    }
+    };
 
     const fetchList = async (listId, options) => {
         try {

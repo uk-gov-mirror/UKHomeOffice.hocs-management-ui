@@ -1,8 +1,17 @@
 import React from 'react';
 import { render, shallow } from 'enzyme';
+import { advanceTo, clear } from 'jest-date-mock';
 import DateInput from '../date';
 
 describe('Form date component', () => {
+    beforeAll(() => {
+        advanceTo(new Date(2021, 2, 4, 0, 0, 0));
+    });
+
+    afterAll(() => {
+        clear();
+    });
+
     it('should render with default props', () => {
         expect(
             render(<DateInput name="date-field" updateState={() => null} />)

@@ -35,12 +35,12 @@ describe('getEntityList', () => {
     const headers = '__headers__';
     const next = jest.fn();
     const entityList = [{ simpleName: 'entity1', uuid: 'u1', data: { title: 'ent1' } },
-    { simpleName: 'entity2', uuid: 'u2', data: { title: 'ent2' } },
-    { simpleName: 'entity3', uuid: 'u3', data: { title: 'ent3' } }]
+        { simpleName: 'entity2', uuid: 'u2', data: { title: 'ent2' } },
+        { simpleName: 'entity3', uuid: 'u3', data: { title: 'ent3' } }];
 
     const expectedResult = [{ simpleName: 'entity1', uuid: 'u1', title: 'ent1' },
-    { simpleName: 'entity2', uuid: 'u2', title: 'ent2' },
-    { simpleName: 'entity3', uuid: 'u3', title: 'ent3' },]
+        { simpleName: 'entity2', uuid: 'u2', title: 'ent2' },
+        { simpleName: 'entity3', uuid: 'u3', title: 'ent3' },];
 
     beforeEach(() => {
         next.mockReset();
@@ -49,10 +49,10 @@ describe('getEntityList', () => {
     });
 
     it('should put the entityList object in response locals', async () => {
-        User.createHeaders.mockImplementation(() => headers)
+        User.createHeaders.mockImplementation(() => headers);
         infoService.get.mockImplementation(() => Promise.resolve({ data: entityList }));
         await getEntityList(req, res, next);
-        expect(infoService.get).toHaveBeenCalledWith(`/entity/list/TestListName`, {}, { headers: headers });
+        expect(infoService.get).toHaveBeenCalledWith('/entity/list/TestListName', {}, { headers: headers });
         expect(next).toHaveBeenCalled();
         expect(res.locals.entityList).toBeDefined();
         expect(res.locals.entityList).toEqual(expectedResult);

@@ -18,7 +18,7 @@ interface MatchParams {
     teamId: string;
 }
 
-export interface AddToTeamProps extends RouteComponentProps<MatchParams> { }
+export type AddToTeamProps = RouteComponentProps<MatchParams>;
 
 const AddToTeam: React.FC<AddToTeamProps> = ({ history, match }) => {
 
