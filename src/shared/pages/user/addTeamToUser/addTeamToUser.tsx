@@ -80,7 +80,7 @@ const AddTeamToUser: React.FC<AddToTeamProps> = ({ history, match }) => {
                 <h1 className="govuk-heading-xl">Add Teams</h1>
                 {
                     state.user ?
-                        <h2 className="govuk-heading-l">{`User: ${state.user.id}`}</h2> :
+                        <h2 className="govuk-heading-l">{`User: ${state.user.firstName} ${state.user.lastName} (${state.user.email})`}</h2> :
                         <h2>User: Loading...</h2>
                 }
                 <TypeAhead
