@@ -2,7 +2,7 @@ jest.mock('../../clients/index');
 jest.mock('../../libs/logger');
 jest.mock('../../models/user');
 const { infoService } = require('../../clients/index');
-const { addToTeam, getAllUsers, getUser, removeFromTeam, returnUsersJson, returnUserJson } = require('../user');
+const { addToTeam, getAllUsers, removeFromTeam, getUser, addUser, amendUser, returnUsersJson, returnUserJson } = require('../user');
 const getLogger = require('../../libs/logger');
 const User = require('../../models/user');
 
@@ -119,27 +119,62 @@ describe('getAllUsers', () => {
 });
 
 describe('getUser', () => {
-
-    let req = { params: 'userId' };
-    let res = {};
-    const next = jest.fn();
-    const user = {
-        label: 'user',
-        value: 'user'
-    };
-    const fetch = jest.fn(() => user);
-
-    beforeEach(() => {
-        next.mockReset();
-        req = { listService: { fetch: fetch } };
-        res = { locals: {} };
-    });
-
     it('should put the users object in response locals', async () => {
+        const headers = '__headers__';
+        User.createHeaders.mockImplementation(() => headers);
+        const userData = { name: 'value' };
+        infoService.get.mockImplementation(() => Promise.resolve({ data: userData }));
+        const userId = 'x-x-x-x';
+        const req = { params: { userId } };
+        let res = { locals: {} };
+        const next = jest.fn();
         await getUser(req, res, next);
-        expect(next).toHaveBeenCalled();
+        expect(infoService.get).toHaveBeenCalledWith('/user/' + userId, { headers } );
         expect(res.locals.user).toBeDefined();
-        expect(res.locals.user).toEqual(user);
+        expect(res.locals.user).toEqual(userData);
+        expect(next).toHaveBeenCalled();
+    });
+});
+
+describe('addUser', () => {
+    it('should invoke info service and put uuid in response', async () => {
+        const headers = '__headers__';
+        const userId = 'x-x-x-x';
+        User.createHeaders.mockImplementation(() => headers);
+        infoService.post.mockImplementation(() => Promise.resolve({ data: { userUUID: userId } }));
+        const reqBody = {
+            email: 'email',
+            firstName: 'firstName',
+            lastName: 'lastName'
+        };
+        const req = { body: reqBody };
+        const sendFunction = jest.fn();
+        let res = { send: sendFunction };
+        const next = jest.fn();
+        await addUser(req, res, next);
+        expect(infoService.post).toHaveBeenCalledWith('/user', reqBody, { headers } );
+        expect(sendFunction).toHaveBeenCalledWith({ userUUID: userId } );
+    });
+});
+
+describe('amendUser', () => {
+    it('should invoke info service', async () => {
+        const headers = '__headers__';
+        const userId = 'x-x-x-x';
+        User.createHeaders.mockImplementation(() => headers);
+        infoService.put.mockImplementation(() => Promise.resolve({ data: { userUUID: userId } }));
+        const reqBody = {
+            firstName: 'firstName',
+            lastName: 'lastName',
+            enabled: false
+        };
+        const req = { body: reqBody , params: { userId } };
+        const sendStatusFunction = jest.fn();
+        let res = { sendStatus: sendStatusFunction };
+        const next = jest.fn();
+        await amendUser(req, res, next);
+        expect(infoService.put).toHaveBeenCalledWith('/user/' + userId, reqBody, { headers } );
+        expect(sendStatusFunction).toHaveBeenCalledWith(200 );
     });
 });
 

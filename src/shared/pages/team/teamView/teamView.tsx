@@ -7,7 +7,7 @@ import { State } from './state';
 import { Action } from './actions';
 import { reducer } from './reducer';
 import { initialState } from './initialState';
-import { User } from '../../../models/user';
+import { ListUser } from '../../../models/listUser';
 import { GENERAL_ERROR_TITLE, LOAD_TEAM_ERROR_DESCRIPTION, LOAD_TEAM_MEMBERS_ERROR_DESCRIPTION, REMOVE_FROM_TEAM_ERROR_DESCRIPTION, VALIDATION_ERROR_TITLE, REMOVE_FROM_TEAM_ALLOCATED_ERROR_DESCRIPTION } from '../../../models/constants';
 import ErrorSummary from '../../../common/components/errorSummary';
 import ErrorMessage from '../../../models/errorMessage';
@@ -25,7 +25,7 @@ const onAddTeamMembersAddClick = (history: History, teamId: string) => {
 };
 
 const onAddNominatedContactClick = (history: History, teamId: string) => {
-    history.push(`/team/${teamId}/add-nominated-contact`);
+    history.push(`/team/${teamId}/manage-nominated-contacts`);
 };
 
 const TeamView: React.FC<TeamMembersProps> = ({ history, match }) => {
@@ -42,7 +42,7 @@ const TeamView: React.FC<TeamMembersProps> = ({ history, match }) => {
                 setErrorMessage(new ErrorMessage(LOAD_TEAM_ERROR_DESCRIPTION, GENERAL_ERROR_TITLE));
             });
         getTeamMembers(teamId)
-            .then((users: User[]) => dispatch({ type: 'PopulateTeamMembers', payload: users }))
+            .then((users: ListUser[]) => dispatch({ type: 'PopulateTeamMembers', payload: users }))
             .catch(() => {
                 setErrorMessage(new ErrorMessage(LOAD_TEAM_MEMBERS_ERROR_DESCRIPTION, GENERAL_ERROR_TITLE));
             });
@@ -54,7 +54,7 @@ const TeamView: React.FC<TeamMembersProps> = ({ history, match }) => {
         deleteUserFromTeam(userUUID, teamId)
             .then(() => {
                 getTeamMembers(teamId)
-                    .then((users: User[]) => dispatch({ type: 'PopulateTeamMembers', payload: users }))
+                    .then((users: ListUser[]) => dispatch({ type: 'PopulateTeamMembers', payload: users }))
                     .catch(() => {
                         setErrorMessage(new ErrorMessage(LOAD_TEAM_MEMBERS_ERROR_DESCRIPTION, GENERAL_ERROR_TITLE));
                     });
@@ -118,7 +118,7 @@ const TeamView: React.FC<TeamMembersProps> = ({ history, match }) => {
                         </div>
                 }
                 <button type="submit" className="govuk-button govuk-!-margin-right-1 add-team-members-button" data-module="govuk-button" onClick={() => onAddTeamMembersAddClick(history, teamId as string)}>Add team members</button>
-                <button type="submit" className="govuk-button govuk-button--secondary  add-nominated-contact-button" data-module="govuk-button" onClick={() => onAddNominatedContactClick(history, teamId as string)}>Add nominated contact</button>
+                <button type="submit" className="govuk-button govuk-button--secondary  manage-nominated-contacts-button" data-module="govuk-button" onClick={() => onAddNominatedContactClick(history, teamId as string)}>Manage nominated contacts</button>
             </div>
         </div>
     );

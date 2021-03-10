@@ -15,79 +15,168 @@ exports[`when the teamView component is mounted should render with default props
       <h1
         class="govuk-heading-xl"
       >
-        View and remove teams
+        Manage User
       </h1>
-      <h2
-        class="govuk-heading-l"
-      >
-        User: __user__
-      </h2>
-      <div>
-        <table
-          class="govuk-table"
+      <form>
+        <p>
+          <strong
+            class="govuk-tag govuk-tag--grey"
+          >
+            Disabled
+          </strong>
+        </p>
+        <div
+          class="govuk-form-group"
         >
-          <thead
-            class="govuk-table__head"
+          <label
+            class="govuk-label govuk-label--s"
+            for="username"
+            id="username-label"
           >
-            <tr
-              class="govuk-table__row"
-            >
-              <th
-                class="govuk-table__header"
-                scope="col"
-              >
-                Teams
-              </th>
-              <th
-                class="govuk-table__header"
-                scope="col"
-              >
-                Action
-              </th>
-            </tr>
-          </thead>
-          <tbody
-            class="govuk-table__body"
+            Username
+          </label>
+          <input
+            class="govuk-input"
+            disabled=""
+            id="username"
+            name="username"
+            type="text"
+            value=""
+          />
+        </div>
+        <div
+          class="govuk-form-group"
+        >
+          <label
+            class="govuk-label govuk-label--s"
+            for="email"
+            id="email-label"
           >
-            <tr
-              class="govuk-table__row"
-            >
-              <td
-                class="govuk-table__cell"
-              >
-                __team1__
-              </td>
-              <td
-                class="govuk-table__cell"
-              >
-                <a
-                  href="#"
-                >
-                  Remove
-                </a>
-              </td>
-            </tr>
-            <tr
-              class="govuk-table__row"
-            >
-              <td
-                class="govuk-table__cell"
-              >
-                __team2__
-              </td>
-              <td
-                class="govuk-table__cell"
-              >
-                <a
-                  href="#"
-                >
-                  Remove
-                </a>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+            Email Address
+          </label>
+          <input
+            class="govuk-input"
+            disabled=""
+            id="email"
+            name="email"
+            type="text"
+            value=""
+          />
+        </div>
+        <div
+          class="govuk-form-group"
+        >
+          <label
+            class="govuk-label govuk-label--s"
+            for="firstName"
+            id="firstName-label"
+          >
+            First Name
+          </label>
+          <input
+            class="govuk-input"
+            disabled=""
+            id="firstName"
+            name="firstName"
+            type="text"
+            value=""
+          />
+        </div>
+        <div
+          class="govuk-form-group"
+        >
+          <label
+            class="govuk-label govuk-label--s"
+            for="lastName"
+            id="lastName-label"
+          >
+            Last Name
+          </label>
+          <input
+            class="govuk-input"
+            disabled=""
+            id="lastName"
+            name="lastName"
+            type="text"
+            value=""
+          />
+        </div>
+      </form>
+      <div
+        class="govuk-!-padding-top-5"
+      >
+        <button
+          class="govuk-button govuk-!-margin-right-1"
+          data-module="govuk-button"
+          type="submit"
+        >
+          Amend Details
+        </button>
       </div>
+      <table
+        class="govuk-table"
+      >
+        <thead
+          class="govuk-table__head"
+        >
+          <tr
+            class="govuk-table__row"
+          >
+            <th
+              class="govuk-table__header"
+              scope="col"
+            >
+              Teams
+            </th>
+            <th
+              class="govuk-table__header"
+              scope="col"
+            >
+              Action
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          class="govuk-table__body"
+        >
+          <tr
+            class="govuk-table__row"
+          >
+            <td
+              class="govuk-table__cell"
+            >
+              __team1__
+            </td>
+            <td
+              class="govuk-table__cell"
+            >
+              <a
+                href="#"
+              >
+                Remove
+              </a>
+            </td>
+          </tr>
+          <tr
+            class="govuk-table__row"
+          >
+            <td
+              class="govuk-table__cell"
+            >
+              __team2__
+            </td>
+            <td
+              class="govuk-table__cell"
+            >
+              <a
+                href="#"
+              >
+                Remove
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
       <button
         class="govuk-button govuk-!-margin-right-1 add-user-members-button"
         data-module="govuk-button"

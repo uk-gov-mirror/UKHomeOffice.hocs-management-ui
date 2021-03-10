@@ -1,4 +1,8 @@
 export interface User {
-    label: string;
-    value: string;
+    id: string;
+    username: string;
+    email: string;
+    firstName: string;
+    lastName: string;
+    enabled: boolean;
 }

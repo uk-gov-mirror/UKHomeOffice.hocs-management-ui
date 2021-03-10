@@ -21,7 +21,7 @@ interface AddParentTopicProps extends RouteComponentProps {
 const validationSchema = string()
     .required()
     .label('Display Name')
-    .matches(/^[a-zA-Z0-9_,.!? ()&]*$/)
+    .matches(/^[a-zA-Z0-9_,.!? ()&-]*$/)
     .label('Parent Topic')
 ;
 

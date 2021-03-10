@@ -14,11 +14,13 @@ import AddStandardLine from '../../pages/standardLineAdd/addStandardLine';
 import AmendStandardLine from '../../pages/standardLineAmend/amendStandardLine';
 import StandardLinesView from '../../pages/standardLineManage/standardLinesView';
 import AddTemplate from '../../pages/template/addTemplate';
-import AddNominatedContact from '../../pages/team/addNominatedContact/addNominatedContact';
+import ManageNominatedContacts from '../../pages/team/manageNominatedContacts/manageNominatedContacts';
 import SelectCaseType from '../../pages/template/selectCaseType';
 import CaseTypeView from '../../pages/template/caseTypeView';
 import UserSearch from '../../pages/user/userSearch/userSearch';
 import UserView from '../../pages/user/userView/userView';
+import AddUser from '../../pages/user/userAdd/addUser';
+import AmendUser from '../../pages/user/userAmend/amendUser';
 import AddTeamToUser from '../../pages/user/addTeamToUser/addTeamToUser';
 import WithdrawCase from '../../pages/case/withdrawCase';
 import CampaignsView from '../../pages/list/mpamCampaign/campaignsView';
@@ -51,6 +53,18 @@ const routes = [
         exact: true,
         component: UserView,
         title: 'UserView'
+    },
+    {
+        path: '/add-user',
+        exact: true,
+        component: AddUser,
+        title: 'Add User'
+    },
+    {
+        path: '/user/:userUUID/amend',
+        exact: true,
+        component: AmendUser,
+        title: 'Amend User'
     },
     {
         path: '/user/:userId/add-teams',
@@ -143,10 +157,10 @@ const routes = [
         title: 'UnitSearch'
     },
     {
-        path: '/team/:teamId/add-nominated-contact',
+        path: '/team/:teamId/manage-nominated-contacts',
         exact: true,
-        component: AddNominatedContact,
-        title: 'Add Nominated Contact'
+        component: ManageNominatedContacts,
+        title: 'Manage Nominated Contacts'
     },
     {
         path: '/case-types',

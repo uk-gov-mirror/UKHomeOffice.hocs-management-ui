@@ -42,6 +42,9 @@ const Dashboard: React.FC = () => (
                             <li>
                                 <Link className="govuk-link" to="/user-search">Manage a user</Link>
                             </li>
+                            <li>
+                                <Link className="govuk-link" to="/add-user">Add a user</Link>
+                            </li>
                         </ul>
                     </li>
                     <li>
