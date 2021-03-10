@@ -36,7 +36,8 @@ const AddUnit: React.FC<AddUnitProps> = ({ csrfToken, history }) => {
     const [unit, dispatch] = React.useReducer<Reducer<Unit, InputEventData>>(reducer, {
         displayName: '',
         shortCode: '',
-        value: ''
+        value: '',
+        type: ''
     });
 
     const handleSubmit = (event: React.FormEvent) => {
