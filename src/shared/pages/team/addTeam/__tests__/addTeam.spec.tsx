@@ -1,7 +1,7 @@
 import { act, fireEvent, getByText, render, RenderResult, wait } from '@testing-library/react';
 import { match, MemoryRouter } from 'react-router-dom';
 import React from 'react';
-import WrappedCreateTeam from '../createTeam';
+import WrappedAddTeam from '../addTeam';
 import { createBrowserHistory, History, Location } from 'history';
 import * as UnitsService from '../../../../services/unitsService';
 import * as CaseTypesService from '../../../../services/caseTypesService';
@@ -24,13 +24,13 @@ let mockState: State;
 
 const renderComponent = () => render(
     <MemoryRouter>
-        <WrappedCreateTeam history={history}  location={location} match={match}/>
+        <WrappedAddTeam history={history}  location={location} match={match}/>
     </MemoryRouter>
 );
 
 const getUnitsSpy = jest.spyOn(UnitsService, 'getUnits');
 const getCaseTypesSpy = jest.spyOn(CaseTypesService, 'getCaseTypes');
-const getCreateTeamSpy = jest.spyOn(TeamsService, 'createTeam');
+const getAddTeamSpy = jest.spyOn(TeamsService, 'addTeam');
 const useReducerSpy = jest.spyOn(React, 'useReducer');
 const reducerDispatch = jest.fn();
 const useErrorSpy = jest.spyOn(useError, 'default');
@@ -88,7 +88,7 @@ beforeEach(() => {
     setMessageSpy.mockReset();
 });
 
-describe('when the createTeam component is mounted', () => {
+describe('when the AddTeam component is mounted', () => {
     it('should render with default props', async () => {
         expect.assertions(4);
         let wrapper: RenderResult;
@@ -151,7 +151,7 @@ describe('when the createTeam component is mounted', () => {
         let wrapper: RenderResult;
         getCaseTypesSpy.mockImplementation(() => Promise.resolve([mockCaseTypes]));
         getUnitsSpy.mockImplementation(() => Promise.resolve([mockUnits]));
-        getCreateTeamSpy.mockImplementationOnce(() => Promise.resolve({ response: { status: 200 } }));
+        getAddTeamSpy.mockImplementationOnce(() => Promise.resolve({ response: { status: 200 } }));
         validateSpy.mockReturnValue(true);
 
         act(() => {
@@ -159,7 +159,7 @@ describe('when the createTeam component is mounted', () => {
         });
 
         await wait(async () => {
-            const submitButton = getByText(wrapper.container, 'Create');
+            const submitButton = getByText(wrapper.container, 'Add');
             fireEvent.click(submitButton);
         });
         await wait(() => {
@@ -168,12 +168,12 @@ describe('when the createTeam component is mounted', () => {
 
     });
 
-    it('should set the correct error message if createTeam returns a 409 response', async () => {
+    it('should set the correct error message if AddTeam returns a 409 response', async () => {
         expect.assertions(1);
         let wrapper: RenderResult;
         getCaseTypesSpy.mockImplementation(() => Promise.resolve([mockCaseTypes]));
         getUnitsSpy.mockImplementation(() => Promise.resolve([mockUnits]));
-        getCreateTeamSpy.mockImplementationOnce(() => Promise.reject({ response: { status: 409 } }));
+        getAddTeamSpy.mockImplementationOnce(() => Promise.reject({ response: { status: 409 } }));
         validateSpy.mockReturnValue(true);
 
         act(() => {
@@ -181,7 +181,7 @@ describe('when the createTeam component is mounted', () => {
         });
 
         await wait(async () => {
-            const submitButton = getByText(wrapper.container, 'Create');
+            const submitButton = getByText(wrapper.container, 'Add');
             fireEvent.click(submitButton);
         });
         await wait(() => {
@@ -191,12 +191,12 @@ describe('when the createTeam component is mounted', () => {
         });
     });
 
-    it('should set the correct error message if createTeam fails for an unknown reason', async () => {
+    it('should set the correct error message if AddTeam fails for an unknown reason', async () => {
         expect.assertions(1);
         let wrapper: RenderResult;
         getCaseTypesSpy.mockImplementation(() => Promise.resolve([mockCaseTypes]));
         getUnitsSpy.mockImplementation(() => Promise.resolve([mockUnits]));
-        getCreateTeamSpy.mockImplementationOnce(() => Promise.reject({ response: { status: 500 } }));
+        getAddTeamSpy.mockImplementationOnce(() => Promise.reject({ response: { status: 500 } }));
         validateSpy.mockReturnValue(true);
 
         act(() => {
@@ -204,7 +204,7 @@ describe('when the createTeam component is mounted', () => {
         });
 
         await wait(async () => {
-            const submitButton = getByText(wrapper.container, 'Create');
+            const submitButton = getByText(wrapper.container, 'Add');
             fireEvent.click(submitButton);
         });
         await wait(() => {

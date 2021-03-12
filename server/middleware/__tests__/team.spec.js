@@ -1,5 +1,5 @@
 import {
-    getTeams, getTeamMembers, returnTeamMembersJson, returnTeamsJson, createTeam
+    getTeams, getTeamMembers, returnTeamMembersJson, returnTeamsJson, addTeam
 } from '../team';
 import { infoService } from '../../clients/index';
 
@@ -135,10 +135,10 @@ describe('returnTeamMembersJson', () => {
     });
 });
 
-describe('createTeam', () => {
+describe('addTeam', () => {
     const req = {
         params: { unitUUID: '__someUnitUUID__' },
-        body: '__someCreateTeamRequest__'
+        body: '__someAddTeamRequest__'
     };
     let res = { sendStatus: jest.fn() };
     const next = jest.fn();
@@ -146,11 +146,11 @@ describe('createTeam', () => {
 
     it('should successfully perform post with data', async () => {
         User.createHeaders.mockImplementation(() => headers);
-        await createTeam(req, res, next);
+        await addTeam(req, res, next);
 
         expect(infoService.post).toHaveBeenCalledWith(
             '/unit/__someUnitUUID__/teams',
-            '__someCreateTeamRequest__',
+            '__someAddTeamRequest__',
             { headers: headers }
         );
         expect(res.sendStatus).toHaveBeenCalledWith(200);
@@ -158,7 +158,7 @@ describe('createTeam', () => {
 
     it('should catch and log error if post request fails', async () => {
         infoService.post.mockImplementation(() => Promise.reject());
-        await createTeam(req, res, next);
+        await addTeam(req, res, next);
         expect(logError).toHaveBeenCalled();
         expect(next).toHaveBeenCalled();
     });

@@ -18,10 +18,10 @@ import { initialState } from './initialState';
 import { ApplicationConsumer } from '../../../contexts/application';
 import { array, object, string } from 'yup';
 import { validate } from '../../../validation';
-import { createTeam } from '../../../services/teamsService';
+import { addTeam } from '../../../services/teamsService';
 import { getCaseTypes } from '../../../services/caseTypesService';
 
-interface CreateTeamProps {
+interface AddTeamProps {
     csrfToken?: string;
     history: History;
 }
@@ -46,7 +46,7 @@ const validationSchema = object({
     })
 });
 
-const CreateTeam: React.FC<CreateTeamProps> = ({ csrfToken,history }) => {
+const AddTeam: React.FC<AddTeamProps> = ({ csrfToken,history }) => {
 
     const [pageError, addFormError, clearErrors, setErrorMessage] = useError();
     const [state, dispatch] = useReducer(reducer, initialState);
@@ -55,8 +55,8 @@ const CreateTeam: React.FC<CreateTeamProps> = ({ csrfToken,history }) => {
         event.preventDefault();
         clearErrors();
         if (validate(validationSchema, state, addFormError)) {
-            createTeam(state.team).then(() => {
-                history.push('/create-team', { successMessage: TEAM_CREATION_SUCCESS });
+            addTeam(state.team).then(() => {
+                history.push('/add-team', { successMessage: TEAM_CREATION_SUCCESS });
             }).catch((error) => {
                 if (error && error.response && error.response.status === 409) {
                     setErrorMessage(
@@ -108,7 +108,7 @@ const CreateTeam: React.FC<CreateTeamProps> = ({ csrfToken,history }) => {
                         pageError={pageError}
                     />
                     <h1 className="govuk-heading-xl">
-                        Create a Team
+                        Add a Team
                     </h1>
                 </div>
             </div>
@@ -150,7 +150,7 @@ const CreateTeam: React.FC<CreateTeamProps> = ({ csrfToken,history }) => {
                         />
 
                         <div className="govuk-form-group">
-                            <button type="submit" className="govuk-button view-team-button" >Create</button>
+                            <button type="submit" className="govuk-button view-team-button" >Add</button>
                         </div>
 
                     </form>
@@ -160,12 +160,12 @@ const CreateTeam: React.FC<CreateTeamProps> = ({ csrfToken,history }) => {
     );
 };
 
-const WrappedCreateTeam = ({ history }: RouteComponentProps) => (
+const WrappedAddTeam = ({ history }: RouteComponentProps) => (
     <ApplicationConsumer>
         {({ csrf }) => (
-            <CreateTeam csrfToken={csrf} history={history} />
+            <AddTeam csrfToken={csrf} history={history} />
         )}
     </ApplicationConsumer>
 );
 
-export default WrappedCreateTeam;
+export default WrappedAddTeam;

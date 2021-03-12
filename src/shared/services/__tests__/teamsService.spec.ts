@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {
-    getTeam, getTeams, getTeamMembers, getTeamsForUser, createTeam
+    getTeam, getTeams, getTeamMembers, getTeamsForUser, addTeam
 } from '../teamsService';
 import Team from '../../models/team';
 import { User } from '../../models/user';
@@ -184,7 +184,7 @@ describe('when the getTeamsForUser method is called', () => {
     });
 });
 
-describe('when the createTeam function is called', () => {
+describe('when the addTeam function is called', () => {
     const team: Team = {
         displayName: '__someDisplayName__',
         permissions: [
@@ -198,16 +198,13 @@ describe('when the createTeam function is called', () => {
         active: true,
         unitUUID: '__someUnitUUID__'
     };
-    beforeEach(() => {
-
-    });
 
     describe('and the post request is successful', () => {
         it('should return a resolved promise', async () => {
             expect.assertions(1);
             axiosPostSpy.mockReturnValue(Promise.resolve({ data: {} }));
 
-            await createTeam(team).then(() => {
+            await addTeam(team).then(() => {
                 expect(axiosPostSpy).toHaveBeenCalledWith(
                     '/api/teams/unit/__someUnitUUID__',
                     team
@@ -221,7 +218,7 @@ describe('when the createTeam function is called', () => {
             axiosPostSpy.mockReturnValue(Promise.reject(new Error('__someError__')));
             expect.assertions(1);
 
-            await createTeam(team).catch((error: Error) => {
+            await addTeam(team).catch((error: Error) => {
                 expect(error.message).toEqual('__someError__');
             });
         });

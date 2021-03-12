@@ -26,7 +26,7 @@ export const getTeamsForUser = (userId: string) => new Promise<[Item]>((resolve,
     .catch(reason => reject(reason))
 );
 
-export const createTeam = (team: Team) => new Promise((resolve, reject) => axios
+export const addTeam = (team: Team) => new Promise((resolve, reject) => axios
     .post(`/api/teams/unit/${team.unitUUID}`, team)
     .then(response => resolve(response.data))
     .catch(reason => reject(reason))

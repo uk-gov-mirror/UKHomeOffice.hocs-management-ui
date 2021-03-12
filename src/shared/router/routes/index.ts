@@ -26,7 +26,7 @@ import WithdrawCase from '../../pages/case/withdrawCase';
 import CampaignsView from '../../pages/list/mpamCampaign/campaignsView';
 import AddCampaign from '../../pages/list/mpamCampaign/addCampaign';
 import AmendCampaign from '../../pages/list/mpamCampaign/amendCampaign';
-import CreateTeam from '../../pages/team/createTeam/createTeam';
+import AddTeam from '../../pages/team/addTeam/addTeam';
 
 export interface Route {
     component: React.FunctionComponent | Error;
@@ -79,10 +79,10 @@ const routes = [
         title: 'TeamSearch'
     },
     {
-        path: '/create-team',
+        path: '/add-team',
         exact: true,
-        component: CreateTeam,
-        title: 'CreateTeam'
+        component: AddTeam,
+        title: 'AddTeam'
     },
     {
         path: '/team-view/:teamId',

@@ -47,7 +47,7 @@ async function getTeamsForUser(req, res, next) {
     }
 }
 
-async function createTeam(req, res, next) {
+async function addTeam(req, res, next) {
     const logger = getLogger(req.request);
     const { unitUUID } = req.params;
     try {
@@ -85,5 +85,5 @@ module.exports = {
     returnTeamJson,
     returnTeamsJson,
     returnTeamMembersJson,
-    createTeam
+    addTeam
 };
