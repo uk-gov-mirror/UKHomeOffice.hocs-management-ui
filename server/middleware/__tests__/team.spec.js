@@ -1,4 +1,16 @@
-import { getTeams, getTeamMembers, returnTeamMembersJson, returnTeamsJson } from '../team';
+import {
+    getTeams, getTeamMembers, returnTeamMembersJson, returnTeamsJson, addTeam
+} from '../team';
+import { infoService } from '../../clients/index';
+
+jest.mock('../../clients/index');
+jest.mock('../../libs/logger');
+jest.mock('../../models/user');
+
+const User = require('../../models/user');
+const getLogger = require('../../libs/logger');
+const logError = jest.fn();
+getLogger.mockImplementation(() => ({ error: logError }));
 
 describe('getTeams', () => {
 
@@ -120,5 +132,34 @@ describe('returnTeamMembersJson', () => {
     it('should be the last handler', async () => {
         await returnTeamMembersJson(req, res, next);
         expect(next).not.toHaveBeenCalled();
+    });
+});
+
+describe('addTeam', () => {
+    const req = {
+        params: { unitUUID: '__someUnitUUID__' },
+        body: '__someAddTeamRequest__'
+    };
+    let res = { sendStatus: jest.fn() };
+    const next = jest.fn();
+    const headers = '__headers__';
+
+    it('should successfully perform post with data', async () => {
+        User.createHeaders.mockImplementation(() => headers);
+        await addTeam(req, res, next);
+
+        expect(infoService.post).toHaveBeenCalledWith(
+            '/unit/__someUnitUUID__/teams',
+            '__someAddTeamRequest__',
+            { headers: headers }
+        );
+        expect(res.sendStatus).toHaveBeenCalledWith(200);
+    });
+
+    it('should catch and log error if post request fails', async () => {
+        infoService.post.mockImplementation(() => Promise.reject());
+        await addTeam(req, res, next);
+        expect(logError).toHaveBeenCalled();
+        expect(next).toHaveBeenCalled();
     });
 });

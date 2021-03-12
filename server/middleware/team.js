@@ -47,6 +47,22 @@ async function getTeamsForUser(req, res, next) {
     }
 }
 
+async function addTeam(req, res, next) {
+    const logger = getLogger(req.request);
+    const { unitUUID } = req.params;
+    try {
+        await infoService.post(
+            `/unit/${unitUUID}/teams`,
+            req.body,
+            { headers: User.createHeaders(req.user) }
+        );
+        res.sendStatus(200);
+    } catch (error) {
+        logger.error(error);
+        next(error);
+    }
+}
+
 async function returnTeamJson(_, res) {
     const { locals: { team } } = res;
     await res.json(team);
@@ -68,5 +84,6 @@ module.exports = {
     getTeamsForUser,
     returnTeamJson,
     returnTeamsJson,
-    returnTeamMembersJson
+    returnTeamMembersJson,
+    addTeam
 };

@@ -6,4 +6,5 @@ export default interface Team {
     letterName: string;
     permissions: Permission[];
     type: string;
+    unitUUID?: string;
 }

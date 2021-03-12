@@ -1,5 +1,7 @@
 import axios from 'axios';
-import { getTeam, getTeams, getTeamMembers, getTeamsForUser } from '../teamsService';
+import {
+    getTeam, getTeams, getTeamMembers, getTeamsForUser, addTeam
+} from '../teamsService';
 import Team from '../../models/team';
 import { User } from '../../models/user';
 import Item from '../../models/item';
@@ -7,6 +9,7 @@ import Item from '../../models/item';
 jest.mock('axios');
 
 let axiosGetSpy: jest.SpyInstance;
+const axiosPostSpy: jest.SpyInstance = jest.spyOn(axios, 'post');
 
 beforeEach(() => {
     jest.resetAllMocks();
@@ -176,6 +179,47 @@ describe('when the getTeamsForUser method is called', () => {
             await getTeamsForUser(userId).catch((error: Error) => {
                 expect(axios.get).toHaveBeenCalledTimes(1);
                 expect(error.message).toEqual('__error__');
+            });
+        });
+    });
+});
+
+describe('when the addTeam function is called', () => {
+    const team: Team = {
+        displayName: '__someDisplayName__',
+        permissions: [
+            {
+                accessLevel: 'OWNER',
+                caseTypeCode: 'MPAM'
+            }
+        ],
+        letterName: '__someLetterName__',
+        type: '__someType__',
+        active: true,
+        unitUUID: '__someUnitUUID__'
+    };
+
+    describe('and the post request is successful', () => {
+        it('should return a resolved promise', async () => {
+            expect.assertions(1);
+            axiosPostSpy.mockReturnValue(Promise.resolve({ data: {} }));
+
+            await addTeam(team).then(() => {
+                expect(axiosPostSpy).toHaveBeenCalledWith(
+                    '/api/teams/unit/__someUnitUUID__',
+                    team
+                );
+            });
+        });
+    });
+
+    describe('and the request fails', () => {
+        it('should return a rejected promise with the error', async () => {
+            axiosPostSpy.mockReturnValue(Promise.reject(new Error('__someError__')));
+            expect.assertions(1);
+
+            await addTeam(team).catch((error: Error) => {
+                expect(error.message).toEqual('__someError__');
             });
         });
     });
