@@ -136,9 +136,11 @@ describe('returnTeamMembersJson', () => {
 });
 
 describe('addTeam', () => {
+    const mockFlush = jest.fn();
     const req = {
         params: { unitUUID: '__someUnitUUID__' },
-        body: '__someAddTeamRequest__'
+        body: '__someAddTeamRequest__',
+        listService: { flush: mockFlush }
     };
     let res = { sendStatus: jest.fn() };
     const next = jest.fn();
@@ -154,6 +156,7 @@ describe('addTeam', () => {
             { headers: headers }
         );
         expect(res.sendStatus).toHaveBeenCalledWith(200);
+        expect(req.listService.flush).toHaveBeenCalledWith('TEAMS');
     });
 
     it('should catch and log error if post request fails', async () => {

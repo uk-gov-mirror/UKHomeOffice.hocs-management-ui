@@ -56,6 +56,7 @@ async function addTeam(req, res, next) {
             req.body,
             { headers: User.createHeaders(req.user) }
         );
+        req.listService.flush('TEAMS');
         res.sendStatus(200);
     } catch (error) {
         logger.error(error);

@@ -15,6 +15,13 @@ describe('List Service', () => {
             const instance = await listService.getInstance();
             expect(instance).toBeDefined();
         });
+        it('should return an instance with expected functions', async () => {
+            listService.initialise();
+            const instance = await listService.getInstance();
+            expect(instance.flush).toBeDefined();
+            expect(instance.getFromStaticList).toBeDefined();
+            expect(instance.fetch).toBeDefined();
+        });
     });
 
     describe('fetchList', () => {
