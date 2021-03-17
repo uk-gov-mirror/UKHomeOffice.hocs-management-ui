@@ -134,7 +134,8 @@ const getInstance = (requestId, user) => {
 
     return {
         fetch: fetchList,
-        getFromStaticList: fromStaticList
+        getFromStaticList: fromStaticList,
+        flush
     };
 
 };
