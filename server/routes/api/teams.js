@@ -2,7 +2,7 @@ const router = require('express').Router();
 const {
     getTeam, getTeams, getTeamMembers, getTeamsForUser,
     returnTeamJson, returnTeamsJson, returnTeamMembersJson,
-    addTeam
+    addTeam, updateTeamName
 } = require('../../middleware/team');
 const { protect } = require('../../middleware/auth');
 
@@ -17,5 +17,9 @@ router.get('/:userId/teams', getTeamsForUser, returnTeamsJson);
 router.post('/unit/:unitUUID',
     protect('DCU'),
     addTeam);
+
+router.put('/:teamId',
+    protect('RENAME_TEAM'),
+    updateTeamName);
 
 module.exports = router;
