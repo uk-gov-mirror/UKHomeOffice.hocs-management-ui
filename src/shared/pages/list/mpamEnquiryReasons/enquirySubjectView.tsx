@@ -57,6 +57,7 @@ const EnquirySubjectView: React.FC<CasesProps> = ({ history, match }) => {
                                 <thead className='govuk-table__head'>
                                     <tr className='govuk-table__row'>
                                         <th className='govuk-table__header' scope='col'>Enquiry Reason</th>
+                                        <th className="govuk-table__header" scope="col">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody className='govuk-table__body'>
@@ -65,6 +66,9 @@ const EnquirySubjectView: React.FC<CasesProps> = ({ history, match }) => {
                                             return (
                                                 <tr className='govuk-table__row' key={enquirySubject.simpleName}>
                                                     <td className='govuk-table__cell'>{enquirySubject.title}</td>
+                                                    <td className="govuk-table__cell">
+                                                        <Link to={`/amend-enquiry-reason/${subject}/${enquirySubject.uuid}`}>Amend</Link>
+                                                    </td>
                                                 </tr>
                                             );
                                         })
