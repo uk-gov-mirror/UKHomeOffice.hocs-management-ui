@@ -3,20 +3,18 @@ import { match, MemoryRouter } from 'react-router-dom';
 import { createBrowserHistory, History, Location } from 'history';
 import { act, render, RenderResult, wait, fireEvent, waitForElement } from '@testing-library/react';
 import {
-    AMEND_ENQ_REASON_ERROR_DESCRIPTION,
-    GENERAL_ERROR_TITLE,
-    LOAD_ENQ_SUB_ERROR_DESCRIPTION
+    GENERAL_ERROR_TITLE
 } from '../../../../models/constants';
+import AmendEntity from '../amendEntity';
 import * as EntityListService from '../../../../services/entityListService';
 import * as useError from '../../../../hooks/useError';
-import { State } from '../../entityList/amendEntityState';
-import AmendEnquiryReason from '../amendEnquiryReason';
+import { State } from '../amendEntityState';
 
 let match: match<any>;
 let history: History<any>;
 let location: Location;
-let wrapper: RenderResult;
 let mockState: State;
+let wrapper: RenderResult;
 
 const useReducerSpy = jest.spyOn(React, 'useReducer');
 const reducerDispatch = jest.fn();
@@ -25,9 +23,27 @@ const addFormErrorSpy = jest.fn();
 const clearErrorsSpy = jest.fn();
 const setMessageSpy = jest.fn();
 
+const entityDescription: EntityDefinition  = {
+    entityListName: 'ENTITIES',
+    entityNamePlural: 'entities',
+    entityName: 'entity',
+    entityNameCapitalised: 'Entity',
+    entityRoute: '/manage-entities',
+    messages: {
+        LOAD_ENTITIES_ERROR: 'There was an error retrieving the entities. Please try refreshing the page.',
+        AMEND_ENTITY_ERROR_DESCRIPTION: 'Something went wrong while amending the entity. Please try again.',
+        AMEND_ENTITY_SUCCESS: 'The entity was amended successfully',
+        ADD_ENTITY_SUCCESS: 'The entity was added successfully',
+        DUPLICATE_ENTITY_ERROR_DESCRIPTION: 'An entity with those details already exists',
+        ADD_ENTITY_ERROR_DESCRIPTION: 'Something went wrong while adding the entity. Please try again.'
+    }
+};
+
+const Component = AmendEntity(entityDescription);
+
 const renderComponent = () => render(
     <MemoryRouter>
-        <AmendEnquiryReason history={history} location={location} match={match}></AmendEnquiryReason>
+        <Component history={history} location={location} match={match}></Component>
     </MemoryRouter>
 );
 const getItemDetailsSpy = jest.spyOn(EntityListService, 'getItemDetails');
@@ -40,6 +56,14 @@ beforeEach(() => {
         path: '',
         url: ''
     };
+
+    location = {
+        hash: '',
+        key: '',
+        pathname: '',
+        search: '',
+        state: {}
+    };
     mockState = {
         title: '',
         originalTitle: '',
@@ -47,7 +71,8 @@ beforeEach(() => {
         uuid: ''
     };
 
-    getItemDetailsSpy.mockImplementation(() => Promise.resolve({ simpleName: 'testSimpleName', title: 'testTitle', uuid: 'testUUID' }));
+    getItemDetailsSpy.mockImplementation(() => Promise.resolve(
+        { simpleName: 'testSimpleName', title: 'testTitle', uuid: 'testUUID' }));
     updateListItemSpy.mockImplementation(() => Promise.resolve());
     useReducerSpy.mockImplementation(() => [mockState, reducerDispatch]);
     useErrorSpy.mockImplementation(() => [{}, addFormErrorSpy, clearErrorsSpy, setMessageSpy]);
@@ -61,7 +86,7 @@ beforeEach(() => {
     });
 });
 
-describe('when the amendEnquiryReason component is mounted', () => {
+describe('when the AmendEntity component is mounted', () => {
     it('should render with default props', async () => {
         expect.assertions(2);
         wrapper = renderComponent();
@@ -87,9 +112,28 @@ describe('when the amendEnquiryReason component is mounted', () => {
         wrapper = renderComponent();
 
         await wait(() => {
-            expect(setMessageSpy).toBeCalledWith({ title: GENERAL_ERROR_TITLE, description: LOAD_ENQ_SUB_ERROR_DESCRIPTION });
+            expect(setMessageSpy).toBeCalledWith({ title: GENERAL_ERROR_TITLE, description: 'There was an error retrieving the entities. Please try refreshing the page.' });
         });
 
+    });
+});
+
+describe('when the new name is entered', () => {
+    it('should be persisted in the page state', async () => {
+        wrapper = renderComponent();
+        getItemDetailsSpy.mockReturnValueOnce(Promise.resolve(
+            { simpleName: 'testSimpleName', title: 'testTitle', uuid: 'testUUID' }
+        ));
+        const nameElement = await waitForElement(async () => {
+            return await wrapper.findByLabelText('New entity name');
+        });
+
+        fireEvent.change(nameElement, { target: { name: 'title', value: 'newTestEntityTitle' } });
+
+        await wait(() => {
+
+            expect(reducerDispatch).toHaveBeenCalledWith({ type: 'SetTitle', payload: 'newTestEntityTitle' });
+        });
     });
 });
 
@@ -100,7 +144,7 @@ describe('when the submit button is clicked', () => {
             mockState.title = '__displayName__';
             mockState.simpleName = '__shortCode__';
             const submitButton = await waitForElement(async () => {
-                return await wrapper.findByText('Amend');
+                return await wrapper.findByText('Submit');
             });
 
             fireEvent.click(submitButton);
@@ -115,7 +159,7 @@ describe('when the submit button is clicked', () => {
                 await wait(() => {
                     expect(getItemDetailsSpy).toHaveBeenCalled();
                     expect(updateListItemSpy).toHaveBeenCalled();
-                    expect(history.push).toHaveBeenCalledWith('/', { successMessage: 'The enquiry reason was amended successfully' });
+                    expect(history.push).toHaveBeenCalledWith('/', { successMessage: 'The entity was amended successfully' });
                 });
             });
             it('should call the begin submit action', async () => {
@@ -128,11 +172,12 @@ describe('when the submit button is clicked', () => {
     });
     describe('and the data is not filled in', () => {
         beforeEach(async () => {
+            updateListItemSpy.mockReturnValueOnce(Promise.resolve(
+                { simpleName: 'testSimpleName', title: 'testTitle', uuid: 'testUUID' }
+            ));
             const submitButton = await waitForElement(async () => {
-                return await wrapper.findByText('Amend');
+                return await wrapper.findByText('Submit');
             });
-            mockState.title = '';
-            mockState.simpleName = '';
 
             fireEvent.click(submitButton);
         });
@@ -142,7 +187,8 @@ describe('when the submit button is clicked', () => {
         });
 
         it('should set the error state', () => {
-            expect(addFormErrorSpy).toHaveBeenNthCalledWith(1, { key: 'title', value: 'The New Enquiry Reason is required' });
+            expect(addFormErrorSpy).toHaveBeenNthCalledWith(1,
+                { key: 'title', value: 'The New entity name is required' });
         });
     });
 });
@@ -156,7 +202,7 @@ describe('when the submit button is clicked', () => {
             mockState.title = '__displayName__';
             mockState.simpleName = '__shortCode__';
             const submitButton = await waitForElement(async () => {
-                return await wrapper.findByText('Amend');
+                return await wrapper.findByText('Submit');
             });
 
             fireEvent.click(submitButton);
@@ -164,7 +210,7 @@ describe('when the submit button is clicked', () => {
 
         describe('and the service call fails', () => {
             it('should set the error state', () => {
-                expect(setMessageSpy).toHaveBeenCalledWith({ description: AMEND_ENQ_REASON_ERROR_DESCRIPTION, title: GENERAL_ERROR_TITLE });
+                expect(setMessageSpy).toHaveBeenCalledWith({ description: 'Something went wrong while amending the entity. Please try again.', title: GENERAL_ERROR_TITLE });
             });
 
             it('should call the begin submit action', () => {

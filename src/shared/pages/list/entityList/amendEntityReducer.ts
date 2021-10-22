@@ -1,5 +1,5 @@
-import { Action } from './actions';
-import { State } from './amendCampaignState';
+import { Action } from './/actions';
+import { State } from './amendEntityState';
 
 export const reducer = (state: State, action: Action) => {
     switch (action.type) {

@@ -1,5 +1,5 @@
-import { State } from '../amendCampaignState';
-import { reducer } from '../amendCampaignReducer';
+import { State } from '../../entityList/amendEntityState';
+import { reducer } from '../../entityList/amendEntityReducer';
 
 describe('when an action is dispatched', () => {
     describe('and it is a SetItemDetails action', () => {

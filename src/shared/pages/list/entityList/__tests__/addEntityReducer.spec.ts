@@ -1,4 +1,4 @@
-import { reducer } from '../addCampaignReducer';
+import { reducer } from '../addEntityReducer';
 import InputEventData from '../../../../models/inputEventData';
 
 describe('when an action is dispatched', () => {

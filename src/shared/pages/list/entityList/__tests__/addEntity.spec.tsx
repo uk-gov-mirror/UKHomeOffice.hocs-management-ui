@@ -1,11 +1,13 @@
-
 import React from 'react';
 import { match, MemoryRouter } from 'react-router-dom';
 import { createBrowserHistory, History, Location } from 'history';
 import { act, render, RenderResult, wait, fireEvent, waitForElement } from '@testing-library/react';
-import AddCampaign from '../addCampaign';
+import AddEntity from '../addEntity';
 import * as EntityListService from '../../../../services/entityListService';
-import { ADD_CAMPAIGN_ERROR_DESCRIPTION, GENERAL_ERROR_TITLE, DUPLICATE_CAMPAIGN_DESCRIPTION, VALIDATION_ERROR_TITLE } from '../../../../models/constants';
+import {
+    GENERAL_ERROR_TITLE,
+    VALIDATION_ERROR_TITLE
+} from '../../../../models/constants';
 import EntityListItem from '../../../../models/entityListItem';
 import * as useError from '../../../../hooks/useError';
 
@@ -22,9 +24,27 @@ const addFormErrorSpy = jest.fn();
 const clearErrorsSpy = jest.fn();
 const setMessageSpy = jest.fn();
 
+
+const entityDescription: EntityDefinition  = {
+    entityListName: 'ENTITIES',
+    entityNamePlural: 'entities',
+    entityName: 'entity',
+    entityNameCapitalised: 'Entity',
+    entityRoute: '/manage-entities',
+    messages: {
+        LOAD_ENTITIES_ERROR: 'There was an error retrieving the entities. Please try refreshing the page.',
+        AMEND_ENTITY_ERROR_DESCRIPTION: 'Something went wrong while amending the entity. Please try again.',
+        AMEND_ENTITY_SUCCESS: 'The entity was amended successfully',
+        ADD_ENTITY_SUCCESS: 'The entity was added successfully',
+        DUPLICATE_ENTITY_ERROR_DESCRIPTION: 'An entity with those details already exists',
+        ADD_ENTITY_ERROR_DESCRIPTION: 'Something went wrong while adding the entity. Please try again.'
+    }
+};
+const Component = AddEntity(entityDescription);
+
 const renderComponent = () => render(
     <MemoryRouter>
-        <AddCampaign history={history} location={location} match={match}></AddCampaign>
+        <Component history={history} location={location} match={match}></Component>
     </MemoryRouter>
 );
 
@@ -63,7 +83,7 @@ beforeEach(() => {
     });
 });
 
-describe('when the addCampaign component is mounted', () => {
+describe('when the addEntity component is mounted', () => {
     it('should render with default props', async () => {
         expect.assertions(1);
 
@@ -78,7 +98,7 @@ describe('when the name is entered', () => {
         expect.assertions(1);
 
         const nameElement = await waitForElement(async () => {
-            return await wrapper.findByLabelText('Campaign name');
+            return await wrapper.findByLabelText('Entity name');
         });
 
         fireEvent.change(nameElement, { target: { name: 'title', value: '__displayTitle__' } });
@@ -94,7 +114,7 @@ describe('when the code is entered', () => {
         expect.assertions(1);
 
         const codeElement = await waitForElement(async () => {
-            return await wrapper.findByLabelText('Campaign code');
+            return await wrapper.findByLabelText('Entity code');
         });
 
         fireEvent.change(codeElement, { target: { name: 'simpleName', value: '__Code__' } });
@@ -123,7 +143,8 @@ describe('when the submit button is clicked', () => {
                 expect.assertions(1);
 
                 await wait(() => {
-                    expect(history.push).toHaveBeenCalledWith('/', { successMessage: 'The campaign was added successfully' });
+                    expect(history.push).toHaveBeenCalledWith('/',
+                        { successMessage: 'The entity was added successfully' });
                 });
             });
             it('should call the begin submit action', async () => {
@@ -141,7 +162,11 @@ describe('when the submit button is clicked', () => {
             });
 
             it('should set the error state', () => {
-                expect(setMessageSpy).toHaveBeenCalledWith({ description: ADD_CAMPAIGN_ERROR_DESCRIPTION, title: GENERAL_ERROR_TITLE });
+                expect(setMessageSpy).toHaveBeenCalledWith(
+                    {
+                        description: 'Something went wrong while adding the entity. Please try again.',
+                        title: GENERAL_ERROR_TITLE,
+                    });
             });
             it('should call the begin submit action', () => {
                 expect(clearErrorsSpy).toHaveBeenCalled();
@@ -153,7 +178,11 @@ describe('when the submit button is clicked', () => {
             });
 
             it('should set the error state', () => {
-                expect(setMessageSpy).toHaveBeenCalledWith({ description: DUPLICATE_CAMPAIGN_DESCRIPTION, title: VALIDATION_ERROR_TITLE });
+                expect(setMessageSpy).toHaveBeenCalledWith(
+                    {
+                        description: 'An entity with those details already exists',
+                        title: VALIDATION_ERROR_TITLE
+                    });
             });
         });
     });
@@ -171,8 +200,14 @@ describe('when the submit button is clicked', () => {
         });
 
         it('should set the error state', () => {
-            expect(addFormErrorSpy).toHaveBeenNthCalledWith(1, { key: 'title', value: 'The Campaign name is required' });
-            expect(addFormErrorSpy).toHaveBeenNthCalledWith(2, { key: 'simpleName', value: 'The Campaign code is required' });
+            expect(addFormErrorSpy).toHaveBeenNthCalledWith(1, {
+                key: 'title',
+                value: 'The Entity name is required'
+            });
+            expect(addFormErrorSpy).toHaveBeenNthCalledWith(2, {
+                key: 'simpleName',
+                value: 'The Entity code is required'
+            });
         });
     });
 });
