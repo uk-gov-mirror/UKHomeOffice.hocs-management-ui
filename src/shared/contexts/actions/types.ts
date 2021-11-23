@@ -1,0 +1,8 @@
+const types = {
+    SET_ERROR: 'SET_ERROR',
+    UNSET_ERROR: 'UNSET_ERROR',
+    UPDATE_API_STATUS: 'UPDATE_API_STATUS',
+    CLEAR_API_STATUS: 'CLEAR_API_STATUS'
+};
+
+export default types;

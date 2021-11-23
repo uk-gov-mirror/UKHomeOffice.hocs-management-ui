@@ -1,0 +1,121 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`when the AmendUser component is mounted should render with default props 1`] = `
+<div>
+  <div
+    class="govuk-grid-row"
+  >
+    <div
+      class="govuk-grid-column-two-thirds-from-desktop"
+    >
+      <a
+        class="govuk-back-link"
+        href="/user-view/xx-xx-xx-xx"
+      >
+        Back
+      </a>
+      <h1
+        class="govuk-heading-xl"
+      >
+        Amend User Details
+      </h1>
+    </div>
+  </div>
+  <div
+    class="govuk-grid-row"
+  >
+    <div
+      class="govuk-grid-column-one-half-from-desktop"
+    >
+      <form
+        method="PUT"
+      >
+        <input
+          name="_csrf"
+          type="hidden"
+          value=""
+        />
+        <div
+          class="govuk-form-group"
+        >
+          <label
+            class="govuk-label govuk-label--s"
+            for="username"
+            id="username-label"
+          >
+            Username
+          </label>
+          <input
+            class="govuk-input"
+            disabled=""
+            id="username"
+            name="username"
+            type="text"
+            value=""
+          />
+        </div>
+        <div
+          class="govuk-form-group"
+        >
+          <label
+            class="govuk-label govuk-label--s"
+            for="email"
+            id="email-label"
+          >
+            Email Address
+          </label>
+          <input
+            class="govuk-input"
+            disabled=""
+            id="email"
+            name="email"
+            type="text"
+            value=""
+          />
+        </div>
+        <div
+          class="govuk-form-group"
+        >
+          <label
+            class="govuk-label govuk-label--s"
+            for="firstName"
+            id="firstName-label"
+          >
+            First Name
+          </label>
+          <input
+            class="govuk-input"
+            id="firstName"
+            name="firstName"
+            type="text"
+            value=""
+          />
+        </div>
+        <div
+          class="govuk-form-group"
+        >
+          <label
+            class="govuk-label govuk-label--s"
+            for="lastName"
+            id="lastName-label"
+          >
+            Last Name
+          </label>
+          <input
+            class="govuk-input"
+            id="lastName"
+            name="lastName"
+            type="text"
+            value=""
+          />
+        </div>
+        <input
+          class="govuk-button"
+          type="submit"
+          value="Submit"
+        />
+      </form>
+    </div>
+  </div>
+</div>
+`;
