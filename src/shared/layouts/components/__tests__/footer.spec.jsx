@@ -1,5 +1,6 @@
 import React from 'react';
 import Footer from '../footer.tsx';
+import { render } from '@testing-library/react';
 
 describe('Layout footer component', () => {
     it('should render with default props', () => {
