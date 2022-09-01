@@ -50,8 +50,8 @@ class DateInput extends Component<DateInputProps> {
         return <div className={`govuk-form-group${error ? ' govuk-form-group--error' : ''}`}>
             <fieldset id={name} disabled={disabled} className="govuk-fieldset" role="group">
                 <legend className="govuk-fieldset__legend govuk-label--s">{label}</legend>
-                {hint && <span className="govuk-hint">{hint}</span>}
-                {error && <span id={`${name}-error`} className="govuk-error-message">{error}</span>}
+                {hint && <div className="govuk-hint">{hint}</div>}
+                {error && <p id={`${name}-error`} className="govuk-error-message">{error}</p>}
                 <div className="govuk-date-input">
                     <div className="govuk-date-input__item">
                         <div className="govuk-form-group">
@@ -60,8 +60,8 @@ class DateInput extends Component<DateInputProps> {
                                 className={`govuk-input govuk-date-input__input govuk-input--width-2 ${error ? 'govuk-input--error' : ''}`}
                                 id={this.datePart('day')}
                                 name={this.datePart('day')}
-                                type="number"
-                                pattern="[0-9]*"
+                                type="text"
+                                inputMode="numeric"
                                 min="1"
                                 max="31"
                                 value={this.state[this.datePart('day')]}

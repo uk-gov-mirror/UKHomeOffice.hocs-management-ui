@@ -69,8 +69,8 @@ class TypeAhead extends Component<TypeAheadProps, TypeAheadState> {
         return (
             <div className={`govuk-form-group${error ? ' govuk-form-group--error' : ''}`}>
                 <label htmlFor={`${name}-input`} id={`${name}-label`} className="govuk-label govuk-label--s">{label}</label>
-                {hint && <span className="govuk-hint">{hint}</span>}
-                {error && <span id={`${name}-error`} className="govuk-error-message">{error}</span>}
+                {hint && <div className="govuk-hint">{hint}</div>}
+                {error && <p id={`${name}-error`} className="govuk-error-message">{error}</p>}
                 <AsyncSelect<Item>
                     cacheOptions
                     classNamePrefix="govuk-typeahead"

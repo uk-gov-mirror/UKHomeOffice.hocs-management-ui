@@ -28,8 +28,8 @@ const TextArea: React.FC<TextProps> = ({ disabled = false,
         <div className={classNames('govuk-form-group', { 'govuk-form-group--error': error })}>
 
             <label htmlFor={name} id={`${name}-label`} className="govuk-label govuk-label--s">{label}</label>
-            {hint && <span className="govuk-hint">{hint}</span>}
-            {error && <span id={`${name}-error`} className="govuk-error-message">{error}</span>}
+            {hint && <div className="govuk-hint">{hint}</div>}
+            {error && <p id={`${name}-error`} className="govuk-error-message">{error}</p>}
 
             <textarea className={classNames('govuk-textarea', { 'govuk-input--error': error })}
                 id={name}
