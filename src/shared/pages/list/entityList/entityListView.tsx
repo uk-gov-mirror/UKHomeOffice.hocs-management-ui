@@ -1,4 +1,4 @@
-import React, { Reducer, useEffect, Fragment } from 'react';
+import React, { Fragment, Reducer, useCallback, useEffect } from 'react';
 import { RouteComponentProps } from 'react-router';
 import { History } from 'history';
 import { getListItems } from '../../../services/entityListService';
@@ -6,20 +6,20 @@ import { State } from './state';
 import { Action } from './actions';
 import { reducer } from './reducer';
 import { initialState } from './initialState';
-import {
-    GENERAL_ERROR_TITLE
-} from '../../../models/constants';
+import { GENERAL_ERROR_TITLE } from '../../../models/constants';
 import ErrorSummary from '../../../common/components/errorSummary';
 import ErrorMessage from '../../../models/errorMessage';
 import useError from '../../../hooks/useError';
 import { Link } from 'react-router-dom';
 import EntityListItem from '../../../models/entityListItem';
+import { ShowInactiveItemsToggle } from './showInactiveItemsToggle';
 
 interface MatchParams {
     teamId: string;
 }
 
 type EntityListViewProps = RouteComponentProps<MatchParams>;
+
 
 const EntityListView = (entityDefinition: EntityDefinition) => {
     const onAddClick = (history: History) => {
@@ -40,33 +40,37 @@ const EntityListView = (entityDefinition: EntityDefinition) => {
                 });
         }, []);
 
-        const amendEntity = (entityUuid: string, event: React.FormEvent) => {
+        const amendEntity = useCallback((entityUuid: string, event: React.FormEvent) => {
             event.preventDefault();
             clearErrors();
             history.push(`${entityDefinition.entityRoute}/${entityUuid}/amend`);
+        }, []);
 
-        };
+        const toggleShowInactive = useCallback(
+            (showInactive: boolean) => dispatch({ type: 'ToggleShowInactive', payload: showInactive }), [dispatch]
+        );
 
         const DisplayCampaignTable = () => (
             <Fragment>
-                {state.entitiesLoaded && (
+                {state.entitiesLoaded && (<>
+                    <ShowInactiveItemsToggle showInactive={state.showInactive} inactiveCount={state.inactiveCount} onToggle={toggleShowInactive}/>
                     <table className="govuk-table">
                         <thead className="govuk-table__head">
                             <tr className="govuk-table__row">
                                 <th className="govuk-table__header" scope="col">{`${entityDefinition.entityNameCapitalised} name`}</th>
                                 <th className="govuk-table__header" scope="col">{`${entityDefinition.entityNameCapitalised} code`}</th>
-                                <th className="govuk-table__header" scope="col">Active</th>
+                                {state.showInactive && <th className="govuk-table__header" scope="col">Active?</th>}
                                 <th className="govuk-table__header" scope="col">Action</th>
                             </tr>
                         </thead>
                         <tbody className="govuk-table__body">
                             {
-                                state.entities.map((entity) => {
+                                state.entitiesToDisplay.map((entity) => {
                                     return (
-                                        <tr className="govuk-table__row" key={entity.uuid}>
+                                        <tr className={`govuk-table__row${entity.active ? '' : ' inactive-entity'}`} key={entity.uuid}>
                                             <td className="govuk-table__cell">{entity.title}</td>
                                             <td className="govuk-table__cell">{entity.simpleName}</td>
-                                            <td className="govuk-table__cell">{entity.active ? 'Yes': 'No'}</td>
+                                            {state.showInactive && <td className="govuk-table__cell" scope="col">{entity.active ? 'Yes' : 'No'}</td>}
                                             <td className="govuk-table__cell">
                                                 <a href="#" onClick={event => amendEntity(entity.uuid, event)}>Amend</a>
                                             </td>
@@ -76,7 +80,7 @@ const EntityListView = (entityDefinition: EntityDefinition) => {
                             }
                         </tbody>
                     </table>
-                )}
+                </>)}
             </Fragment>
         );
 
